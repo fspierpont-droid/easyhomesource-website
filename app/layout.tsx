@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteLogo } from "@/components/SiteLogo";
 import type { ReactNode } from "react";
 import "./globals.css";
 
@@ -21,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <header className="sticky top-0 z-20 border-b border-forest/10 bg-white/90 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-            <Link href="/" className="text-lg font-black text-forest">Easy HomeSource</Link>
+            <Link href="/" aria-label="Easy HomeSource home"><SiteLogo /></Link>
             <div className="flex flex-wrap justify-end gap-3 text-sm font-bold text-forest sm:gap-6">
               {nav.map(([label, href]) => <Link key={href} href={href} className="hover:text-clay">{label}</Link>)}
             </div>
