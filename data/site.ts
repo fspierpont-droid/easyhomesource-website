@@ -6,11 +6,11 @@ export const siteInfo = {
 };
 
 export const socialLinks = {
-  youtube: "",
-  facebook: "",
-  instagram: "",
-  x: "",
-  tiktok: ""
+  youtube: "https://www.youtube.com/@EasyHomesource",
+  facebook: "https://www.facebook.com/easyhomesource",
+  instagram: "https://www.instagram.com/easyhomesource/",
+  x: "https://x.com/EasyHomesource",
+  tiktok: "https://www.tiktok.com/@easyhomesource0"
 };
 
 export const navLinks = [
