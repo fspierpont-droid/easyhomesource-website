@@ -5,10 +5,14 @@ export type Home = {
   name: string;
   manufacturer: string | null;
   price: string | null;
+  priceLabel?: string;
+  startingPrice?: number | null;
   beds: number | null;
   baths: number | null;
   squareFeet: number | null;
   size: string | null;
+  width?: string | null;
+  length?: string | null;
   status: HomeStatus;
   featured: boolean;
   onDisplay: boolean;
@@ -18,6 +22,9 @@ export type Home = {
   mainImage: string | null;
   floorplanImage: string | null;
   description: string;
+  longDescription?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   features: string[];
   notes: string;
   needsVerification: boolean;
@@ -28,26 +35,62 @@ const defaultFeatures = ["Manufactured home", "Brooksville-area dealership suppo
 
 export const homes: Home[] = [
   {
-    id: "paxton",
-    name: "Paxton",
+    id: "tulip",
+    name: "The Tulip",
     manufacturer: null, // TODO: confirm manufacturer
     price: "$39,888",
+    priceLabel: "Starting Price",
+    startingPrice: 39888,
     beds: 1,
     baths: 1,
     squareFeet: 480,
     size: "12' x 40'",
+    width: "12'",
+    length: "40'",
     status: "Coming Soon",
     featured: true,
-    onDisplay: true,
-    newArrival: true,
+    onDisplay: false,
+    newArrival: false,
     specialOffer: true,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
-    description: defaultDescription,
+    description: "An affordable compact manufactured home option for buyers looking for a practical path toward homeownership.",
+    longDescription: "The Tulip is a compact, budget-friendly home option designed for buyers who want a simple and affordable way to start the path toward homeownership. Ask Easy HomeSource about current availability, financing options, delivery, setup, and final quote details.",
+    seoTitle: "The Tulip Manufactured Home Starting at $39,888 | Easy HomeSource",
+    seoDescription: "Explore The Tulip, a compact manufactured home starting at $39,888 from Easy HomeSource in Brooksville, Florida. Ask about availability, financing options, delivery, setup, and final quote details.",
     features: defaultFeatures,
-    notes: "Starter inventory placeholder for Paxton. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
-    needsVerification: true
+    notes: "The Tulip special-offer listing. Home availability, pricing, financing, delivery, setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.",
+    needsVerification: false
+  },
+  {
+    id: "paxton",
+    name: "Paxton",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: "$158,888",
+    priceLabel: "Starting Price",
+    startingPrice: 158888,
+    beds: 3,
+    baths: 2,
+    squareFeet: 1394,
+    size: "26' 8\" x 52'",
+    width: "26' 8\"",
+    length: "52'",
+    status: "Coming Soon",
+    featured: true,
+    onDisplay: true,
+    newArrival: false,
+    specialOffer: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: "A spacious 3 bedroom, 2 bathroom manufactured home with an open layout and room for everyday living.",
+    longDescription: "The Paxton is a spacious manufactured home with 3 bedrooms, 2 bathrooms, and approximately 1,394 square feet. It is a strong option for buyers looking for a larger layout with comfortable living space, practical design, and support from Easy HomeSource through pricing, financing guidance, delivery, and setup.",
+    seoTitle: "Paxton Manufactured Home | Easy HomeSource",
+    seoDescription: "Explore the Paxton manufactured home from Easy HomeSource, a spacious 3 bedroom, 2 bathroom home with approximately 1,394 square feet. Ask about pricing, financing options, delivery, setup, and availability.",
+    features: defaultFeatures,
+    notes: "Paxton listing corrected to remove The Tulip starter-home price and specifications.",
+    needsVerification: false
   },
   {
     id: "dogwood",
