@@ -1,91 +1,256 @@
 export type HomeStatus = "Available" | "Coming Soon" | "Sold";
 
 export type Home = {
-  slug: string;
+  id: string;
   name: string;
-  series: string;
-  manufacturer: string;
-  price: string;
-  beds: number;
-  baths: number;
-  squareFootage: number;
-  size: string;
+  manufacturer: string | null;
+  price: string | null;
+  beds: number | null;
+  baths: number | null;
+  squareFeet: number | null;
+  size: string | null;
   status: HomeStatus;
   featured: boolean;
-  visualDescription: string;
-  floorplanDescription: string;
+  locationOnLot: string | null;
+  mainImage: string | null;
+  floorplanImage: string | null;
   description: string;
   features: string[];
+  notes: string;
+  needsVerification: boolean;
 };
+
+const defaultDescription = "A starter Easy HomeSource inventory placeholder. Contact the Brooksville team for current availability, verified specifications, options, and next steps.";
+const defaultFeatures = ["Manufactured home", "Brooksville-area dealership support", "Financing conversation available", "Delivery and setup coordination guidance"];
 
 export const homes: Home[] = [
   {
-    slug: "brooksville-breeze",
-    name: "Brooksville Breeze",
-    series: "Family Series",
-    manufacturer: "Champion Homes",
-    price: "$129,900",
-    beds: 3,
-    baths: 2,
-    squareFootage: 1456,
-    size: "28' x 52'",
-    status: "Available",
-    featured: true,
-    visualDescription: "Double-section home with covered entry option",
-    floorplanDescription: "Open living, island kitchen, split-bedroom layout, and utility room.",
-    description: "A practical three-bedroom home with an open kitchen, comfortable living room, and a private primary suite designed for everyday Florida living.",
-    features: ["Island kitchen", "Split-bedroom layout", "Walk-in primary closet", "Utility room", "Energy-conscious construction"]
-  },
-  {
-    slug: "suncoast-haven",
-    name: "Suncoast Haven",
-    series: "Family Series",
-    manufacturer: "Clayton Homes",
-    price: "$154,500",
-    beds: 4,
-    baths: 2,
-    squareFootage: 1791,
-    size: "28' x 64'",
-    status: "Available",
-    featured: true,
-    visualDescription: "Four-bedroom double-section home",
-    floorplanDescription: "Large gathering area, central kitchen, four bedrooms, and two full baths.",
-    description: "Room to grow with four bedrooms, generous storage, and a kitchen built to keep family, guests, and daily routines connected.",
-    features: ["Four bedrooms", "Large dining area", "Family-size kitchen", "Double vanity bath", "Covered entry option"]
-  },
-  {
-    slug: "cypress-cottage",
-    name: "Cypress Cottage",
-    series: "Value Series",
-    manufacturer: "Fleetwood Homes",
-    price: "$99,900",
-    beds: 2,
-    baths: 2,
-    squareFootage: 960,
-    size: "16' x 60'",
-    status: "Sold",
-    featured: false,
-    visualDescription: "Efficient single-section home",
-    floorplanDescription: "Two-bedroom plan with open living space and two full baths.",
-    description: "An efficient single-section home for buyers who want comfort, simplicity, and an approachable path into manufactured home ownership.",
-    features: ["Efficient footprint", "Two full baths", "Open living area", "Low-maintenance finishes", "Great starter option"]
-  },
-  {
-    slug: "hernando-retreat",
-    name: "Hernando Retreat",
-    series: "Premier Series",
-    manufacturer: "Live Oak Homes",
-    price: "$189,000",
-    beds: 3,
-    baths: 2,
-    squareFootage: 1980,
-    size: "32' x 66'",
+    id: "paxton",
+    name: "Paxton",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
     status: "Coming Soon",
     featured: true,
-    visualDescription: "Spacious ranch-style manufactured home",
-    floorplanDescription: "Oversized living room, den option, pantry storage, and private primary suite.",
-    description: "A larger home with upgraded living spaces, flexible gathering areas, and a primary suite that feels tucked away from the main living area.",
-    features: ["Oversized living room", "Den option", "Deluxe primary suite", "Pantry storage", "Entertainment-ready layout"]
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Paxton. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "dogwood",
+    name: "Dogwood",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: true,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Dogwood. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "timberland-custom",
+    name: "Timberland Custom",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: true,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Timberland Custom. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "atmos",
+    name: "Atmos",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Atmos. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "born-to-run",
+    name: "Born to Run",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Born to Run. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "hey-jude",
+    name: "Hey Jude",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Hey Jude. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "boujee-xl-2",
+    name: "Boujee XL 2",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Boujee XL 2. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "oak",
+    name: "Oak",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Oak. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "move-on-up",
+    name: "Move On Up",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: null,
+    status: "Coming Soon",
+    featured: true,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for Move On Up. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "28x60",
+    name: "28x60",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: "28' x 60'",
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for 28x60. TODO: confirm price, beds/baths, square footage, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "16x72",
+    name: "16x72",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: "16' x 72'",
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for 16x72. TODO: confirm price, beds/baths, square footage, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
+  },
+  {
+    id: "12x40",
+    name: "12x40",
+    manufacturer: null, // TODO: confirm manufacturer
+    price: null, // TODO: confirm price
+    beds: null, // TODO: confirm beds/baths
+    baths: null, // TODO: confirm beds/baths
+    squareFeet: null, // TODO: confirm square footage
+    size: "12' x 40'",
+    status: "Coming Soon",
+    featured: false,
+    locationOnLot: null,
+    mainImage: null, // TODO: add real image
+    floorplanImage: null, // TODO: add real floorplan
+    description: defaultDescription,
+    features: defaultFeatures,
+    notes: "Starter inventory placeholder for 12x40. TODO: confirm price, beds/baths, square footage, lot location, manufacturer, image, and floorplan.",
+    needsVerification: true
   }
 ];
 
@@ -93,6 +258,6 @@ export function getFeaturedHomes() {
   return homes.filter((home) => home.featured);
 }
 
-export function getHomeBySlug(slug: string) {
-  return homes.find((home) => home.slug === slug);
+export function getHomeById(id: string) {
+  return homes.find((home) => home.id === id);
 }

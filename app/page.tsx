@@ -48,7 +48,7 @@ export default function HomePage() {
             <div><p className="font-black text-clay">Featured homes</p><h2 className="text-3xl font-black text-forest">Popular homes for Florida buyers</h2></div>
             <ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink>
           </div>
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">{featuredHomes.map((home) => <HomeCard key={home.slug} home={home} />)}</div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">{featuredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
         </div>
       </section>
 
@@ -71,7 +71,7 @@ export default function HomePage() {
           <div>
             <p className="font-black text-clay">Ready to browse?</p>
             <h2 className="mt-2 text-4xl font-black text-forest">Compare homes by price, size, beds, baths, and availability.</h2>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Start Quote</ButtonLink></div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Request Info</ButtonLink></div>
           </div>
           <LeadForm cta="Request Info" />
         </div>

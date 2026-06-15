@@ -52,7 +52,7 @@ export function LeadForm({ interestedHome = "", cta = "Request Info" }: { intere
           Interested home
           <select name="interestedHome" defaultValue={interestedHome} className="mt-2 w-full rounded-2xl border border-forest/15 bg-white px-4 py-3 font-normal text-forest outline-none focus:border-clay focus:ring-4 focus:ring-clay/10">
             <option value="">Not sure yet</option>
-            {homes.map((home) => <option key={home.slug} value={home.name}>{home.name}</option>)}
+            {homes.map((home) => <option key={home.id} value={home.name}>{home.name}</option>)}
           </select>
         </label>
       </div>

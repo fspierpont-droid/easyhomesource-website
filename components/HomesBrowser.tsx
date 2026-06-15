@@ -13,7 +13,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
   const filteredHomes = useMemo(() => {
     return homes.filter((home) => {
       const statusMatch = status === "All" || home.status === status;
-      const bedroomMatch = bedrooms === "Any" || home.beds >= Number(bedrooms);
+      const bedroomMatch = bedrooms === "Any" || home.beds !== null && home.beds >= Number(bedrooms);
       return statusMatch && bedroomMatch;
     });
   }, [bedrooms, homes, status]);
@@ -49,7 +49,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
         </div>
         <p className="mt-4 text-sm font-semibold text-forest/65">Showing {filteredHomes.length} of {homes.length} homes. Labels identify Featured, Available, Coming Soon, and Sold inventory.</p>
       </div>
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">{filteredHomes.map((home) => <HomeCard key={home.slug} home={home} />)}</div>
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">{filteredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
     </section>
   );
 }
