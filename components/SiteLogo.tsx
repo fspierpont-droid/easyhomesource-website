@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const logoPath = "/images/easy-homesource-logo.png";
+const logoPath = "/images/EHS_logo_vector_preview.png";
 
 export function SiteLogo() {
   const [showImage, setShowImage] = useState(true);
@@ -11,13 +11,12 @@ export function SiteLogo() {
   return (
     <span className="inline-flex min-h-10 items-center">
       {showImage ? (
-        // TODO: upload the real logo file to public/images/easy-homesource-logo.png
         <Image
           src={logoPath}
           alt="Easy HomeSource"
           width={220}
-          height={40}
-          className="h-10 w-auto max-w-[220px] object-contain"
+          height={48}
+          className="h-9 w-auto max-w-[180px] object-contain sm:h-10 sm:max-w-[220px]"
           priority
           onError={() => setShowImage(false)}
         />
