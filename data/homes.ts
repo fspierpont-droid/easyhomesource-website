@@ -71,9 +71,9 @@ export const homes: Home[] = [
     name: "Paxton",
     model: "Paxton 28523A",
     manufacturer: null, // TODO: confirm manufacturer
-    price: "$158,888",
+    price: "$143,185",
     priceLabel: "Starting Price",
-    startingPrice: 158888,
+    startingPrice: 143185,
     beds: 3,
     baths: 2,
     squareFeet: 1394,
@@ -93,8 +93,8 @@ export const homes: Home[] = [
     seoTitle: "Paxton Manufactured Home | Easy HomeSource",
     seoDescription: "Explore the Paxton manufactured home from Easy HomeSource, a spacious 3 bedroom, 2 bathroom home with approximately 1,394 square feet. Ask about pricing, financing options, delivery, setup, and availability.",
     features: defaultFeatures,
-    notes: "Paxton listing corrected to remove The Tulip starter-home price and specifications. Trove previously displayed $143,185. Current intended website price is $158,888 unless management updates it.",
-    priceNote: "Trove previously displayed $143,185. Current intended website price is $158,888 unless management updates it.",
+    notes: "Paxton price corrected from prior placeholder $158,888 to current Trove/catalog reference $143,185. Confirm final price with management before launch.",
+    priceNote: "Current Trove/catalog reference price is $143,185. Confirm final price with management before launch.",
     needsVerification: false
   },
   {
@@ -102,10 +102,12 @@ export const homes: Home[] = [
     name: "Dogwood",
     manufacturer: null, // TODO: confirm manufacturer
     price: null, // TODO: confirm price
-    beds: null, // TODO: confirm beds/baths
-    baths: null, // TODO: confirm beds/baths
-    squareFeet: null, // TODO: confirm square footage
-    size: null,
+    beds: 2,
+    baths: 2,
+    squareFeet: 790,
+    size: "14' x 60'",
+    width: "14'",
+    length: "60'",
     status: "Coming Soon",
     featured: true,
     onDisplay: false,
@@ -116,7 +118,7 @@ export const homes: Home[] = [
     floorplanImage: null, // TODO: add real floorplan
     description: defaultDescription,
     features: defaultFeatures,
-    notes: "Starter inventory placeholder for Dogwood. TODO: confirm price, beds/baths, square footage, size, lot location, manufacturer, image, and floorplan.",
+    notes: "Dogwood specs set from known catalog details. TODO: confirm price, lot location, manufacturer, image, and floorplan.",
     needsVerification: true
   },
   {
