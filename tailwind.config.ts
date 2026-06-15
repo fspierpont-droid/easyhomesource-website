@@ -5,9 +5,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        forest: "#17483f",
-        clay: "#c56b3f",
-        sand: "#f5efe6"
+        ehsBlue: "#41A2D9",
+        ehsLightBlue: "#A5E1F8",
+        ehsMediumBlue: "#63C4EC",
+        ehsBlack: "#050505",
+        ehsSoftBlue: "#F3FAFE",
+        borderGray: "#E5E7EB"
       }
     }
   },

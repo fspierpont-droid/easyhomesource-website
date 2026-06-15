@@ -21,7 +21,7 @@ export function SiteLogo() {
           onError={() => setShowImage(false)}
         />
       ) : (
-        <span className="text-lg font-black text-forest">Easy HomeSource</span>
+        <span className="text-lg font-black text-ehsBlack">Easy HomeSource</span>
       )}
     </span>
   );
