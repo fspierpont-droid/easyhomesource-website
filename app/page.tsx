@@ -1,7 +1,9 @@
 import { ButtonLink } from "@/components/ButtonLink";
 import { HomeCard } from "@/components/HomeCard";
 import { LeadForm } from "@/components/LeadForm";
+import { VideoCard } from "@/components/VideoCard";
 import { getFeaturedHomes } from "@/data/homes";
+import { videos } from "@/data/videos";
 
 const reasons = [
   "Straightforward home information and clear starting prices.",
@@ -65,6 +67,17 @@ export default function HomePage() {
             <ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink>
           </div>
           <div className="mt-8 grid gap-6 lg:grid-cols-3">{featuredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
+        </div>
+      </section>
+
+
+      <section className="bg-ehsSoftBlue px-4 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div><p className="font-black text-ehsBlue">Videos & Reels</p><h2 className="text-3xl font-black text-ehsBlack">See What’s Happening at Easy HomeSource</h2><p className="mt-3 max-w-3xl leading-7 text-ehsBlack/70">Watch home tours, new arrivals, walkthroughs, and helpful videos from the Easy HomeSource team.</p></div>
+            <ButtonLink href="/videos" variant="secondary">View All Videos</ButtonLink>
+          </div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-4">{videos.map((video) => <VideoCard key={video.id} video={video} />)}</div>
         </div>
       </section>
 
