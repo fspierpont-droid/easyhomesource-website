@@ -11,6 +11,9 @@ export type Home = {
   size: string | null;
   status: HomeStatus;
   featured: boolean;
+  onDisplay: boolean;
+  newArrival: boolean;
+  specialOffer: boolean;
   locationOnLot: string | null;
   mainImage: string | null;
   floorplanImage: string | null;
@@ -28,13 +31,16 @@ export const homes: Home[] = [
     id: "paxton",
     name: "Paxton",
     manufacturer: null, // TODO: confirm manufacturer
-    price: null, // TODO: confirm price
-    beds: null, // TODO: confirm beds/baths
-    baths: null, // TODO: confirm beds/baths
-    squareFeet: null, // TODO: confirm square footage
-    size: null,
+    price: "$39,888",
+    beds: 1,
+    baths: 1,
+    squareFeet: 480,
+    size: "12' x 40'",
     status: "Coming Soon",
     featured: true,
+    onDisplay: true,
+    newArrival: true,
+    specialOffer: true,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -54,6 +60,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: true,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -73,6 +82,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: true,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -92,6 +104,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -111,6 +126,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -130,6 +148,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -149,6 +170,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -168,6 +192,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -187,6 +214,9 @@ export const homes: Home[] = [
     size: null,
     status: "Coming Soon",
     featured: true,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -206,6 +236,9 @@ export const homes: Home[] = [
     size: "28' x 60'",
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -225,6 +258,9 @@ export const homes: Home[] = [
     size: "16' x 72'",
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan
@@ -244,6 +280,9 @@ export const homes: Home[] = [
     size: "12' x 40'",
     status: "Coming Soon",
     featured: false,
+    onDisplay: false,
+    newArrival: false,
+    specialOffer: false,
     locationOnLot: null,
     mainImage: null, // TODO: add real image
     floorplanImage: null, // TODO: add real floorplan

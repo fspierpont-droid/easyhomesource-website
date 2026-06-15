@@ -11,7 +11,7 @@ A public-facing Next.js marketing website for Easy HomeSource, a manufactured ho
 
 ## Lead webhook
 
-Set `NEXT_PUBLIC_GHL_WEBHOOK_URL` to post lead form submissions to a GoHighLevel webhook. If the variable is not set, the form displays a local success message for development and demos.
+Set `GHL_WEBHOOK_URL=` on the server to post lead form submissions to a GoHighLevel webhook. If the variable is not set, the API logs submissions clearly in development and the form displays a safe success message.
 
 ## Commands
 
