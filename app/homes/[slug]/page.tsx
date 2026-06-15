@@ -22,14 +22,14 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_420px]">
         <section>
           <div className="flex flex-wrap items-center gap-3">
-            {home.featured && <span className="rounded-full bg-clay px-3 py-1 text-xs font-black text-white">Featured</span>}
+            {home.featured && <span className="rounded-full bg-ehsBlue px-3 py-1 text-xs font-black text-white">Featured</span>}
             <StatusBadge status={home.status} />
-            <span className="rounded-full bg-sand px-3 py-1 text-xs font-black text-forest">{home.size ?? unknown}</span>
+            <span className="rounded-full bg-ehsSoftBlue px-3 py-1 text-xs font-black text-ehsBlack">{home.size ?? unknown}</span>
           </div>
-          <p className="mt-6 font-black text-clay">{home.manufacturer ?? "Manufacturer being finalized"}</p>
-          <h1 className="mt-2 text-4xl font-black text-forest sm:text-5xl">{home.name}</h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-forest/75">{home.description}</p>
-          <div className="mt-8 rounded-[2rem] bg-gradient-to-br from-forest via-forest to-clay p-6 text-white shadow-xl shadow-forest/10">
+          <p className="mt-6 font-black text-ehsBlue">{home.manufacturer ?? "Manufacturer being finalized"}</p>
+          <h1 className="mt-2 text-4xl font-black text-ehsBlack sm:text-5xl">{home.name}</h1>
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">{home.description}</p>
+          <div className="mt-8 rounded-[2rem] bg-gradient-to-br from-ehsBlack via-ehsBlack to-ehsBlue p-6 text-white shadow-xl shadow-ehsBlack/10">
             <p className="text-sm font-black uppercase tracking-wide text-white/70">{home.size ?? unknown}</p>
             <div className="mt-24 rounded-3xl bg-white/10 p-5 backdrop-blur"><p className="text-3xl font-black">{home.name}</p><p className="mt-2 text-white/75">{specsSummary}</p></div>
           </div>
@@ -41,15 +41,15 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
             <Detail label="Size" value={home.size ?? unknown} />
           </dl>
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-3xl border border-forest/10 bg-white p-6"><h2 className="text-2xl font-black text-forest">Features</h2><ul className="mt-4 grid gap-3">{home.features.map((feature) => <li key={feature} className="font-semibold text-forest/75">✓ {feature}</li>)}</ul></div>
-            <div className="rounded-3xl border border-forest/10 bg-sand p-6"><h2 className="text-2xl font-black text-forest">Floor plan notes</h2><p className="mt-4 leading-8 text-forest/75">Floor plan details are being finalized. Ask Easy HomeSource for the latest layout information and available options.</p></div>
+            <div className="rounded-3xl border border-borderGray bg-white p-6"><h2 className="text-2xl font-black text-ehsBlack">Features</h2><ul className="mt-4 grid gap-3">{home.features.map((feature) => <li key={feature} className="font-semibold text-ehsBlack/75">✓ {feature}</li>)}</ul></div>
+            <div className="rounded-3xl border border-borderGray bg-ehsSoftBlue p-6"><h2 className="text-2xl font-black text-ehsBlack">Floor plan notes</h2><p className="mt-4 leading-8 text-ehsBlack/75">Floor plan details are being finalized. Ask Easy HomeSource for the latest layout information and available options.</p></div>
           </div>
-          <div className="mt-8 rounded-[2rem] bg-forest p-8 text-white">
+          <div className="mt-8 rounded-[2rem] bg-ehsBlue p-8 text-white">
             <h2 className="text-3xl font-black">Want the full quote for this home?</h2>
             <p className="mt-3 leading-7 text-white/75">Ask about current availability, financing guidance, delivery to your Florida site, setup, permitting, and move-in timing.</p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/contact">Start Quote</ButtonLink><ButtonLink href="/contact" variant="secondary">Schedule a Tour</ButtonLink></div>
           </div>
-          <p className="mt-6 rounded-2xl border border-forest/10 bg-white p-4 text-sm font-semibold leading-6 text-forest/70">{disclaimer}</p>
+          <p className="mt-6 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">{disclaimer}</p>
         </section>
         <aside className="lg:sticky lg:top-24 lg:self-start"><LeadForm interestedHome={home.name} cta="Request Info" /></aside>
       </div>
@@ -58,5 +58,5 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
 }
 
 function Detail({ label, value }: { label: string; value: string | number }) {
-  return <div className="rounded-2xl bg-sand p-4"><dt className="text-xs font-black uppercase tracking-wide text-forest/60">{label}</dt><dd className="mt-1 text-xl font-black text-forest">{value}</dd></div>;
+  return <div className="rounded-2xl bg-ehsSoftBlue p-4"><dt className="text-xs font-black uppercase tracking-wide text-ehsBlack/60">{label}</dt><dd className="mt-1 text-xl font-black text-ehsBlack">{value}</dd></div>;
 }
