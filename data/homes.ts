@@ -3,6 +3,7 @@ export type HomeStatus = "Available" | "Coming Soon" | "Sold";
 export type Home = {
   id: string;
   name: string;
+  model?: string | null;
   manufacturer: string | null;
   price: string | null;
   priceLabel?: string;
@@ -27,6 +28,7 @@ export type Home = {
   seoDescription?: string;
   features: string[];
   notes: string;
+  priceNote?: string;
   needsVerification: boolean;
 };
 
@@ -37,6 +39,7 @@ export const homes: Home[] = [
   {
     id: "tulip",
     name: "The Tulip",
+    model: null,
     manufacturer: null, // TODO: confirm manufacturer
     price: "$39,888",
     priceLabel: "Starting Price",
@@ -66,6 +69,7 @@ export const homes: Home[] = [
   {
     id: "paxton",
     name: "Paxton",
+    model: "Paxton 28523A",
     manufacturer: null, // TODO: confirm manufacturer
     price: "$158,888",
     priceLabel: "Starting Price",
@@ -89,7 +93,8 @@ export const homes: Home[] = [
     seoTitle: "Paxton Manufactured Home | Easy HomeSource",
     seoDescription: "Explore the Paxton manufactured home from Easy HomeSource, a spacious 3 bedroom, 2 bathroom home with approximately 1,394 square feet. Ask about pricing, financing options, delivery, setup, and availability.",
     features: defaultFeatures,
-    notes: "Paxton listing corrected to remove The Tulip starter-home price and specifications.",
+    notes: "Paxton listing corrected to remove The Tulip starter-home price and specifications. Trove previously displayed $143,185. Current intended website price is $158,888 unless management updates it.",
+    priceNote: "Trove previously displayed $143,185. Current intended website price is $158,888 unless management updates it.",
     needsVerification: false
   },
   {
