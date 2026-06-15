@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {children}
         <footer className="bg-forest px-4 py-12 text-white">
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
-            <div><h2 className="text-2xl font-black">Easy HomeSource</h2><p className="mt-3 max-w-md leading-7 text-white/75">Manufactured home dealership in Brooksville, Florida, serving buyers across Florida with home shopping, financing guidance, and move-in support.</p><p className="mt-4 font-bold text-white/80">Phone: (352) 555-0100 — placeholder, replace before launch</p></div>
+            <div><h2 className="text-2xl font-black">Easy HomeSource</h2><p className="mt-3 max-w-md leading-7 text-white/75">Manufactured home dealership in Brooksville, Florida, serving buyers across Florida with home shopping, financing guidance, and move-in support.</p>{/* TODO: add real Easy HomeSource phone number when configured. */}<p className="mt-4 font-bold text-white/80">Phone: Call Easy HomeSource</p></div>
             <div><p className="font-black">Quick links</p><div className="mt-3 grid gap-2">{nav.map(([label, href]) => <Link key={href} href={href} className="text-white/75 hover:text-white">{label}</Link>)}</div></div>
             <div><p className="font-black">Location</p><p className="mt-3 text-white/75">Brooksville, Florida</p><Link className="mt-4 inline-flex rounded-full bg-clay px-5 py-3 font-black text-white hover:bg-clay/90" href="/contact">Request Info</Link></div>
           </div>
