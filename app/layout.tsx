@@ -5,21 +5,19 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Easy HomeSource | Manufactured Homes in Brooksville, FL",
-  description: "Easy HomeSource helps Florida buyers find affordable manufactured homes with clear pricing, financing guidance, and delivery, setup, permitting, and move-in support."
+  metadataBase: new URL("https://easyhomesource.com"),
+  title: { default: "Easy HomeSource | Manufactured Homes in Brooksville, FL", template: "%s | Easy HomeSource" },
+  description: "Shop affordable manufactured homes in Brooksville, Florida with pricing guidance, financing options, delivery, setup, permitting, and move-in support.",
+  openGraph: { title: "Easy HomeSource | Manufactured Homes in Brooksville, FL", description: "Affordable Florida manufactured homes with clear support from shopping through delivery and setup.", url: "https://easyhomesource.com", siteName: "Easy HomeSource", locale: "en_US", type: "website" }
 };
 
-const nav = [
-  ["Homes", "/homes"],
-  ["Financing", "/financing"],
-  ["About", "/about"],
-  ["Contact", "/contact"]
-];
+const nav = [["Homes", "/homes"], ["Featured Homes", "/featured-homes"], ["Special Offers", "/special-offers"], ["Financing", "/financing"], ["Delivery & Setup", "/delivery-setup"], ["How It Works", "/how-it-works"], ["Contact", "/contact"]];
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="pb-12 lg:pb-0">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "LocalBusiness", name: "Easy HomeSource", telephone: "+1-352-558-8888", address: { "@type": "PostalAddress", streetAddress: "9011 McIntyre Rd", addressLocality: "Brooksville", addressRegion: "FL", postalCode: "34601", addressCountry: "US" }, url: "https://easyhomesource.com" }) }} />
         <SiteHeader />
         {children}
         <footer className="bg-ehsBlack px-4 py-12 text-white">

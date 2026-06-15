@@ -20,10 +20,11 @@ export default function HomePage() {
           <div className="relative">
             <p className="font-black uppercase tracking-wide text-ehsBlue">Manufactured homes in Brooksville, Florida</p>
             <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Affordable Florida manufactured homes, without the guesswork.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers find affordable manufactured homes with clear pricing, financing guidance, and support through delivery, setup, permitting, and move-in.</p>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery, setup, permitting, and move-in.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
-              <ButtonLink href="/financing" variant="secondary">Get Pre-Qualified</ButtonLink>
+              <ButtonLink href="/contact" variant="secondary">Get Pricing</ButtonLink>
+              <ButtonLink href="/financing" variant="secondary">Check Financing Options</ButtonLink>
             </div>
           </div>
           <div className="relative rounded-[2rem] bg-white p-4 shadow-2xl shadow-ehsBlack/10">
@@ -35,10 +36,25 @@ export default function HomePage() {
               <div className="mt-4 grid grid-cols-3 gap-3 text-center text-sm font-black">
                 <span className="rounded-2xl bg-white/15 p-3">Clear pricing</span>
                 <span className="rounded-2xl bg-white/15 p-3">Florida delivery</span>
-                <span className="rounded-2xl bg-white/15 p-3">Move-in help</span>
+                <span className="rounded-2xl bg-white/15 p-3">Setup guidance</span>
+                <span className="rounded-2xl bg-white/15 p-3">Financing options</span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16">
+        <div className="mx-auto grid max-w-6xl gap-6 rounded-[2rem] bg-white p-8 shadow-sm lg:grid-cols-[1fr_auto] lg:items-center">
+          <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps renters and buyers explore affordable manufactured homes, financing options, delivery, setup, and a clear path forward.</p></div>
+          <div className="flex flex-col gap-3"><ButtonLink href="/homes">See Homes You Can Own</ButtonLink><ButtonLink href="/contact" variant="secondary">Talk to a Home Consultant</ButtonLink></div>
+        </div>
+      </section>
+
+      <section className="bg-ehsSoftBlue px-4 py-16">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="rounded-[2rem] bg-gradient-to-br from-ehsBlack to-ehsBlue p-8 text-white"><p className="text-sm font-black uppercase tracking-wide text-white/70">Featured Affordable Home</p><h2 className="mt-2 text-4xl font-black">Starting at $39,888</h2><p className="mt-4 leading-8 text-white/80">Looking for one of the most affordable ways to start your path to homeownership? This featured home gives buyers a practical, budget-friendly option with support from Easy HomeSource from quote to delivery and setup.</p></div>
+          <div><div className="flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes/paxton#lead-form">Get Pricing</ButtonLink><ButtonLink href="/contact" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div><p className="mt-5 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Home availability, pricing, financing, delivery, setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p></div>
         </div>
       </section>
 
@@ -73,7 +89,7 @@ export default function HomePage() {
             <h2 className="mt-2 text-4xl font-black text-ehsBlack">Compare homes by price, size, beds, baths, and availability.</h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Request Info</ButtonLink></div>
           </div>
-          <LeadForm cta="Request Info" />
+          <LeadForm cta="Get Pricing" sourcePage="Homepage" />
         </div>
       </section>
     </main>

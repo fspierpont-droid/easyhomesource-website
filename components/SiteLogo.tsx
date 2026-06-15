@@ -16,7 +16,7 @@ export function SiteLogo() {
           alt="Easy HomeSource"
           width={220}
           height={48}
-          className="h-9 w-auto max-w-[180px] object-contain sm:h-10 sm:max-w-[220px]"
+          className="h-12 w-auto max-w-[220px] object-contain sm:h-14 sm:max-w-[280px]"
           priority
           onError={() => setShowImage(false)}
         />
