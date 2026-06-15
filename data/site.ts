@@ -20,5 +20,6 @@ export const navLinks = [
   ["Financing", "/financing"],
   ["Delivery & Setup", "/delivery-setup"],
   ["How It Works", "/how-it-works"],
+  ["Videos", "/videos"],
   ["Contact", "/contact"]
 ] as const;

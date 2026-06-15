@@ -24,7 +24,7 @@ export function SiteHeader() {
         <nav className="mx-auto max-w-7xl px-4 py-3" aria-label="Main navigation">
           <div className="flex items-center justify-between gap-4">
             <Link href="/" aria-label="Easy HomeSource home" onClick={() => setOpen(false)} className="shrink-0"><SiteLogo /></Link>
-            <div className="hidden items-center gap-3 whitespace-nowrap text-[13px] font-bold text-ehsBlack xl:flex 2xl:gap-4 2xl:text-sm">
+            <div className="hidden items-center gap-2 whitespace-nowrap text-[13px] font-bold text-ehsBlack xl:flex 2xl:gap-3 2xl:text-sm">
               {navLinks.map(([label, href]) => <Link key={href} href={href} className="transition hover:text-ehsBlue">{label}</Link>)}
               <Link className="rounded-full bg-ehsBlue px-5 py-3 font-black text-white shadow-sm transition hover:bg-ehsMediumBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60" href="/contact">Get Pricing</Link>
             </div>
@@ -32,9 +32,9 @@ export function SiteHeader() {
           </div>
           {open && (
             <div className="mt-4 grid gap-2 rounded-3xl border border-borderGray bg-ehsSoftBlue p-3 text-sm font-black text-ehsBlack shadow-lg xl:hidden">
-              {navLinks.map(([label, href]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl bg-white px-4 py-3 transition hover:text-ehsBlue">{label}</Link>)}
-              <div className="rounded-2xl bg-white px-4 py-3"><SocialLinks /></div>
-              <Link onClick={() => setOpen(false)} className="rounded-2xl bg-ehsBlue px-4 py-3 text-center text-white transition hover:bg-ehsMediumBlue" href="/contact">Get Pricing</Link>
+              {navLinks.map(([label, href]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="flex min-h-11 items-center rounded-2xl bg-white px-4 py-2.5 transition hover:text-ehsBlue">{label}</Link>)}
+              <div className="rounded-2xl bg-white px-4 py-2.5"><SocialLinks /></div>
+              <Link onClick={() => setOpen(false)} className="flex min-h-11 items-center justify-center rounded-2xl bg-ehsBlue px-4 py-2.5 text-center text-white transition hover:bg-ehsMediumBlue" href="/contact">Get Pricing</Link>
             </div>
           )}
         </nav>
