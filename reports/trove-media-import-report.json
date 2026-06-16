@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-16T13:46:27.372Z",
+  "generatedAt": "2026-06-16T14:47:57.828Z",
   "startUrl": "https://easyhomesource.com/homes",
-  "manualMode": false,
+  "manualMode": true,
   "debugMode": true,
   "homes": [
     {
       "homeName": "The Tulip",
       "slug": "tulip",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/legacy-housing-select-collection-s-1240-11fla",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -20,14 +20,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/legacy-housing-select-collection-s-1240-11fla: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Dogwood",
       "slug": "dogwood",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -40,14 +40,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Born to Run",
       "slug": "born-to-run",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-born-to-run",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -60,14 +60,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/clayton-addison-tempo-series-born-to-run: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Classic C-1672-32C",
       "slug": "classic-c-1672-32c",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/legacy-housing-classic-collection-c-1672-32c",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -80,14 +80,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/legacy-housing-classic-collection-c-1672-32c: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Move on Up",
       "slug": "move-on-up",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-move-on-up",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -100,14 +100,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/clayton-addison-tempo-series-move-on-up: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Paxton",
       "slug": "paxton",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -120,14 +120,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Oak",
       "slug": "oak",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -140,14 +140,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Atmos 28603N",
       "slug": "atmos-28603n",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-alpha-atmos-28603n",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -160,14 +160,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/palm-harbor-plant-city-alpha-atmos-28603n: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Craft Select 28603A",
       "slug": "craft-select-28603a",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -180,14 +180,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Hey Jude",
       "slug": "hey-jude",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-hey-jude",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -200,14 +200,14 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/clayton-addison-tempo-series-hey-jude: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     },
     {
       "homeName": "Boujee XL 2",
       "slug": "boujee-xl-2",
-      "matchedTroveDetailUrl": null,
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2",
       "detailPageFound": false,
       "imgTagCount": 0,
       "srcsetUrlCount": 0,
@@ -220,7 +220,7 @@
       "finalDownloadedFiles": [],
       "generatedGalleryPaths": [],
       "errors": [
-        "Detail URL not found."
+        "Failed to fetch https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
       ],
       "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
     }
