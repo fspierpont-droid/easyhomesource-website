@@ -1,8 +1,9 @@
+import { getImportedHomeMedia } from "@/data/homeMedia";
 export type HomeStatus = "Available" | "Coming Soon" | "Sold";
-export type GalleryCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "video";
+export type GalleryCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "video" | "other";
 export type StandardFeatureCategory = "Exterior & Construction" | "Interior" | "Kitchen" | "Bathroom" | "Mechanical" | "Energy / Insulation" | "Options / Upgrades";
 
-export type HomeGalleryItem = { src: string; alt: string; category: GalleryCategory; isPrimary?: boolean };
+export type HomeGalleryItem = { src: string; alt: string; category: GalleryCategory; isPrimary?: boolean; sourceUrl?: string };
 export type StandardFeatureGroup = { category: StandardFeatureCategory; items: string[] };
 
 export type Home = {
@@ -52,15 +53,21 @@ const seeds: Seed[] = [
   { name: "Boujee XL 2", slug: "boujee-xl-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee XL 2", bedrooms: 4, bathrooms: 3, squareFeet: 1980, width: 28, length: 72, size: "28' x 72'", startingPrice: 147374.32, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false }
 ];
 
-export const homes: Home[] = seeds.map((home, index) => ({
+export const homes: Home[] = seeds.map((home, index) => {
+  const importedMedia = getImportedHomeMedia(home.slug);
+  const fallbackGallery = galleryFor(home.slug, home.displayName ?? home.name);
+  const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
+  const gallery = importedGallery?.length ? importedGallery : fallbackGallery;
+  return ({
   id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
   bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
   startingPrice: home.startingPrice ?? null, salePrice: null, priceLabel: home.priceLabel ?? (home.startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
-  shortDescription: desc(home.displayName ?? home.name), longDescription: desc(home.displayName ?? home.name), features: defaultFeatures, standardFeatures, images: [], gallery: galleryFor(home.slug, home.displayName ?? home.name),
-  floorPlanImage: `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: null, videoUrl: null, virtualTourUrl: null, walkthroughVideoUrl: null,
+  shortDescription: desc(home.displayName ?? home.name), longDescription: desc(home.displayName ?? home.name), features: defaultFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
+  floorPlanImage: importedMedia?.floorPlanImage ?? `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
   seoTitle: `${home.displayName ?? home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.displayName ?? home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
-}));
+  });
+});
 
 export function formatHomePrice(home: Home): string {
   const amount = home.salePrice ?? home.startingPrice;
