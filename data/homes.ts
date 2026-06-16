@@ -6,8 +6,8 @@ export type HomeGalleryItem = { src: string; alt: string; category: GalleryCateg
 export type StandardFeatureGroup = { category: StandardFeatureCategory; items: string[] };
 
 export type Home = {
-  id: string; name: string; slug: string; manufacturer?: string | null; modelNumber?: string | null; series?: string | null; homeType?: string | null;
-  bedrooms?: number | null; bathrooms?: number | null; squareFeet?: number | null; width?: string | null; length?: string | null; size?: string | null;
+  id: string; name: string; displayName?: string | null; alternateName?: string | null; slug: string; manufacturer?: string | null; modelNumber?: string | null; series?: string | null; homeType?: string | null; note?: string | null;
+  bedrooms?: number | null; bathrooms?: number | null; squareFeet?: number | null; width?: number | null; length?: number | null; size?: string | null;
   startingPrice?: number | null; salePrice?: number | null; priceLabel?: string | null; priceDisclaimer?: string | null;
   status: HomeStatus; isActive: boolean; isFeatured: boolean; isOnDisplay: boolean; isNewArrival: boolean; isSpecialOffer: boolean; isComingSoon: boolean;
   shortDescription: string; longDescription?: string; features: string[]; standardFeatures: StandardFeatureGroup[];
@@ -26,9 +26,8 @@ const standardFeatures: StandardFeatureGroup[] = [
   { category: "Energy / Insulation", items: ["Insulation and energy details confirmed by home specification sheet"] },
   { category: "Options / Upgrades", items: ["Available options and upgrades confirmed with Easy HomeSource"] }
 ];
-const defaultFeatures = ["Public home catalog listing", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
-const desc = (name: string) => `${name} is listed in the Easy HomeSource public home catalog. Request current pricing, availability, floor plan details, media, delivery, setup, financing guidance, and final quote information from the Brooksville team.`;
-const price = (n?: number | null) => n ? `$${n.toLocaleString()}` : null;
+const defaultFeatures = ["Public Trove display inventory listing", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
+const desc = (name: string) => `${name} is listed in the Easy HomeSource public Trove display inventory. Request current pricing, availability, floor plan details, media, delivery, setup, financing guidance, and final quote information from the Brooksville team.`;
 const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
   { src: `/homes/${slug}/exterior/${slug}-exterior-01.jpg`, alt: `${name} manufactured home exterior at Easy HomeSource`, category: "exterior", isPrimary: true },
   { src: `/homes/${slug}/interior/${slug}-living-01.jpg`, alt: `${name} living room interior`, category: "interior" },
@@ -38,32 +37,35 @@ const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
   { src: `/homes/${slug}/floorplan/${slug}-floorplan.jpg`, alt: `${name} floor plan`, category: "floorplan" }
 ];
 
-type Seed = Pick<Home, "name"|"slug"|"modelNumber"|"bedrooms"|"bathrooms"|"squareFeet"|"size"|"startingPrice"|"isFeatured"|"isOnDisplay"|"isSpecialOffer"|"isNewArrival">;
+type Seed = Pick<Home, "name"|"displayName"|"alternateName"|"slug"|"manufacturer"|"series"|"modelNumber"|"bedrooms"|"bathrooms"|"squareFeet"|"width"|"length"|"size"|"startingPrice"|"priceLabel"|"isFeatured"|"isOnDisplay"|"isSpecialOffer"|"isNewArrival"|"note">;
 const seeds: Seed[] = [
-  { name: "The Tulip", slug: "tulip", bedrooms: 1, bathrooms: 1, squareFeet: 480, size: "12' x 40'", startingPrice: 39888, isFeatured: true, isOnDisplay: false, isSpecialOffer: true, isNewArrival: false },
-  { name: "Paxton", modelNumber: "Paxton 28523A", slug: "paxton", bedrooms: 3, bathrooms: 2, squareFeet: 1394, size: "26' 8\" x 52'", startingPrice: 143185, isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
-  { name: "Dogwood", slug: "dogwood", bedrooms: 2, bathrooms: 2, squareFeet: 790, size: "14' x 60'", startingPrice: 62900, isFeatured: true, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Born to Run", slug: "born-to-run", bedrooms: 2, bathrooms: 2, squareFeet: 900, size: "16' x 60'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Classic C-1672-32C", slug: "classic-c-1672-32c", bedrooms: 3, bathrooms: 2, squareFeet: 1068, size: "16' x 72'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Move on Up", slug: "move-on-up", bedrooms: 3, bathrooms: 2, squareFeet: 1080, size: "16' x 72'", isFeatured: true, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Oak", slug: "oak", bedrooms: 4, bathrooms: 2, squareFeet: 1475, size: "28' x 56'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Atmos 28603N", slug: "atmos-28603n", bedrooms: 3, bathrooms: 2, squareFeet: 1600, size: "26' 8\" x 60'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: true },
-  { name: "Craft Select 28603A", slug: "craft-select-28603a", bedrooms: 3, bathrooms: 2, squareFeet: 1680, size: "26' 8\" x 60'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: true },
-  { name: "Hey Jude", slug: "hey-jude", bedrooms: 5, bathrooms: 2, squareFeet: 1896, size: "28' x 72'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false },
-  { name: "Boujee XL 2", slug: "boujee-xl-2", bedrooms: 4, bathrooms: 3, squareFeet: 1980, size: "28' x 72'", isFeatured: false, isOnDisplay: false, isSpecialOffer: false, isNewArrival: false }
+  { name: "The Tulip", alternateName: "Select S-1240-11FLA", slug: "tulip", manufacturer: "Legacy Housing", series: "Select Collection", modelNumber: "S-1240-11FLA", bedrooms: 1, bathrooms: 1, squareFeet: 480, width: 12, length: 40, size: "12' x 40'", startingPrice: 39888, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: true, isNewArrival: false, note: "Uploaded PDF did not contain a clean price row for this home. It showed Mini Tulip with HUD Base Price Missing. Use $39,888 as the current EHS special-offer price unless management changes it." },
+  { name: "Dogwood", slug: "dogwood", manufacturer: "Clayton TRU", series: "TRU Origin", modelNumber: "Dogwood", bedrooms: 2, bathrooms: 2, squareFeet: 790, width: 14, length: 60, size: "14' x 60'", startingPrice: 59946.77, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Born to Run", slug: "born-to-run", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Born to Run", bedrooms: 2, bathrooms: 2, squareFeet: 900, width: 16, length: 60, size: "16' x 60'", startingPrice: 80777.73, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Classic C-1672-32C", slug: "classic-c-1672-32c", manufacturer: "Legacy", series: "Classic", modelNumber: "C-1672-32C", bedrooms: 3, bathrooms: 2, squareFeet: 1068, width: 16, length: 72, size: "16' x 72'", startingPrice: 83447.31, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Move on Up", slug: "move-on-up", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Move on Up", bedrooms: 3, bathrooms: 2, squareFeet: 1080, width: 16, length: 72, size: "16' x 72'", startingPrice: 90136.67, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Paxton", displayName: "Paxton 28523A", slug: "paxton", manufacturer: "Cavco Plant City", series: "Elite", modelNumber: "Paxton 28523A", bedrooms: 3, bathrooms: 2, squareFeet: 1394, width: 26.67, length: 52, size: "26' 8\" x 52'", startingPrice: 143185, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false, note: "The uploaded PDF had conflicting Paxton data. The public Trove catalog and current business correction should control this website record. Use $143,185 unless management changes it." },
+  { name: "Oak", slug: "oak", manufacturer: "Clayton TRU", series: "TRU Origin", modelNumber: "Oak", bedrooms: 4, bathrooms: 2, squareFeet: 1475, width: 28, length: 56, size: "28' x 56'", startingPrice: 84608.94, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Atmos 28603N", slug: "atmos-28603n", manufacturer: "Cavco Plant City", series: "Alpha", modelNumber: "Atmos 28603N", bedrooms: 3, bathrooms: 2, squareFeet: 1600, width: 26.67, length: 60, size: "26' 8\" x 60'", startingPrice: 159324.27, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Craft Select 28603A", slug: "craft-select-28603a", manufacturer: "Cavco Plant City", series: "Craft Select", modelNumber: "Craft Select 28603A", bedrooms: 3, bathrooms: 2, squareFeet: 1680, width: 26.67, length: 60, size: "26' 8\" x 60'", startingPrice: 126049.75, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Hey Jude", slug: "hey-jude", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Hey Jude", bedrooms: 5, bathrooms: 2, squareFeet: 1896, width: 28, length: 72, size: "28' x 72'", startingPrice: 128101.34, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false },
+  { name: "Boujee XL 2", slug: "boujee-xl-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee XL 2", bedrooms: 4, bathrooms: 3, squareFeet: 1980, width: 28, length: 72, size: "28' x 72'", startingPrice: 147374.32, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isSpecialOffer: false, isNewArrival: false }
 ];
 
 export const homes: Home[] = seeds.map((home, index) => ({
-  id: home.slug, slug: home.slug, name: home.name, modelNumber: home.modelNumber ?? null, manufacturer: null, series: null, homeType: "Manufactured Home",
-  bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, size: home.size, width: home.size?.split(" x ")[0] ?? null, length: home.size?.split(" x ")[1] ?? null,
-  startingPrice: home.startingPrice ?? null, salePrice: null, priceLabel: home.startingPrice ? "Starting Price" : "Call for current pricing", priceDisclaimer: catalogPriceDisclaimer,
-  status: "Coming Soon", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: true,
-  shortDescription: desc(home.name), longDescription: desc(home.name), features: defaultFeatures, standardFeatures, images: [], gallery: galleryFor(home.slug, home.name),
+  id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
+  bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
+  startingPrice: home.startingPrice ?? null, salePrice: null, priceLabel: home.priceLabel ?? (home.startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
+  status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
+  shortDescription: desc(home.displayName ?? home.name), longDescription: desc(home.displayName ?? home.name), features: defaultFeatures, standardFeatures, images: [], gallery: galleryFor(home.slug, home.displayName ?? home.name),
   floorPlanImage: `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: null, videoUrl: null, virtualTourUrl: null, walkthroughVideoUrl: null,
-  seoTitle: `${home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
+  seoTitle: `${home.displayName ?? home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.displayName ?? home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
 }));
 
-export function formatHomePrice(home: Home): string { return home.salePrice ? `$${home.salePrice.toLocaleString()}` : home.startingPrice ? `$${home.startingPrice.toLocaleString()}` : "Call for current pricing"; }
+export function formatHomePrice(home: Home): string {
+  const amount = home.salePrice ?? home.startingPrice;
+  return amount ? `$${Math.round(amount).toLocaleString()}` : "Call for current pricing";
+}
 export function getFeaturedHomes() { return homes.filter((home) => home.isFeatured && home.isActive); }
 export function getHomeBySlug(slug: string) { return homes.find((home) => home.slug === slug && home.isActive); }
 export const getHomeById = getHomeBySlug;
