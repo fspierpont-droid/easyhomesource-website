@@ -1,13 +1,79 @@
 [
-  { "name": "The Tulip", "slug": "tulip", "troveName": "Select S-1240-11FLA", "aliases": ["Select S-1240-11FLA", "Tulip", "The Tulip", "Mini Tulip"] },
-  { "name": "Dogwood", "slug": "dogwood", "troveName": "Dogwood", "aliases": ["Dogwood"] },
-  { "name": "Born to Run", "slug": "born-to-run", "troveName": "Born to Run", "aliases": ["Born to Run"] },
-  { "name": "Classic C-1672-32C", "slug": "classic-c-1672-32c", "troveName": "Classic C-1672-32C", "aliases": ["Classic C-1672-32C", "C-1672-32C"] },
-  { "name": "Move on Up", "slug": "move-on-up", "troveName": "Move on Up", "aliases": ["Move on Up"] },
-  { "name": "Paxton", "slug": "paxton", "troveName": "Paxton 28523A", "aliases": ["Paxton", "Paxton 28523A"] },
-  { "name": "Oak", "slug": "oak", "troveName": "Oak", "aliases": ["Oak"] },
-  { "name": "Atmos 28603N", "slug": "atmos-28603n", "troveName": "Atmos 28603N", "aliases": ["Atmos", "Atmos 28603N"] },
-  { "name": "Craft Select 28603A", "slug": "craft-select-28603a", "troveName": "Craft Select 28603A", "aliases": ["Craft Select", "Craft Select 28603A"] },
-  { "name": "Hey Jude", "slug": "hey-jude", "troveName": "Hey Jude", "aliases": ["Hey Jude"] },
-  { "name": "Boujee XL 2", "slug": "boujee-xl-2", "troveName": "Boujee XL 2", "aliases": ["Boujee XL 2", "Boujee"] }
+  {
+    "name": "The Tulip",
+    "slug": "tulip",
+    "troveName": "Select S-1240-11FLA",
+    "troveDetailUrl": "https://easyhomesource.com/homes/legacy-housing-select-collection-s-1240-11fla",
+    "aliases": ["The Tulip", "Tulip", "Mini Tulip", "Select S-1240-11FLA", "S-1240-11FLA"]
+  },
+  {
+    "name": "Dogwood",
+    "slug": "dogwood",
+    "troveName": "Dogwood",
+    "troveDetailUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
+    "aliases": ["Dogwood"]
+  },
+  {
+    "name": "Born to Run",
+    "slug": "born-to-run",
+    "troveName": "Born to Run",
+    "troveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-born-to-run",
+    "aliases": ["Born to Run"]
+  },
+  {
+    "name": "Classic C-1672-32C",
+    "slug": "classic-c-1672-32c",
+    "troveName": "Classic C-1672-32C",
+    "troveDetailUrl": "https://easyhomesource.com/homes/legacy-housing-classic-collection-c-1672-32c",
+    "aliases": ["Classic C-1672-32C", "C-1672-32C"]
+  },
+  {
+    "name": "Move on Up",
+    "slug": "move-on-up",
+    "troveName": "Move on Up",
+    "troveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-move-on-up",
+    "aliases": ["Move on Up", "Move On Up"]
+  },
+  {
+    "name": "Paxton",
+    "slug": "paxton",
+    "troveName": "Paxton 28523A",
+    "troveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
+    "aliases": ["Paxton", "Paxton 28523A"]
+  },
+  {
+    "name": "Oak",
+    "slug": "oak",
+    "troveName": "Oak",
+    "troveDetailUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak",
+    "aliases": ["Oak", "Spruce Oak"]
+  },
+  {
+    "name": "Atmos 28603N",
+    "slug": "atmos-28603n",
+    "troveName": "Atmos 28603N",
+    "troveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-alpha-atmos-28603n",
+    "aliases": ["Atmos", "Atmos 28603N"]
+  },
+  {
+    "name": "Craft Select 28603A",
+    "slug": "craft-select-28603a",
+    "troveName": "Craft Select 28603A",
+    "troveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a",
+    "aliases": ["Craft Select", "Craft Select 28603A"]
+  },
+  {
+    "name": "Hey Jude",
+    "slug": "hey-jude",
+    "troveName": "Hey Jude",
+    "troveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-tempo-series-hey-jude",
+    "aliases": ["Hey Jude"]
+  },
+  {
+    "name": "Boujee XL 2",
+    "slug": "boujee-xl-2",
+    "troveName": "Boujee XL 2",
+    "troveDetailUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2",
+    "aliases": ["Boujee XL 2", "Boujee XL"]
+  }
 ]
