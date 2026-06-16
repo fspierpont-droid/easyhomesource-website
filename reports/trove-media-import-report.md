@@ -1,6 +1,6 @@
 # Trove Media Import Report
 
-Generated: 2026-06-16T12:27:25.010Z
+Generated: 2026-06-16T13:46:27.375Z
 Manual mode: no
 
 ## The Tulip
@@ -9,9 +9,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -26,9 +27,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -43,9 +45,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -60,9 +63,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -77,9 +81,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -94,9 +99,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -111,9 +117,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -128,9 +135,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -145,9 +153,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -162,9 +171,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
@@ -179,9 +189,10 @@ Manual mode: no
 - Matched Trove detail URL: Not found
 - Detail page found: no
 - IMG tags found: 0
-- Picture/source srcset URLs found: 0
+- Srcset URLs found: 0
 - PDF/brochure links found: 0
 - Iframe/video links found: 0
+- Media candidates found: 0
 - Media candidates accepted: 0
 - Media candidates rejected: 0
 - Rejection reasons: None
