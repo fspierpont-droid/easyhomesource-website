@@ -5,7 +5,7 @@ import { HomeImage } from "@/components/HomeImage";
 
 const statusStyles: Record<HomeStatus, string> = { Available: "bg-ehsLightBlue/60 text-ehsBlack ring-ehsBlue/20", "Coming Soon": "bg-ehsMediumBlue/25 text-ehsBlack ring-ehsMediumBlue/20", Sold: "bg-borderGray text-ehsBlack ring-ehsBlack/10" };
 export function StatusBadge({ status }: { status: HomeStatus }) { return <span className={`rounded-full px-3 py-1 text-xs font-black ring-1 ${statusStyles[status]}`}>{status}</span>; }
-export function homeBadges(home: Home) { return [home.isFeatured && "Featured", home.isOnDisplay && "On Display", home.isSpecialOffer && "Special Offer", home.isNewArrival && "New Arrival", home.isComingSoon && "Coming Soon"].filter(Boolean) as string[]; }
+export function homeBadges(home: Home) { return [home.isFeatured && "Featured", home.isOnDisplay && "On Display", home.isCatalogModel && "Online Catalog", home.isSpecialOffer && "Special Offer", home.isNewArrival && "New Arrival", home.isComingSoon && "Coming Soon"].filter(Boolean) as string[]; }
 
 export function HomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
