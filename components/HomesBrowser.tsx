@@ -5,12 +5,13 @@ import { HomeCard } from "@/components/HomeCard";
 import type { Home } from "@/data/homes";
 
 type Sort = "featured" | "price-asc" | "price-desc" | "sqft-desc" | "sqft-asc" | "beds-desc" | "beds-asc";
-type FlagKey = "featured" | "onDisplay" | "specialOffer" | "newArrival";
+type FlagKey = "featured" | "onDisplay" | "catalogModel" | "specialOffer" | "newArrival";
 
 const priceNumber = (home: Home) => home.salePrice ?? home.startingPrice ?? Number.POSITIVE_INFINITY;
 const flagLabels: { key: FlagKey; label: string }[] = [
   { key: "featured", label: "Featured" },
   { key: "onDisplay", label: "On Display" },
+  { key: "catalogModel", label: "Online Catalog" },
   { key: "specialOffer", label: "Special Offer" },
   { key: "newArrival", label: "New Arrival" }
 ];
@@ -24,7 +25,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
   const [manufacturer, setManufacturer] = useState("Any");
   const [sort, setSort] = useState<Sort>("featured");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [flags, setFlags] = useState<Record<FlagKey, boolean>>({ featured: false, onDisplay: false, newArrival: false, specialOffer: false });
+  const [flags, setFlags] = useState<Record<FlagKey, boolean>>({ featured: false, onDisplay: false, catalogModel: false, newArrival: false, specialOffer: false });
 
   const manufacturers = useMemo(() => {
     const names: string[] = [];
@@ -50,13 +51,14 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
         (manufacturer === "Any" || home.manufacturer === manufacturer) &&
         (!flags.featured || home.isFeatured) &&
         (!flags.onDisplay || home.isOnDisplay) &&
+        (!flags.catalogModel || home.isCatalogModel) &&
         (!flags.specialOffer || home.isSpecialOffer) &&
         (!flags.newArrival || home.isNewArrival)
       );
     });
 
     return list.sort((a, b) => {
-      if (sort === "featured") return Number(b.isFeatured) - Number(a.isFeatured) || Number(b.isSpecialOffer) - Number(a.isSpecialOffer) || priceNumber(a) - priceNumber(b);
+      if (sort === "featured") return Number(b.isFeatured) - Number(a.isFeatured) || Number(b.isSpecialOffer) - Number(a.isSpecialOffer) || Number(b.isOnDisplay) - Number(a.isOnDisplay) || Number(a.isCatalogModel) - Number(b.isCatalogModel) || priceNumber(a) - priceNumber(b);
       if (sort === "price-asc") return priceNumber(a) - priceNumber(b);
       if (sort === "price-desc") return priceNumber(b) - priceNumber(a);
       if (sort === "sqft-asc") return (a.squareFeet ?? Number.POSITIVE_INFINITY) - (b.squareFeet ?? Number.POSITIVE_INFINITY);
@@ -73,7 +75,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
     setPriceMax("Any");
     setSqftMin("Any");
     setManufacturer("Any");
-    setFlags({ featured: false, onDisplay: false, newArrival: false, specialOffer: false });
+    setFlags({ featured: false, onDisplay: false, catalogModel: false, newArrival: false, specialOffer: false });
     setSort("featured");
   };
 
@@ -84,7 +86,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
           <div>
             <p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Shop homes</p>
             <h2 className="mt-1 text-2xl font-black text-ehsBlack">Find the right model faster</h2>
-            <p className="mt-2 text-sm font-semibold leading-6 text-ehsBlack/65">Filter by budget, beds, baths, size, manufacturer, and on-lot status.</p>
+            <p className="mt-2 text-sm font-semibold leading-6 text-ehsBlack/65">Filter by budget, beds, baths, size, manufacturer, display homes, and online catalog models.</p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="rounded-full border border-ehsBlue px-5 py-3 text-sm font-black text-ehsBlue lg:hidden">{filtersOpen ? "Hide Filters" : "Filter Homes"}</button>
@@ -103,7 +105,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
           <Select label="Manufacturer" value={manufacturer} setValue={setManufacturer} options={manufacturers} suffix="" className="lg:col-span-4" />
           <label className="text-sm font-black text-ehsBlack lg:col-span-4">Sort
             <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="mt-2 w-full rounded-2xl border border-borderGray bg-white px-4 py-3 font-semibold text-ehsBlack outline-none focus:border-ehsBlue focus:ring-4 focus:ring-ehsLightBlue/50">
-              <option value="featured">Featured / Special Offers first</option>
+              <option value="featured">Display homes first</option>
               <option value="price-asc">Price: low to high</option>
               <option value="price-desc">Price: high to low</option>
               <option value="sqft-desc">Square footage: high to low</option>
@@ -112,7 +114,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
               <option value="beds-asc">Bedrooms: low to high</option>
             </select>
           </label>
-          <div className="grid grid-cols-2 gap-2 lg:col-span-4">
+          <div className="grid grid-cols-2 gap-2 lg:col-span-4 xl:grid-cols-3">
             {flagLabels.map(({ key, label }) => <button key={key} type="button" onClick={() => setFlags((value) => ({ ...value, [key]: !value[key] }))} className={`rounded-full px-4 py-3 text-sm font-black transition ${flags[key] ? "bg-ehsBlue text-white" : "bg-ehsSoftBlue text-ehsBlack hover:bg-ehsLightBlue/60"}`}>{label}</button>)}
           </div>
         </div>
