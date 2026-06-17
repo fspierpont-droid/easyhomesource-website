@@ -1,5 +1,6 @@
 import { catalogHomeSeeds } from "@/data/catalogHomeSeeds";
 import { getImportedHomeMedia } from "@/data/homeMedia";
+import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
 export type HomeStatus = "Available" | "Coming Soon" | "Sold";
 export type GalleryCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "video" | "other";
 export type StandardFeatureCategory = "Exterior & Construction" | "Interior" | "Kitchen" | "Bathroom" | "Mechanical" | "Energy / Insulation" | "Options / Upgrades";
@@ -59,13 +60,15 @@ const seeds: Seed[] = [...displaySeeds, ...catalogSeeds];
 
 export const homes: Home[] = seeds.map((home, index) => {
   const importedMedia = getImportedHomeMedia(home.slug);
+  const scraped = scrapedHomeDetails[home.slug];
   const fallbackGallery = galleryFor(home.slug, home.displayName ?? home.name);
   const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
   const gallery = importedGallery?.length ? importedGallery : fallbackGallery;
+  const startingPrice = scraped?.startingPrice ?? home.startingPrice ?? null;
   return ({
   id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
   bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
-  startingPrice: home.startingPrice ?? null, salePrice: null, priceLabel: home.priceLabel ?? (home.startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
+  startingPrice, salePrice: null, priceLabel: scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isCatalogModel: home.isCatalogModel, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
   shortDescription: desc(home.displayName ?? home.name, home.isCatalogModel), longDescription: desc(home.displayName ?? home.name, home.isCatalogModel), features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
   floorPlanImage: importedMedia?.floorPlanImage ?? `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
