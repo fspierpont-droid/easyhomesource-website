@@ -20,7 +20,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
   if (home.size) specs.push({ label: "Size", value: home.size });
   const videoLink: string | undefined = home.videoUrl ?? home.virtualTourUrl ?? home.walkthroughVideoUrl ?? undefined;
   const brochureUrl: string | undefined = home.brochureUrl ?? undefined;
-  const similar = homes.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 3);
+  const similar = homes.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
 
   return (
     <main className="px-4 py-12">
@@ -45,7 +45,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
           <section className="mt-8 rounded-3xl border border-borderGray bg-white p-6"><h2 className="text-2xl font-black text-ehsBlack">Standard features</h2><div className="mt-5 grid gap-4 md:grid-cols-2">{home.standardFeatures.map((group) => <div key={group.category} className="rounded-2xl bg-ehsSoftBlue p-5"><h3 className="font-black text-ehsBlack">{group.category}</h3><ul className="mt-3 grid gap-2 text-sm font-semibold text-ehsBlack/75">{group.items.map((item) => <li key={item}>✓ {item}</li>)}</ul></div>)}</div></section>
           {brochureUrl && <section className="mt-8"><ButtonLink href={brochureUrl}>View Brochure</ButtonLink></section>}
           <div className="mt-8 rounded-[2rem] bg-ehsBlue p-8 text-white"><h2 className="text-3xl font-black">Want pricing for this home?</h2><p className="mt-3 leading-7 text-white/75">Ask about current availability, financing guidance, delivery, setup, permitting, and move-in timing.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><ButtonLink href="#lead-form">Get Pricing</ButtonLink><ButtonLink href="/contact" variant="secondary">Schedule Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div></div>
-          <section className="mt-12"><h2 className="text-3xl font-black text-ehsBlack">Similar homes</h2><div className="mt-6 grid gap-6 lg:grid-cols-3">{similar.map((item) => <HomeCard key={item.id} home={item} />)}</div></section>
+          <section className="mt-12"><h2 className="text-3xl font-black text-ehsBlack">Similar homes</h2><div className="mt-6 grid gap-6 md:grid-cols-2">{similar.map((item) => <HomeCard key={item.id} home={item} />)}</div></section>
         </section>
         <aside id="lead-form" className="lg:sticky lg:top-24 lg:self-start"><LeadForm interestedHome={home.name} interestedHomeSlug={home.slug} cta="Get Pricing" sourcePage={`${home.name} home detail`} /></aside>
       </div>
