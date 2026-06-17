@@ -1,7 +1,5 @@
 import type { HomeMediaManifest } from "@/data/homeMedia";
 
-const troveImage = (path: string) => `https://easyhomesource.com/_next/image?q=75&url=${encodeURIComponent(`https://trove.b-cdn.net/images/${path}`)}&w=3840`;
-
 export const homeMedia: HomeMediaManifest = {
   "tulip": {
     "slug": "tulip",
@@ -52,44 +50,44 @@ export const homeMedia: HomeMediaManifest = {
     "slug": "paxton",
     "gallery": [
       {
-        "src": troveImage("4kzbpen1xjw.jpeg"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F4kzbpen1xjw.jpeg&w=3840",
         "alt": "Paxton 28523A exterior at Easy HomeSource",
         "category": "exterior",
         "isPrimary": true,
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       },
       {
-        "src": troveImage("s85iiu4uen.jpeg"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fs85iiu4uen.jpeg&w=3840",
         "alt": "Paxton 28523A interior home features",
         "category": "interior",
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       },
       {
-        "src": troveImage("m8eenejg0uq.jpeg"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fm8eenejg0uq.jpeg&w=3840",
         "alt": "Paxton 28523A kitchen home features",
         "category": "kitchen",
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       },
       {
-        "src": troveImage("2bmuctswqc.jpeg"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F2bmuctswqc.jpeg&w=3840",
         "alt": "Paxton 28523A bathroom home features",
         "category": "bathroom",
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       },
       {
-        "src": troveImage("vmsubowqbib.jpeg"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fvmsubowqbib.jpeg&w=3840",
         "alt": "Paxton 28523A bedroom home features",
         "category": "bedroom",
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       },
       {
-        "src": troveImage("0dnz5urfjqtm.jpeg?crop=1178%2C606%2C140%2C113"),
+        "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F0dnz5urfjqtm.jpeg%3Fcrop%3D1178%252C606%252C140%252C113&w=3840",
         "alt": "Paxton 28523A floor plan",
         "category": "floorplan",
         "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
       }
     ],
-    "floorPlanImage": troveImage("0dnz5urfjqtm.jpeg?crop=1178%2C606%2C140%2C113"),
+    "floorPlanImage": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F0dnz5urfjqtm.jpeg%3Fcrop%3D1178%252C606%252C140%252C113&w=3840",
     "brochureUrl": null,
     "videoUrl": null,
     "virtualTourUrl": null,
