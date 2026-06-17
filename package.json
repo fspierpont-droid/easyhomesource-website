@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "import:trove-media": "node --experimental-strip-types scripts/import-trove-media.ts",
+    "import:public-trove-media": "node --experimental-strip-types scripts/import-public-trove-media.ts",
     "validate:catalog-media": "node --experimental-strip-types scripts/validate-catalog-media.ts",
     "capture:browser-media": "node --experimental-strip-types scripts/import-browser-captures.ts",
     "import:manual-media": "node --experimental-strip-types scripts/import-manual-media.ts"

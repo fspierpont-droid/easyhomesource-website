@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-06-17T08:30:47.461Z",
+  "phase": "final",
+  "startUrl": "https://easyhomesource.com/homes",
+  "only": "paxton",
+  "delayMs": 8000,
+  "publicHtmlOnly": true,
+  "stopOn429": true,
+  "homes": [
+    {
+      "homeName": "Paxton",
+      "slug": "paxton",
+      "matchedTroveDetailUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
+      "detailPageFound": false,
+      "imgTagCount": 0,
+      "srcsetUrlCount": 0,
+      "pdfBrochureLinkCount": 0,
+      "iframeVideoLinkCount": 0,
+      "mediaCandidatesFound": 0,
+      "mediaCandidatesAccepted": 0,
+      "mediaCandidatesRejected": 0,
+      "rejectionReasons": {},
+      "finalDownloadedFiles": [],
+      "generatedGalleryPaths": [],
+      "errors": [
+        "Failed to fetch https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a: fetch failed (getaddrinfo EAI_AGAIN easyhomesource.com)"
+      ],
+      "note": "No media downloaded for this home. Possible causes: Trove lazy-loads images client-side, images are protected behind scripts, selector mismatch, or detail URL not found."
+    }
+  ]
+}
