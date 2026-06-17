@@ -48,8 +48,46 @@ export const homeMedia: HomeMediaManifest = {
   },
   "paxton": {
     "slug": "paxton",
-    "gallery": [],
-    "floorPlanImage": null,
+    "gallery": [
+      {
+        "src": "https://trove.b-cdn.net/images/4kzbpen1xjw.jpeg",
+        "alt": "Paxton 28523A exterior at Easy HomeSource",
+        "category": "exterior",
+        "isPrimary": true,
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      },
+      {
+        "src": "https://trove.b-cdn.net/images/s85iiu4uen.jpeg",
+        "alt": "Paxton 28523A interior home features",
+        "category": "interior",
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      },
+      {
+        "src": "https://trove.b-cdn.net/images/m8eenejg0uq.jpeg",
+        "alt": "Paxton 28523A kitchen home features",
+        "category": "kitchen",
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      },
+      {
+        "src": "https://trove.b-cdn.net/images/2bmuctswqc.jpeg",
+        "alt": "Paxton 28523A bathroom home features",
+        "category": "bathroom",
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      },
+      {
+        "src": "https://trove.b-cdn.net/images/vmsubowqbib.jpeg",
+        "alt": "Paxton 28523A bedroom home features",
+        "category": "bedroom",
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      },
+      {
+        "src": "https://trove.b-cdn.net/images/0dnz5urfjqtm.jpeg?crop=1178%2C606%2C140%2C113",
+        "alt": "Paxton 28523A floor plan",
+        "category": "floorplan",
+        "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+      }
+    ],
+    "floorPlanImage": "https://trove.b-cdn.net/images/0dnz5urfjqtm.jpeg?crop=1178%2C606%2C140%2C113",
     "brochureUrl": null,
     "videoUrl": null,
     "virtualTourUrl": null,
