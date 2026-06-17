@@ -1,4 +1,5 @@
-import { homeMedia } from "@/data/homeMedia.generated";
+import { catalogHomeMedia } from "@/data/catalogHomeMedia.generated";
+import { homeMedia as displayHomeMedia } from "@/data/homeMedia.generated";
 
 export type ImportedMediaCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "brochure" | "video" | "other";
 
@@ -21,6 +22,8 @@ export type HomeMediaEntry = {
 };
 
 export type HomeMediaManifest = Record<string, HomeMediaEntry>;
+
+const homeMedia: HomeMediaManifest = { ...displayHomeMedia, ...catalogHomeMedia };
 
 export function getImportedHomeMedia(slug: string): HomeMediaEntry | undefined {
   return homeMedia[slug];
