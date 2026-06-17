@@ -6,8 +6,22 @@ import { SiteLogo } from "@/components/SiteLogo";
 import { SocialLinks } from "@/components/SocialLinks";
 import { navLinks, siteInfo } from "@/data/site";
 
+const primaryLinks = [
+  ["Homes", "/homes"],
+  ["Financing", "/financing"],
+  ["Videos", "/videos"]
+] as const;
+
+const moreLinks = navLinks.filter(([, href]) => !primaryLinks.some(([, primaryHref]) => primaryHref === href));
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  const closeMenus = () => {
+    setOpen(false);
+    setMoreOpen(false);
+  };
 
   return (
     <>
@@ -23,18 +37,29 @@ export function SiteHeader() {
         </div>
         <nav className="mx-auto max-w-7xl px-4 py-3" aria-label="Main navigation">
           <div className="flex items-center justify-between gap-4">
-            <Link href="/" aria-label="Easy HomeSource home" onClick={() => setOpen(false)} className="shrink-0"><SiteLogo /></Link>
-            <div className="hidden items-center gap-2 whitespace-nowrap text-[13px] font-bold text-ehsBlack xl:flex 2xl:gap-3 2xl:text-sm">
-              {navLinks.map(([label, href]) => <Link key={href} href={href} className="transition hover:text-ehsBlue">{label}</Link>)}
+            <Link href="/" aria-label="Easy HomeSource home" onClick={closeMenus} className="shrink-0"><SiteLogo /></Link>
+
+            <div className="hidden items-center gap-2 whitespace-nowrap text-sm font-black text-ehsBlack lg:flex">
+              {primaryLinks.map(([label, href]) => <Link key={href} href={href} className="rounded-full px-4 py-2 transition hover:bg-ehsSoftBlue hover:text-ehsBlue">{label}</Link>)}
+              <div className="relative">
+                <button type="button" className="rounded-full px-4 py-2 transition hover:bg-ehsSoftBlue hover:text-ehsBlue" onClick={() => setMoreOpen((value) => !value)} aria-expanded={moreOpen}>More ▾</button>
+                {moreOpen && (
+                  <div className="absolute right-0 mt-3 w-64 rounded-3xl border border-borderGray bg-white p-3 shadow-xl">
+                    {moreLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMenus} className="flex min-h-11 items-center rounded-2xl px-4 py-2.5 transition hover:bg-ehsSoftBlue hover:text-ehsBlue">{label}</Link>)}
+                    <div className="mt-2 rounded-2xl bg-ehsSoftBlue px-4 py-3"><SocialLinks /></div>
+                  </div>
+                )}
+              </div>
               <Link className="rounded-full bg-ehsBlue px-5 py-3 font-black text-white shadow-sm transition hover:bg-ehsMediumBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60" href="/contact">Get Pricing</Link>
             </div>
-            <button type="button" className="rounded-full border border-borderGray bg-white px-4 py-2 text-sm font-black text-ehsBlack shadow-sm transition hover:border-ehsBlue hover:text-ehsBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60 xl:hidden" aria-expanded={open} onClick={() => setOpen((value) => !value)}>Menu</button>
+
+            <button type="button" className="rounded-full border border-borderGray bg-white px-4 py-2 text-sm font-black text-ehsBlack shadow-sm transition hover:border-ehsBlue hover:text-ehsBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60 lg:hidden" aria-expanded={open} onClick={() => setOpen((value) => !value)}>Menu</button>
           </div>
           {open && (
-            <div className="mt-4 grid gap-2 rounded-3xl border border-borderGray bg-ehsSoftBlue p-3 text-sm font-black text-ehsBlack shadow-lg xl:hidden">
-              {navLinks.map(([label, href]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="flex min-h-11 items-center rounded-2xl bg-white px-4 py-2.5 transition hover:text-ehsBlue">{label}</Link>)}
+            <div className="mt-4 grid gap-2 rounded-3xl border border-borderGray bg-ehsSoftBlue p-3 text-sm font-black text-ehsBlack shadow-lg lg:hidden">
+              {navLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMenus} className="flex min-h-11 items-center rounded-2xl bg-white px-4 py-2.5 transition hover:text-ehsBlue">{label}</Link>)}
               <div className="rounded-2xl bg-white px-4 py-2.5"><SocialLinks /></div>
-              <Link onClick={() => setOpen(false)} className="flex min-h-11 items-center justify-center rounded-2xl bg-ehsBlue px-4 py-2.5 text-center text-white transition hover:bg-ehsMediumBlue" href="/contact">Get Pricing</Link>
+              <Link onClick={closeMenus} className="flex min-h-11 items-center justify-center rounded-2xl bg-ehsBlue px-4 py-2.5 text-center text-white transition hover:bg-ehsMediumBlue" href="/contact">Get Pricing</Link>
             </div>
           )}
         </nav>
