@@ -1,5 +1,6 @@
 import { catalogHomeMedia } from "@/data/catalogHomeMedia.generated";
 import { homeMedia as displayHomeMedia } from "@/data/homeMedia.generated";
+import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
 
 export type ImportedMediaCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "brochure" | "video" | "other";
 
@@ -23,7 +24,13 @@ export type HomeMediaEntry = {
 
 export type HomeMediaManifest = Record<string, HomeMediaEntry>;
 
-const homeMedia: HomeMediaManifest = { ...displayHomeMedia, ...catalogHomeMedia };
+const scrapedMedia: HomeMediaManifest = {};
+for (const slug in scrapedHomeDetails) {
+  const detail = scrapedHomeDetails[slug];
+  if (detail?.media?.gallery?.length) scrapedMedia[slug] = detail.media;
+}
+
+const homeMedia: HomeMediaManifest = { ...displayHomeMedia, ...catalogHomeMedia, ...scrapedMedia };
 
 export function getImportedHomeMedia(slug: string): HomeMediaEntry | undefined {
   return homeMedia[slug];
