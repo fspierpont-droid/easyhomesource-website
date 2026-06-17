@@ -28,11 +28,25 @@ If a home has a gallery/carousel, open or scroll through it first so lazy-loaded
 
 ## Step 3: Create and run the EHS Media Capture bookmarklet
 
+### Desktop browser bookmarklet
+
 1. Open `tools/trove-media-bookmarklet.min.txt` in the repo.
 2. Copy the entire one-line text. It starts with `javascript:(()=>{`.
 3. Create a new browser bookmark named `EHS Media Capture`.
 4. Paste the copied one-line text into the bookmark URL/address field.
 5. While viewing the Trove page, click the `EHS Media Capture` bookmark.
+
+### Mobile Chrome short-loader bookmarklet
+
+Mobile Chrome bookmark URL fields may reject the full capture bookmarklet because it is too long. On mobile Chrome, do **not** paste the full bookmarklet.
+
+1. Open `tools/trove-media-loader-bookmarklet.txt` in the repo.
+2. Copy the short one-line loader bookmarklet. It starts with `javascript:(()=>{`.
+3. Create a new browser bookmark named `EHS Media Capture`.
+4. Paste the short loader into the bookmark URL/address field.
+5. While viewing the Trove page, run the `EHS Media Capture` bookmark from Chrome's address bar/bookmark suggestions.
+
+The loader pulls the real capture script from `/trove-capture.js` on the deployed website, then injects it into the current Trove page.
 
 The script will try to copy JSON to your clipboard and will also open a new browser tab/window containing the JSON text so you can copy it manually if clipboard access fails.
 
