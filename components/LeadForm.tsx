@@ -1,10 +1,12 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { homes } from "@/data/homes";
+import { siteInfo } from "@/data/site";
 
-const informationalConsent = "I agree to receive informational calls and text messages from Easy HomeSource about my inquiry, quotes, appointments, financing, delivery, setup, and project updates. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out or HELP for help.";
-const marketingConsent = "I agree to receive marketing calls and text messages from Easy HomeSource about homes, promotions, events, and homeownership opportunities. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.";
+const informationalConsent = "I agree to receive informational text messages from Easy HomeSource related to my inquiry, appointments, account updates, and customer service communications. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our Privacy Policy and Terms & Conditions.";
+const marketingConsent = "I agree to receive marketing and promotional text messages from Easy HomeSource, including inventory updates, pricing updates, promotions, and special offers. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchase. View our Privacy Policy and Terms & Conditions.";
 
 type LeadFormProps = { interestedHome?: string; interestedHomeSlug?: string; cta?: string; sourcePage?: string };
 
@@ -81,6 +83,14 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
       <button disabled={status === "submitting"} className="mt-5 w-full rounded-full bg-ehsBlue px-6 py-4 font-black text-white transition hover:bg-ehsBlue/90 disabled:cursor-wait disabled:opacity-70" type="submit">
         {status === "submitting" ? "Sending..." : cta}
       </button>
+      <div className="mt-5 space-y-4 text-center text-sm leading-6 text-ehsBlack/70">
+        <p>SMS consent is collected only when a user voluntarily checks one or both consent boxes above before submitting the form.</p>
+        <p>Message types may include informational messages, including responses to inquiries, appointment reminders, and service updates, and marketing messages if separately consented.</p>
+        <p>Message frequency varies. Message and data rates may apply.</p>
+        <p>Reply STOP to opt out. Reply HELP for assistance or contact us at <a className="font-black text-ehsBlack underline" href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a> or <a className="font-black text-ehsBlack underline" href={`tel:${siteInfo.phoneHref}`}>{siteInfo.phoneDisplay}</a>.</p>
+        <p>Consent is not a condition of purchase. We do not sell or share your information.</p>
+        <p>View our Privacy Policy: <Link className="font-black text-ehsBlack underline" href="/privacy">{siteInfo.privacyUrl}</Link><br />View our Terms &amp; Conditions: <Link className="font-black text-ehsBlack underline" href="/terms">{siteInfo.termsUrl}</Link></p>
+      </div>
       {status === "success" && <p className="mt-4 rounded-2xl bg-ehsSoftBlue p-3 text-sm font-semibold text-ehsBlack">Thanks! Your request has been captured and our team will follow up soon.</p>}
       {status === "error" && <p className="mt-4 rounded-2xl bg-ehsSoftBlue p-3 text-sm font-semibold text-ehsBlack">Something went wrong. Please call/text 352-558-8888 or try again in a moment.</p>}
     </form>
