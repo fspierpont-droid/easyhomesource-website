@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-06-18T14:33:05.334Z",
+  "count": 1,
+  "homes": [
+    {
+      "slug": "dogwood",
+      "url": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
+      "price": 61900,
+      "images": 2,
+      "floorPlanImage": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fhlhud009m4m.jpeg&w=3840",
+      "source": "saved-html"
+    }
+  ]
+}
