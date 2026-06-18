@@ -9,33 +9,33 @@ export type ScrapedHomeDetail = {
 };
 
 export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
-  "dogwood": {
-    "slug": "dogwood",
-    "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
-    "startingPrice": 61900,
+  "oak": {
+    "slug": "oak",
+    "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak",
+    "startingPrice": 100900,
     "priceLabel": "Starting Price",
     "media": {
-      "slug": "dogwood",
+      "slug": "oak",
       "gallery": [
         {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fpz3trw21p3f.jpeg&w=3840",
-          "alt": "alt=\"Dogwood hero, elevation, and exterior home features\" draggable=\"false\" width=\"576\" he",
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fjt8x77rys.jpeg&w=3840",
+          "alt": "alt=\"Oak hero, elevation, and exterior home features\" draggable=\"false\" width=\"992\" height",
           "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
+          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak",
           "isPrimary": true
         },
         {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fhlhud009m4m.jpeg&w=3840",
-          "alt": "sidewalls Lined cabinets Rolled edge countertops MDF windowsills trim 38x78 front door Glimmer Greige Panels Shower STD with Tub option on multi-sections View similar homes Elm floor plan",
-          "category": "floorplan",
-          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood"
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fed21y2hdjl.jpeg&w=3840",
+          "alt": "raw media link",
+          "category": "other",
+          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak"
         }
       ],
-      "floorPlanImage": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fhlhud009m4m.jpeg&w=3840",
+      "floorPlanImage": null,
       "brochureUrl": null,
       "videoUrl": null,
       "virtualTourUrl": null,
-      "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood"
+      "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak"
     }
   }
 };
