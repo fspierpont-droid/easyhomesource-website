@@ -1,14 +1,11 @@
 {
-  "generatedAt": "2026-06-18T16:20:49.863Z",
-  "count": 5,
+  "generatedAt": "2026-06-18T16:41:52.013Z",
+  "count": 8,
   "homes": [
     {
-      "slug": "classic-c-1672-32c",
-      "url": "https://easyhomesource.com/homes/legacy-housing-classic-collection-c-1672-32c",
-      "price": 83900,
-      "images": 24,
-      "floorPlanImage": null,
-      "source": "saved-html"
+      "slug": "paxton",
+      "url": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
+      "error": "ENOENT: no such file or directory, open '/Users/scottpierpont/Downloads/paxton.html'"
     }
   ]
 }
