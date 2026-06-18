@@ -882,5 +882,166 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "virtualTourUrl": null,
       "sourcePage": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
     }
+  },
+  "paxton": {
+    "slug": "paxton",
+    "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
+    "startingPrice": 149900,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "paxton",
+      "gallery": [
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F4kzbpen1xjw.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a hero, elevation, and exterior home features\" draggable=\"false\" width=\"1",
+          "category": "exterior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
+          "isPrimary": true
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fs85iiu4uen.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fbku08r0u4tr.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fn8b43tia5fm.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fm8eenejg0uq.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a kitchen home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "kitchen",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Ffyto3f8hr3.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a kitchen home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "kitchen",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Frq8461jvs8e.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a kitchen home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "kitchen",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F32kqrb0tes.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a kitchen home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "kitchen",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F005wei13og6hc.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a kitchen home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "kitchen",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fij9zamqg978.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fx4qy5m62k5.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fvmsubowqbib.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fpcbs4gwyl29.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F4u6m3o74903.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F2bmuctswqc.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bathroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "bathroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F3umg9gbvhyn.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bathroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "bathroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F52zcb1pyp6v.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bathroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "bathroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F1zujglzq6fh.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bathroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "bathroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F6slqrjl6w5q.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bathroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "bathroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fekm6iladdy5.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fj3h4gr5d7mq.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fck88zb8py4.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a bedroom home features\" draggable=\"false\" width=\"1322\" height=\"882\" deco",
+          "category": "bedroom",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F8zelpgqhxgn.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        },
+        {
+          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F4ne1j93f3kh.jpeg&w=3840",
+          "alt": "alt=\"Paxton 28523a interior home features\" draggable=\"false\" width=\"1322\" height=\"882\" dec",
+          "category": "interior",
+          "sourceUrl": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+        }
+      ],
+      "floorPlanImage": null,
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
+    }
   }
 };
