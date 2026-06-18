@@ -5,13 +5,14 @@ import { HomeImage } from "@/components/HomeImage";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
 import type { GalleryCategory, HomeGalleryItem } from "@/data/homes";
 
-const categories: { key: GalleryCategory; label: string; placeholder: string }[] = [
-  { key: "exterior", label: "Exterior", placeholder: "Exterior photo coming soon" },
-  { key: "interior", label: "Interior", placeholder: "Interior photo coming soon" },
-  { key: "kitchen", label: "Kitchen", placeholder: "Kitchen photo coming soon" },
-  { key: "bathroom", label: "Bathroom", placeholder: "Bathroom photo coming soon" },
-  { key: "bedroom", label: "Bedroom", placeholder: "Bedroom photo coming soon" },
-  { key: "floorplan", label: "Floor Plan", placeholder: "Floor plan coming soon" }
+const categories: { key: GalleryCategory; label: string }[] = [
+  { key: "exterior", label: "Exterior" },
+  { key: "interior", label: "Interior" },
+  { key: "kitchen", label: "Kitchen" },
+  { key: "bathroom", label: "Bathroom" },
+  { key: "bedroom", label: "Bedroom" },
+  { key: "floorplan", label: "Floor Plan" },
+  { key: "other", label: "Additional Photos" }
 ];
 
 export function HomeMediaGallery({ homeName, gallery }: { homeName: string; gallery: HomeGalleryItem[] }) {
@@ -37,22 +38,19 @@ export function HomeMediaGallery({ homeName, gallery }: { homeName: string; gall
     <section className="mt-8">
       {primary && <ImageButton image={primary} onClick={() => openImage(primary.src)} className="min-h-[360px] rounded-[2rem] shadow-xl shadow-ehsBlack/10" label="Open main home photo" />}
 
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+      {images.length > 1 && <div className="mt-4 grid gap-3 sm:grid-cols-3">
         {images.slice(0, 6).map((image) => <ImageButton key={`thumb-${image.src}`} image={image} onClick={() => openImage(image.src)} className="min-h-32 rounded-2xl" label={`Open ${image.alt}`} />)}
-      </div>
+      </div>}
 
-      {categories.map(({ key, label, placeholder }) => {
+      {categories.map(({ key, label }) => {
         const items = images.filter((item) => item.category === key);
+        if (!items.length) return null;
         return (
           <section key={key} className="mt-8">
             <h2 className="text-2xl font-black text-ehsBlack">{label}</h2>
-            {items.length ? (
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {items.map((item) => <ImageButton key={`${key}-${item.src}`} image={item} onClick={() => openImage(item.src)} className="min-h-56" label={`Open ${item.alt}`} placeholderTitle={placeholder} />)}
-              </div>
-            ) : (
-              <MediaPlaceholder title={placeholder} className="mt-4" />
-            )}
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              {items.map((item) => <ImageButton key={`${key}-${item.src}`} image={item} onClick={() => openImage(item.src)} className="min-h-56" label={`Open ${item.alt}`} />)}
+            </div>
           </section>
         );
       })}
@@ -85,11 +83,11 @@ export function HomeMediaGallery({ homeName, gallery }: { homeName: string; gall
   );
 }
 
-function ImageButton({ image, onClick, className, label, placeholderTitle }: { image: HomeGalleryItem; onClick: () => void; className: string; label: string; placeholderTitle?: string }) {
+function ImageButton({ image, onClick, className, label }: { image: HomeGalleryItem; onClick: () => void; className: string; label: string }) {
   return (
     <button type="button" onClick={onClick} className="group block w-full cursor-zoom-in rounded-[inherit] text-left focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/70" aria-label={label}>
       <div className="relative">
-        <HomeImage src={image.src} alt={image.alt} className={className} placeholderTitle={placeholderTitle ?? "Photo coming soon"} />
+        <HomeImage src={image.src} alt={image.alt} className={className} placeholderTitle="Photo coming soon" />
         <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-ehsBlack/75 px-3 py-1 text-xs font-black text-white opacity-0 transition group-hover:opacity-100 group-focus:opacity-100">Click to enlarge</span>
       </div>
     </button>
