@@ -75,9 +75,12 @@ async function main() {
 async function readExistingDetails() {
   try {
     const current = await readFile(OUTPUT_PATH, "utf8");
-    const jsonStart = current.indexOf("= {");
+    const marker = "export const scrapedHomeDetails";
+    const markerIndex = current.indexOf(marker);
+    const assignmentIndex = markerIndex >= 0 ? current.indexOf("=", markerIndex) : -1;
+    const jsonStart = assignmentIndex >= 0 ? current.indexOf("{", assignmentIndex) : -1;
     const jsonEnd = current.lastIndexOf("};");
-    if (jsonStart >= 0 && jsonEnd > jsonStart) return JSON.parse(current.slice(jsonStart + 2, jsonEnd + 1)) as Record<string, ScrapedDetail>;
+    if (jsonStart >= 0 && jsonEnd > jsonStart) return JSON.parse(current.slice(jsonStart, jsonEnd + 1)) as Record<string, ScrapedDetail>;
   } catch {}
   return {};
 }
