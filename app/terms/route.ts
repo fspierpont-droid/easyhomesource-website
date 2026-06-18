@@ -1,11 +1,5 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { NextResponse } from "next/server";
 
-export async function GET() {
-  const html = await readFile(path.join(process.cwd(), "public/legal/easyhomesource-terms.html"), "utf8");
-  return new Response(html, {
-    headers: {
-      "content-type": "text/html; charset=utf-8"
-    }
-  });
+export function GET() {
+  return NextResponse.redirect("https://easyhomesource.com/terms", 307);
 }
