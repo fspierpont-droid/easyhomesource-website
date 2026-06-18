@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-18T14:58:33.715Z",
+  "generatedAt": "2026-06-18T15:12:03.781Z",
   "count": 1,
   "homes": [
     {
-      "slug": "oak",
-      "url": "https://easyhomesource.com/homes/tru-homes-tru-origin-spruce-oak",
-      "price": 100900,
-      "images": 2,
-      "floorPlanImage": null,
+      "slug": "move-on-up",
+      "url": "https://easyhomesource.com/homes/clayton-addison-tempo-series-move-on-up",
+      "price": 94900,
+      "images": 15,
+      "floorPlanImage": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fqarjcw20gi.jpeg&w=3840",
       "source": "saved-html"
     }
   ]
