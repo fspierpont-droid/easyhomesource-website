@@ -24,6 +24,7 @@ const ROOT = process.cwd();
 const ONLY = argValue("--only");
 const LIMIT = Number(argValue("--limit") || 0);
 const DELAY_MS = Number(argValue("--delay") || 1500);
+const HTML_FILE = argValue("--html-file");
 const ALLOWLIST_PATH = path.join(ROOT, "scripts/trove-detail-allowlist.json");
 const OUTPUT_PATH = path.join(ROOT, "data/scrapedHomeDetails.generated.ts");
 const REPORT_DIR = path.join(ROOT, "reports");
@@ -35,13 +36,19 @@ function argValue(name: string) {
   return index >= 0 ? process.argv[index + 1] : undefined;
 }
 
+function localPath(value: string) {
+  if (value.startsWith("~/")) return path.join(process.env.HOME || ROOT, value.slice(2));
+  return path.isAbsolute(value) ? value : path.join(ROOT, value);
+}
+
 async function main() {
   const allAllowed = JSON.parse(await readFile(ALLOWLIST_PATH, "utf8")) as Allow[];
   let allowed = ONLY ? allAllowed.filter((item) => item.slug === ONLY) : allAllowed;
   if (LIMIT > 0) allowed = allowed.slice(0, LIMIT);
   if (!allowed.length) throw new Error(ONLY ? `No detail page found for --only=${ONLY}` : "No detail pages configured.");
+  if (HTML_FILE && allowed.length !== 1) throw new Error("--html-file can only be used with --only=one-slug");
 
-  const details: Record<string, ScrapedDetail> = {};
+  const details: Record<string, ScrapedDetail> = await readExistingDetails();
   const report: unknown[] = [];
   await mkdir(REPORT_DIR, { recursive: true });
 
@@ -49,10 +56,10 @@ async function main() {
     const item = allowed[index];
     try {
       console.log(`Scraping ${item.slug}: ${item.url}`);
-      const html = await fetchText(item.url);
+      const html = HTML_FILE ? await readFile(localPath(HTML_FILE), "utf8") : await fetchText(item.url);
       const detail = scrapeDetail(item, html);
       details[item.slug] = detail;
-      report.push({ slug: item.slug, url: item.url, price: detail.startingPrice, images: detail.media.gallery.length, floorPlanImage: detail.media.floorPlanImage });
+      report.push({ slug: item.slug, url: item.url, price: detail.startingPrice, images: detail.media.gallery.length, floorPlanImage: detail.media.floorPlanImage, source: HTML_FILE ? "saved-html" : "web" });
     } catch (error) {
       console.error(`Failed ${item.slug}:`, error instanceof Error ? error.message : String(error));
       report.push({ slug: item.slug, url: item.url, error: error instanceof Error ? error.message : String(error) });
@@ -65,6 +72,16 @@ async function main() {
   console.log(`Wrote ${OUTPUT_PATH}`);
 }
 
+async function readExistingDetails() {
+  try {
+    const current = await readFile(OUTPUT_PATH, "utf8");
+    const jsonStart = current.indexOf("= {");
+    const jsonEnd = current.lastIndexOf("};");
+    if (jsonStart >= 0 && jsonEnd > jsonStart) return JSON.parse(current.slice(jsonStart + 2, jsonEnd + 1)) as Record<string, ScrapedDetail>;
+  } catch {}
+  return {};
+}
+
 function scrapeDetail(item: Allow, html: string): ScrapedDetail {
   const text = strip(html);
   const homeName = extractName(text) || titleFromSlug(item.slug);
@@ -74,21 +91,7 @@ function scrapeDetail(item: Allow, html: string): ScrapedDetail {
   const firstPhoto = gallery.find((image) => image.category !== "floorplan") ?? gallery[0];
   if (firstPhoto) firstPhoto.isPrimary = true;
 
-  return {
-    slug: item.slug,
-    sourcePage: item.url,
-    startingPrice: price,
-    priceLabel: price ? "Starting Price" : null,
-    media: {
-      slug: item.slug,
-      gallery,
-      floorPlanImage,
-      brochureUrl: null,
-      videoUrl: null,
-      virtualTourUrl: null,
-      sourcePage: item.url
-    }
-  };
+  return { slug: item.slug, sourcePage: item.url, startingPrice: price, priceLabel: price ? "Starting Price" : null, media: { slug: item.slug, gallery, floorPlanImage, brochureUrl: null, videoUrl: null, virtualTourUrl: null, sourcePage: item.url } };
 }
 
 function extractName(text: string) {
@@ -144,7 +147,7 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
   let rawMatch: RegExpExecArray | null;
   while ((rawMatch = rawMediaRegex.exec(pageHtml))) add(rawMatch[0].replace(/&amp;/g, "&"), "raw media link");
 
-  return candidates.slice(0, 16);
+  return candidates.slice(0, 24);
 }
 
 function normalizeImageUrl(raw: string) {
@@ -153,24 +156,14 @@ function normalizeImageUrl(raw: string) {
   if (!first) return "";
   try {
     const parsed = new URL(first, "https://easyhomesource.com");
-    if (parsed.pathname === "/_next/image" && parsed.searchParams.get("url")) {
-      const imageUrl = parsed.searchParams.get("url") || "";
-      return proxiedTroveUrl(imageUrl);
-    }
+    if (parsed.pathname === "/_next/image" && parsed.searchParams.get("url")) return proxiedTroveUrl(parsed.searchParams.get("url") || "");
     if (/trove\.b-cdn\.net/i.test(parsed.hostname)) return proxiedTroveUrl(parsed.toString());
     return parsed.toString();
-  } catch {
-    return "";
-  }
+  } catch { return ""; }
 }
 
 function proxiedTroveUrl(url: string) {
-  try {
-    const parsed = new URL(url);
-    return `https://easyhomesource.com/_next/image?q=75&url=${encodeURIComponent(parsed.toString())}&w=3840`;
-  } catch {
-    return "";
-  }
+  try { return `https://easyhomesource.com/_next/image?q=75&url=${encodeURIComponent(new URL(url).toString())}&w=3840`; } catch { return ""; }
 }
 
 function classify(text: string): Category {
@@ -210,12 +203,7 @@ async function fetchText(url: string) {
 }
 
 function pageHeaders() {
-  return {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://easyhomesource.com/homes"
-  };
+  return { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36", "Accept": "text/html,application/xhtml+xml", "Accept-Language": "en-US,en;q=0.9", "Referer": "https://easyhomesource.com/homes" };
 }
 
 async function writeOutput(details: Record<string, ScrapedDetail>) {
@@ -223,8 +211,5 @@ async function writeOutput(details: Record<string, ScrapedDetail>) {
   await writeFile(OUTPUT_PATH, body);
 }
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
+function delay(ms: number) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 main().catch((error) => { console.error(error); process.exit(1); });
