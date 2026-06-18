@@ -2,6 +2,9 @@ export const siteInfo = {
   address: "9011 McIntyre Rd, Brooksville, FL 34601",
   phoneDisplay: "352-558-8888",
   phoneHref: "+13525588888",
+  email: "info@easyhomesource.com",
+  privacyUrl: "https://easyhomesource.com/privacy",
+  termsUrl: "https://easyhomesource.com/terms",
   pricingDisclaimer: "Home availability, pricing, financing, delivery, setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote."
 };
 
