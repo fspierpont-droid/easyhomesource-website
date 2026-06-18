@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-18T15:12:03.781Z",
-  "count": 1,
+  "generatedAt": "2026-06-18T16:20:49.863Z",
+  "count": 5,
   "homes": [
     {
-      "slug": "move-on-up",
-      "url": "https://easyhomesource.com/homes/clayton-addison-tempo-series-move-on-up",
-      "price": 94900,
-      "images": 15,
-      "floorPlanImage": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fqarjcw20gi.jpeg&w=3840",
+      "slug": "classic-c-1672-32c",
+      "url": "https://easyhomesource.com/homes/legacy-housing-classic-collection-c-1672-32c",
+      "price": 83900,
+      "images": 24,
+      "floorPlanImage": null,
       "source": "saved-html"
     }
   ]
