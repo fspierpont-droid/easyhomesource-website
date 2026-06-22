@@ -57,6 +57,7 @@ const displaySeeds: Seed[] = [
 ];
 const catalogSeeds: Seed[] = catalogHomeSeeds.map((home) => ({ ...home, startingPrice: null, priceLabel: "Call for current pricing", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Online catalog model. Confirm availability, price, options, freight, setup, and order timing before quoting." }));
 const seeds: Seed[] = [...displaySeeds, ...catalogSeeds];
+const protectedSeedPriceSlugs = new Set(["tulip", "paxton"]);
 
 export const homes: Home[] = seeds.map((home, index) => {
   const importedMedia = getImportedHomeMedia(home.slug);
@@ -64,11 +65,13 @@ export const homes: Home[] = seeds.map((home, index) => {
   const fallbackGallery = galleryFor(home.slug, home.displayName ?? home.name);
   const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
   const gallery = importedGallery?.length ? importedGallery : fallbackGallery;
-  const startingPrice = scraped?.startingPrice ?? home.startingPrice ?? null;
+  const startingPrice = protectedSeedPriceSlugs.has(home.slug)
+    ? home.startingPrice ?? scraped?.startingPrice ?? null
+    : scraped?.startingPrice ?? home.startingPrice ?? null;
   return ({
   id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
   bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
-  startingPrice, salePrice: null, priceLabel: scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
+  startingPrice, salePrice: null, priceLabel: protectedSeedPriceSlugs.has(home.slug) ? home.priceLabel : scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isCatalogModel: home.isCatalogModel, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
   shortDescription: desc(home.displayName ?? home.name, home.isCatalogModel), longDescription: desc(home.displayName ?? home.name, home.isCatalogModel), features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
   floorPlanImage: importedMedia?.floorPlanImage ?? `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
