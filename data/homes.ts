@@ -29,9 +29,14 @@ const standardFeatures: StandardFeatureGroup[] = [
   { category: "Energy / Insulation", items: ["Insulation and energy details confirmed by home specification sheet"] },
   { category: "Options / Upgrades", items: ["Available options and upgrades confirmed with Easy HomeSource"] }
 ];
-const displayFeatures = ["Public Trove display inventory listing", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
+const displayFeatures = ["Available through Easy HomeSource", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
 const catalogFeatures = ["Online floor plan catalog model", "Available to quote or order", "Pricing confirmed by Easy HomeSource", "Delivery, setup, and financing guidance available"];
-const desc = (name: string, catalogModel = false) => catalogModel ? `${name} is part of the Easy HomeSource online floor plan catalog. Request current availability, order options, pricing, delivery, setup, financing guidance, and final quote information from the Brooksville team.` : `${name} is listed in the Easy HomeSource public Trove display inventory. Request current pricing, availability, floor plan details, media, delivery, setup, financing guidance, and final quote information from the Brooksville team.`;
+const desc = (name: string, catalogModel = false, slug?: string) => {
+  if (slug === "tulip") return `${name} is the TRU Mini TRT12482PH, offered by Easy HomeSource at the advertised special price. Explore the verified manufacturer floor plan, photos, specifications, delivery, setup, financing guidance, and final quote information with the Brooksville team.`;
+  return catalogModel
+    ? `${name} is part of the Easy HomeSource online floor plan catalog. Request current availability, order options, pricing, delivery, setup, financing guidance, and final quote information from the Brooksville team.`
+    : `${name} is listed in the Easy HomeSource public display inventory. Request current pricing, availability, floor plan details, media, delivery, setup, financing guidance, and final quote information from the Brooksville team.`;
+};
 const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
   { src: `/homes/${slug}/exterior/${slug}-exterior-01.jpg`, alt: `${name} manufactured home exterior at Easy HomeSource`, category: "exterior", isPrimary: true },
   { src: `/homes/${slug}/interior/${slug}-living-01.jpg`, alt: `${name} living room interior`, category: "interior" },
@@ -43,7 +48,7 @@ const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
 
 type Seed = Pick<Home, "name"|"displayName"|"alternateName"|"slug"|"manufacturer"|"series"|"modelNumber"|"bedrooms"|"bathrooms"|"squareFeet"|"width"|"length"|"size"|"startingPrice"|"priceLabel"|"isFeatured"|"isOnDisplay"|"isCatalogModel"|"isSpecialOffer"|"isNewArrival"|"note">;
 const displaySeeds: Seed[] = [
-  { name: "The Tulip", alternateName: "Mini Tulip", slug: "tulip", manufacturer: "Clayton TRU", series: "TRU Origin", modelNumber: "Mini Tulip", bedrooms: null, bathrooms: null, squareFeet: null, width: null, length: null, size: null, startingPrice: 39888, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: true, isNewArrival: false, note: "The Tulip is the Clayton TRU Origin Mini Tulip. Do not use the Legacy Select S-1240-11FLA / 12' x 40' specifications or media for this listing. Keep the approved EHS special-offer price at $39,888 until management changes it. Exact specifications and model-matched media still need verification." },
+  { name: "Tulip", alternateName: "TRT12482PH", slug: "tulip", manufacturer: "Clayton TRU", series: "TRU Mini", modelNumber: "TRT12482PH", bedrooms: 2, bathrooms: 1, squareFeet: 544, width: 12, length: 48, size: "12' x 48'", startingPrice: 39888, priceLabel: "Special Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: true, isNewArrival: false, note: "Verified against the official TRU manufacturer page and sales sheet for model TRT12482PH. Keep the approved Easy HomeSource special price at $39,888 unless management changes it. Manufacturer photography and floor plan are representative; colors, finishes, options, and availability may vary." },
   { name: "Dogwood", slug: "dogwood", manufacturer: "Clayton TRU", series: "TRU Origin", modelNumber: "Dogwood", bedrooms: 2, bathrooms: 2, squareFeet: 790, width: 14, length: 60, size: "14' x 60'", startingPrice: 59946.77, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false },
   { name: "Born to Run", slug: "born-to-run", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Born to Run", bedrooms: 2, bathrooms: 2, squareFeet: 900, width: 16, length: 60, size: "16' x 60'", startingPrice: 80777.73, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false },
   { name: "Classic C-1672-32C", slug: "classic-c-1672-32c", manufacturer: "Legacy", series: "Classic", modelNumber: "C-1672-32C", bedrooms: 3, bathrooms: 2, squareFeet: 1068, width: 16, length: 72, size: "16' x 72'", startingPrice: 83447.31, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false },
@@ -68,12 +73,13 @@ export const homes: Home[] = seeds.map((home, index) => {
   const startingPrice = protectedSeedPriceSlugs.has(home.slug)
     ? home.startingPrice ?? scraped?.startingPrice ?? null
     : scraped?.startingPrice ?? home.startingPrice ?? null;
+  const description = desc(home.displayName ?? home.name, home.isCatalogModel, home.slug);
   return ({
   id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
   bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
   startingPrice, salePrice: null, priceLabel: protectedSeedPriceSlugs.has(home.slug) ? home.priceLabel : scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isCatalogModel: home.isCatalogModel, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
-  shortDescription: desc(home.displayName ?? home.name, home.isCatalogModel), longDescription: desc(home.displayName ?? home.name, home.isCatalogModel), features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
+  shortDescription: description, longDescription: description, features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
   floorPlanImage: importedMedia?.floorPlanImage ?? `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
   seoTitle: `${home.displayName ?? home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.displayName ?? home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
   });
