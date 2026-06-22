@@ -116,9 +116,12 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
 
   const add = (rawUrl: string, context: string) => {
     const src = normalizeImageUrl(rawUrl);
-    if (!src || seen.has(src) || /logo|favicon|icon|avatar|map|staticmap|social|youtube|facebook|instagram|tiktok|x\.com|twitter/i.test(src + context)) return;
+    const combined = `${src} ${context}`;
+    if (!src || seen.has(src)) return;
+    if (/logo|favicon|icon|avatar|map|staticmap|social|youtube|facebook|instagram|tiktok|x\.com|twitter/i.test(combined)) return;
+    if (/view similar homes|raw media link/i.test(context)) return;
     if (!/trove\.b-cdn\.net|_next\/image/i.test(src)) return;
-    const category = classify(context + " " + src);
+    const category = classify(combined);
     const alt = makeAlt(homeName, category, context);
     seen.add(src);
     candidates.push({ src, alt, category, sourceUrl: item.url });
@@ -128,7 +131,7 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
   let imageMatch: RegExpExecArray | null;
   while ((imageMatch = imageTagRegex.exec(pageHtml))) {
     const attrs = imageMatch[1];
-    const context = strip(attrs);
+    const context = attr(attrs, "alt") || attr(attrs, "aria-label") || strip(attrs);
     add(attr(attrs, "src"), context);
     add(attr(attrs, "data-src"), context);
     add(attr(attrs, "srcset"), context);
@@ -139,16 +142,12 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
   let sourceMatch: RegExpExecArray | null;
   while ((sourceMatch = sourceTagRegex.exec(pageHtml))) {
     const attrs = sourceMatch[1];
-    const context = strip(attrs);
+    const context = attr(attrs, "title") || strip(attrs);
     add(attr(attrs, "src"), context);
     add(attr(attrs, "data-src"), context);
     add(attr(attrs, "srcset"), context);
     add(attr(attrs, "data-srcset"), context);
   }
-
-  const rawMediaRegex = /https?:[^"'<>()\s]+\.(?:jpe?g|png|webp|avif)(?:\?[^"'<>()\s]*)?|\/_next\/image\?[^"'<>()\s]+/gi;
-  let rawMatch: RegExpExecArray | null;
-  while ((rawMatch = rawMediaRegex.exec(pageHtml))) add(rawMatch[0].replace(/&amp;/g, "&"), "raw media link");
 
   return candidates.slice(0, 24);
 }
@@ -181,8 +180,8 @@ function classify(text: string): Category {
 }
 
 function makeAlt(homeName: string, category: Category, context: string) {
-  const readable = strip(context).slice(0, 90);
-  if (readable && !/srcset|sizes|loading|decoding|class|style/i.test(readable)) return readable;
+  const readable = strip(context).slice(0, 120);
+  if (readable && !/srcset|sizes|loading|decoding|class|style|view similar homes/i.test(readable)) return readable;
   if (category === "floorplan") return `${homeName} floor plan`;
   return `${homeName} ${category} home features`;
 }
