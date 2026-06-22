@@ -1,6 +1,7 @@
 import { catalogHomeMedia } from "@/data/catalogHomeMedia.generated";
 import { homeMedia as displayHomeMedia } from "@/data/homeMedia.generated";
 import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
+import { tulipManufacturerMedia } from "@/data/tulipManufacturerMedia";
 
 export type ImportedMediaCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "brochure" | "video" | "other";
 
@@ -50,7 +51,12 @@ for (const slug in scrapedHomeDetails) {
   if (sanitized) scrapedMedia[slug] = sanitized;
 }
 
-const homeMedia: HomeMediaManifest = { ...displayHomeMedia, ...catalogHomeMedia, ...scrapedMedia };
+const homeMedia: HomeMediaManifest = {
+  ...displayHomeMedia,
+  ...catalogHomeMedia,
+  ...scrapedMedia,
+  ...tulipManufacturerMedia
+};
 
 export function getImportedHomeMedia(slug: string): HomeMediaEntry | undefined {
   return homeMedia[slug];
