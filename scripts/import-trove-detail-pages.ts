@@ -4,6 +4,13 @@ import path from "node:path";
 type Allow = { slug: string; url: string };
 type Category = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "other";
 type GalleryItem = { src: string; alt: string; category: Category; isPrimary?: boolean; sourceUrl: string };
+type ProductJson = {
+  "@type"?: string | string[];
+  name?: string;
+  image?: unknown;
+  offers?: unknown;
+  [key: string]: unknown;
+};
 type ScrapedDetail = {
   slug: string;
   sourcePage: string;
@@ -86,15 +93,81 @@ async function readExistingDetails() {
 }
 
 function scrapeDetail(item: Allow, html: string): ScrapedDetail {
+  const product = extractJsonLdProduct(html);
   const text = strip(html);
-  const homeName = extractName(text) || titleFromSlug(item.slug);
-  const price = extractPrice(text);
-  const gallery = extractGallery(item, html, homeName);
+  const homeName = product?.name?.trim() || extractName(text) || titleFromSlug(item.slug);
+  const price = extractProductPrice(product) ?? extractPrice(text, homeName);
+  const gallery = extractGallery(item, html, homeName, product);
   const floorPlanImage = gallery.find((image) => image.category === "floorplan")?.src ?? null;
   const firstPhoto = gallery.find((image) => image.category !== "floorplan") ?? gallery[0];
   if (firstPhoto) firstPhoto.isPrimary = true;
 
-  return { slug: item.slug, sourcePage: item.url, startingPrice: price, priceLabel: price ? "Starting Price" : null, media: { slug: item.slug, gallery, floorPlanImage, brochureUrl: null, videoUrl: null, virtualTourUrl: null, sourcePage: item.url } };
+  return {
+    slug: item.slug,
+    sourcePage: item.url,
+    startingPrice: price,
+    priceLabel: price ? "Starting Price" : null,
+    media: {
+      slug: item.slug,
+      gallery,
+      floorPlanImage,
+      brochureUrl: extractBrochureUrl(html, item.url),
+      videoUrl: null,
+      virtualTourUrl: null,
+      sourcePage: item.url
+    }
+  };
+}
+
+function extractJsonLdProduct(html: string): ProductJson | null {
+  const scriptRegex = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = scriptRegex.exec(html))) {
+    try {
+      const parsed = JSON.parse(match[1].trim()) as unknown;
+      const product = findProductNode(parsed);
+      if (product) return product;
+    } catch {}
+  }
+  return null;
+}
+
+function findProductNode(value: unknown): ProductJson | null {
+  if (!value || typeof value !== "object") return null;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findProductNode(item);
+      if (found) return found;
+    }
+    return null;
+  }
+
+  const node = value as ProductJson;
+  const types = Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]];
+  if (types.some((type) => String(type).toLowerCase() === "product")) return node;
+
+  for (const nested of Object.values(node)) {
+    const found = findProductNode(nested);
+    if (found) return found;
+  }
+  return null;
+}
+
+function extractProductPrice(product: ProductJson | null) {
+  if (!product?.offers) return null;
+  const offers = Array.isArray(product.offers) ? product.offers : [product.offers];
+  for (const offer of offers) {
+    if (!offer || typeof offer !== "object") continue;
+    const data = offer as Record<string, unknown>;
+    const specification = data.priceSpecification && typeof data.priceSpecification === "object"
+      ? data.priceSpecification as Record<string, unknown>
+      : null;
+    for (const candidate of [data.price, data.lowPrice, specification?.price]) {
+      const amount = Number(String(candidate ?? "").replace(/[$,\s]/g, ""));
+      if (Number.isFinite(amount) && amount >= 10000) return amount;
+    }
+  }
+  return null;
 }
 
 function extractName(text: string) {
@@ -102,15 +175,16 @@ function extractName(text: string) {
   return match?.[1]?.trim();
 }
 
-function extractPrice(text: string) {
-  const matches = Array.from(text.matchAll(/\$\s*([0-9][0-9,]{3,})/g));
+function extractPrice(text: string, homeName: string) {
+  const lowerText = text.toLowerCase();
+  const nameIndex = lowerText.indexOf(homeName.toLowerCase());
+  const scoped = nameIndex >= 0 ? text.slice(nameIndex, nameIndex + 1200) : text;
+  const matches = Array.from(scoped.matchAll(/\$\s*([0-9][0-9,]{3,})/g));
   const prices = matches.map((match) => Number(match[1].replace(/,/g, ""))).filter((value) => Number.isFinite(value) && value >= 10000);
   return prices.length ? prices[0] : null;
 }
 
-function extractGallery(item: Allow, html: string, homeName: string): GalleryItem[] {
-  const similarIndex = html.search(/View similar homes|similar homes/i);
-  const pageHtml = similarIndex > 0 ? html.slice(0, similarIndex) : html;
+function extractGallery(item: Allow, html: string, homeName: string, product: ProductJson | null): GalleryItem[] {
   const candidates: GalleryItem[] = [];
   const seen = new Set<string>();
 
@@ -120,6 +194,7 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
     if (!src || seen.has(src)) return;
     if (/logo|favicon|icon|avatar|map|staticmap|social|youtube|facebook|instagram|tiktok|x\.com|twitter/i.test(combined)) return;
     if (/view similar homes|raw media link/i.test(context)) return;
+    if (!contextBelongsToHome(context, homeName)) return;
     if (!/trove\.b-cdn\.net|_next\/image/i.test(src)) return;
     const category = classify(combined);
     const alt = makeAlt(homeName, category, context);
@@ -127,9 +202,13 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
     candidates.push({ src, alt, category, sourceUrl: item.url });
   };
 
+  for (const imageUrl of extractStructuredImages(product)) {
+    add(imageUrl, findImageContext(html, imageUrl) || `${homeName} product image`);
+  }
+
   const imageTagRegex = /<img\b([^>]+)>/gi;
   let imageMatch: RegExpExecArray | null;
-  while ((imageMatch = imageTagRegex.exec(pageHtml))) {
+  while ((imageMatch = imageTagRegex.exec(html))) {
     const attrs = imageMatch[1];
     const context = attr(attrs, "alt") || attr(attrs, "aria-label") || strip(attrs);
     add(attr(attrs, "src"), context);
@@ -140,7 +219,7 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
 
   const sourceTagRegex = /<source\b([^>]+)>/gi;
   let sourceMatch: RegExpExecArray | null;
-  while ((sourceMatch = sourceTagRegex.exec(pageHtml))) {
+  while ((sourceMatch = sourceTagRegex.exec(html))) {
     const attrs = sourceMatch[1];
     const context = attr(attrs, "title") || strip(attrs);
     add(attr(attrs, "src"), context);
@@ -150,6 +229,50 @@ function extractGallery(item: Allow, html: string, homeName: string): GalleryIte
   }
 
   return candidates.slice(0, 24);
+}
+
+function extractStructuredImages(product: ProductJson | null) {
+  if (!product?.image) return [] as string[];
+  const values = Array.isArray(product.image) ? product.image : [product.image];
+  const images: string[] = [];
+  for (const value of values) {
+    if (typeof value === "string") images.push(value);
+    else if (value && typeof value === "object") {
+      const image = value as Record<string, unknown>;
+      const url = image.url ?? image.contentUrl;
+      if (typeof url === "string") images.push(url);
+    }
+  }
+  return images;
+}
+
+function findImageContext(html: string, imageUrl: string) {
+  let basename = "";
+  try { basename = path.posix.basename(new URL(imageUrl).pathname); } catch {}
+  if (!basename) return "";
+  const imageTagRegex = /<img\b([^>]+)>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = imageTagRegex.exec(html))) {
+    const attrs = match[1];
+    if (!attrs.includes(basename)) continue;
+    return attr(attrs, "alt") || attr(attrs, "aria-label") || "";
+  }
+  return "";
+}
+
+function contextBelongsToHome(context: string, homeName: string) {
+  const readable = strip(context).toLowerCase();
+  if (!readable) return true;
+  if (!/floor\s?plan|hero|elevation|exterior|home features/.test(readable)) return true;
+  const tokens = homeName.toLowerCase().split(/[^a-z0-9]+/).filter((token) => token.length >= 3);
+  return tokens.some((token) => readable.includes(token)) || readable === "floor plan" || readable === "product image";
+}
+
+function extractBrochureUrl(html: string, sourcePage: string) {
+  const hrefRegex = /href=["']([^"']+(?:\/pdf|\.pdf(?:\?[^"']*)?))["']/gi;
+  const match = hrefRegex.exec(html);
+  if (!match?.[1]) return null;
+  try { return new URL(match[1].replace(/&amp;/g, "&"), sourcePage).toString(); } catch { return null; }
 }
 
 function normalizeImageUrl(raw: string) {
