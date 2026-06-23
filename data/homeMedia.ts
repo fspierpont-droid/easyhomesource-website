@@ -2,6 +2,7 @@ import { catalogHomeMedia } from "@/data/catalogHomeMedia.generated";
 import { homeMedia as displayHomeMedia } from "@/data/homeMedia.generated";
 import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
 import { tulipManufacturerMedia } from "@/data/tulipManufacturerMedia";
+import { craftSelectManufacturerMedia } from "@/data/craftSelectManufacturerMedia";
 
 export type ImportedMediaCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "brochure" | "video" | "other";
 
@@ -55,7 +56,8 @@ const homeMedia: HomeMediaManifest = {
   ...displayHomeMedia,
   ...catalogHomeMedia,
   ...scrapedMedia,
-  ...tulipManufacturerMedia
+  ...tulipManufacturerMedia,
+  ...craftSelectManufacturerMedia
 };
 
 export function getImportedHomeMedia(slug: string): HomeMediaEntry | undefined {
