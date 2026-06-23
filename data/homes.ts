@@ -60,9 +60,9 @@ const displaySeeds: Seed[] = [
   { name: "Hey Jude", slug: "hey-jude", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Hey Jude", bedrooms: 5, bathrooms: 2, squareFeet: 1896, width: 28, length: 72, size: "28' x 72'", startingPrice: 128101.34, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false },
   { name: "Boujee XL 2", slug: "boujee-xl-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee XL 2", bedrooms: 4, bathrooms: 3, squareFeet: 1980, width: 28, length: 72, size: "28' x 72'", startingPrice: 147374.32, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false }
 ];
-const catalogSeeds: Seed[] = catalogHomeSeeds.map((home) => ({ ...home, startingPrice: null, priceLabel: "Call for current pricing", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Online catalog model. Confirm availability, price, options, freight, setup, and order timing before quoting." }));
+const catalogSeeds: Seed[] = catalogHomeSeeds.map((home) => ({ ...home, startingPrice: home.startingPrice, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Online catalog model. Website price is sourced from the EHS HUD Price column in QS Master Quote ERP Template V05. Confirm availability, options, freight, setup, and order timing before quoting." }));
 const seeds: Seed[] = [...displaySeeds, ...catalogSeeds];
-const protectedSeedPriceSlugs = new Set(["tulip", "paxton", "craft-select-28603a"]);
+const protectedSeedPriceSlugs = new Set(["tulip", "paxton", "craft-select-28603a", ...catalogHomeSeeds.map((home) => home.slug)]);
 
 export const homes: Home[] = seeds.map((home, index) => {
   const importedMedia = getImportedHomeMedia(home.slug);
