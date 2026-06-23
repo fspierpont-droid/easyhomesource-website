@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-22T20:07:38.762Z",
-  "count": 9,
+  "generatedAt": "2026-06-23T15:31:46.319Z",
+  "count": 10,
   "homes": [
     {
-      "slug": "paxton",
-      "url": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a",
-      "price": 149900,
-      "images": 24,
+      "slug": "craft-select-28603a",
+      "url": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a",
+      "price": 120900,
+      "images": 0,
       "floorPlanImage": null,
       "source": "saved-html"
     }

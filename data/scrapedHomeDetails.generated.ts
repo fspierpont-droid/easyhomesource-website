@@ -1043,5 +1043,20 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "virtualTourUrl": null,
       "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-elite-paxton-28523a"
     }
+  },
+  "craft-select-28603a": {
+    "slug": "craft-select-28603a",
+    "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a",
+    "startingPrice": 120900,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "craft-select-28603a",
+      "gallery": [],
+      "floorPlanImage": null,
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a"
+    }
   }
 };
