@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 :root {
-  color: #18312d;
-  background: #fffcf7;
+  color: #082b49;
+  background: #f7fbff;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #fffcf7;
+  background: linear-gradient(180deg, #ffffff 0%, #f3fafe 42%, #ffffff 100%);
 }
 
 ::selection {
-  background: #c56b3f;
+  background: #1688c9;
   color: white;
 }
