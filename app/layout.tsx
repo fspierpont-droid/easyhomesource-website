@@ -10,7 +10,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://easyhomesource.com"),
   title: { default: "Easy HomeSource | Manufactured Homes in Brooksville, FL", template: "%s | Easy HomeSource" },
-  description: "Shop affordable manufactured homes in Brooksville, Florida with pricing guidance, financing options, delivery, setup, permitting, and move-in support.",
+  description: "Shop affordable manufactured homes in Brooksville, Florida with pricing guidance, financing options, delivery and setup, permitting, and move-in support.",
   openGraph: { title: "Easy HomeSource | Manufactured Homes in Brooksville, FL", description: "Affordable Florida manufactured homes with clear support from shopping through delivery and setup.", url: "https://easyhomesource.com", siteName: "Easy HomeSource", locale: "en_US", type: "website" }
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.25fr_0.75fr_0.8fr]">
             <div>
               <SiteLogo />
-              <p className="mt-4 max-w-md leading-7 text-white/78">Your trusted partner for affordable manufactured homes, delivery, setup, financing options, and a clearer path to homeownership.</p>
+              <p className="mt-4 max-w-md leading-7 text-white/78">Your trusted partner for affordable manufactured homes, delivery and setup, financing options, and a clearer path to homeownership.</p>
               <address className="mt-5 not-italic leading-7 text-white/70">Serving Brooksville and Central Florida from<br />{siteInfo.address}</address>
               <p className="mt-3 font-bold text-white/85">Phone: <a className="hover:text-ehsLightBlue" href={`tel:${siteInfo.phoneHref}`}>{siteInfo.phoneDisplay}</a></p>
               <p className="mt-1 font-bold text-white/85">Email: <a className="hover:text-ehsLightBlue" href={`mailto:${siteInfo.email}`}>{siteInfo.email}</a></p>

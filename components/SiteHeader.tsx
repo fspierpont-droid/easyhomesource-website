@@ -35,7 +35,7 @@ export function SiteHeader() {
             <div className="hidden shrink-0 xl:block"><SocialLinks inverse /></div>
           </div>
         </div>
-        <nav className="mx-auto max-w-7xl px-4 py-3" aria-label="Main navigation">
+        <nav className="mx-auto max-w-7xl px-4 py-2 lg:py-3" aria-label="Main navigation">
           <div className="flex items-center justify-between gap-4">
             <Link href="/" aria-label="Easy HomeSource home" onClick={closeMenus} className="shrink-0"><SiteLogo /></Link>
 
@@ -59,7 +59,7 @@ export function SiteHeader() {
             <button type="button" className="rounded-full border border-ehsBlue/20 bg-white px-4 py-2 text-sm font-black text-ehsNavy shadow-sm transition hover:border-ehsBlue hover:text-ehsDeepBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60 lg:hidden" aria-expanded={open} onClick={() => setOpen((value) => !value)}>Menu</button>
           </div>
           {open && (
-            <div className="mt-4 grid gap-2 rounded-3xl border border-ehsBlue/10 bg-ehsSoftBlue p-3 text-sm font-black text-ehsNavy shadow-lg lg:hidden">
+            <div className="mt-3 grid gap-1.5 rounded-3xl border border-ehsBlue/10 bg-ehsSoftBlue p-2.5 text-sm font-black text-ehsNavy shadow-lg lg:hidden">
               {primaryLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMenus} className="flex min-h-11 items-center justify-center rounded-2xl bg-ehsBlue px-4 py-2.5 text-white transition hover:bg-ehsDeepBlue">{label}</Link>)}
               {secondaryLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMenus} className="flex min-h-11 items-center rounded-2xl bg-white px-4 py-2.5 transition hover:text-ehsDeepBlue">{label}</Link>)}
               <div className="rounded-2xl bg-white px-4 py-2.5"><SocialLinks /></div>
@@ -68,9 +68,9 @@ export function SiteHeader() {
         </nav>
       </header>
       <div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t border-ehsBlue/10 bg-white text-center text-sm font-black shadow-2xl lg:hidden">
-        <a className="py-3 text-ehsDeepBlue" href={`tel:${siteInfo.phoneHref}`}>Call</a>
-        <a className="border-x border-ehsBlue/10 py-3 text-ehsDeepBlue" href={`sms:${siteInfo.phoneHref}`}>Text</a>
-        <Link className="bg-ehsBlue py-3 text-white" href="/contact">Get Quote</Link>
+        <a className="py-2.5 text-ehsDeepBlue" href={`tel:${siteInfo.phoneHref}`}>Call</a>
+        <a className="border-x border-ehsBlue/10 py-2.5 text-ehsDeepBlue" href={`sms:${siteInfo.phoneHref}`}>Text</a>
+        <Link className="bg-ehsBlue py-2.5 text-white" href="/contact">Get Quote</Link>
       </div>
     </>
   );

@@ -5,7 +5,7 @@ export const siteInfo = {
   email: "info@easyhomesource.com",
   privacyUrl: "https://easyhomesource.com/privacy",
   termsUrl: "https://easyhomesource.com/terms",
-  pricingDisclaimer: "Home availability, pricing, financing, delivery, setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote."
+  pricingDisclaimer: "Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote."
 };
 
 export const socialLinks = {

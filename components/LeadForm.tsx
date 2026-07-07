@@ -55,7 +55,7 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
       <div className="border-b border-borderGray pb-5">
         <p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Easy HomeSource</p>
         <h2 className="mt-1 text-3xl font-black text-ehsBlack">{cta}</h2>
-        <p className="mt-2 text-sm leading-6 text-ehsBlack/70">You are requesting help from Easy HomeSource. Tell us what you are looking for and our Brooksville team will follow up with home availability, financing options, delivery, setup, and permitting details.</p>
+        <p className="mt-2 text-sm leading-6 text-ehsBlack/70">You are requesting help from Easy HomeSource. Tell us what you are looking for and our Brooksville team will follow up with home availability, financing options, delivery and setup, and permitting details.</p>
       </div>
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <Field label="First Name" name="firstName" required />
