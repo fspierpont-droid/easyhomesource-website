@@ -9,13 +9,17 @@ export function homeBadges(home: Home) { return [home.isFeatured && "Featured", 
 
 export function HomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
-  const specs = [home.bedrooms != null && { label: "Beds", value: home.bedrooms }, home.bathrooms != null && { label: "Baths", value: home.bathrooms }, home.squareFeet != null && { label: "Sq. Ft.", value: home.squareFeet.toLocaleString() }].filter(Boolean) as { label: string; value: string | number }[];
+  const specs = [
+    { label: "Beds", value: home.bedrooms != null ? home.bedrooms : "Ask" },
+    { label: "Baths", value: home.bathrooms != null ? home.bathrooms : "Ask" },
+    { label: "Sq. Ft.", value: home.squareFeet != null ? home.squareFeet.toLocaleString() : "Ask" }
+  ];
 
   return (
     <article className="group h-full overflow-hidden rounded-[1.75rem] border border-ehsBlue/10 bg-white shadow-sm shadow-ehsNavy/5 transition hover:-translate-y-1 hover:border-ehsBlue/25 hover:shadow-xl hover:shadow-ehsNavy/10">
       <Link href={`/homes/${home.slug}`} aria-label={`View details for ${home.displayName ?? home.name}`} className="block h-full focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/70">
-        <div className="relative min-h-64 overflow-hidden bg-ehsSoftBlue">
-          <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} photo`} className="min-h-64 rounded-none transition duration-500 group-hover:scale-105" />
+        <div className="relative min-h-56 overflow-hidden bg-ehsSoftBlue sm:min-h-64">
+          <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} photo`} className="min-h-56 rounded-none transition duration-500 group-hover:scale-105 sm:min-h-64" />
           <span className="absolute right-5 top-5"><StatusBadge status={home.status} /></span>
         </div>
         <div className="space-y-4 p-5 sm:p-6">
@@ -26,10 +30,10 @@ export function HomeCard({ home }: { home: Home }) {
             <p className="mt-1 text-3xl font-black text-ehsNavy">{formatHomePrice(home)}</p>
             <p className="mt-2 text-xs font-semibold text-ehsNavy/55">Final quote required.</p>
           </div>
-          {specs.length > 0 && <dl className="grid grid-cols-3 gap-2 text-sm">{specs.map((spec) => <Spec key={spec.label} {...spec} />)}</dl>}
+          <dl className="grid grid-cols-3 gap-2 text-sm" aria-label={`${home.displayName ?? home.name} quick specs`}>{specs.map((spec) => <Spec key={spec.label} {...spec} />)}</dl>
           <div className="flex flex-col gap-3 pt-1 sm:flex-row">
             <span className="inline-flex flex-1 justify-center rounded-full bg-ehsBlue px-5 py-3 text-sm font-black text-white transition group-hover:bg-ehsDeepBlue">View Details</span>
-            <span className="inline-flex flex-1 justify-center rounded-full border border-ehsBlue/30 bg-white px-5 py-3 text-sm font-black text-ehsDeepBlue">Get Pricing</span>
+            <span className="inline-flex flex-1 justify-center rounded-full border border-ehsBlue/30 bg-white px-5 py-3 text-sm font-black text-ehsDeepBlue">Get Quote</span>
           </div>
         </div>
       </Link>

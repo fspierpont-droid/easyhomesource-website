@@ -55,27 +55,27 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
       <div className="border-b border-borderGray pb-5">
         <p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Easy HomeSource</p>
         <h2 className="mt-1 text-3xl font-black text-ehsBlack">{cta}</h2>
-        <p className="mt-2 text-sm leading-6 text-ehsBlack/70">Tell us what you are looking for and our Brooksville team will follow up with home availability, financing options, delivery, setup, and permitting details.</p>
+        <p className="mt-2 text-sm leading-6 text-ehsBlack/70">You are requesting help from Easy HomeSource. Tell us what you are looking for and our Brooksville team will follow up with home availability, financing options, delivery, setup, and permitting details.</p>
       </div>
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <Field label="First Name" name="firstName" required />
         <Field label="Last Name" name="lastName" required />
         <Field label="Phone" name="phone" type="tel" required />
         <Field label="Email" name="email" type="email" required />
-        <Select label="Do You Own Land?" name="ownsLand" options={["Yes", "No", "Not Sure"]} />
+        <Select label="Land Status" name="ownsLand" options={["Own land", "Buying land", "Need land", "Not sure"]} />
         <Select label="Preferred Contact Method" name="preferredContactMethod" options={["Call", "Text", "Email"]} />
         <Select label="Timeline to Purchase" name="timeline" options={["ASAP", "30-60 Days", "60-90 Days", "90+ Days", "Just Looking"]} />
         <Select label="Financing Interest" name="financingInterest" options={["Yes", "No", "Not Sure"]} />
       </div>
       <label className="mt-4 block text-sm font-black text-ehsBlack">
-        Interested Home
+        Preferred Home / Model
         <select name="interestedHome" defaultValue={interestedHome} className="mt-2 w-full rounded-2xl border border-borderGray bg-white px-4 py-3 font-normal text-ehsBlack outline-none focus:border-ehsBlue focus:ring-4 focus:ring-ehsBlue/10">
           <option value="">Not sure yet</option>
-          {homes.map((home) => <option key={home.id} value={home.name}>{home.name}</option>)}
+          {homes.map((home) => <option key={home.id} value={home.name}>{home.displayName ?? home.name}</option>)}
         </select>
       </label>
       <label className="mt-4 block text-sm font-black text-ehsBlack">
-        Message
+        Notes
         <textarea name="message" rows={4} className="mt-2 w-full rounded-2xl border border-borderGray px-4 py-3 font-normal text-ehsBlack outline-none focus:border-ehsBlue focus:ring-4 focus:ring-ehsBlue/10" placeholder="Example: I own land near Brooksville and want a 3-bedroom home." />
       </label>
       <Consent name="smsInformationalConsent" text={informationalConsent} />
@@ -91,7 +91,7 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
         <p>Consent is not a condition of purchase. We do not sell or share your information.</p>
         <p>View our Privacy Policy: <Link className="font-black text-ehsBlack underline" href="/privacy">{siteInfo.privacyUrl}</Link><br />View our Terms &amp; Conditions: <Link className="font-black text-ehsBlack underline" href="/terms">{siteInfo.termsUrl}</Link></p>
       </div>
-      {status === "success" && <p className="mt-4 rounded-2xl bg-ehsSoftBlue p-3 text-sm font-semibold text-ehsBlack">Thanks! Your request has been captured and our team will follow up soon.</p>}
+      {status === "success" && <p className="mt-4 rounded-2xl bg-ehsSoftBlue p-3 text-sm font-semibold text-ehsBlack">Thanks! Your request has been sent to Easy HomeSource and our team will follow up soon.</p>}
       {status === "error" && <p className="mt-4 rounded-2xl bg-ehsSoftBlue p-3 text-sm font-semibold text-ehsBlack">Something went wrong. Please call/text 352-558-8888 or try again in a moment.</p>}
     </form>
   );
