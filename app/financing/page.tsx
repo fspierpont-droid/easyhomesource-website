@@ -6,7 +6,7 @@ const financingSections = [
   ["Manufactured home financing considerations", "Manufactured home loans can vary based on whether the home is placed on owned land, leased land, or purchased with land. Home type, age, installation details, insurance, title work, and lender program requirements may all affect the path forward."],
   ["Land-home package questions", "If you are buying land with the home or already own property, ask early about zoning, access, utilities, well and septic needs, surveys, flood considerations, setbacks, and whether the selected home can be installed on that site."],
   ["Down payment and documentation", "Be prepared to discuss potential down payment funds and common documentation such as identification, income information, employment history, bank statements, land details, and any lender-specific forms."],
-  ["Total project cost factors", "The home price is only one part of the project. Site work, delivery, setup, taxes, permits, utility connections, skirting, steps, options, inspections, and local requirements can affect the final amount needed to move in."]
+  ["Total project cost factors", "The home price is only one part of the project. Site work, delivery and setup, taxes, permits, utility connections, skirting, steps, options, inspections, and local requirements can affect the final amount needed to move in."]
 ];
 
 export default function FinancingPage() {

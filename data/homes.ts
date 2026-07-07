@@ -18,7 +18,7 @@ export type Home = {
   seoTitle?: string; seoDescription?: string; createdAt: string;
 };
 
-export const catalogPriceDisclaimer = "Home availability, pricing, financing, delivery, setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.";
+export const catalogPriceDisclaimer = "Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.";
 
 const standardFeatures: StandardFeatureGroup[] = [
   { category: "Exterior & Construction", items: ["Manufactured home construction", "Delivery and setup guidance available"] },
@@ -32,10 +32,10 @@ const standardFeatures: StandardFeatureGroup[] = [
 const displayFeatures = ["Available through Easy HomeSource", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
 const catalogFeatures = ["Online floor plan catalog model", "Available to quote or order", "Pricing confirmed by Easy HomeSource", "Delivery, setup, and financing guidance available"];
 const desc = (name: string, catalogModel = false, slug?: string) => {
-  if (slug === "tulip") return `${name} is the TRU Mini TRT12482PH, offered by Easy HomeSource at the advertised special price. Explore the verified manufacturer floor plan, photos, specifications, delivery, setup, financing guidance, and final quote information with the Brooksville team.`;
+  if (slug === "tulip") return `${name} is the TRU Mini TRT12482PH, offered by Easy HomeSource at the advertised special price. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
   return catalogModel
-    ? `${name} is part of the Easy HomeSource online floor plan catalog. Request current availability, order options, pricing, delivery, setup, financing guidance, and final quote information from the Brooksville team.`
-    : `${name} is listed in the Easy HomeSource public display inventory. Request current pricing, availability, floor plan details, media, delivery, setup, financing guidance, and final quote information from the Brooksville team.`;
+    ? `${name} is part of the Easy HomeSource online floor plan catalog. Contact our Brooksville team for current availability, order options, pricing, delivery and setup, financing guidance, and a final quote.`
+    : `The ${name} is part of the Easy HomeSource display inventory. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
 };
 const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
   { src: `/homes/${slug}/exterior/${slug}-exterior-01.jpg`, alt: `${name} manufactured home exterior at Easy HomeSource`, category: "exterior", isPrimary: true },
