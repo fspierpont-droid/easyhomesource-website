@@ -86,7 +86,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
           <div>
             <p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Shop homes</p>
             <h2 className="mt-1 text-2xl font-black text-ehsBlack">Find the right model faster</h2>
-            <p className="mt-2 text-sm font-semibold leading-6 text-ehsBlack/65">Filter by budget, beds, baths, size, manufacturer, display homes, and online catalog models.</p>
+            <p className="mt-2 text-sm font-semibold leading-6 text-ehsBlack/65">Filter by budget, beds, baths, size, manufacturer, display homes, and online catalog models. Every card opens a detail page with photos, specs, and a quote request path.</p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="rounded-full border border-ehsBlue px-5 py-3 text-sm font-black text-ehsBlue lg:hidden">{filtersOpen ? "Hide Filters" : "Filter Homes"}</button>
@@ -126,7 +126,7 @@ export function HomesBrowser({ homes }: { homes: Home[] }) {
       </div>
 
       {filteredHomes.length ? (
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">{filteredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
+        <div className="mt-8 grid gap-5 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">{filteredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
       ) : (
         <div className="mt-8 rounded-[2rem] border border-borderGray bg-white p-8 text-center shadow-sm">
           <h3 className="text-2xl font-black text-ehsBlack">No homes match those filters.</h3>

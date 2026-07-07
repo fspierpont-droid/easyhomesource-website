@@ -20,7 +20,7 @@ export default function FinancingPage() {
           <div className="mt-8 grid gap-4">
             {financingSections.map(([title, text]) => <div key={title} className="rounded-2xl bg-ehsSoftBlue p-5 leading-7 text-ehsBlack"><h2 className="text-xl font-black">{title}</h2><p className="mt-2 text-ehsBlack/75">{text}</p></div>)}
           </div>
-          <p className="mt-6 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Financing availability, qualification requirements, rates, payments, down payment amounts, and loan terms are determined by lenders and may vary by buyer, property, home, and program.</p>
+          <p className="mt-6 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Financing information on this website is for guidance only and is not an approval, guarantee, credit decision, or commitment to lend. Financing availability, qualification requirements, rates, payments, down payment amounts, and loan terms are determined by lenders and may vary by buyer, property, home, and program.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Ask About Pre-Qualification</ButtonLink></div>
         </section>
         <LeadForm cta="Ask About Financing" />
