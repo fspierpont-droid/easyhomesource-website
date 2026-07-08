@@ -3,7 +3,7 @@ import type { VideoItem } from "@/data/videos";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
 
 export function VideoCard({ video }: { video: VideoItem }) {
-  const askHref = video.relatedHomeSlug ? `/homes/${video.relatedHomeSlug}#lead-form` : "/contact";
+  const askHref = video.relatedHomeSlug ? `/get-quote?home=${encodeURIComponent(video.relatedHomeSlug)}` : "/get-quote";
   const ctaLabel = video.relatedHomeSlug ? "Ask About This Home" : "Start Your Journey";
   const isHostedVideo = video.videoUrl?.toLowerCase().endsWith(".mp4");
 

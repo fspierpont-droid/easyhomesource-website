@@ -15,7 +15,7 @@ export default function AboutPage() {
           ].map(([title, text]) => <div key={title} className="rounded-3xl bg-ehsSoftBlue p-6"><h2 className="text-xl font-black text-ehsBlack">{title}</h2><p className="mt-3 leading-7 text-ehsBlack/70">{text}</p></div>)}
         </div>
         <div className="mt-8 rounded-[2rem] bg-white p-6 leading-8 text-ehsBlack/75 shadow-sm ring-1 ring-ehsBlack/10">Whether you are shopping for a home only, exploring a land-home path, or trying to understand site preparation before you commit, Easy HomeSource is here to provide clear answers and practical direction without turning this public website into a portal, CRM, or quote system.</div>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Schedule a Tour</ButtonLink></div>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Schedule a Tour</ButtonLink></div>
       </section>
     </main>
   );

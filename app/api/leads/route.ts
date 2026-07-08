@@ -1,17 +1,44 @@
 import { NextResponse } from "next/server";
 
-const consentTextInformational = "I agree to receive informational calls and text messages from Easy HomeSource about my inquiry, quotes, appointments, financing, delivery and setup, and project updates. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out or HELP for help.";
-const consentTextMarketing = "I agree to receive marketing calls and text messages from Easy HomeSource about homes, promotions, events, and homeownership opportunities. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.";
+const consentTextContact = "I agree to be contacted by Easy HomeSource by phone, text, or email about my home inquiry. Message and data rates may apply. Message frequency may vary. Reply STOP to opt out.";
+const consentTextMarketing = "I agree to receive occasional promotional messages from Easy HomeSource about homes, pricing, and offers.";
+
+function clean(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
 
 export async function POST(request: Request) {
   const body = await request.json();
   const payload = {
-    firstName: body.firstName ?? "", lastName: body.lastName ?? "", phone: body.phone ?? "", email: body.email ?? "",
-    interestedHome: body.interestedHome ?? "", interestedHomeSlug: body.interestedHomeSlug ?? "", sourcePage: body.sourcePage ?? "", sourceUrl: body.sourceUrl ?? "",
-    ownsLand: body.ownsLand ?? "", preferredContactMethod: body.preferredContactMethod ?? "", timeline: body.timeline ?? "", financingInterest: body.financingInterest ?? "", message: body.message ?? "",
-    smsInformationalConsent: Boolean(body.smsInformationalConsent), smsMarketingConsent: Boolean(body.smsMarketingConsent), consentTextInformational, consentTextMarketing,
-    submittedAt: new Date().toISOString(), userAgent: request.headers.get("user-agent") ?? body.userAgent ?? ""
+    firstName: clean(body.firstName),
+    lastName: clean(body.lastName),
+    phone: clean(body.phone),
+    email: clean(body.email),
+    preferredContactMethod: clean(body.preferredContactMethod),
+    interestedHome: clean(body.interestedHome),
+    interestedHomeSlug: clean(body.interestedHomeSlug),
+    landStatus: clean(body.landStatus),
+    city: clean(body.city),
+    county: clean(body.county),
+    financingInterest: clean(body.financingInterest),
+    deliverySetupHelp: clean(body.deliverySetupHelp),
+    message: clean(body.message),
+    smsContactConsent: Boolean(body.smsContactConsent),
+    smsMarketingConsent: Boolean(body.smsMarketingConsent),
+    consentTextContact,
+    consentTextMarketing,
+    sourcePage: clean(body.sourcePage),
+    sourceUrl: clean(body.sourceUrl),
+    submittedAt: new Date().toISOString(),
+    userAgent: request.headers.get("user-agent") ?? clean(body.userAgent)
   };
-  if (process.env.NODE_ENV !== "production") console.info("Easy HomeSource lead inquiry captured locally while CRM integration is paused:", payload);
-  return NextResponse.json({ ok: true, message: "Thanks! Your request has been captured. If you need immediate help, call or text 352-558-8888." });
+
+  if (!payload.firstName || !payload.lastName || (!payload.phone && !payload.email) || !payload.smsContactConsent) {
+    return NextResponse.json({ ok: false, message: "Missing required quote request fields." }, { status: 400 });
+  }
+
+  // TODO: Send this normalized payload to GHL, email, or the selected lead provider after that integration is approved.
+  if (process.env.NODE_ENV !== "production") console.info("Easy HomeSource quote/contact request captured locally while CRM integration is paused:", payload);
+
+  return NextResponse.json({ ok: true, message: "Thanks — your request has been received." });
 }

@@ -9,6 +9,8 @@ export function homeBadges(home: Home) { return [home.isFeatured && "Featured", 
 
 export function HomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
+  const detailsHref = `/homes/${home.slug}`;
+  const quoteHref = `/get-quote?home=${encodeURIComponent(home.slug)}`;
   const specs = [
     { label: "Beds", value: home.bedrooms != null ? home.bedrooms : "Ask" },
     { label: "Baths", value: home.bathrooms != null ? home.bathrooms : "Ask" },
@@ -17,26 +19,26 @@ export function HomeCard({ home }: { home: Home }) {
 
   return (
     <article className="group h-full overflow-hidden rounded-[1.75rem] border border-ehsBlue/10 bg-white shadow-sm shadow-ehsNavy/5 transition hover:-translate-y-1 hover:border-ehsBlue/25 hover:shadow-xl hover:shadow-ehsNavy/10">
-      <Link href={`/homes/${home.slug}`} aria-label={`View details for ${home.displayName ?? home.name}`} className="block h-full focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/70">
+      <Link href={detailsHref} aria-label={`View details for ${home.displayName ?? home.name}`} className="block focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/70">
         <div className="relative min-h-56 overflow-hidden bg-ehsSoftBlue sm:min-h-64">
           <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} photo`} className="min-h-56 rounded-none transition duration-500 group-hover:scale-105 sm:min-h-64" />
           <span className="absolute right-5 top-5"><StatusBadge status={home.status} /></span>
         </div>
-        <div className="space-y-4 p-5 sm:p-6">
-          <div>{home.modelNumber && <p className="text-sm font-semibold text-ehsDeepBlue">{home.modelNumber}</p>}<h3 className="mt-1 text-2xl font-black leading-tight text-ehsNavy">{home.displayName ?? home.name}</h3></div>
-          <div className="flex flex-wrap gap-2">{homeBadges(home).map((badge) => <span key={badge} className="rounded-full bg-ehsSoftBlue px-3 py-1 text-xs font-black text-ehsDeepBlue">{badge}</span>)}</div>
-          <div className="rounded-2xl bg-gradient-to-br from-ehsSoftBlue to-white p-4 ring-1 ring-ehsBlue/10">
-            <p className="text-xs font-black uppercase tracking-wide text-ehsNavy/60">{home.priceLabel ?? "Price"}</p>
-            <p className="mt-1 text-3xl font-black text-ehsNavy">{formatHomePrice(home)}</p>
-            <p className="mt-2 text-xs font-semibold text-ehsNavy/55">Final quote required.</p>
-          </div>
-          <dl className="grid grid-cols-3 gap-2 text-sm" aria-label={`${home.displayName ?? home.name} quick specs`}>{specs.map((spec) => <Spec key={spec.label} {...spec} />)}</dl>
-          <div className="flex flex-col gap-3 pt-1 sm:flex-row">
-            <span className="inline-flex flex-1 justify-center rounded-full bg-ehsBlue px-5 py-3 text-sm font-black text-white transition group-hover:bg-ehsDeepBlue">View Details</span>
-            <span className="inline-flex flex-1 justify-center rounded-full border border-ehsBlue/30 bg-white px-5 py-3 text-sm font-black text-ehsDeepBlue">Get Quote</span>
-          </div>
-        </div>
       </Link>
+      <div className="space-y-4 p-5 sm:p-6">
+        <div>{home.modelNumber && <p className="text-sm font-semibold text-ehsDeepBlue">{home.modelNumber}</p>}<h3 className="mt-1 text-2xl font-black leading-tight text-ehsNavy"><Link href={detailsHref}>{home.displayName ?? home.name}</Link></h3></div>
+        <div className="flex flex-wrap gap-2">{homeBadges(home).map((badge) => <span key={badge} className="rounded-full bg-ehsSoftBlue px-3 py-1 text-xs font-black text-ehsDeepBlue">{badge}</span>)}</div>
+        <div className="rounded-2xl bg-gradient-to-br from-ehsSoftBlue to-white p-4 ring-1 ring-ehsBlue/10">
+          <p className="text-xs font-black uppercase tracking-wide text-ehsNavy/60">{home.priceLabel ?? "Price"}</p>
+          <p className="mt-1 text-3xl font-black text-ehsNavy">{formatHomePrice(home)}</p>
+          <p className="mt-2 text-xs font-semibold text-ehsNavy/55">Final quote required.</p>
+        </div>
+        <dl className="grid grid-cols-3 gap-2 text-sm" aria-label={`${home.displayName ?? home.name} quick specs`}>{specs.map((spec) => <Spec key={spec.label} {...spec} />)}</dl>
+        <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+          <Link className="inline-flex flex-1 justify-center rounded-full bg-ehsBlue px-5 py-3 text-sm font-black text-white transition hover:bg-ehsDeepBlue" href={detailsHref}>View Details</Link>
+          <Link className="inline-flex flex-1 justify-center rounded-full border border-ehsBlue/30 bg-white px-5 py-3 text-sm font-black text-ehsDeepBlue transition hover:bg-ehsSoftBlue" href={quoteHref}>Get Quote</Link>
+        </div>
+      </div>
     </article>
   );
 }

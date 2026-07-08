@@ -8,7 +8,7 @@ import { navLinks, siteInfo } from "@/data/site";
 
 const primaryLinks = [
   ["View Available Homes", "/homes"],
-  ["Get a Quote", "/contact"],
+  ["Get a Quote", "/get-quote"],
   ["Financing Options", "/financing"]
 ] as const;
 
@@ -53,7 +53,7 @@ export function SiteHeader() {
                 )}
               </div>
               <Link className="rounded-full border border-ehsBlue/20 bg-ehsSoftBlue px-5 py-3 font-black text-ehsDeepBlue transition hover:border-ehsBlue hover:bg-white" href="/financing">Financing Options</Link>
-              <Link className="rounded-full bg-ehsBlue px-5 py-3 font-black text-white shadow-lg shadow-ehsBlue/20 transition hover:bg-ehsDeepBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60" href="/contact">Get a Quote</Link>
+              <Link className="rounded-full bg-ehsBlue px-5 py-3 font-black text-white shadow-lg shadow-ehsBlue/20 transition hover:bg-ehsDeepBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60" href="/get-quote">Get a Quote</Link>
             </div>
 
             <button type="button" className="rounded-full border border-ehsBlue/20 bg-white px-4 py-2 text-sm font-black text-ehsNavy shadow-sm transition hover:border-ehsBlue hover:text-ehsDeepBlue focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60 lg:hidden" aria-expanded={open} onClick={() => setOpen((value) => !value)}>Menu</button>
@@ -70,7 +70,7 @@ export function SiteHeader() {
       <div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t border-ehsBlue/10 bg-white text-center text-sm font-black shadow-2xl lg:hidden">
         <a className="py-2.5 text-ehsDeepBlue" href={`tel:${siteInfo.phoneHref}`}>Call</a>
         <a className="border-x border-ehsBlue/10 py-2.5 text-ehsDeepBlue" href={`sms:${siteInfo.phoneHref}`}>Text</a>
-        <Link className="bg-ehsBlue py-2.5 text-white" href="/contact">Get Quote</Link>
+        <Link className="bg-ehsBlue py-2.5 text-white" href="/get-quote">Get Quote</Link>
       </div>
     </>
   );

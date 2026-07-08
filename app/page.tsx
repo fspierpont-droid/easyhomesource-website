@@ -26,7 +26,7 @@ export default function HomePage() {
             <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery and setup, permitting, and move-in.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
-              <ButtonLink href="/contact" variant="secondary">Get Pricing</ButtonLink>
+              <ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink>
               <ButtonLink href="/financing" variant="secondary">Check Financing Options</ButtonLink>
             </div>
           </div>
@@ -50,14 +50,14 @@ export default function HomePage() {
       <section className="px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-6 rounded-[2rem] bg-white p-8 shadow-sm lg:grid-cols-[1fr_auto] lg:items-center">
           <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps renters and buyers explore affordable manufactured homes, financing options, delivery and setup, and a clear path forward.</p></div>
-          <div className="flex flex-col gap-3"><ButtonLink href="/homes">See Homes You Can Own</ButtonLink><ButtonLink href="/contact" variant="secondary">Talk to a Home Consultant</ButtonLink></div>
+          <div className="flex flex-col gap-3"><ButtonLink href="/homes">See Homes You Can Own</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Talk to a Home Consultant</ButtonLink></div>
         </div>
       </section>
 
       <section className="bg-ehsSoftBlue px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="rounded-[2rem] bg-gradient-to-br from-ehsBlack to-ehsBlue p-8 text-white"><p className="text-sm font-black uppercase tracking-wide text-white/70">Featured Affordable Home</p><h2 className="mt-2 text-4xl font-black">Starting at {tulip ? formatHomePrice(tulip) : "Call for current pricing"}</h2><h3 className="mt-3 text-2xl font-black">The Tulip</h3><p className="mt-4 leading-8 text-white/80">Looking for one of the most affordable ways to start your path to homeownership? The Tulip gives buyers a practical, budget-friendly option with support from Easy HomeSource from quote to delivery and setup.</p></div>
-          <div><div className="flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes/tulip#lead-form">Get Pricing</ButtonLink><ButtonLink href="/contact" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div><p className="mt-5 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p></div>
+          <div><div className="flex flex-col gap-3 sm:flex-row"><ButtonLink href="/get-quote?home=tulip">Get Pricing</ButtonLink><ButtonLink href="/get-quote?home=tulip" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div><p className="mt-5 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p></div>
         </div>
       </section>
 
@@ -92,7 +92,7 @@ export default function HomePage() {
       <section className="px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
           <InfoBlock title="Financing guidance" text="Start with budget, lender expectations, down-payment questions, and the land or community details that may affect your path forward." cta="Get Pre-Qualified" href="/financing" />
-          <InfoBlock title="Delivery, setup, and permits" text="We help buyers understand the steps after selecting a home, including freight, site work, setup, inspections, and permitting timelines." cta="Schedule a Tour" href="/contact" />
+          <InfoBlock title="Delivery, setup, and permits" text="We help buyers understand the steps after selecting a home, including freight, site work, setup, inspections, and permitting timelines." cta="Schedule a Tour" href="/get-quote" />
         </div>
       </section>
 
@@ -101,7 +101,7 @@ export default function HomePage() {
           <div>
             <p className="font-black text-ehsBlue">Ready to browse?</p>
             <h2 className="mt-2 text-4xl font-black text-ehsBlack">Compare homes by price, size, beds, baths, and availability.</h2>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/contact" variant="secondary">Request Info</ButtonLink></div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Request Info</ButtonLink></div>
           </div>
           <LeadForm cta="Get Pricing" sourcePage="Homepage" />
         </div>
