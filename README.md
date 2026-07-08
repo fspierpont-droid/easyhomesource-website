@@ -9,9 +9,19 @@ A public-facing Next.js marketing website for Easy HomeSource, a manufactured ho
 - TypeScript
 - Vercel-ready scripts
 
-## Lead webhook
+## Lead email notifications
 
-Set `GHL_WEBHOOK_URL=` on the server to post lead form submissions to a GoHighLevel webhook. If the variable is not set, the API logs submissions clearly in development and the form displays a safe success message.
+The Get Quote form posts normalized lead data to `/api/leads`. GHL is intentionally not connected yet; the route keeps an adapter boundary for a future GHL integration.
+
+Configure the server-side email provider with environment variables:
+
+- `EHS_LEAD_EMAIL_PROVIDER=resend`
+- `RESEND_API_KEY=`
+- `EHS_LEAD_EMAIL_TO=` (comma-separated recipient list is supported)
+- `EHS_LEAD_EMAIL_FROM=`
+- `EHS_LEAD_EMAIL_REPLY_TO=` (optional fallback; the customer email is used when provided)
+
+If these variables are not configured, lead delivery fails loudly so submissions are not silently acknowledged without a delivery path.
 
 ## Commands
 
