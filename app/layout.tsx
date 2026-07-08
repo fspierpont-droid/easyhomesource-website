@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="mt-4 grid gap-2">
                 <Link href="/privacy" className="rounded-xl px-1 py-1 text-white/75 hover:text-white">Privacy Policy</Link>
                 <Link href="/terms" className="rounded-xl px-1 py-1 text-white/75 hover:text-white">Terms &amp; Conditions</Link>
-                <Link className="mt-3 inline-flex justify-center rounded-full bg-white px-5 py-3 font-black text-ehsDeepBlue shadow-lg shadow-black/20 hover:bg-ehsSoftBlue" href="/contact">Get a Quote</Link>
+                <Link className="mt-3 inline-flex justify-center rounded-full bg-white px-5 py-3 font-black text-ehsDeepBlue shadow-lg shadow-black/20 hover:bg-ehsSoftBlue" href="/get-quote">Get a Quote</Link>
                 <Link className="inline-flex justify-center rounded-full border border-white/25 px-5 py-3 font-black text-white hover:bg-white/10" href="/financing">Financing Options</Link>
               </div>
             </div>
