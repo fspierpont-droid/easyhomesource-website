@@ -94,6 +94,7 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
         <h2 className="mt-1 text-3xl font-black text-ehsBlack">{cta}</h2>
         <p className="mt-2 text-sm leading-6 text-ehsBlack/70">Tell us what you are looking for and our Brooksville team will follow up about home availability, delivery and setup, financing options, and next steps.</p>
       </div>
+      <input type="text" name="companyWebsite" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <Field label="First name" name="firstName" required error={errors.firstName} />
         <Field label="Last name" name="lastName" required error={errors.lastName} />
