@@ -84,7 +84,7 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
   }
 
   if (status === "success") {
-    return <div className="rounded-[2rem] border border-ehsBlue/20 bg-white p-6 shadow-xl shadow-ehsBlack/5 sm:p-8"><p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Request received</p><h2 className="mt-2 text-3xl font-black text-ehsBlack">Thanks — your request has been received.</h2><p className="mt-4 text-lg leading-8 text-ehsBlack/75">An Easy HomeSource team member will contact you soon about pricing, availability, delivery, setup, financing options, and next steps.</p></div>;
+    return <div className="rounded-[2rem] border border-ehsBlue/20 bg-white p-6 shadow-xl shadow-ehsBlack/5 sm:p-8"><p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Request received</p><h2 className="mt-2 text-3xl font-black text-ehsBlack">Thanks — your request has been received.</h2><p className="mt-4 text-lg leading-8 text-ehsBlack/75">An Easy HomeSource team member will contact you soon about pricing, availability, delivery and setup, financing options, and next steps.</p></div>;
   }
 
   return (
