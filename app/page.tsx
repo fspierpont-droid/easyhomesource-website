@@ -5,58 +5,94 @@ import { VideoCard } from "@/components/VideoCard";
 import { formatHomePrice, getFeaturedHomes, getHomeBySlug } from "@/data/homes";
 import { videos } from "@/data/videos";
 
+const proofPoints = [
+  { label: "Tour homes today", value: "Brooksville lot" },
+  { label: "Published starting prices", value: "No guessing" },
+  { label: "Help after selection", value: "Financing, delivery, setup" }
+];
+
+const steps = [
+  { title: "Browse real homes", text: "Start with homes you can tour on the Easy HomeSource lot or compare orderable floor plans online." },
+  { title: "Get a clear quote path", text: "Review pricing, financing questions, delivery, setup, permits, and site conditions before you commit." },
+  { title: "Move forward with support", text: "Work with the Brooksville team through lender conversations, home selection, delivery planning, and move-in steps." }
+];
+
 const reasons = [
-  "Straightforward home information and clear starting prices.",
-  "Guidance on financing conversations before you choose a model.",
-  "Help coordinating delivery and setup, permits, and move-in steps."
+  "Real display homes, public starting prices, and simple comparison tools.",
+  "A clearer path through financing, land questions, delivery, setup, and permits.",
+  "Local Brooksville support instead of a generic online catalog experience."
 ];
 
 export default function HomePage() {
   const featuredHomes = getFeaturedHomes();
+  const homepageFeaturedHomes = featuredHomes.slice(0, 6);
+  const displayHomeCount = featuredHomes.filter((home) => home.isOnDisplay).length;
   const tulip = getHomeBySlug("tulip");
+  const dogwood = getHomeBySlug("dogwood");
+  const bornToRun = getHomeBySlug("born-to-run");
 
   return (
     <main>
-      <section className="relative overflow-hidden bg-ehsSoftBlue px-4 py-16 sm:py-24">
+      <section className="relative overflow-hidden bg-ehsSoftBlue px-4 py-14 sm:py-20">
         <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-ehsBlue/15 blur-3xl" />
-        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="relative">
             <p className="font-black uppercase tracking-wide text-ehsBlue">Manufactured homes in Brooksville, Florida</p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Affordable Florida manufactured homes, without the guesswork.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery and setup, permitting, and move-in.</p>
+            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Tour real homes. Get clear pricing. Move forward without the guesswork.</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps Florida buyers compare affordable manufactured homes, understand financing options, and plan the delivery, setup, permits, and move-in steps with one local team.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
               <ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink>
               <ButtonLink href="/financing" variant="secondary">Check Financing Options</ButtonLink>
             </div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {proofPoints.map((point) => (
+                <div key={point.label} className="rounded-2xl border border-borderGray bg-white/80 p-4 shadow-sm">
+                  <p className="text-sm font-black text-ehsBlue">{point.label}</p>
+                  <p className="mt-1 font-black text-ehsBlack">{point.value}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="relative rounded-[2rem] bg-white p-4 shadow-2xl shadow-ehsBlack/10">
             <div className="rounded-[1.5rem] bg-gradient-to-br from-ehsBlack via-ehsBlack to-ehsBlue p-6 text-white">
-              <div className="rounded-3xl bg-white/10 p-6 backdrop-blur">
-                <p className="text-sm font-black uppercase tracking-wide text-white/70">Brooksville dealership support</p>
-                <h2 className="mt-16 text-3xl font-black">Homes, financing guidance, delivery and setup, and permits in one clear process.</h2>
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-sm font-black uppercase tracking-wide text-white/70">Easy HomeSource display lot</p>
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-ehsBlack">Open to tour</span>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-3 text-center text-sm font-black">
-                <span className="rounded-2xl bg-white/15 p-3">Clear pricing</span>
-                <span className="rounded-2xl bg-white/15 p-3">Florida delivery</span>
-                <span className="rounded-2xl bg-white/15 p-3">Setup guidance</span>
-                <span className="rounded-2xl bg-white/15 p-3">Financing options</span>
+              <h2 className="mt-6 text-3xl font-black">Start with homes you can actually walk through.</h2>
+              <p className="mt-4 leading-7 text-white/80">Compare entry-level options, larger family homes, and featured display models before sitting down for pricing and financing guidance.</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{displayHomeCount}</p><p className="text-sm font-bold text-white/75">display homes</p></div>
+                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{tulip ? formatHomePrice(tulip) : "$39,888"}</p><p className="text-sm font-bold text-white/75">featured special</p></div>
+                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">352</p><p className="text-sm font-bold text-white/75">local call/text</p></div>
+              </div>
+              <div className="mt-6 grid gap-3">
+                {[tulip, dogwood, bornToRun].filter(Boolean).map((home) => (
+                  <div key={home!.slug} className="flex items-center justify-between rounded-2xl bg-white/10 p-4">
+                    <div>
+                      <p className="font-black">{home!.displayName ?? home!.name}</p>
+                      <p className="text-sm font-semibold text-white/70">{home!.bedrooms} bed • {home!.bathrooms} bath • {home!.size}</p>
+                    </div>
+                    <p className="text-right font-black">{formatHomePrice(home!)}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="px-4 py-16">
+      <section className="px-4 py-14">
         <div className="mx-auto grid max-w-6xl gap-6 rounded-[2rem] bg-white p-8 shadow-sm lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps renters and buyers explore affordable manufactured homes, financing options, delivery and setup, and a clear path forward.</p></div>
+          <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Start with affordable homes, then get help understanding financing, delivery, setup, permitting, and the final quote before you make a decision.</p></div>
           <div className="flex flex-col gap-3"><ButtonLink href="/homes">See Homes You Can Own</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Talk to a Home Consultant</ButtonLink></div>
         </div>
       </section>
 
       <section className="bg-ehsSoftBlue px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="rounded-[2rem] bg-gradient-to-br from-ehsBlack to-ehsBlue p-8 text-white"><p className="text-sm font-black uppercase tracking-wide text-white/70">Featured Affordable Home</p><h2 className="mt-2 text-4xl font-black">Starting at {tulip ? formatHomePrice(tulip) : "Call for current pricing"}</h2><h3 className="mt-3 text-2xl font-black">The Tulip</h3><p className="mt-4 leading-8 text-white/80">Looking for one of the most affordable ways to start your path to homeownership? The Tulip gives buyers a practical, budget-friendly option with support from Easy HomeSource from quote to delivery and setup.</p></div>
+          <div className="rounded-[2rem] bg-gradient-to-br from-ehsBlack to-ehsBlue p-8 text-white"><p className="text-sm font-black uppercase tracking-wide text-white/70">Featured Affordable Home</p><h2 className="mt-2 text-4xl font-black">Starting at {tulip ? formatHomePrice(tulip) : "Call for current pricing"}</h2><h3 className="mt-3 text-2xl font-black">The Tulip</h3><p className="mt-4 leading-8 text-white/80">A practical, budget-friendly starting point for buyers who want a real path toward ownership instead of another year of rent payments.</p></div>
           <div><div className="flex flex-col gap-3 sm:flex-row"><ButtonLink href="/get-quote?home=tulip">Get Pricing</ButtonLink><ButtonLink href="/get-quote?home=tulip" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div><p className="mt-5 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p></div>
         </div>
       </section>
@@ -67,15 +103,29 @@ export default function HomePage() {
             <div><p className="font-black text-ehsBlue">Featured homes</p><h2 className="text-3xl font-black text-ehsBlack">Popular homes for Florida buyers</h2></div>
             <ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink>
           </div>
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">{featuredHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">{homepageFeaturedHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
         </div>
       </section>
 
-
       <section className="bg-ehsSoftBlue px-4 py-16">
         <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl"><p className="font-black text-ehsBlue">How the process works</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">From browsing to move-in, the path is clearer here.</h2></div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+            {steps.map((step, index) => (
+              <div key={step.title} className="rounded-[2rem] bg-white p-7 shadow-sm">
+                <p className="flex h-11 w-11 items-center justify-center rounded-full bg-ehsBlue text-lg font-black text-white">{index + 1}</p>
+                <h3 className="mt-5 text-2xl font-black text-ehsBlack">{step.title}</h3>
+                <p className="mt-3 leading-7 text-ehsBlack/70">{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-6xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div><p className="font-black text-ehsBlue">Videos & Reels</p><h2 className="text-3xl font-black text-ehsBlack">See What’s Happening at Easy HomeSource</h2><p className="mt-3 max-w-3xl leading-7 text-ehsBlack/70">Watch home tours, new arrivals, walkthroughs, and helpful videos from the Easy HomeSource team.</p></div>
+            <div><p className="font-black text-ehsBlue">Videos & Reels</p><h2 className="text-3xl font-black text-ehsBlack">See what’s happening at Easy HomeSource</h2><p className="mt-3 max-w-3xl leading-7 text-ehsBlack/70">Watch home tours, new arrivals, walkthroughs, and helpful videos from the Easy HomeSource team.</p></div>
             <ButtonLink href="/videos" variant="secondary">View All Videos</ButtonLink>
           </div>
           <div className="mt-8 grid gap-6 lg:grid-cols-4">{videos.map((video) => <VideoCard key={video.id} video={video} />)}</div>
@@ -85,14 +135,14 @@ export default function HomePage() {
       <section className="bg-ehsBlack px-4 py-16 text-white">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
           <div className="lg:col-span-1"><p className="font-black text-ehsBlue">Why choose Easy HomeSource</p><h2 className="mt-2 text-3xl font-black">A simpler way to shop for a manufactured home.</h2></div>
-          <div className="grid gap-4 lg:col-span-2 sm:grid-cols-3">{reasons.map((reason) => <div key={reason} className="rounded-3xl bg-white/10 p-5 font-semibold leading-7 text-white/85">{reason}</div>)}</div>
+          <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2">{reasons.map((reason) => <div key={reason} className="rounded-3xl bg-white/10 p-5 font-semibold leading-7 text-white/85">{reason}</div>)}</div>
         </div>
       </section>
 
       <section className="px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
           <InfoBlock title="Financing guidance" text="Start with budget, lender expectations, down-payment questions, and the land or community details that may affect your path forward." cta="Get Pre-Qualified" href="/financing" />
-          <InfoBlock title="Delivery, setup, and permits" text="We help buyers understand the steps after selecting a home, including freight, site work, setup, inspections, and permitting timelines." cta="Schedule a Tour" href="/get-quote" />
+          <InfoBlock title="Delivery, setup, and permits" text="Understand the steps after selecting a home, including freight, site work, setup, inspections, permitting timelines, and final quote variables." cta="Schedule a Tour" href="/get-quote" />
         </div>
       </section>
 
