@@ -7,19 +7,19 @@ import { videos } from "@/data/videos";
 
 const proofPoints = [
   { label: "Tour homes today", value: "Brooksville lot" },
-  { label: "Published starting prices", value: "No guessing" },
-  { label: "Help after selection", value: "Financing, delivery, setup" }
+  { label: "One-stop guidance", value: "Home, land, setup" },
+  { label: "Clear next steps", value: "Quote to move-in" }
 ];
 
 const steps = [
   { title: "Browse real homes", text: "Start with homes you can tour on the Easy HomeSource lot or compare orderable floor plans online." },
-  { title: "Get a clear quote path", text: "Review pricing, financing questions, delivery, setup, permits, and site conditions before you commit." },
-  { title: "Move forward with support", text: "Work with the Brooksville team through lender conversations, home selection, delivery planning, and move-in steps." }
+  { title: "Plan the full package", text: "Review home pricing, land-and-home package options, financing questions, delivery, setup, permits, and site conditions before you commit." },
+  { title: "Move forward with support", text: "Work with the Brooksville team through home selection, package planning, lender conversations, delivery coordination, and move-in steps." }
 ];
 
 const reasons = [
   "Real display homes, public starting prices, and simple comparison tools.",
-  "A clearer path through financing, land questions, delivery, setup, and permits.",
+  "A one-stop path for home-only buyers, turnkey planning, land-and-home package questions, delivery, setup, and permits.",
   "Local Brooksville support instead of a generic online catalog experience."
 ];
 
@@ -38,8 +38,8 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="relative">
             <p className="font-black uppercase tracking-wide text-ehsBlue">Manufactured homes in Brooksville, Florida</p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Tour real homes. Get clear pricing. Move forward without the guesswork.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps Florida buyers compare affordable manufactured homes, understand financing options, and plan the delivery, setup, permits, and move-in steps with one local team.</p>
+            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Your one-stop shop for affordable Florida manufactured homes.</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps Florida buyers compare homes, explore financing options, and plan turnkey home paths, land-and-home package options, delivery, setup, permits, and move-in steps with one local team.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
               <ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink>
@@ -61,7 +61,7 @@ export default function HomePage() {
                 <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-ehsBlack">Open to tour</span>
               </div>
               <h2 className="mt-6 text-3xl font-black">Start with homes you can actually walk through.</h2>
-              <p className="mt-4 leading-7 text-white/80">Compare entry-level options, larger family homes, and featured display models before sitting down for pricing and financing guidance.</p>
+              <p className="mt-4 leading-7 text-white/80">Compare entry-level options, larger family homes, turnkey paths, and land-and-home package possibilities before sitting down for pricing and financing guidance.</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{displayHomeCount}</p><p className="text-sm font-bold text-white/75">display homes</p></div>
                 <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{tulip ? formatHomePrice(tulip) : "$39,888"}</p><p className="text-sm font-bold text-white/75">featured special</p></div>
@@ -85,7 +85,7 @@ export default function HomePage() {
 
       <section className="px-4 py-14">
         <div className="mx-auto grid max-w-6xl gap-6 rounded-[2rem] bg-white p-8 shadow-sm lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Start with affordable homes, then get help understanding financing, delivery, setup, permitting, and the final quote before you make a decision.</p></div>
+          <div><p className="font-black text-ehsBlue">Why Rent When You Can Own?</p><h2 className="mt-2 text-4xl font-black text-ehsBlack">Homeownership may be closer than you think.</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ehsBlack/75">Start with affordable homes, then get help understanding financing, turnkey package planning, land-and-home options, delivery, setup, permitting, and the final quote before you make a decision.</p></div>
           <div className="flex flex-col gap-3"><ButtonLink href="/homes">See Homes You Can Own</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Talk to a Home Consultant</ButtonLink></div>
         </div>
       </section>
@@ -141,7 +141,7 @@ export default function HomePage() {
 
       <section className="px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
-          <InfoBlock title="Financing guidance" text="Start with budget, lender expectations, down-payment questions, and the land or community details that may affect your path forward." cta="Get Pre-Qualified" href="/financing" />
+          <InfoBlock title="Turnkey home package guidance" text="Explore home-only purchases, land-and-home package options, budget expectations, lender questions, delivery, setup, site work, and the variables that affect your final path forward." cta="Get Pricing" href="/get-quote" />
           <InfoBlock title="Delivery, setup, and permits" text="Understand the steps after selecting a home, including freight, site work, setup, inspections, permitting timelines, and final quote variables." cta="Schedule a Tour" href="/get-quote" />
         </div>
       </section>
