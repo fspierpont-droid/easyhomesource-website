@@ -33,44 +33,44 @@ export default function HomePage() {
 
   return (
     <main>
-      <section className="relative overflow-hidden bg-ehsSoftBlue px-4 py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-ehsSoftBlue px-4 py-10 sm:py-12 lg:py-8 xl:py-10">
         <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-ehsBlue/15 blur-3xl" />
-        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[1.02fr_0.98fr] xl:gap-10">
           <div className="relative">
             <p className="font-black uppercase tracking-wide text-ehsBlue">Manufactured homes in Brooksville, Florida</p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Affordable Florida manufactured homes, without the guesswork.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery, setup, permitting, and move-in.</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <h1 className="mt-3 text-4xl font-black leading-[1.08] tracking-tight text-ehsBlack sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]">Affordable Florida manufactured homes, without the guesswork.</h1>
+            <p className="mt-4 max-w-2xl text-lg leading-7 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery, setup, permitting, and move-in.</p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
               <ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink>
               <ButtonLink href="/financing" variant="secondary">Check Financing Options</ButtonLink>
             </div>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {proofPoints.map((point) => (
-                <div key={point.label} className="rounded-2xl border border-borderGray bg-white/80 p-4 shadow-sm">
+                <div key={point.label} className="rounded-2xl border border-borderGray bg-white/80 p-3.5 shadow-sm">
                   <p className="text-sm font-black text-ehsBlue">{point.label}</p>
                   <p className="mt-1 font-black text-ehsBlack">{point.value}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="relative rounded-[2rem] bg-white p-4 shadow-2xl shadow-ehsBlack/10">
-            <div className="rounded-[1.5rem] bg-gradient-to-br from-ehsBlack via-ehsBlack to-ehsBlue p-6 text-white">
+          <div className="relative rounded-[2rem] bg-white p-3 shadow-2xl shadow-ehsBlack/10">
+            <div className="rounded-[1.5rem] bg-gradient-to-br from-ehsBlack via-ehsBlack to-ehsBlue p-5 text-white">
               <div className="flex items-center justify-between gap-4">
                 <p className="text-sm font-black uppercase tracking-wide text-white/70">Homes you can tour today</p>
                 <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-ehsBlack">Brooksville, FL</span>
               </div>
-              <h2 className="mt-6 text-3xl font-black">Start with real homes, then build the right plan.</h2>
-              <p className="mt-4 leading-7 text-white/80">Walk through homes on the lot, compare monthly-budget expectations, and talk through the real project pieces before making a decision.</p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{displayHomeCount}</p><p className="text-sm font-bold text-white/75">display homes</p></div>
-                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{tulip ? formatHomePrice(tulip) : "$39,888"}</p><p className="text-sm font-bold text-white/75">featured special</p></div>
-                <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">352</p><p className="text-sm font-bold text-white/75">local call/text</p></div>
+              <h2 className="mt-4 text-3xl font-black leading-tight">Start with real homes, then build the right plan.</h2>
+              <p className="mt-3 leading-6 text-white/80">Walk through homes on the lot, compare monthly-budget expectations, and talk through the real project pieces before making a decision.</p>
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+                <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">{displayHomeCount} homes on display</p></div>
+                <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">Featured from {tulip ? formatHomePrice(tulip) : "$39,888"}</p></div>
+                <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">Call/Text 352-558-8888</p></div>
               </div>
-              <div className="mt-6 grid gap-3">
+              <div className="mt-4 grid gap-2.5">
                 {[tulip, dogwood, bornToRun].filter(Boolean).map((home) => (
-                  <div key={home!.slug} className="flex items-center justify-between rounded-2xl bg-white/10 p-4">
-                    <div>
+                  <div key={home!.slug} className="flex items-center justify-between gap-4 rounded-2xl bg-white/10 px-4 py-3">
+                    <div className="min-w-0">
                       <p className="font-black">{home!.displayName ?? home!.name}</p>
                       <p className="text-sm font-semibold text-white/70">{home!.bedrooms} bed • {home!.bathrooms} bath • {home!.size}</p>
                     </div>
