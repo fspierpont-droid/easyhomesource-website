@@ -1,8 +1,9 @@
 import { ButtonLink } from "@/components/ButtonLink";
-import { HomeCard } from "@/components/HomeCard";
+import { HomeImage } from "@/components/HomeImage";
 import { LeadForm } from "@/components/LeadForm";
 import { VideoCard } from "@/components/VideoCard";
-import { formatHomePrice, getFeaturedHomes, getHomeBySlug } from "@/data/homes";
+import Link from "next/link";
+import { formatHomePrice, getFeaturedHomes, getHomeBySlug, type Home } from "@/data/homes";
 import { videos } from "@/data/videos";
 
 const proofPoints = [
@@ -25,7 +26,12 @@ const reasons = [
 
 export default function HomePage() {
   const featuredHomes = getFeaturedHomes();
-  const homepageFeaturedHomes = featuredHomes.slice(0, 6);
+  const homepageFeaturedHomes = [
+    { home: getHomeBySlug("tulip"), price: "$39,888" },
+    { home: getHomeBySlug("dogwood"), price: "$61,900" },
+    { home: getHomeBySlug("born-to-run"), price: "$89,875" },
+    { home: getHomeBySlug("paxton"), price: "$158,888" }
+  ].filter((item): item is { home: Home; price: string } => Boolean(item.home));
   const displayHomeCount = featuredHomes.filter((home) => home.isOnDisplay).length;
   const tulip = getHomeBySlug("tulip");
   const dogwood = getHomeBySlug("dogwood");
@@ -90,20 +96,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-ehsSoftBlue px-4 py-16">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="rounded-[2rem] bg-gradient-to-br from-ehsBlack to-ehsBlue p-8 text-white"><p className="text-sm font-black uppercase tracking-wide text-white/70">Featured Affordable Home</p><h2 className="mt-2 text-4xl font-black">Starting at {tulip ? formatHomePrice(tulip) : "Call for current pricing"}</h2><h3 className="mt-3 text-2xl font-black">The Tulip</h3><p className="mt-4 leading-8 text-white/80">A practical, budget-friendly starting point for buyers who want a real path toward ownership instead of another year of rent payments.</p></div>
-          <div><div className="flex flex-col gap-3 sm:flex-row"><ButtonLink href="/get-quote?home=tulip">Get Pricing</ButtonLink><ButtonLink href="/get-quote?home=tulip" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div><p className="mt-5 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p></div>
-        </div>
-      </section>
-
-      <section className="px-4 py-16">
+      <section className="bg-ehsSoftBlue px-4 py-10 sm:py-12">
         <div className="mx-auto max-w-6xl">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="overflow-hidden rounded-[2rem] bg-white shadow-lg shadow-ehsNavy/10 lg:grid lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative min-h-64 overflow-hidden bg-ehsNavy lg:min-h-[22rem]">
+              <HomeImage src={tulip?.gallery.find((item) => item.isPrimary)?.src ?? tulip?.gallery[0]?.src} alt="The Tulip affordable manufactured home" className="absolute inset-0 h-full min-h-64 rounded-none lg:min-h-[22rem]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ehsBlack/90 via-ehsBlack/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                <p className="text-sm font-black uppercase tracking-wide text-white/75">Featured affordable home</p>
+                <h2 className="mt-1 text-3xl font-black sm:text-4xl">The Tulip</h2>
+                {tulip && <p className="mt-2 font-bold text-white/85">{tulip.bedrooms} beds • {tulip.bathrooms} bath • {tulip.squareFeet?.toLocaleString()} sq. ft.</p>}
+              </div>
+            </div>
+            <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+              <p className="font-black text-ehsBlue">A practical path to homeownership</p>
+              <h3 className="mt-2 text-3xl font-black text-ehsBlack sm:text-4xl">Starting at $39,888</h3>
+              <p className="mt-3 max-w-xl leading-7 text-ehsBlack/70">A budget-friendly home with a smart, efficient layout—available to explore with help from our local Brooksville team.</p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/get-quote?home=tulip">Get Pricing</ButtonLink><ButtonLink href="/get-quote?home=tulip" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div>
+              <p className="mt-4 border-t border-borderGray pt-3 text-xs font-semibold leading-5 text-ehsBlack/55">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div><p className="font-black text-ehsBlue">Featured homes</p><h2 className="text-3xl font-black text-ehsBlack">Popular homes for Florida buyers</h2></div>
             <ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink>
           </div>
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">{homepageFeaturedHomes.map((home) => <HomeCard key={home.id} home={home} />)}</div>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{homepageFeaturedHomes.map(({ home, price }) => <HomepageHomeCard key={home.id} home={home} price={price} />)}</div>
         </div>
       </section>
 
@@ -162,4 +180,19 @@ export default function HomePage() {
 
 function InfoBlock({ title, text, cta, href }: { title: string; text: string; cta: string; href: string }) {
   return <div className="rounded-[2rem] border border-borderGray bg-white p-8 shadow-sm"><h2 className="text-3xl font-black text-ehsBlack">{title}</h2><p className="mt-4 leading-8 text-ehsBlack/70">{text}</p><div className="mt-6"><ButtonLink href={href} variant="secondary">{cta}</ButtonLink></div></div>;
+}
+
+function HomepageHomeCard({ home, price }: { home: Home; price: string }) {
+  const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
+  return <article className="group overflow-hidden rounded-[1.5rem] border border-ehsBlue/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <Link href={`/homes/${home.slug}`} className="block overflow-hidden bg-white" aria-label={`View ${home.displayName ?? home.name}`}>
+      <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} exterior`} className="h-44 rounded-none transition duration-500 group-hover:scale-105" />
+    </Link>
+    <div className="p-5">
+      <h3 className="text-xl font-black text-ehsNavy">{home.displayName ?? home.name}</h3>
+      <p className="mt-1 text-sm font-semibold text-ehsBlack/60">{home.bedrooms} beds • {home.bathrooms} baths • {home.squareFeet?.toLocaleString()} sq. ft.</p>
+      <p className="mt-3 text-2xl font-black text-ehsBlue">{price}</p>
+      <Link href={`/homes/${home.slug}`} className="mt-4 inline-flex w-full justify-center rounded-full bg-ehsBlue px-5 py-2.5 text-sm font-black text-white transition hover:bg-ehsDeepBlue">View Home</Link>
+    </div>
+  </article>;
 }
