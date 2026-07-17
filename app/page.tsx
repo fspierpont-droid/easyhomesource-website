@@ -7,8 +7,8 @@ import { videos } from "@/data/videos";
 
 const proofPoints = [
   { label: "Tour homes today", value: "Brooksville lot" },
-  { label: "One-stop guidance", value: "Home, land, setup" },
-  { label: "Clear next steps", value: "Quote to move-in" }
+  { label: "Clear pricing path", value: "Quote before you commit" },
+  { label: "Local guidance", value: "Delivery, setup, financing" }
 ];
 
 const steps = [
@@ -38,8 +38,8 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="relative">
             <p className="font-black uppercase tracking-wide text-ehsBlue">Manufactured homes in Brooksville, Florida</p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Your one-stop shop for affordable Florida manufactured homes.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps Florida buyers compare homes, explore financing options, and plan turnkey home paths, land-and-home package options, delivery, setup, permits, and move-in steps with one local team.</p>
+            <h1 className="mt-4 text-4xl font-black tracking-tight text-ehsBlack sm:text-6xl">Affordable Florida manufactured homes, without the guesswork.</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps buyers compare homes, understand pricing, explore financing options, and get support through delivery, setup, permitting, and move-in.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/homes">View Available Homes</ButtonLink>
               <ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink>
@@ -57,11 +57,11 @@ export default function HomePage() {
           <div className="relative rounded-[2rem] bg-white p-4 shadow-2xl shadow-ehsBlack/10">
             <div className="rounded-[1.5rem] bg-gradient-to-br from-ehsBlack via-ehsBlack to-ehsBlue p-6 text-white">
               <div className="flex items-center justify-between gap-4">
-                <p className="text-sm font-black uppercase tracking-wide text-white/70">Easy HomeSource display lot</p>
-                <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-ehsBlack">Open to tour</span>
+                <p className="text-sm font-black uppercase tracking-wide text-white/70">Homes you can tour today</p>
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-ehsBlack">Brooksville, FL</span>
               </div>
-              <h2 className="mt-6 text-3xl font-black">Start with homes you can actually walk through.</h2>
-              <p className="mt-4 leading-7 text-white/80">Compare entry-level options, larger family homes, turnkey paths, and land-and-home package possibilities before sitting down for pricing and financing guidance.</p>
+              <h2 className="mt-6 text-3xl font-black">Start with real homes, then build the right plan.</h2>
+              <p className="mt-4 leading-7 text-white/80">Walk through homes on the lot, compare monthly-budget expectations, and talk through the real project pieces before making a decision.</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{displayHomeCount}</p><p className="text-sm font-bold text-white/75">display homes</p></div>
                 <div className="rounded-2xl bg-white/15 p-4"><p className="text-3xl font-black">{tulip ? formatHomePrice(tulip) : "$39,888"}</p><p className="text-sm font-bold text-white/75">featured special</p></div>
