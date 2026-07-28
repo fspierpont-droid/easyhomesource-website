@@ -1,6 +1,16 @@
 # Easy HomeSource Website
 
-A public-facing Next.js marketing website for Easy HomeSource, a manufactured home dealership in Brooksville, Florida. This site is separate from the internal EHS portal and does not include CRM or quoting features.
+A public-facing Next.js marketing website for Easy HomeSource, a manufactured home dealership in Brooksville, Florida. The production site is deployed on Vercel at [easyhomesource.com](https://easyhomesource.com). This site is separate from the internal EHS portal; public lead capture is handled by an embedded GoHighLevel form rather than the portal's quoting workflow.
+
+## Production status
+
+- Public website live on Vercel
+- Real Easy HomeSource contact information published
+- Real home inventory and starting prices published
+- Home walkthrough and lot videos available
+- GoHighLevel quote form connected
+- Financing inquiries routed through the central lead-capture path
+- Expanded public home detail pages available
 
 ## Tech stack
 
@@ -9,11 +19,11 @@ A public-facing Next.js marketing website for Easy HomeSource, a manufactured ho
 - TypeScript
 - Vercel-ready scripts
 
-## Lead email notifications
+## Public lead capture
 
-The Get Quote form posts normalized lead data to `/api/leads`. GHL is intentionally not connected yet; the route keeps an adapter boundary for a future GHL integration.
+`/get-quote` is the central public lead-intake page and embeds the approved GoHighLevel form. Home, source, and CTA context can be passed in the URL and is forwarded to the form embed. Financing calls to action use the same page with `source=financing`.
 
-Configure the server-side email provider with environment variables:
+The older `/api/leads` route remains in the repository as a server-side email adapter, but it is not the public form used by the current website. If that route is used by a future integration, configure it with:
 
 - `EHS_LEAD_EMAIL_PROVIDER=resend`
 - `RESEND_API_KEY=`
