@@ -1,6 +1,5 @@
 import { ButtonLink } from "@/components/ButtonLink";
 import { HomeImage } from "@/components/HomeImage";
-import { LeadForm } from "@/components/LeadForm";
 import { VideoCard } from "@/components/VideoCard";
 import Link from "next/link";
 import { formatHomePrice, getFeaturedHomes, getHomeBySlug, type Home } from "@/data/homes";
@@ -168,7 +167,12 @@ export default function HomePage() {
             <h2 className="mt-2 text-4xl font-black text-ehsBlack">Compare homes by price, size, beds, baths, and availability.</h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row"><ButtonLink href="/homes">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Request Info</ButtonLink></div>
           </div>
-          <LeadForm cta="Get Pricing" sourcePage="Homepage" />
+          <div className="rounded-[2rem] border border-borderGray bg-white p-8 shadow-xl shadow-ehsBlack/5">
+            <p className="text-sm font-black uppercase tracking-wide text-ehsBlue">Pricing and next steps</p>
+            <h2 className="mt-2 text-3xl font-black text-ehsBlack">Ready to talk about the right home?</h2>
+            <p className="mt-3 leading-7 text-ehsBlack/70">Use our quote request page to tell us about the home you like, your land status, and whether you want financing guidance.</p>
+            <div className="mt-6"><ButtonLink href="/get-quote">Get Pricing</ButtonLink></div>
+          </div>
         </div>
       </section>
     </main>
