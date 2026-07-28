@@ -85,9 +85,15 @@ export const homes: Home[] = seeds.map((home, index) => {
   });
 });
 
+/** Keep prices numeric in home data; add customer-facing context only at render time. */
+export function formatStartingPrice(price?: number | null): string {
+  return price != null
+    ? `Starting at $${Math.round(price).toLocaleString()}`
+    : "Call/Text for starting price";
+}
+
 export function formatHomePrice(home: Home): string {
-  const amount = home.salePrice ?? home.startingPrice;
-  return amount ? `$${Math.round(amount).toLocaleString()}` : "Call for current pricing";
+  return formatStartingPrice(home.salePrice ?? home.startingPrice);
 }
 export function getFeaturedHomes() { return homes.filter((home) => home.isFeatured && home.isActive); }
 export function getHomeBySlug(slug: string) { return homes.find((home) => home.slug === slug && home.isActive); }

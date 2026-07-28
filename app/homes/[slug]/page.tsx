@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
 import { HomeCard, StatusBadge, homeBadges } from "@/components/HomeCard";
 import { HomeMediaGallery } from "@/components/HomeMediaGallery";
-import { MediaPlaceholder } from "@/components/MediaPlaceholder";
 import { formatHomePrice, getHomeBySlug, homes } from "@/data/homes";
 import { siteInfo } from "@/data/site";
 
@@ -40,10 +39,10 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
 
           <HomeMediaGallery homeName={home.displayName ?? home.name} gallery={home.gallery} />
 
-          <section className="mt-8">
+          {videoLink && <section className="mt-8">
             <h2 className="text-2xl font-black text-ehsBlack">Videos</h2>
-            {videoLink ? <div className="mt-4 rounded-3xl border border-borderGray bg-white p-6"><a className="font-black text-ehsBlue" href={videoLink}>Open video or virtual tour</a></div> : <MediaPlaceholder title="Video tour coming soon" className="mt-4" />}
-          </section>
+            <div className="mt-4 rounded-3xl border border-borderGray bg-white p-6"><a className="font-black text-ehsBlue" href={videoLink}>Open video or virtual tour</a></div>
+          </section>}
 
           <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-5"><Detail label="Price" value={formatHomePrice(home)} />{specs.map((spec) => <Detail key={spec.label} {...spec} />)}</dl>
           <p className="mt-6 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">{home.priceDisclaimer ?? siteInfo.pricingDisclaimer}</p>
