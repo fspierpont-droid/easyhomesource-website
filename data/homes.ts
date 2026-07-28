@@ -80,7 +80,7 @@ export const homes: Home[] = seeds.map((home, index) => {
   startingPrice, salePrice: null, priceLabel: protectedSeedPriceSlugs.has(home.slug) ? home.priceLabel : scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"), priceDisclaimer: catalogPriceDisclaimer,
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isCatalogModel: home.isCatalogModel, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
   shortDescription: description, longDescription: description, features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
-  floorPlanImage: importedMedia?.floorPlanImage ?? `/homes/${home.slug}/floorplan/${home.slug}-floorplan.jpg`, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
+  floorPlanImage: importedMedia?.floorPlanImage ?? null, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
   seoTitle: `${home.displayName ?? home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.displayName ?? home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
   });
 });
