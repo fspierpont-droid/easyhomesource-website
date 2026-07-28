@@ -26,12 +26,9 @@ const reasons = [
 
 export default function HomePage() {
   const featuredHomes = getFeaturedHomes();
-  const homepageFeaturedHomes = [
-    { home: getHomeBySlug("tulip"), price: "$39,888" },
-    { home: getHomeBySlug("dogwood"), price: "$61,900" },
-    { home: getHomeBySlug("born-to-run"), price: "$89,875" },
-    { home: getHomeBySlug("paxton"), price: "$158,888" }
-  ].filter((item): item is { home: Home; price: string } => Boolean(item.home));
+  const homepageFeaturedHomes = ["tulip", "dogwood", "born-to-run", "paxton"]
+    .map(getHomeBySlug)
+    .filter((home): home is Home => Boolean(home));
   const displayHomeCount = featuredHomes.filter((home) => home.isOnDisplay).length;
   const tulip = getHomeBySlug("tulip");
   const dogwood = getHomeBySlug("dogwood");
@@ -121,7 +118,7 @@ export default function HomePage() {
             <div><p className="font-black text-ehsBlue">Featured homes</p><h2 className="text-3xl font-black text-ehsBlack">Popular homes for Florida buyers</h2></div>
             <ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink>
           </div>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{homepageFeaturedHomes.map(({ home, price }) => <HomepageHomeCard key={home.id} home={home} price={price} />)}</div>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{homepageFeaturedHomes.map((home) => <HomepageHomeCard key={home.id} home={home} />)}</div>
         </div>
       </section>
 
@@ -182,7 +179,7 @@ function InfoBlock({ title, text, cta, href }: { title: string; text: string; ct
   return <div className="rounded-[2rem] border border-borderGray bg-white p-8 shadow-sm"><h2 className="text-3xl font-black text-ehsBlack">{title}</h2><p className="mt-4 leading-8 text-ehsBlack/70">{text}</p><div className="mt-6"><ButtonLink href={href} variant="secondary">{cta}</ButtonLink></div></div>;
 }
 
-function HomepageHomeCard({ home, price }: { home: Home; price: string }) {
+function HomepageHomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
   return <article className="group overflow-hidden rounded-[1.5rem] border border-ehsBlue/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
     <Link href={`/homes/${home.slug}`} className="block overflow-hidden bg-white" aria-label={`View ${home.displayName ?? home.name}`}>
@@ -191,7 +188,7 @@ function HomepageHomeCard({ home, price }: { home: Home; price: string }) {
     <div className="p-5">
       <h3 className="text-xl font-black text-ehsNavy">{home.displayName ?? home.name}</h3>
       <p className="mt-1 text-sm font-semibold text-ehsBlack/60">{home.bedrooms} beds • {home.bathrooms} baths • {home.squareFeet?.toLocaleString()} sq. ft.</p>
-      <p className="mt-3 text-2xl font-black text-ehsBlue">{price}</p>
+      <p className="mt-3 text-2xl font-black text-ehsBlue">{formatHomePrice(home)}</p>
       <Link href={`/homes/${home.slug}`} className="mt-4 inline-flex w-full justify-center rounded-full bg-ehsBlue px-5 py-2.5 text-sm font-black text-white transition hover:bg-ehsDeepBlue">View Home</Link>
     </div>
   </article>;
