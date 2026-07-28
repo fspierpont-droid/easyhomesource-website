@@ -86,9 +86,22 @@ export const homes: Home[] = seeds.map((home, index) => {
 
 /** Keep prices numeric in home data; add customer-facing context only at render time. */
 export function formatStartingPrice(price?: number | null): string {
-  return price != null
+  return price != null && Number.isFinite(price) && price > 0
     ? `Starting at $${Math.round(price).toLocaleString()}`
     : "Call/Text for starting price";
+}
+
+/** Records without the core facts customers use to compare homes need extra context. */
+export function hasIncompleteCatalogDetails(home: Home): boolean {
+  return !(
+    home.startingPrice != null && Number.isFinite(home.startingPrice) && home.startingPrice > 0 &&
+    home.bedrooms != null && home.bedrooms > 0 &&
+    home.bathrooms != null && home.bathrooms > 0 &&
+    home.squareFeet != null && home.squareFeet > 0 &&
+    Boolean(home.size) &&
+    Boolean(home.manufacturer) &&
+    Boolean(home.modelNumber)
+  );
 }
 
 export function formatHomePrice(home: Home): string {

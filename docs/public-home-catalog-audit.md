@@ -18,7 +18,7 @@
 
 These records intentionally expose only the lineup facts currently known to the public-site project. Unknown values use customer-facing placeholders rather than inferred prices, specifications, or media.
 
-## Launch data gaps
+## Catalog completion gaps
 
 ### Missing verified starting prices
 
@@ -58,7 +58,21 @@ These records intentionally expose only the lineup facts currently known to the 
 
 - All 28 public homes currently use the safe **Video walkthrough coming soon** state.
 
-## Scott / EHS approval needed before launch
+## Catalog completion tracker
+
+Use **Missing** only when no verified value or approved model-specific media is assigned. **Known** means the public record currently contains a value; it does not replace the final approval step. Keep customer-facing fields in their safe placeholder state until EHS marks the applicable item approved.
+
+| Home | Starting price | Beds | Baths | Sq. ft. | Dimensions | Manufacturer | Model number | Photos | Floorplan | Video | Display / catalog status | Approval status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Boujee 2 | Missing | Missing | Missing | Missing | Missing | Known: Clayton Addison | Known: Boujee 2 | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Timberland | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Delilah | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Craft Select 15663A | Missing | Missing | Missing | Missing | Missing | Known: Cavco Plant City | Known: 15663A | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Creekside Series | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Craft Select 28603A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | On display | Media approval pending |
+| Select S-1272-32A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | Catalog/orderable | Media approval pending |
+
+## EHS approval needed
 
 - Confirm starting prices for all five newly added lineup records.
 - Confirm beds, baths, square footage, dimensions, and model numbers for the five incomplete records.
@@ -67,7 +81,6 @@ These records intentionally expose only the lineup facts currently known to the 
 - Approve and assign model-specific photography for the seven entries listed above; do not substitute stock photography.
 - Approve and assign the five missing floor plans and any model-specific walkthrough videos.
 - Confirm on-display versus orderable-catalog status for all newly added records.
-- Complete a final price and availability review immediately before Trove replacement/domain cutover.
 
 ## Developer verification checklist
 
