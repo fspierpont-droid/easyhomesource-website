@@ -6,7 +6,7 @@ import { HomeCard, StatusBadge, homeBadges } from "@/components/HomeCard";
 import { HomeImage } from "@/components/HomeImage";
 import { HomeMediaGallery } from "@/components/HomeMediaGallery";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
-import { formatHomePrice, getHomeBySlug, homes } from "@/data/homes";
+import { formatHomePrice, getHomeBySlug, hasIncompleteCatalogDetails, homes } from "@/data/homes";
 
 const startingPriceDisclaimer = "Starting price does not include delivery, setup, taxes, permits, site work, utility connections, skirting, steps, or selected options.";
 
@@ -30,12 +30,13 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
   const photos = home.gallery.filter((item) => item.category !== "floorplan" && item.category !== "video");
   const floorPlan = home.floorPlanImage ?? home.gallery.find((item) => item.category === "floorplan")?.src;
   const videoLink = home.videoUrl ?? home.virtualTourUrl ?? home.walkthroughVideoUrl;
+  const isIncomplete = hasIncompleteCatalogDetails(home);
   const pricingHref = `/get-quote?home=${encodeURIComponent(home.slug)}`;
   const tourHref = `/get-quote?home=${encodeURIComponent(home.slug)}&source=schedule-tour`;
   const specs = [
-    home.bedrooms != null && { label: "Beds", value: home.bedrooms },
-    home.bathrooms != null && { label: "Baths", value: home.bathrooms },
-    home.squareFeet != null && { label: "Square feet", value: home.squareFeet.toLocaleString() },
+    home.bedrooms != null && Number.isFinite(home.bedrooms) && home.bedrooms > 0 && { label: "Beds", value: home.bedrooms },
+    home.bathrooms != null && Number.isFinite(home.bathrooms) && home.bathrooms > 0 && { label: "Baths", value: home.bathrooms },
+    home.squareFeet != null && Number.isFinite(home.squareFeet) && home.squareFeet > 0 && { label: "Square feet", value: home.squareFeet.toLocaleString() },
     home.size && { label: "Home size", value: home.size }
   ].filter(Boolean) as { label: string; value: string | number }[];
   const similar = homes.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
@@ -66,6 +67,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
               <p className="text-sm font-black uppercase tracking-wider text-ehsBlue">About this home</p>
               <h2 className="mt-2 text-2xl font-black text-ehsBlack">Comfort, value, and a plan that fits real life</h2>
               <p className="mt-4 leading-8 text-ehsBlack/75">{home.longDescription ?? home.shortDescription}</p>
+              {isIncomplete && <p className="mt-5 rounded-2xl bg-ehsSoftBlue p-4 text-sm font-bold leading-6 text-ehsBlack/70">This home is part of the Easy HomeSource lineup. Final specs, availability, and starting price may vary. Contact us for the latest details.</p>}
             </section>
 
             <section className="mt-8" aria-labelledby="gallery-heading">
@@ -103,7 +105,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
             <p className="text-xs font-black uppercase tracking-[0.16em] text-ehsBlue">Easy HomeSource price</p>
             <p className="mt-2 text-3xl font-black text-ehsBlack">{formatHomePrice(home)}</p>
             <p className="mt-3 text-xs font-semibold leading-5 text-ehsBlack/60">{startingPriceDisclaimer}</p>
-            <dl className="mt-6 grid grid-cols-2 gap-3">{specs.map((spec) => <Detail key={spec.label} {...spec} />)}</dl>
+            {specs.length ? <dl className="mt-6 grid grid-cols-2 gap-3">{specs.map((spec) => <Detail key={spec.label} {...spec} />)}</dl> : <p className="mt-6 rounded-2xl bg-ehsSoftBlue p-4 text-sm font-bold text-ehsBlack/70">Details coming soon. Ask us for current specs.</p>}
             <div className="mt-6 grid gap-3">
               <ButtonLink href={pricingHref}>Get Pricing for This Home</ButtonLink>
               <ButtonLink href={tourHref} variant="secondary">Schedule a Tour</ButtonLink>
