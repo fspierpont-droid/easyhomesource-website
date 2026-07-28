@@ -73,6 +73,7 @@ export function LeadForm({ interestedHome = "", interestedHomeSlug = "", cta = "
 
     setStatus("submitting");
     try {
+      // TODO(GHL): Replace this website lead endpoint with the approved GHL integration once its workflow and field mapping are available.
       const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!response.ok) throw new Error("Lead submission failed");
       setStatus("success");
