@@ -4,17 +4,9 @@ The public Easy HomeSource website uses the approved GoHighLevel form:
 
 `https://links.framelitmedia.com/widget/form/rdWwyO5p9cn3CTEQlmAG`
 
-This integration applies only to the public `/get-quote` lead-capture page. It does not replace or modify the internal quote portal, pricing engine, PDF generation, authentication, or catalog administration.
+`/get-quote` is the central public lead-intake page. Financing inquiries route there through `/get-quote?source=financing` and use the same approved GHL form; `/financing` does not maintain a separate lead form. This integration does not replace or modify the internal quote portal, pricing engine, PDF generation, authentication, or catalog administration.
 
-## Vercel configuration
-
-Set the following environment variable in Vercel for each environment that should use the GHL form, then redeploy:
-
-```text
-NEXT_PUBLIC_GHL_FORM_URL=https://links.framelitmedia.com/widget/form/rdWwyO5p9cn3CTEQlmAG
-```
-
-When the variable contains a valid HTTPS URL, `/get-quote` embeds that form. When it is absent or invalid, the existing website lead form remains available as the fallback. Confirm both production and preview environment settings explicitly; do not describe GHL as connected when the iframe is not in use.
+The approved form URL is configured directly in the public quote page so that the website does not fall back to a second native lead form.
 
 ## Expected flow
 
@@ -23,11 +15,9 @@ When the variable contains a valid HTTPS URL, `/get-quote` embeds that form. Whe
 3. GHL creates or updates the contact and associated opportunity according to the approved GHL workflow.
 4. Sales receives the opportunity and follows up with the lead.
 
-## Consent requirement
+## Form presentation and consent
 
-The following language must remain visible near the form, together with links to the Privacy Policy and Terms & Conditions:
-
-> By submitting this form, you agree that Easy HomeSource may contact you by phone, text, or email about your inquiry. Message and data rates may apply. Reply STOP to opt out.
+The website provides the responsive card and iframe wrapper. Visual styling for fields inside the iframe must be adjusted in GHL Form Builder. Consent checkboxes and their language are maintained in the GHL form; the website shows only a small Privacy Policy and Terms & Conditions note below it to avoid duplication.
 
 ## Interested-home attribution
 
