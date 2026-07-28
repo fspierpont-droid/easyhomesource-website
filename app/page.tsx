@@ -148,7 +148,7 @@ export default function HomePage() {
               <p className="font-black text-ehsBlue">Plan your visit</p>
               <h3 className="mt-2 text-2xl font-black text-ehsBlack">Found something you want to see in person?</h3>
               <p className="mt-3 leading-7 text-ehsBlack/70">Browse available homes, request starting-price details, or schedule time with our Brooksville team.</p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/contact">Schedule a Tour</ButtonLink><ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink></div>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/get-quote?source=homepage&cta=schedule-tour">Schedule a Tour</ButtonLink><ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink></div>
             </div>
           </div>
         </div>
