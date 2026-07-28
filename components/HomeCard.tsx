@@ -29,7 +29,7 @@ export function HomeCard({ home }: { home: Home }) {
         <div>{home.modelNumber && <p className="text-sm font-semibold text-ehsDeepBlue">{home.modelNumber}</p>}<h3 className="mt-1 text-2xl font-black leading-tight text-ehsNavy"><Link href={detailsHref}>{home.displayName ?? home.name}</Link></h3></div>
         <div className="flex flex-wrap gap-2">{homeBadges(home).map((badge) => <span key={badge} className="rounded-full bg-ehsSoftBlue px-3 py-1 text-xs font-black text-ehsDeepBlue">{badge}</span>)}</div>
         <div className="rounded-2xl bg-gradient-to-br from-ehsSoftBlue to-white p-4 ring-1 ring-ehsBlue/10">
-          <p className="text-xs font-black uppercase tracking-wide text-ehsNavy/60">{home.priceLabel ?? "Price"}</p>
+          <p className="text-xs font-black uppercase tracking-wide text-ehsNavy/60">Display price</p>
           <p className="mt-1 text-3xl font-black text-ehsNavy">{formatHomePrice(home)}</p>
           <p className="mt-2 text-xs font-semibold text-ehsNavy/55">Final quote required.</p>
         </div>

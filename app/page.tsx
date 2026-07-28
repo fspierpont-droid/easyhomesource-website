@@ -66,7 +66,7 @@ export default function HomePage() {
               <p className="mt-3 leading-6 text-white/80">Walk through homes on the lot, compare monthly-budget expectations, and talk through the real project pieces before making a decision.</p>
               <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
                 <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">{displayHomeCount} homes on display</p></div>
-                <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">Featured from {tulip ? formatHomePrice(tulip) : "$39,888"}</p></div>
+                <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">Featured: {tulip ? formatHomePrice(tulip) : "Call/Text for starting price"}</p></div>
                 <div className="flex min-h-16 items-center rounded-2xl bg-white/15 p-3"><p className="text-sm font-black leading-5">Call/Text 352-558-8888</p></div>
               </div>
               <div className="mt-4 grid gap-2.5">
@@ -106,7 +106,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
               <p className="font-black text-ehsBlue">A practical path to homeownership</p>
-              <h3 className="mt-2 text-3xl font-black text-ehsBlack sm:text-4xl">Starting at $39,888</h3>
+              <h3 className="mt-2 text-3xl font-black text-ehsBlack sm:text-4xl">{tulip ? formatHomePrice(tulip) : "Call/Text for starting price"}</h3>
               <p className="mt-3 max-w-xl leading-7 text-ehsBlack/70">A budget-friendly home with a smart, efficient layout—available to explore with help from our local Brooksville team.</p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/get-quote?home=tulip">Get Pricing</ButtonLink><ButtonLink href="/get-quote?home=tulip" variant="secondary">Schedule a Tour</ButtonLink><ButtonLink href="tel:+13525588888" variant="secondary">Call/Text 352-558-8888</ButtonLink></div>
               <p className="mt-4 border-t border-borderGray pt-3 text-xs font-semibold leading-5 text-ehsBlack/55">Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote.</p>
@@ -139,10 +139,18 @@ export default function HomePage() {
       <section className="px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div><p className="font-black text-ehsBlue">Videos & Reels</p><h2 className="text-3xl font-black text-ehsBlack">See what’s happening at Easy HomeSource</h2><p className="mt-3 max-w-3xl leading-7 text-ehsBlack/70">Watch home tours, new arrivals, walkthroughs, and helpful videos from the Easy HomeSource team.</p></div>
+            <div><p className="font-black text-ehsBlue">Videos & Walkthroughs</p><h2 className="text-3xl font-black text-ehsBlack">See homes before you visit</h2><p className="mt-3 max-w-3xl leading-7 text-ehsBlack/70">Watch quick walkthroughs, lot videos, and featured home previews before scheduling a tour.</p></div>
             <ButtonLink href="/videos" variant="secondary">View All Videos</ButtonLink>
           </div>
-          <div className="mt-8 grid gap-6 lg:grid-cols-4">{videos.map((video) => <VideoCard key={video.id} video={video} />)}</div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+            {videos.map((video) => <VideoCard key={video.id} video={video} />)}
+            <div className="flex flex-col justify-center rounded-[1.75rem] bg-ehsSoftBlue p-6 sm:p-8">
+              <p className="font-black text-ehsBlue">Plan your visit</p>
+              <h3 className="mt-2 text-2xl font-black text-ehsBlack">Found something you want to see in person?</h3>
+              <p className="mt-3 leading-7 text-ehsBlack/70">Browse available homes, request starting-price details, or schedule time with our Brooksville team.</p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/contact">Schedule a Tour</ButtonLink><ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink></div>
+            </div>
+          </div>
         </div>
       </section>
 
