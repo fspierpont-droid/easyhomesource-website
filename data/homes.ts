@@ -37,15 +37,6 @@ const desc = (name: string, catalogModel = false, slug?: string) => {
     ? `${name} is part of the Easy HomeSource online floor plan catalog. Contact our Brooksville team for current availability, order options, pricing, delivery and setup, financing guidance, and a final quote.`
     : `The ${name} is part of the Easy HomeSource display inventory. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
 };
-const galleryFor = (slug: string, name: string): HomeGalleryItem[] => [
-  { src: `/homes/${slug}/exterior/${slug}-exterior-01.jpg`, alt: `${name} manufactured home exterior at Easy HomeSource`, category: "exterior", isPrimary: true },
-  { src: `/homes/${slug}/interior/${slug}-living-01.jpg`, alt: `${name} living room interior`, category: "interior" },
-  { src: `/homes/${slug}/kitchen/${slug}-kitchen-01.jpg`, alt: `${name} kitchen`, category: "kitchen" },
-  { src: `/homes/${slug}/bathroom/${slug}-bathroom-01.jpg`, alt: `${name} bathroom`, category: "bathroom" },
-  { src: `/homes/${slug}/bedroom/${slug}-bedroom-01.jpg`, alt: `${name} bedroom`, category: "bedroom" },
-  { src: `/homes/${slug}/floorplan/${slug}-floorplan.jpg`, alt: `${name} floor plan`, category: "floorplan" }
-];
-
 type Seed = Pick<Home, "name"|"displayName"|"alternateName"|"slug"|"manufacturer"|"series"|"modelNumber"|"bedrooms"|"bathrooms"|"squareFeet"|"width"|"length"|"size"|"startingPrice"|"priceLabel"|"isFeatured"|"isOnDisplay"|"isCatalogModel"|"isSpecialOffer"|"isNewArrival"|"note">;
 const displaySeeds: Seed[] = [
   { name: "Tulip", alternateName: "TRT12482PH", slug: "tulip", manufacturer: "Clayton TRU", series: "TRU Mini", modelNumber: "TRT12482PH", bedrooms: 2, bathrooms: 1, squareFeet: 544, width: 12, length: 48, size: "12' x 48'", startingPrice: 39888, priceLabel: "Special Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: true, isNewArrival: false, note: "Verified against the official TRU manufacturer page and sales sheet for model TRT12482PH. Keep the approved Easy HomeSource special price at $39,888 unless management changes it. Manufacturer photography and floor plan are representative; colors, finishes, options, and availability may vary." },
@@ -60,16 +51,24 @@ const displaySeeds: Seed[] = [
   { name: "Hey Jude", slug: "hey-jude", manufacturer: "Clayton Addison", series: "Tempo Series", modelNumber: "Hey Jude", bedrooms: 5, bathrooms: 2, squareFeet: 1896, width: 28, length: 72, size: "28' x 72'", startingPrice: 128101.34, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false },
   { name: "Boujee XL 2", slug: "boujee-xl-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee XL 2", bedrooms: 4, bathrooms: 3, squareFeet: 1980, width: 28, length: 72, size: "28' x 72'", startingPrice: 147374.32, priceLabel: "Starting Price", isFeatured: true, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: false }
 ];
+const knownLineupSeeds: Seed[] = [
+  { name: "Boujee 2", slug: "boujee-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee 2", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  { name: "Timberland", slug: "timberland", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  { name: "Delilah", slug: "delilah", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  { name: "Craft Select 15663A", slug: "craft-select-15663a", manufacturer: "Cavco Plant City", series: "Craft Select", modelNumber: "15663A", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  { name: "Creekside Series", slug: "creekside-series", series: "Creekside Series", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }
+];
 const catalogSeeds: Seed[] = catalogHomeSeeds.map((home) => ({ ...home, startingPrice: home.startingPrice, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Online catalog model. Website price is sourced from the EHS Price calculation in QS Master Quote ERP Template V05. Confirm availability, options, freight, setup, and order timing before quoting." }));
-const seeds: Seed[] = [...displaySeeds, ...catalogSeeds];
+const seeds: Seed[] = [...displaySeeds, ...catalogSeeds, ...knownLineupSeeds];
 const protectedSeedPriceSlugs = new Set(["tulip", "dogwood", "born-to-run", "paxton", "craft-select-28603a", ...catalogHomeSeeds.map((home) => home.slug)]);
 
 export const homes: Home[] = seeds.map((home, index) => {
   const importedMedia = getImportedHomeMedia(home.slug);
   const scraped = scrapedHomeDetails[home.slug];
-  const fallbackGallery = galleryFor(home.slug, home.displayName ?? home.name);
   const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
-  const gallery = importedGallery?.length ? importedGallery : fallbackGallery;
+  // Never manufacture media paths: an empty gallery renders the customer-facing
+  // placeholder until model-specific assets have been reviewed and assigned.
+  const gallery = importedGallery?.length ? importedGallery : [];
   const startingPrice = protectedSeedPriceSlugs.has(home.slug)
     ? home.startingPrice ?? scraped?.startingPrice ?? null
     : scraped?.startingPrice ?? home.startingPrice ?? null;
