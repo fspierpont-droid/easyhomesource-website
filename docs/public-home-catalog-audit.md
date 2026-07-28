@@ -18,6 +18,25 @@
 
 These records intentionally expose only the lineup facts currently known to the public-site project. Unknown values use customer-facing placeholders rather than inferred prices, specifications, or media.
 
+## Media Assignment Round 1
+
+### Media assigned in this PR
+
+- **None.** The repository audit did not find model-specific, approved media that can be safely assigned to any of the seven prioritized records. Existing assignments for the other public homes are unchanged.
+- Craft Select 28603A and Select S-1272-32A retain their already-reviewed floor plans. Neither record has a clearly matched model photo in the current manifests or public asset folders.
+- The five incomplete lineup records retain the **Photos coming soon**, **Floor plan coming soon**, and **Video walkthrough coming soon** states rather than receiving inferred media.
+
+### Ambiguous media requiring Scott/EHS review
+
+- **Boujee XL 2 assets must not be reused for Boujee 2.** `data/homeMedia.generated.ts` contains an exterior and floor plan explicitly mapped to `boujee-xl-2`; the similar name alone is not enough to approve either asset for `boujee-2`.
+- **Atmos 28603N photography must not be reused for Craft Select 28603A.** The existing exterior is explicitly mapped to the Alpha Atmos 28603N source page, while Craft Select 28603A currently has only its model-specific floor plan and brochure mapping.
+- **Craft Select 28603A has two references to the same floor-plan asset, but no photo candidate.** The display-home generated manifest and manufacturer manifest both identify `chsd69aabrr.jpeg` as a floor plan, not an exterior.
+- **Select S-1272-32A has only a floor-plan candidate.** Its catalog manifest deliberately has no exterior path, so the floor plan must not be promoted as a model photo.
+- **No filename, folder, manifest entry, or reviewed slug/model mapping was found for Timberland, Delilah, Craft Select 15663A, or Creekside Series.** Media for those records needs a model-specific asset and EHS approval before assignment.
+- **The general Easy HomeSource promotional video is not a model walkthrough.** It remains site content and is not assigned to any home record.
+
+Round 1 reviewed `data/homeMedia.ts`, `data/homes.ts`, `data/catalogHomeSeeds.ts`, the generated media manifests, manufacturer media manifests, import maps/reports, and `public/`. The `public/homes/` model folders contain placeholders only; no unassigned home photography or floor plans are stored there.
+
 ## Catalog completion gaps
 
 ### Missing verified starting prices
