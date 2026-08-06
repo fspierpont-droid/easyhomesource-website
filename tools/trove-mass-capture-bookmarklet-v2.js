@@ -1,0 +1,148 @@
+javascript:(()=>{ 
+  "use strict"; 
+  const output = {
+    capturedAt: new Date().toISOString(),
+    sourceUrl: location.href,
+    homes: []
+  };
+
+  const SUSPICIOUS_QUERY = /(?:token|auth|session|cookie|signature|signed|jwt|bearer|access[_-]?key|secret|credential|password|expires|policy|x-amz|x-goog|cf-signature)/i; 
+  
+  const stripUnsafeQuery = (url) => { 
+    try { 
+      const parsed = new URL(url); 
+      for (const key of Array.from(parsed.searchParams.keys())) { 
+        if (SUSPICIOUS_QUERY.test(key) || SUSPICIOUS_QUERY.test(parsed.searchParams.get(key) || "")) parsed.searchParams.delete(key); 
+      } 
+      parsed.hash = ""; 
+      return parsed.toString(); 
+    } catch { 
+      return url; 
+    } 
+  };
+
+  let allProducts = [];
+
+  // Method 1: Check Next.js data block (for public pages)
+  const nextDataScript = document.getElementById('__NEXT_DATA__');
+  if (nextDataScript) {
+    try {
+      const nextData = JSON.parse(nextDataScript.textContent);
+      const searchForProducts = (obj) => {
+        if (!obj || typeof obj !== 'object') return [];
+        let found = [];
+        for (const key in obj) {
+            if (key === 'products' && Array.isArray(obj[key])) found = found.concat(obj[key]);
+            else if (Array.isArray(obj[key])) found = found.concat(searchForProducts(obj[key]));
+            else if (typeof obj[key] === 'object') found = found.concat(searchForProducts(obj[key]));
+        }
+        return found;
+      };
+      allProducts = allProducts.concat(searchForProducts(nextData));
+    } catch (e) {
+      console.warn("Next.js parsing failed");
+    }
+  }
+
+  // Method 2: Check standard React/Redux/Window variables (often used in Admin panels)
+  if (window.__INITIAL_STATE__) {
+      const state = window.__INITIAL_STATE__;
+      if (state.catalog && state.catalog.products) allProducts = allProducts.concat(state.catalog.products);
+      if (state.inventory && state.inventory.items) allProducts = allProducts.concat(state.inventory.items);
+  }
+
+  // Method 3: Bruteforce search through window objects that might hold the catalog
+  for (const key of Object.keys(window)) {
+      try {
+         const obj = window[key];
+         if (obj && typeof obj === 'object') {
+             if (Array.isArray(obj.products)) allProducts = allProducts.concat(obj.products);
+             if (Array.isArray(obj.items) && obj.items[0] && obj.items[0].square_feet) allProducts = allProducts.concat(obj.items);
+         }
+      } catch (e) {
+          // ignore cross-origin errors
+      }
+  }
+
+  // Fallback Method 4: If we are in the admin dashboard, intercept the fetch requests
+  // This requires the user to scroll or refresh the page while the script is active, 
+  // but since it's a bookmarklet, it's better to just scrape the DOM if we are on the admin grid.
+  
+  if (allProducts.length === 0) {
+      // Admin DOM Scraper
+      const rows = document.querySelectorAll('tr, .TableRow, [role="row"]');
+      rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          // If it looks like a home row (has beds, baths, or price)
+          if (text.includes('bed') || text.includes('bath') || text.includes('$') || text.match(/\d{2,} sq/)) {
+              // Extract what we can from the row
+              const cells = Array.from(row.querySelectorAll('td, div')).map(c => c.innerText.trim()).filter(Boolean);
+              if (cells.length > 2) {
+                  output.homes.push({
+                      id: "scraped-" + Math.random().toString(36).substr(2, 9),
+                      name: cells[0] || cells[1] || "Unknown",
+                      rawRowText: text
+                  });
+              }
+          }
+      });
+  } else {
+      // Process found JSON products
+      output.homes = allProducts.filter(p => p && (p.name || p.title)).map(p => {
+         const details = p.details || p.specifications || {};
+         const price = p.price || {};
+         
+         const images = (p.images || p.photos || []).map(img => ({
+            url: stripUnsafeQuery(img.image_url || img.formatted_image_url || img.url || img),
+            alt: img.alt || "",
+            tags: img.image_tags || img.tags || []
+         }));
+
+         return {
+            id: p.id || p._id,
+            name: p.name || p.title,
+            slug: p.slug || (p.name || p.title || "").toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+            manufacturer: p.supplier?.name || p.supplier || p.manufacturer?.name || p.manufacturer || "",
+            series: p.product_group?.name || p.product_group || p.series || "",
+            bedrooms: details.bedrooms || details.beds || null,
+            bathrooms: details.bathrooms || details.baths || null,
+            squareFeet: details.square_feet || details.sqft || null,
+            width: details.width_inches ? Math.round(details.width_inches / 12) : (details.width || null),
+            length: details.length_inches ? Math.round(details.length_inches / 12) : (details.length || null),
+            startingPrice: price.retail_micros ? price.retail_micros / 1000000 : (price.starting || price.base || null),
+            images: images
+         };
+      });
+  }
+
+  // Deduplicate homes
+  const uniqueHomes = [];
+  const seenIds = new Set();
+  output.homes.forEach(h => {
+      const key = h.id || h.name;
+      if (!seenIds.has(key)) {
+          seenIds.add(key);
+          uniqueHomes.push(h);
+      }
+  });
+  output.homes = uniqueHomes;
+
+  if (output.homes.length === 0) {
+     alert("Could not find the catalog data. Try navigating to the PUBLIC easyhomesource.com/catalog page instead of the Admin dashboard, and run the bookmarklet there.");
+     return;
+  }
+
+  const json = JSON.stringify(output, null, 2); 
+  const html = `<!doctype html><title>EHS Mass Capture</title><style>body{font-family:system-ui;margin:24px}textarea{width:100%;height:75vh;font-family:ui-monospace,monospace}</style><h1>EHS Mass Capture JSON (${output.homes.length} homes found)</h1><p>Copy this JSON and save it to a file, then upload it to the AI.</p><textarea autofocus>${json.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</textarea>`; 
+  
+  navigator.clipboard?.writeText(json).catch(() => {}); 
+  
+  const win = window.open("", "_blank"); 
+  if (win) { 
+    win.document.open(); 
+    win.document.write(html); 
+    win.document.close(); 
+  } else { 
+    alert("Copied " + output.homes.length + " homes to clipboard!"); 
+  } 
+})();
