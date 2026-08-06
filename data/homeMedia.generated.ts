@@ -326,11 +326,18 @@ export const homeMedia: HomeMediaManifest = {
   },
   "craft-select-15663a": {
     "slug": "craft-select-15663a",
-    "gallery": [],
-    "floorPlanImage": null,
+    "gallery": [
+      {
+        "src": "/homes/craft-select-15663a/floorplan/craft-select-15663a-floorplan-01.jpg",
+        "alt": "Cavco Select / 15763A Layout 117004",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2037/floorplan/236750/floor-plans-SMALL%20%288%29.jpg"
+      }
+    ],
+    "floorPlanImage": "/homes/craft-select-15663a/floorplan/craft-select-15663a-floorplan-01.jpg",
     "brochureUrl": null,
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.manufacturedhomes.com/home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/"
+    "sourcePage": "https://www.myfloridamanufacturedhome.com/manufactured-home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/"
   }
 };

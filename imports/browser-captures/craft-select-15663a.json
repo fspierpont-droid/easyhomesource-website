@@ -1,15 +1,29 @@
 {
-  "sourcePage": "https://www.manufacturedhomes.com/home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/",
-  "pageTitle": "Cavco Select 15763A",
-  "capturedAt": "2026-08-06T18:45:00.000Z",
+  "sourcePage": "https://www.myfloridamanufacturedhome.com/manufactured-home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/",
+  "pageTitle": "Cavco Select / 15763A by Wayne Frier Home Center of Tallahassee - FMHA",
+  "capturedAt": "2026-08-06T18:43:41.982Z",
   "media": [
     {
-      "url": "https://cdn.manufacturedhomes.com/floor_plans/117004/large.jpg",
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2037/floorplan/236750/floor-plans-SMALL%20%288%29.jpg",
       "type": "image",
       "categoryGuess": "floorplan",
-      "alt": "Cavco Select 15763A Layout",
-      "width": 1200,
-      "height": 818
+      "alt": "Cavco Select / 15763A Layout 117004",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://www.myfloridamanufacturedhome.com/brochure/dealer/1529/236750/",
+      "type": "brochure",
+      "categoryGuess": "brochure",
+      "alt": "Floorplan Brochure"
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2037/floorplan/236750/floor-plans-SMALL%20%288%29.jpg",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "",
+      "width": 1185,
+      "height": 700
     }
   ],
   "slug": "craft-select-15663a"
