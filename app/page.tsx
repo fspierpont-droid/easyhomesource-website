@@ -12,15 +12,15 @@ const proofPoints = [
 ];
 
 const steps = [
-  { title: "Browse real homes", text: "Start with homes you can tour on the Easy HomeSource lot or compare orderable floor plans online." },
-  { title: "Plan the full package", text: "Review home pricing, land-and-home package options, financing questions, delivery, setup, permits, and site conditions before you commit." },
-  { title: "Move forward with support", text: "Work with the Brooksville team through home selection, package planning, lender conversations, delivery coordination, and move-in steps." }
+  { title: "Tour Actual Homes on the Lot", text: "Don't just look at floorplans. Walk through fully furnished, high-quality models right here at our Brooksville dealership." },
+  { title: "Transparent, Upfront Pricing", text: "No hidden fees or runarounds. We provide clear pricing guidance covering the home, delivery, setup, permits, and site work." },
+  { title: "Turnkey Financing & Delivery", text: "From securing lenders to handing you the keys, our local team handles the heavy lifting so you can move into your new home stress-free." }
 ];
 
 const reasons = [
-  "Real display homes, public starting prices, and simple comparison tools.",
-  "A one-stop path for home-only buyers, turnkey planning, land-and-home package questions, delivery, setup, and permits.",
-  "Local Brooksville support instead of a generic online catalog experience."
+  "No-pressure shopping with clear starting prices and on-lot display homes you can actually walk through.",
+  "Turnkey solutions for land-and-home packages, delivery, setup, permitting, and utilities.",
+  "Decades of local expertise in Brooksville and Central Florida—we know the zoning, the land, and the best local contractors."
 ];
 
 export default function HomePage() {

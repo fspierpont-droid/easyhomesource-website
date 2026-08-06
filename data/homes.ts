@@ -74,6 +74,12 @@ export const homes: Home[] = seeds.map((home, index) => {
     ? home.startingPrice ?? scraped?.startingPrice ?? null
     : scraped?.startingPrice ?? home.startingPrice ?? null;
   const description = desc(home.displayName ?? home.name, home.isCatalogModel, home.slug);
+  const baseTitle = `${home.displayName ?? home.name} - ${home.bedrooms ? `${home.bedrooms} Bed, ${home.bathrooms} Bath` : 'Manufactured Home'}`;
+  const seoTitle = `${baseTitle} | Brooksville, FL`;
+  const seoDescription = home.isCatalogModel 
+    ? `View the ${home.displayName ?? home.name} floor plan by ${home.manufacturer || 'our builders'}. This ${home.squareFeet || 'spacious'} sq. ft. home is available to order in Brooksville, FL with financing & delivery support.`
+    : `Tour the ${home.displayName ?? home.name} on our lot in Brooksville, FL! This ${home.bedrooms ? `${home.bedrooms}-bed, ${home.bathrooms}-bath` : 'beautiful'} manufactured home is available now. Call for a quote.`;
+  
   return ({
   id: home.slug, slug: home.slug, name: home.name, displayName: home.displayName ?? null, alternateName: home.alternateName ?? null, modelNumber: home.modelNumber ?? null, manufacturer: home.manufacturer ?? null, series: home.series ?? null, note: home.note ?? null, homeType: "Manufactured Home",
   bedrooms: home.bedrooms, bathrooms: home.bathrooms, squareFeet: home.squareFeet, width: home.width, length: home.length, size: home.size,
@@ -81,7 +87,7 @@ export const homes: Home[] = seeds.map((home, index) => {
   status: "Available", isActive: true, isFeatured: home.isFeatured, isOnDisplay: home.isOnDisplay, isCatalogModel: home.isCatalogModel, isNewArrival: home.isNewArrival, isSpecialOffer: home.isSpecialOffer, isComingSoon: false,
   shortDescription: description, longDescription: description, features: home.isCatalogModel ? catalogFeatures : displayFeatures, standardFeatures, images: gallery.map((item) => item.src), gallery,
   floorPlanImage: importedMedia?.floorPlanImage ?? null, brochureUrl: importedMedia?.brochureUrl ?? null, videoUrl: importedMedia?.videoUrl ?? null, virtualTourUrl: importedMedia?.virtualTourUrl ?? null, walkthroughVideoUrl: null,
-  seoTitle: `${home.displayName ?? home.name} Manufactured Home | Easy HomeSource`, seoDescription: `Explore ${home.displayName ?? home.name} specs, price guidance, photos, floor plans, videos, and brochure media from Easy HomeSource.`, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
+  seoTitle, seoDescription, createdAt: `2026-01-${String(index + 1).padStart(2, "0")}`
   });
 });
 
