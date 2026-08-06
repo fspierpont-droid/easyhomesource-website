@@ -83,10 +83,10 @@ Use **Missing** only when no verified value or approved model-specific media is 
 
 | Home | Starting price | Beds | Baths | Sq. ft. | Dimensions | Manufacturer | Model number | Photos | Floorplan | Video | Display / catalog status | Approval status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Boujee 2 | Missing | Known: 3 | Known: 2 | Known: 1580 | Known: 28'x60' | Known: Clayton Addison | Known: 44BOU28603BH | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Boujee 2 | Missing | Known: 3 | Known: 2 | Known: 1580 | Known: 28'x60' | Known: Clayton Addison | Known: 44BOU28603BH | Known | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
 ~~| Timberland | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |~~
 | Delilah | Missing | Known: 4 | Known: 2 | Known: 2280 | Known: 30'x76' | Known: Timber Creek | Known: CSFL-3301 | Known | Known | Known | Catalog/orderable; confirm | Pending EHS approval |
-| Craft Select 15663A | Missing | Known: 3 | Known: 2 | Known: 1140 | Known: 15'x76' | Known: Cavco Plant City | Known: 15663A | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
+| Craft Select 15663A | Missing | Known: 3 | Known: 2 | Known: 1140 | Known: 15'x76' | Known: Cavco Plant City | Known: 15663A | Missing | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
 | Creekside Series | Missing | Missing | Missing | Missing | Missing | Known: Timber Creek | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
 | Craft Select 28603A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | On display | Media approval pending |
 | Select S-1272-32A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | Catalog/orderable | Media approval pending |
