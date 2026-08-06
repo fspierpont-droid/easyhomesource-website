@@ -1,20 +1,128 @@
 {
-  "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/",
-  "pageTitle": "Tru Maple Manufactured Home",
-  "capturedAt": "2026-08-06T19:01:55.726Z",
-  "slug": "maple",
+  "sourcePage": "https://www.southcarolinamanufacturedhomes.com/floor-plan-detail/236739-1257/lexington-discount-homes/lexington/origin-series/maple-trt28483m/",
+  "pageTitle": "Origin Series Maple TRT28483M - Clayton Homes",
+  "capturedAt": "2026-08-06T18:41:40.193Z",
   "media": [
     {
-      "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRU-MAPLE-3BED-2BATH-scaled.webp",
-      "type": "image",
-      "categoryGuess": "exterior",
-      "alt": "TRU Maple Exterior"
-    },
-    {
-      "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRT28483M_MAPLE-768x408.webp",
+      "url": "https://cdn.manufacturedhomes.com/floor_plans/116958/large.jpg",
       "type": "image",
       "categoryGuess": "floorplan",
-      "alt": "TRU Maple Floor Plan"
+      "alt": "Origin Series / Maple TRT28483M Layout 116958",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121868/large.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Origin Series / Maple TRT28483M Kitchen 121868",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121869/large.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Origin Series / Maple TRT28483M Kitchen 121869",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121870/large.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Origin Series / Maple TRT28483M Kitchen 121870",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121871/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Origin Series / Maple TRT28483M Interior 121871",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121872/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Origin Series / Maple TRT28483M Interior 121872",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121873/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Origin Series / Maple TRT28483M Interior 121873",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121874/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Origin Series / Maple TRT28483M Interior 121874",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121875/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Origin Series / Maple TRT28483M Interior 121875",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121876/large.jpg",
+      "type": "image",
+      "categoryGuess": "bedroom",
+      "alt": "Origin Series / Maple TRT28483M Bedroom 121876",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121877/large.jpg",
+      "type": "image",
+      "categoryGuess": "bedroom",
+      "alt": "Origin Series / Maple TRT28483M Bedroom 121877",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121878/large.jpg",
+      "type": "image",
+      "categoryGuess": "bedroom",
+      "alt": "Origin Series / Maple TRT28483M Bedroom 121878",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121883/large.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Origin Series / Maple TRT28483M Bathroom 121883",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121884/large.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Origin Series / Maple TRT28483M Bathroom 121884",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/121886/large.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Origin Series / Maple TRT28483M Exterior 121886",
+      "width": 1200,
+      "height": 818
     }
-  ]
+  ],
+  "slug": "maple"
 }

@@ -347,7 +347,7 @@ export const homeMedia: HomeMediaManifest = {
     "brochureUrl": null,
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/"
+    "sourcePage": "https://www.southcarolinamanufacturedhomes.com/floor-plan-detail/236739-1257/lexington-discount-homes/lexington/origin-series/maple-trt28483m/"
   },
   "white-oak": {
     "slug": "white-oak",
@@ -356,6 +356,6 @@ export const homeMedia: HomeMediaManifest = {
     "brochureUrl": null,
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618/creekside-series/the-white-oak-cs-3221/"
   }
 };

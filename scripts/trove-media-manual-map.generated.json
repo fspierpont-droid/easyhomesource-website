@@ -214,43 +214,148 @@
   },
   {
     "slug": "maple",
-    "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/",
+    "sourcePage": "https://www.southcarolinamanufacturedhomes.com/floor-plan-detail/236739-1257/lexington-discount-homes/lexington/origin-series/maple-trt28483m/",
     "media": [
       {
-        "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRU-MAPLE-3BED-2BATH-scaled.webp",
-        "category": "bathroom",
-        "alt": "TRU Maple Exterior"
+        "url": "https://cdn.manufacturedhomes.com/floor_plans/116958/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Layout 116958"
       },
       {
-        "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRT28483M_MAPLE-768x408.webp",
+        "url": "https://cdn.manufacturedhomes.com/photos/121868/large.jpg",
         "category": "floorplan",
-        "alt": "TRU Maple Floor Plan"
+        "alt": "Origin Series / Maple TRT28483M Kitchen 121868"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121869/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Kitchen 121869"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121870/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Kitchen 121870"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121871/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Interior 121871"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121872/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Interior 121872"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121873/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Interior 121873"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121874/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Interior 121874"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121875/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Interior 121875"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121876/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Bedroom 121876"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121877/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Bedroom 121877"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121878/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Bedroom 121878"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121883/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Bathroom 121883"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121884/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Bathroom 121884"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/121886/large.jpg",
+        "category": "floorplan",
+        "alt": "Origin Series / Maple TRT28483M Exterior 121886"
       }
     ]
   },
   {
     "slug": "white-oak",
-    "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/",
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618/creekside-series/the-white-oak-cs-3221/",
     "media": [
       {
-        "url": "https://cdn.manufacturedhomes.com/floor_plans/81358/large.jpg",
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Layout.jpg",
         "category": "floorplan",
-        "alt": "White Oak Floor Plan"
+        "alt": "Creekside Series / The White Oak CS-3221 Layout 81376"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/101258/large.jpg",
-        "category": "exterior",
-        "alt": "White Oak Exterior"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-2.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Interior 86353"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/101259/large.jpg",
-        "category": "interior",
-        "alt": "White Oak Interior"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-3.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Interior 86354"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/101260/large.jpg",
-        "category": "kitchen",
-        "alt": "White Oak Kitchen"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-4.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Interior 86355"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-5.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Interior 86356"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-1.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86357"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-2.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86358"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-1.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86367"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-2.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86368"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-3.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86369"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-1.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Exterior 86374"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-2.jpg",
+        "category": "floorplan",
+        "alt": "Creekside Series / The White Oak CS-3221 Exterior 86375"
       }
     ]
   }

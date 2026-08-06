@@ -1,32 +1,104 @@
 {
-  "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/",
-  "pageTitle": "The White Oak CS-3221",
-  "capturedAt": "2026-08-06T19:02:02.050Z",
-  "slug": "white-oak",
+  "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618/creekside-series/the-white-oak-cs-3221/",
+  "pageTitle": "Creekside Series The White Oak CS-3221 by Timber Creek Housing",
+  "capturedAt": "2026-08-06T18:41:40.193Z",
   "media": [
     {
-      "url": "https://cdn.manufacturedhomes.com/floor_plans/81358/large.jpg",
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Layout.jpg",
       "type": "image",
       "categoryGuess": "floorplan",
-      "alt": "White Oak Floor Plan"
+      "alt": "Creekside Series / The White Oak CS-3221 Layout 81376",
+      "width": 1200,
+      "height": 818
     },
     {
-      "url": "https://cdn.manufacturedhomes.com/photos/101258/large.jpg",
-      "type": "image",
-      "categoryGuess": "exterior",
-      "alt": "White Oak Exterior"
-    },
-    {
-      "url": "https://cdn.manufacturedhomes.com/photos/101259/large.jpg",
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-2.jpg",
       "type": "image",
       "categoryGuess": "interior",
-      "alt": "White Oak Interior"
+      "alt": "Creekside Series / The White Oak CS-3221 Interior 86353",
+      "width": 1200,
+      "height": 818
     },
     {
-      "url": "https://cdn.manufacturedhomes.com/photos/101260/large.jpg",
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-3.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The White Oak CS-3221 Interior 86354",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-4.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The White Oak CS-3221 Interior 86355",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-5.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The White Oak CS-3221 Interior 86356",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-1.jpg",
       "type": "image",
       "categoryGuess": "kitchen",
-      "alt": "White Oak Kitchen"
+      "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86357",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-2.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86358",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-1.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86367",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-2.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86368",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-3.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86369",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-1.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Creekside Series / The White Oak CS-3221 Exterior 86374",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-2.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Creekside Series / The White Oak CS-3221 Exterior 86375",
+      "width": 1200,
+      "height": 818
     }
-  ]
+  ],
+  "slug": "white-oak"
 }
