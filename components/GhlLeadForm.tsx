@@ -3,13 +3,24 @@ import Link from "next/link";
 type GhlLeadFormProps = {
   formUrl: string;
   homeSlug?: string;
+  propertyId?: string;
+  propertyAddress?: string;
   source?: string;
   cta?: string;
 };
 
-export function GhlLeadForm({ formUrl, homeSlug, source = "website", cta }: GhlLeadFormProps) {
+export function GhlLeadForm({
+  formUrl,
+  homeSlug,
+  propertyId,
+  propertyAddress,
+  source = "website",
+  cta
+}: GhlLeadFormProps) {
   const url = new URL(formUrl);
   if (homeSlug) url.searchParams.set("home", homeSlug);
+  if (propertyId) url.searchParams.set("property", propertyId);
+  if (propertyAddress) url.searchParams.set("property_address", propertyAddress);
   if (source) url.searchParams.set("source", source);
   if (cta) url.searchParams.set("cta", cta);
 
