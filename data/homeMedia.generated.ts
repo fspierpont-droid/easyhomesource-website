@@ -211,5 +211,23 @@ export const homeMedia: HomeMediaManifest = {
     "videoUrl": "https://my.matterport.com/api/v2/player/models/nBr5bwTEycr/thumb/",
     "virtualTourUrl": null,
     "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817/creekside-series/the-delilah-csfl-3301/"
+  },
+  "boujee-2": {
+    "slug": "boujee-2",
+    "gallery": [],
+    "floorPlanImage": null,
+    "brochureUrl": null,
+    "videoUrl": null,
+    "virtualTourUrl": null,
+    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh"
+  },
+  "craft-select-15663a": {
+    "slug": "craft-select-15663a",
+    "gallery": [],
+    "floorPlanImage": null,
+    "brochureUrl": null,
+    "videoUrl": null,
+    "virtualTourUrl": null,
+    "sourcePage": "https://www.manufacturedhomes.com/home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/"
   }
 };

@@ -1,5 +1,62 @@
 [
   {
+    "slug": "boujee-2",
+    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh",
+    "media": [
+      {
+        "url": "https://cdn.manufacturedhomes.com/floor_plans/45133/large.jpg",
+        "category": "floorplan",
+        "alt": "Boujee 2 Layout"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92204/large.jpg",
+        "category": "interior",
+        "alt": "Boujee 2 Interior 1"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92205/large.jpg",
+        "category": "interior",
+        "alt": "Boujee 2 Interior 2"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92206/large.jpg",
+        "category": "interior",
+        "alt": "Boujee 2 Interior 3"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92207/large.jpg",
+        "category": "interior",
+        "alt": "Boujee 2 Interior 4"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92208/large.jpg",
+        "category": "interior",
+        "alt": "Boujee 2 Interior 5"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92218/large.jpg",
+        "category": "exterior",
+        "alt": "Boujee 2 Exterior 1"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/92219/large.jpg",
+        "category": "exterior",
+        "alt": "Boujee 2 Exterior 2"
+      }
+    ]
+  },
+  {
+    "slug": "craft-select-15663a",
+    "sourcePage": "https://www.manufacturedhomes.com/home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/",
+    "media": [
+      {
+        "url": "https://cdn.manufacturedhomes.com/floor_plans/117004/large.jpg",
+        "category": "floorplan",
+        "alt": "Cavco Select 15763A Layout"
+      }
+    ]
+  },
+  {
     "slug": "delilah",
     "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817/creekside-series/the-delilah-csfl-3301/",
     "media": [

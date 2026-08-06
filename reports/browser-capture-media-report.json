@@ -1,4 +1,35 @@
 {
-  "generatedAt": "2026-06-17T07:30:29.089Z",
-  "captures": []
+  "generatedAt": "2026-08-06T18:41:08.818Z",
+  "captures": [
+    {
+      "file": "boujee-2.json",
+      "slug": "boujee-2",
+      "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh",
+      "pageTitle": "The Boujee / The Boujee 2 44BOU28603BH",
+      "capturedMedia": 8,
+      "acceptedMedia": 8,
+      "rejections": {}
+    },
+    {
+      "file": "craft-select-15663a.json",
+      "slug": "craft-select-15663a",
+      "sourcePage": "https://www.manufacturedhomes.com/home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/",
+      "pageTitle": "Cavco Select 15763A",
+      "capturedMedia": 1,
+      "acceptedMedia": 1,
+      "rejections": {}
+    },
+    {
+      "file": "delilah.json",
+      "slug": "delilah",
+      "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817/creekside-series/the-delilah-csfl-3301/",
+      "pageTitle": "Creekside Series The Delilah CSFL-3301 by Timber Creek Housing",
+      "capturedMedia": 22,
+      "acceptedMedia": 19,
+      "rejections": {
+        "duplicate URL": 2,
+        "unsupported media URL": 1
+      }
+    }
+  ]
 }

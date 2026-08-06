@@ -1,0 +1,72 @@
+{
+  "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh",
+  "pageTitle": "The Boujee / The Boujee 2 44BOU28603BH",
+  "capturedAt": "2026-08-06T18:45:00.000Z",
+  "media": [
+    {
+      "url": "https://cdn.manufacturedhomes.com/floor_plans/45133/large.jpg",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "Boujee 2 Layout",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92204/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Boujee 2 Interior 1",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92205/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Boujee 2 Interior 2",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92206/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Boujee 2 Interior 3",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92207/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Boujee 2 Interior 4",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92208/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Boujee 2 Interior 5",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92218/large.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Boujee 2 Exterior 1",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/92219/large.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Boujee 2 Exterior 2",
+      "width": 1200,
+      "height": 818
+    }
+  ],
+  "slug": "boujee-2"
+}
