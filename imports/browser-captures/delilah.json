@@ -1,0 +1,180 @@
+{
+  "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817/creekside-series/the-delilah-csfl-3301/",
+  "pageTitle": "Creekside Series The Delilah CSFL-3301 by Timber Creek Housing",
+  "capturedAt": "2026-08-06T18:38:37.232Z",
+  "media": [
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/floor-plans-SMALL.jpg",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "",
+      "width": 1200,
+      "height": 818
+    },
+    {
+      "url": "https://my.matterport.com/api/v2/player/models/nBr5bwTEycr/thumb/",
+      "type": "video",
+      "categoryGuess": "video",
+      "alt": "c39d223f94ff4a7708f30056ac4ebbe9 3D Tour",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/floor-plans-SMALL.jpg",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Layout 89122",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-1.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Interior 103322",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-2.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Interior 103323",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-3.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Interior 103324",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-4.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Interior 103325",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-5.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Interior 103326",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-1.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103327",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-2.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103328",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-3.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103329",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-4.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103330",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-5.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103331",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-6.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Kitchen 103332",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-1.jpg",
+      "type": "image",
+      "categoryGuess": "bedroom",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Bedroom 103333",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-2.jpg",
+      "type": "image",
+      "categoryGuess": "bedroom",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Bedroom 103334",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-1.jpg",
+      "type": "image",
+      "categoryGuess": "bathroom",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Bathroom 103339",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-ext-1.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Exterior 103348",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-ext-2.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "Creekside Series / The Delilah CSFL-3301 Exterior 103349",
+      "width": 600,
+      "height": 350
+    },
+    {
+      "url": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/232817/",
+      "type": "brochure",
+      "categoryGuess": "brochure",
+      "alt": "Brochure"
+    },
+    {
+      "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-1.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "",
+      "width": 1185,
+      "height": 616
+    },
+    {
+      "url": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/matterport_oembed.php?url=https%3A%2F%2Fmy.matterport.com%2Fshow%2F%3Fm%3DnBr5bwTEycr",
+      "type": "video",
+      "categoryGuess": "video",
+      "alt": ""
+    }
+  ],
+  "slug": "delilah"
+}
