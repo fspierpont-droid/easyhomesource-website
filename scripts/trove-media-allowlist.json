@@ -135,5 +135,23 @@
     "aliases": [
       "Craft Select 15663A"
     ]
+  },
+  {
+    "name": "Maple",
+    "slug": "maple",
+    "troveName": "Maple",
+    "troveDetailUrl": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/",
+    "aliases": [
+      "Maple"
+    ]
+  },
+  {
+    "name": "White Oak",
+    "slug": "white-oak",
+    "troveName": "White Oak",
+    "troveDetailUrl": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/",
+    "aliases": [
+      "White Oak"
+    ]
   }
 ]

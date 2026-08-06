@@ -1,0 +1,20 @@
+{
+  "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/",
+  "pageTitle": "Tru Maple Manufactured Home",
+  "capturedAt": "2026-08-06T19:01:55.726Z",
+  "slug": "maple",
+  "media": [
+    {
+      "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRU-MAPLE-3BED-2BATH-scaled.webp",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "TRU Maple Exterior"
+    },
+    {
+      "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRT28483M_MAPLE-768x408.webp",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "TRU Maple Floor Plan"
+    }
+  ]
+}

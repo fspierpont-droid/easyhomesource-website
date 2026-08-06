@@ -339,5 +339,23 @@ export const homeMedia: HomeMediaManifest = {
     "videoUrl": null,
     "virtualTourUrl": null,
     "sourcePage": "https://www.myfloridamanufacturedhome.com/manufactured-home/236750-1529/wayne-frier-home-center-of-tallahassee/midway/cavco-select/15763a/"
+  },
+  "maple": {
+    "slug": "maple",
+    "gallery": [],
+    "floorPlanImage": null,
+    "brochureUrl": null,
+    "videoUrl": null,
+    "virtualTourUrl": null,
+    "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/"
+  },
+  "white-oak": {
+    "slug": "white-oak",
+    "gallery": [],
+    "floorPlanImage": null,
+    "brochureUrl": null,
+    "videoUrl": null,
+    "virtualTourUrl": null,
+    "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/"
   }
 };

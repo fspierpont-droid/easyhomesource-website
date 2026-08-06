@@ -211,5 +211,47 @@
         "alt": "delilah video"
       }
     ]
+  },
+  {
+    "slug": "maple",
+    "sourcePage": "https://redrockhomecenter.com/inventory/tru-maple-manufactured-home/",
+    "media": [
+      {
+        "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRU-MAPLE-3BED-2BATH-scaled.webp",
+        "category": "bathroom",
+        "alt": "TRU Maple Exterior"
+      },
+      {
+        "url": "https://redrockhomecenter.com/wp-content/uploads/2025/11/TRT28483M_MAPLE-768x408.webp",
+        "category": "floorplan",
+        "alt": "TRU Maple Floor Plan"
+      }
+    ]
+  },
+  {
+    "slug": "white-oak",
+    "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/",
+    "media": [
+      {
+        "url": "https://cdn.manufacturedhomes.com/floor_plans/81358/large.jpg",
+        "category": "floorplan",
+        "alt": "White Oak Floor Plan"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/101258/large.jpg",
+        "category": "exterior",
+        "alt": "White Oak Exterior"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/101259/large.jpg",
+        "category": "interior",
+        "alt": "White Oak Interior"
+      },
+      {
+        "url": "https://cdn.manufacturedhomes.com/photos/101260/large.jpg",
+        "category": "kitchen",
+        "alt": "White Oak Kitchen"
+      }
+    ]
   }
 ]

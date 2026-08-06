@@ -1,0 +1,32 @@
+{
+  "sourcePage": "https://www.manufacturedhomes.com/home/231618-1972/living-southern-homes,-inc/brewton/creekside-series/the-white-oak-cs-3221/",
+  "pageTitle": "The White Oak CS-3221",
+  "capturedAt": "2026-08-06T19:02:02.050Z",
+  "slug": "white-oak",
+  "media": [
+    {
+      "url": "https://cdn.manufacturedhomes.com/floor_plans/81358/large.jpg",
+      "type": "image",
+      "categoryGuess": "floorplan",
+      "alt": "White Oak Floor Plan"
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/101258/large.jpg",
+      "type": "image",
+      "categoryGuess": "exterior",
+      "alt": "White Oak Exterior"
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/101259/large.jpg",
+      "type": "image",
+      "categoryGuess": "interior",
+      "alt": "White Oak Interior"
+    },
+    {
+      "url": "https://cdn.manufacturedhomes.com/photos/101260/large.jpg",
+      "type": "image",
+      "categoryGuess": "kitchen",
+      "alt": "White Oak Kitchen"
+    }
+  ]
+}
