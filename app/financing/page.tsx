@@ -1,27 +1,46 @@
 import { ButtonLink } from "@/components/ButtonLink";
+import type { Metadata } from "next";
 
-const financingSections = [
-  ["Getting pre-qualified", "Start with a practical conversation about budget, timing, credit, income, land plans, and the type of manufactured home you want. Pre-qualification can help you understand what information a lender may request before you choose a specific home."],
-  ["Manufactured home financing considerations", "Manufactured home loans can vary based on whether the home is placed on owned land, leased land, or purchased with land. Home type, age, installation details, insurance, title work, and lender program requirements may all affect the path forward."],
-  ["Land-home package questions", "If you are buying land with the home or already own property, ask early about zoning, access, utilities, well and septic needs, surveys, flood considerations, setbacks, and whether the selected home can be installed on that site."],
-  ["Down payment and documentation", "Be prepared to discuss potential down payment funds and common documentation such as identification, income information, employment history, bank statements, land details, and any lender-specific forms."],
-  ["Total project cost factors", "The home price is only one part of the project. Site work, delivery and setup, taxes, permits, utility connections, skirting, steps, options, inspections, and local requirements can affect the final amount needed to move in."]
-];
+export const metadata: Metadata = {
+  title: "Financing Options",
+  description: "Learn about the clear, stress-free financing options for manufactured and mobile homes in Brooksville, FL at Easy HomeSource.",
+};
 
 export default function FinancingPage() {
   return (
-    <main className="px-4 py-12">
-      <div className="mx-auto max-w-6xl">
-        <section>
-          <p className="font-black text-ehsBlue">Financing guidance</p>
-          <h1 className="mt-2 text-4xl font-black text-ehsBlack">Prepare for manufactured home financing with clearer next steps.</h1>
-          <p className="mt-4 text-lg leading-8 text-ehsBlack/75">Easy HomeSource helps Florida buyers get ready for lender conversations without promising approval, rates, payments, or specific loan terms. Our goal is to help you ask better questions and understand the real costs that can affect your move-in plan.</p>
-          <div className="mt-8 grid gap-4">
-            {financingSections.map(([title, text]) => <div key={title} className="rounded-2xl bg-ehsSoftBlue p-5 leading-7 text-ehsBlack"><h2 className="text-xl font-black">{title}</h2><p className="mt-2 text-ehsBlack/75">{text}</p></div>)}
-          </div>
-          <p className="mt-6 rounded-2xl border border-borderGray bg-white p-4 text-sm font-semibold leading-6 text-ehsBlack/70">Financing information on this website is for guidance only and is not an approval, guarantee, credit decision, or commitment to lend. Financing availability, qualification requirements, rates, payments, down payment amounts, and loan terms are determined by lenders and may vary by buyer, property, home, and program.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ButtonLink href="/get-quote?source=financing">Ask About Financing</ButtonLink><ButtonLink href="/get-quote" variant="secondary">Get Pricing</ButtonLink><ButtonLink href="/homes" variant="secondary">View Available Homes</ButtonLink></div>
-        </section>
+    <main className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-black tracking-tight text-ehsDeepBlue sm:text-5xl">Financing Options</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-ehsBlack/70">
+          We believe the path to homeownership should be clear and stress-free. Our local Brooksville team works with trusted lenders to find the right financing package for your family.
+        </p>
+      </div>
+
+      <div className="mt-16 grid gap-8 sm:grid-cols-2">
+        <div className="rounded-2xl border border-ehsBlue/10 bg-white p-8 shadow-sm">
+          <h2 className="text-2xl font-bold text-ehsDeepBlue">Home-Only Financing</h2>
+          <p className="mt-4 leading-relaxed text-ehsBlack/70">
+            If you already own land or are planning to place your new home in a leased-lot community, home-only (chattel) loans are designed just for you. They typically offer a streamlined approval process so you can move in faster.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-ehsBlue/10 bg-white p-8 shadow-sm">
+          <h2 className="text-2xl font-bold text-ehsDeepBlue">Land & Home Packages</h2>
+          <p className="mt-4 leading-relaxed text-ehsBlack/70">
+            Looking to purchase land and a home at the same time? We can help coordinate construction-to-permanent loans that bundle the cost of your land, the home, delivery, setup, and site improvements into one single monthly payment.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-16 rounded-3xl bg-ehsSoftBlue/20 p-8 text-center sm:p-12">
+        <h2 className="text-3xl font-black text-ehsDeepBlue">Ready to explore your options?</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-ehsBlack/70">
+          Every financial situation is unique. Reach out to our team today, and we'll guide you through the process, answer your questions, and connect you with our trusted lending partners.
+        </p>
+        <div className="mt-8 flex justify-center gap-4">
+          <ButtonLink href="/get-quote" size="lg" className="bg-ehsLightBlue text-white hover:bg-ehsBlue">Contact Our Team</ButtonLink>
+          <ButtonLink href="/homes" size="lg" variant="secondary" className="bg-white">Browse Homes First</ButtonLink>
+        </div>
       </div>
     </main>
   );
