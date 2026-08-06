@@ -101,7 +101,11 @@ export async function getPublicPropertyFeed(): Promise<PropertyRecord[]> {
       .map((record, index) => mapPublicProperty(record as PublicPropertyApiRecord, index))
       .filter((property): property is PropertyRecord => Boolean(property));
 
-    return mapped.length > 0 ? mapped : fallback;
+    if (payload.length > 0 && mapped.length === 0) {
+      throw new Error("Property feed contained no valid records");
+    }
+
+    return mapped;
   } catch {
     return fallback;
   }
