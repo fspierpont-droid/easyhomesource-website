@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
-  formatPropertyAddress,
   getPropertyMapUrl,
   properties,
   type PropertyRecord,
@@ -45,14 +44,15 @@ function getPackageLabel(property: PropertyRecord) {
 }
 
 function getCustomerDescription(property: PropertyRecord) {
+  if (property.status === "Under Contract / Sold") {
+    return "This property is currently under contract or no longer available. Easy HomeSource can help locate and plan a similar land-and-home package.";
+  }
+
   if (property.propertyType === "Finished Home") {
     return "A completed home opportunity. Ask about current specifications, pricing, financing, and showing availability.";
   }
 
   if (property.propertyType === "Home in Progress") {
-    if (property.status === "Under Contract / Sold") {
-      return "This property is currently under contract. Easy HomeSource can help locate and plan a similar land-and-home package.";
-    }
     return "A home is currently being prepared on this property. Ask about the expected timeline, finishes, and package details.";
   }
 
@@ -98,11 +98,7 @@ export function PropertyInventory() {
   const [propertyType, setPropertyType] = useState<PropertyType | "All">("All");
   const [sort, setSort] = useState<SortOption>("featured");
 
-  const publicProperties = useMemo(
-    () => properties.filter((property) => property.publicVisible),
-    []
-  );
-
+  const publicProperties = useMemo(() => properties.filter((property) => property.publicVisible), []);
   const cities = useMemo(
     () => Array.from(new Set(publicProperties.map((property) => property.city).filter(Boolean))).sort(),
     [publicProperties]
@@ -161,6 +157,15 @@ export function PropertyInventory() {
       document.getElementById("package-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
   };
+
+  const clearFilters = () => {
+    setQuery("");
+    setCity("All");
+    setStatus("All");
+    setPropertyType("All");
+  };
+
+  const controlClass = "h-12 rounded-2xl border border-ehsBlue/15 px-4 font-bold text-ehsNavy outline-none focus:border-ehsBlue";
 
   return (
     <main className="overflow-hidden bg-white">
@@ -227,8 +232,6 @@ export function PropertyInventory() {
                   <path d="M105 20C135 96 100 174 120 248c18 68-18 145 18 294" fill="none" stroke="#a5e1f8" strokeWidth="65" opacity=".8" />
                   <path d="M148 75c130 20 160 160 325 160 94 0 155 45 260 180" fill="none" stroke="#1688c9" strokeDasharray="8 10" strokeLinecap="round" strokeWidth="4" opacity=".32" />
                   <path d="M240 300c145 30 225 7 350-90M250 410c150-60 300-40 455 30" fill="none" stroke="#0b4f86" strokeDasharray="6 11" strokeLinecap="round" strokeWidth="3" opacity=".22" />
-                  <circle cx="460" cy="265" r="150" fill="#a5e1f8" opacity=".12" />
-                  <circle cx="695" cy="420" r="115" fill="#41a2d9" opacity=".1" />
                 </svg>
 
                 {cityPositions.map((position) => {
@@ -310,23 +313,23 @@ export function PropertyInventory() {
               <span className="sr-only">Search properties</span>
               <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search address, city, or ZIP" className="h-12 w-full rounded-2xl border border-ehsBlue/15 px-4 font-semibold text-ehsNavy outline-none transition focus:border-ehsBlue" />
             </label>
-            <select value={city} onChange={(event) => setCity(event.target.value)} className="h-12 rounded-2xl border border-ehsBlue/15 px-4 font-bold text-ehsNavy outline-none focus:border-ehsBlue">
+            <select aria-label="Filter by city" value={city} onChange={(event) => setCity(event.target.value)} className={controlClass}>
               <option value="All">All cities</option>
               {cities.map((cityName) => <option key={cityName} value={cityName}>{cityName}</option>)}
             </select>
-            <select value={status} onChange={(event) => setStatus(event.target.value as PropertyStatus | "All")} className="h-12 rounded-2xl border border-ehsBlue/15 px-4 font-bold text-ehsNavy outline-none focus:border-ehsBlue">
+            <select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value as PropertyStatus | "All")} className={controlClass}>
               <option value="All">All statuses</option>
               <option value="Available Now">Available now</option>
               <option value="Coming Soon / In Progress">Coming soon</option>
               <option value="Under Contract / Sold">Under contract</option>
             </select>
-            <select value={propertyType} onChange={(event) => setPropertyType(event.target.value as PropertyType | "All")} className="h-12 rounded-2xl border border-ehsBlue/15 px-4 font-bold text-ehsNavy outline-none focus:border-ehsBlue">
+            <select aria-label="Filter by opportunity type" value={propertyType} onChange={(event) => setPropertyType(event.target.value as PropertyType | "All")} className={controlClass}>
               <option value="All">All opportunity types</option>
               <option value="Finished Home">Completed homes</option>
               <option value="Home in Progress">Homes in progress</option>
               <option value="Vacant Lot / Land">Land opportunities</option>
             </select>
-            <select value={sort} onChange={(event) => setSort(event.target.value as SortOption)} className="h-12 rounded-2xl border border-ehsBlue/15 px-4 font-bold text-ehsNavy outline-none focus:border-ehsBlue sm:col-start-2 lg:col-start-5">
+            <select aria-label="Sort package opportunities" value={sort} onChange={(event) => setSort(event.target.value as SortOption)} className={`${controlClass} sm:col-start-2 lg:col-start-5`}>
               <option value="featured">Featured order</option>
               <option value="city">City</option>
               <option value="status">Status</option>
@@ -385,7 +388,7 @@ export function PropertyInventory() {
             <div className="mt-8 rounded-[2rem] border border-dashed border-ehsBlue/25 bg-white p-10 text-center">
               <h3 className="text-2xl font-black text-ehsNavy">No matching opportunities</h3>
               <p className="mt-3 text-ehsBlack/65">Clear one or more filters, or request help locating a land-and-home package that meets your needs.</p>
-              <button type="button" onClick={() => { setQuery(""); setCity("All"); setStatus("All"); setPropertyType("All"); }} className="mt-5 rounded-full bg-ehsNavy px-5 py-3 font-black text-white hover:bg-ehsBlue">
+              <button type="button" onClick={clearFilters} className="mt-5 rounded-full bg-ehsNavy px-5 py-3 font-black text-white hover:bg-ehsBlue">
                 Clear filters
               </button>
             </div>
