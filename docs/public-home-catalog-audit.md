@@ -86,6 +86,8 @@ Use **Missing** only when no verified value or approved model-specific media is 
 | Boujee 2 | Missing | Known: 3 | Known: 2 | Known: 1580 | Known: 28'x60' | Known: Clayton Addison | Known: 44BOU28603BH | Known | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
 ~~| Timberland | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |~~
 | Delilah | Missing | Known: 4 | Known: 2 | Known: 2280 | Known: 30'x76' | Known: Timber Creek | Known: CSFL-3301 | Known | Known | Known | Catalog/orderable; confirm | Pending EHS approval |
+| Maple | Missing | Known: 3 | Known: 2 | Known: 1264 | Known: 28'x48' | Known: TRU Origin | Known: Maple | Missing | Missing | Missing | On display | Pending EHS approval |
+| White Oak | Missing | Known: 3 | Known: 2 | Known: 2280 | Known: 30'x76' | Known: Timber Creek | Known: CS-3221 | Missing | Missing | Missing | On display | Pending EHS approval |
 | Craft Select 15663A | Missing | Known: 3 | Known: 2 | Known: 1140 | Known: 15'x76' | Known: Cavco Plant City | Known: 15663A | Missing | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
 | Creekside Series | Missing | Missing | Missing | Missing | Missing | Known: Timber Creek | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
 | Craft Select 28603A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | On display | Media approval pending |
