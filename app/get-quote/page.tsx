@@ -1,7 +1,8 @@
 import { GhlLeadForm } from "@/components/GhlLeadForm";
 import { getHomeBySlug, homes } from "@/data/homes";
-import { formatPropertyAddress, properties } from "@/data/properties";
+import { formatPropertyAddress } from "@/data/properties";
 import { siteInfo } from "@/data/site";
+import { getPublicPropertyFeed } from "@/lib/property-feed";
 
 export const metadata = {
   title: "Get a Quote | Easy HomeSource",
@@ -18,11 +19,12 @@ type GetQuoteSearchParams = {
   cta?: string;
 };
 
-export default function GetQuotePage({ searchParams }: { searchParams?: GetQuoteSearchParams }) {
+export default async function GetQuotePage({ searchParams }: { searchParams?: GetQuoteSearchParams }) {
   const requestedHome = searchParams?.home ? getHomeBySlug(searchParams.home) : undefined;
   const requestedModel = searchParams?.model ? homes.find((home) => home.name === searchParams.model || home.displayName === searchParams.model || home.modelNumber === searchParams.model) : undefined;
   const interestedHome = requestedHome ?? requestedModel;
-  const interestedProperty = searchParams?.property ? properties.find((property) => property.id === searchParams.property) : undefined;
+  const propertyFeed = searchParams?.property ? await getPublicPropertyFeed() : [];
+  const interestedProperty = searchParams?.property ? propertyFeed.find((property) => property.id === searchParams.property) : undefined;
   const interestedPropertyAddress = interestedProperty ? formatPropertyAddress(interestedProperty) : undefined;
   const isFinancingInquiry = searchParams?.source === "financing";
 
@@ -46,7 +48,7 @@ export default function GetQuotePage({ searchParams }: { searchParams?: GetQuote
           homeSlug={interestedHome?.slug ?? searchParams?.home}
           propertyId={interestedProperty?.id ?? searchParams?.property}
           propertyAddress={interestedPropertyAddress}
-          source={searchParams?.source ?? (interestedProperty ? "property-map" : "website")}
+          source={searchParams?.source ?? (interestedProperty ? "land-home-packages" : "website")}
           cta={searchParams?.cta}
         />
       </section>
