@@ -18,6 +18,7 @@ export const socialLinks = {
 
 export const navLinks = [
   ["Homes", "/homes"],
+  ["Land & Properties", "/properties"],
   ["Featured Homes", "/featured-homes"],
   ["Special Offers", "/special-offers"],
   ["Financing", "/financing"],
