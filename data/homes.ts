@@ -53,7 +53,7 @@ const displaySeeds: Seed[] = [
 ];
 const knownLineupSeeds: Seed[] = [
   { name: "Boujee 2", slug: "boujee-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "Boujee 2", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
-  { name: "Timberland", slug: "timberland", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  // { name: "Timberland", slug: "timberland", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
   { name: "Delilah", slug: "delilah", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
   { name: "Craft Select 15663A", slug: "craft-select-15663a", manufacturer: "Cavco Plant City", series: "Craft Select", modelNumber: "15663A", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
   { name: "Creekside Series", slug: "creekside-series", series: "Creekside Series", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }

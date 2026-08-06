@@ -11,7 +11,7 @@
 ## Homes added
 
 - Boujee 2 (`boujee-2`)
-- Timberland (`timberland`)
+~~- Timberland (`timberland`)~~ (Removed, custom build)
 - Delilah (`delilah`)
 - Craft Select 15663A (`craft-select-15663a`)
 - Creekside Series (`creekside-series`)
