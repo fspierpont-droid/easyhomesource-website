@@ -214,12 +214,115 @@ export const homeMedia: HomeMediaManifest = {
   },
   "boujee-2": {
     "slug": "boujee-2",
-    "gallery": [],
-    "floorPlanImage": null,
+    "gallery": [
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-01.jpg",
+        "alt": "The Boujee The Boujee 2 44BOU28603BH floor plan",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/floor-plans-SMALL.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-02.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH Interior 92204",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/1.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-03.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH Interior 92205",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/2.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-04.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92206",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/3.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-05.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92207",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/4.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-06.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92208",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/5.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-07.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92209",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/6.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-08.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92210",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/7.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-09.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92211",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/8.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-10.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92212",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/9.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-11.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92213",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/10.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-12.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92214",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/11.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-13.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92215",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/12.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-14.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92216",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/13.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-15.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92217",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/14.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-16.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92218",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/15.jpg"
+      },
+      {
+        "src": "/homes/boujee-2/floorplan/boujee-2-floorplan-17.jpg",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92219",
+        "category": "floorplan",
+        "sourceUrl": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/16.jpg"
+      }
+    ],
+    "floorPlanImage": "/homes/boujee-2/floorplan/boujee-2-floorplan-01.jpg",
     "brochureUrl": null,
-    "videoUrl": null,
+    "videoUrl": "https://my.matterport.com/api/v2/player/models/M6uRNXTTQHc/thumb/",
     "virtualTourUrl": null,
-    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh"
+    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh/"
   },
   "craft-select-15663a": {
     "slug": "craft-select-15663a",

@@ -1,47 +1,102 @@
 [
   {
     "slug": "boujee-2",
-    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh",
+    "sourcePage": "https://www.manufacturedhomes.com/home/226859/clayton-addison/addison/the-boujee/the-boujee-2-44bou28603bh/",
     "media": [
       {
-        "url": "https://cdn.manufacturedhomes.com/floor_plans/45133/large.jpg",
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/floor-plans-SMALL.jpg",
         "category": "floorplan",
-        "alt": "Boujee 2 Layout"
+        "alt": "The Boujee The Boujee 2 44BOU28603BH floor plan"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92204/large.jpg",
-        "category": "interior",
-        "alt": "Boujee 2 Interior 1"
+        "url": "https://my.matterport.com/api/v2/player/models/M6uRNXTTQHc/thumb/",
+        "category": "video",
+        "alt": "71dd9f9c30627123ddf7770ddd9ccabf 3D Tour"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92205/large.jpg",
-        "category": "interior",
-        "alt": "Boujee 2 Interior 2"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/1.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH Interior 92204"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92206/large.jpg",
-        "category": "interior",
-        "alt": "Boujee 2 Interior 3"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/2.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH Interior 92205"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92207/large.jpg",
-        "category": "interior",
-        "alt": "Boujee 2 Interior 4"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/3.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92206"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92208/large.jpg",
-        "category": "interior",
-        "alt": "Boujee 2 Interior 5"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/4.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92207"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92218/large.jpg",
-        "category": "exterior",
-        "alt": "Boujee 2 Exterior 1"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/5.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92208"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/92219/large.jpg",
-        "category": "exterior",
-        "alt": "Boujee 2 Exterior 2"
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/6.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92209"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/7.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92210"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/8.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92211"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/9.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92212"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/10.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92213"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/11.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92214"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/12.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92215"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/13.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92216"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/14.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92217"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/15.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92218"
+      },
+      {
+        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3378/floorplan/226859/16.jpg",
+        "category": "floorplan",
+        "alt": "The Boujee / The Boujee 2 44BOU28603BH No Category 92219"
+      },
+      {
+        "url": "https://www.manufacturedhomes.com/wp-content/plugins/mfh/matterport_oembed.php?url=https%3A%2F%2Fmy.matterport.com%2Fshow%2F%3Fm%3DM6uRNXTTQHc",
+        "category": "video",
+        "alt": "boujee-2 video"
       }
     ]
   },
