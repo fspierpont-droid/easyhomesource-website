@@ -50,8 +50,20 @@ javascript:(()=>{
   // Deduplicate images
   output.images = [...new Set(output.images)];
 
+  // Look for Next.js data block if we are on the public detail page
+  let rawNextData = null;
+  const nextDataScript = document.getElementById('__NEXT_DATA__');
+  if (nextDataScript) {
+      try {
+          rawNextData = JSON.parse(nextDataScript.textContent);
+      } catch(e) {}
+  }
+  
   // Try to find intercepted raw data
   output.interceptedData = window.__EHS_INTERCEPTED_DATA__ || [];
+  if (rawNextData) {
+      output.nextData = rawNextData;
+  }
 
   const json = JSON.stringify(output, null, 2); 
   const html = `<!doctype html><title>EHS Single Home Capture</title><style>body{font-family:system-ui;margin:24px}textarea{width:100%;height:75vh;font-family:ui-monospace,monospace}</style><h1>EHS Single Home Capture</h1><p>Copy this JSON and send it to the AI.</p><textarea autofocus>${json.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</textarea>`; 
