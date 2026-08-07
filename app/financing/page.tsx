@@ -35,7 +35,7 @@ export default function FinancingPage() {
       <div className="mt-16 rounded-3xl bg-ehsSoftBlue/20 p-8 text-center sm:p-12">
         <h2 className="text-3xl font-black text-ehsDeepBlue">Ready to explore your options?</h2>
         <p className="mx-auto mt-4 max-w-2xl text-ehsBlack/70">
-          Every financial situation is unique. Reach out to our team today, and we'll guide you through the process, answer your questions, and connect you with our trusted lending partners.
+          Every financial situation is unique. Reach out to our team today, and we&apos;ll guide you through the process, answer your questions, and connect you with our trusted lending partners.
         </p>
         <div className="mt-8 flex justify-center gap-4">
           <ButtonLink href="/get-quote" size="lg" className="bg-ehsLightBlue text-white hover:bg-ehsBlue">Contact Our Team</ButtonLink>

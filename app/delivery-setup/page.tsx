@@ -22,7 +22,7 @@ export default function DeliverySetupPage() {
           <div>
             <h2 className="text-2xl font-bold text-ehsDeepBlue">Site Preparation & Permitting</h2>
             <p className="mt-3 leading-relaxed text-ehsBlack/70">
-              Before your home ever leaves our lot, the ground needs to be ready. We understand local Hernando County and Central Florida zoning laws. We'll help coordinate the necessary permits, land clearing, and foundation prep required for a safe, compliant installation.
+              Before your home ever leaves our lot, the ground needs to be ready. We understand local Hernando County and Central Florida zoning laws. We&apos;ll help coordinate the necessary permits, land clearing, and foundation prep required for a safe, compliant installation.
             </p>
           </div>
         </section>

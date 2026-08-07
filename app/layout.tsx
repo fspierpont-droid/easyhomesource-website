@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteLogo } from "@/components/SiteLogo";
 import { SocialLinks } from "@/components/SocialLinks";
+import { ChatWidget } from "@/components/ChatWidget";
 import { navLinks, siteInfo } from "@/data/site";
 import type { ReactNode } from "react";
 import "./globals.css";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
           <p className="mx-auto mt-10 max-w-6xl border-t border-white/10 pt-6 text-sm leading-6 text-white/60">{siteInfo.pricingDisclaimer}</p>
         </footer>
+        <ChatWidget />
       </body>
     </html>
   );
