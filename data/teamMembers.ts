@@ -52,7 +52,7 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
   },
   {
     id: 'user-5',
-    name: 'Mike',
+    name: 'Mike Ung',
     email: 'mike@easyhomesource.com',
     role: 'Manager',
     active: true,
