@@ -12,6 +12,7 @@ import {
   type DeliveryCalculationResult,
   type QuoteFinancialTotals
 } from '@/data/pricingSpreadsheet';
+import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
 
 export interface SelectedQuoteLineItem {
   id: string;
@@ -53,6 +54,7 @@ export interface SavedQuote {
   totalTurnkeyPrice: number;
   estimatedTotal: number;
   salesperson: string;
+  salespersonEmail?: string;
   status: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT';
   lineItems: SelectedQuoteLineItem[];
   discounts: number;
@@ -87,11 +89,11 @@ export function ManualQuoteBuilderModal({
   // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Summary & Totals)
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
-  // Customer Details
+  // Customer Details & Assigned Consultant from Verified Team
   const [customerName, setCustomerName] = useState(initialCustomerName || existingQuote?.customerName || '');
   const [customerPhone, setCustomerPhone] = useState(existingQuote?.customerPhone || '352-555-0199');
   const [customerEmail, setCustomerEmail] = useState(existingQuote?.customerEmail || '');
-  const [salesperson, setSalesperson] = useState(existingQuote?.salesperson || 'Ken License');
+  const [salesperson, setSalesperson] = useState(existingQuote?.salesperson || 'Scott Pierpont');
 
   // Selected Home (from verified Master Catalog)
   const [homeSearch, setHomeSearch] = useState('');
@@ -371,7 +373,9 @@ export function ManualQuoteBuilderModal({
       return;
     }
 
+    const assignedUser = VERIFIED_TEAM_USERS.find((u) => u.name === salesperson) || VERIFIED_TEAM_USERS[6];
     const quoteNumber = existingQuote?.quoteNumber || `Q-2026-${String(Math.floor(1000 + Math.random() * 9000))}`;
+
     const newQuote: SavedQuote = {
       id: existingQuote?.id || `quote-${Date.now()}`,
       quoteNumber,
@@ -403,7 +407,8 @@ export function ManualQuoteBuilderModal({
       salesTax: quoteTotals.sales_tax_total,
       totalTurnkeyPrice: quoteTotals.estimated_total,
       estimatedTotal: quoteTotals.estimated_total,
-      salesperson,
+      salesperson: assignedUser.name,
+      salespersonEmail: assignedUser.email,
       status,
       lineItems,
       discounts,
@@ -485,12 +490,12 @@ export function ManualQuoteBuilderModal({
 
         {/* Modal Scrollable Workspace */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* STEP 1: Customer Details */}
+          {/* STEP 1: Customer Details & Assigned Team User */}
           {step === 1 && (
             <div className="space-y-4">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 1</span>
-                <h4 className="text-lg font-black text-[#0B1E38]">Customer Contact &amp; Assignment</h4>
+                <h4 className="text-lg font-black text-[#0B1E38]">Customer Contact &amp; Consultant Assignment</h4>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -529,15 +534,17 @@ export function ManualQuoteBuilderModal({
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Assigned Home Consultant</label>
+                  <label className="block font-bold text-slate-700 mb-1">Assigned Housing Consultant *</label>
                   <select
                     value={salesperson}
                     onChange={(e) => setSalesperson(e.target.value)}
                     className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
                   >
-                    <option value="Ken License">Ken License (Senior Home Consultant)</option>
-                    <option value="Kristen Overstreet">Kristen Overstreet (Sales Specialist)</option>
-                    <option value="Kris Kinney">Kris Kinney (Land & Project Specialist)</option>
+                    {VERIFIED_TEAM_USERS.map((user) => (
+                      <option key={user.id} value={user.name}>
+                        {user.name} ({user.role} • {user.email})
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

@@ -31,10 +31,10 @@ export default function CustomerShareQuotePage() {
     freightDelivery: 3850,
     siteWorkTotal: 34500,
     discounts: 0,
-    salesperson: 'Ken License',
+    salesperson: 'Scott Pierpont',
     salespersonTitle: 'Senior Housing Consultant',
     salespersonPhone: '(352) 558-8888',
-    salespersonEmail: 'ken@easyhomesource.com',
+    salespersonEmail: 'scott@easyhomesource.com',
     status: 'APPROVED',
     notes: 'Turnkey land and home package proposal for Homosassa homesite. Includes county building permits, site prep, potable water well, 1050-gal septic system, 200A electric panel, 3.0-ton heat pump, vented vinyl skirting, and code steps.',
     lineItems: [
