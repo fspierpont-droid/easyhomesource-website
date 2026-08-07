@@ -12,6 +12,7 @@ import { PropertyEditor } from '@/components/portal/PropertyEditor';
 import { AddPropertyModal } from '@/components/portal/AddPropertyModal';
 import { PropertyAnalyticsView } from '@/components/portal/PropertyAnalyticsView';
 import { ManualQuoteBuilderModal, type SavedQuote } from '@/components/portal/ManualQuoteBuilderModal';
+import { calculateComprehensiveQuoteTotals } from '@/data/pricingSpreadsheet';
 import { QuoteDashboardView } from '@/components/portal/QuoteDashboardView';
 import { ReadyToQuoteView, type ReadyBuyer } from '@/components/portal/ReadyToQuoteView';
 import { QuoteLibraryView } from '@/components/portal/QuoteLibraryView';
@@ -22,7 +23,7 @@ interface PropertyPackageManagerProps {
 }
 
 // Complete Full Quote Library Dataset (20+ Historical & Active Customer Proposals)
-const FULL_SAVED_QUOTES: SavedQuote[] = [
+const RAW_SAVED_QUOTES: any[] = [
   {
     id: 'quote-1',
     quoteNumber: 'Q-2026-0801',
@@ -399,6 +400,29 @@ const FULL_SAVED_QUOTES: SavedQuote[] = [
     updatedAt: '2026-07-30T16:00:00Z'
   }
 ];
+
+const FULL_SAVED_QUOTES: SavedQuote[] = RAW_SAVED_QUOTES.map((q) => {
+  const homeP = Number(q.homePrice) || 0;
+  const landP = Number(q.propertyPrice) || 0;
+  const freightP = Number(q.freightDelivery) || 0;
+  const siteP = Number(q.siteWorkTotal) || 0;
+  const disc = Number(q.discounts) || 0;
+  const subt = homeP + landP + freightP + siteP - disc;
+  const tax = Math.round(subt * 0.03 * 100) / 100;
+  const estTotal = Math.round((subt + tax) * 100) / 100;
+  const totals = calculateComprehensiveQuoteTotals(homeP + landP, freightP, siteP, 0, disc, q.factoryCost || Math.round(homeP * 0.72), 0, 0, 0, 0.03);
+
+  return {
+    ...q,
+    subtotal: subt,
+    taxBasis: subt,
+    salesTax: tax,
+    totalTurnkeyPrice: estTotal,
+    estimatedTotal: estTotal,
+    financialTotals: totals,
+    lineItems: q.lineItems || []
+  };
+});
 
 export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPackageManagerProps) {
   // Default to 'dashboard' on page load!

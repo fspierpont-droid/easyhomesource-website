@@ -3,7 +3,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import type { Property } from '@/types/property';
 import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
-import { SERVICE_CATALOG, autoCalculateDelivery, type ServiceCatalogItem, type DeliveryCalculationResult } from '@/data/pricingSpreadsheet';
+import {
+  SERVICE_CATALOG,
+  autoCalculateDelivery,
+  calculateBlockTieDown,
+  calculateComprehensiveQuoteTotals,
+  type ServiceCatalogItem,
+  type DeliveryCalculationResult,
+  type QuoteFinancialTotals
+} from '@/data/pricingSpreadsheet';
 
 export interface SelectedQuoteLineItem {
   id: string;
@@ -11,8 +19,10 @@ export interface SelectedQuoteLineItem {
   name: string;
   category: 'mandatory_services' | 'site_work' | 'addons' | 'options' | 'custom';
   unitPrice: number;
+  unitCost: number;
   quantity: number;
   totalPrice: number;
+  totalCost: number;
   description: string;
 }
 
@@ -25,7 +35,9 @@ export interface SavedQuote {
   homeModel: string;
   manufacturer: string;
   homePrice: number;
+  factoryCost: number;
   homeWidth: number;
+  homeLength: number;
   propertyAddress: string;
   propertyPrice: number;
   siteWorkTotal: number;
@@ -35,14 +47,18 @@ export interface SavedQuote {
   acSystem: number;
   permitsFees: number;
   skirtingSteps: number;
+  subtotal: number;
+  taxBasis: number;
+  salesTax: number;
   totalTurnkeyPrice: number;
-  downPaymentPercent: number;
-  downPaymentAmount: number;
-  estimatedMonthlyPayment: number;
+  estimatedTotal: number;
   salesperson: string;
   status: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT';
   lineItems: SelectedQuoteLineItem[];
+  discounts: number;
   notes: string;
+  shareToken?: string;
+  financialTotals?: QuoteFinancialTotals;
   createdAt: string;
   updatedAt: string;
 }
@@ -68,7 +84,7 @@ export function ManualQuoteBuilderModal({
   availableProperties,
   existingQuote = null
 }: ManualQuoteBuilderModalProps) {
-  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing)
+  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Summary & Totals)
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
   // Customer Details
@@ -83,13 +99,13 @@ export function ManualQuoteBuilderModal({
   const [selectedHomeSlug, setSelectedHomeSlug] = useState<string>(
     existingQuote?.homeModel ? 'custom' : FULL_MASTER_CATALOG_HOMES[0]?.slug || ''
   );
-  
+
   const selectedHome: MasterCatalogHome | undefined = useMemo(() => {
     return FULL_MASTER_CATALOG_HOMES.find((h) => h.slug === selectedHomeSlug) || FULL_MASTER_CATALOG_HOMES[0];
   }, [selectedHomeSlug]);
 
   const [customHomeName, setCustomHomeName] = useState<string>(
-    existingQuote?.homeModel || selectedHome?.name || 'Manufactured Home'
+    existingQuote?.homeModel || (selectedHome ? `${selectedHome.manufacturer} ${selectedHome.name}` : 'Manufactured Home')
   );
   const [selectedManufacturer, setSelectedManufacturer] = useState<string>(
     existingQuote?.manufacturer || selectedHome?.manufacturer || 'CAVCO Plant City'
@@ -97,7 +113,9 @@ export function ManualQuoteBuilderModal({
   const [customHomePrice, setCustomHomePrice] = useState<number>(
     existingQuote?.homePrice ?? selectedHome?.ehsPrice ?? 39888
   );
-  const [homePriceOverrideReason, setHomePriceOverrideReason] = useState<string>('');
+  const [customFactoryCost, setCustomFactoryCost] = useState<number>(
+    existingQuote?.factoryCost ?? selectedHome?.estFactoryCost ?? 28000
+  );
 
   // Selected Property / Land
   const [landOption, setLandOption] = useState<'OWNED' | 'PORTAL_PROPERTY'>(
@@ -119,9 +137,15 @@ export function ManualQuoteBuilderModal({
   const [deliveryMiles, setDeliveryMiles] = useState<number>(existingQuote?.deliveryMiles || 25);
   const [deliveryCalculation, setDeliveryCalculation] = useState<DeliveryCalculationResult | null>(null);
   const [freightPrice, setFreightPrice] = useState<number>(existingQuote?.freightDelivery || 3850);
+  const [freightCost, setFreightCost] = useState<number>(3500);
   const [isCalculatingDelivery, setIsCalculatingDelivery] = useState(false);
 
-  // Itemized Line Items (Initialized from ERP Standard Services)
+  // Initial Itemized Line Items from ERP Standard Services
+  const initialBlockTie = useMemo(() => {
+    const homeClass = (selectedHome?.width || 14) > 18 ? 'double' : 'single';
+    return calculateBlockTieDown(selectedHome?.length || 60, homeClass);
+  }, [selectedHome]);
+
   const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>(
     existingQuote?.lineItems || [
       {
@@ -129,10 +153,12 @@ export function ManualQuoteBuilderModal({
         sku: 'SITE-BLOCK-TIEDOWN',
         name: 'Block & Hurricane Tie-Down Installation',
         category: 'mandatory_services',
-        unitPrice: 4500,
+        unitPrice: initialBlockTie.price || 5835,
+        unitCost: initialBlockTie.cost || 4668,
         quantity: 1,
-        totalPrice: 4500,
-        description: 'Concrete pier pads, leveling, and Florida wind zone hurricane ground anchors.'
+        totalPrice: initialBlockTie.price || 5835,
+        totalCost: initialBlockTie.cost || 4668,
+        description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (${initialBlockTie.matchedLength}ft table).`
       },
       {
         id: 'item-2',
@@ -140,28 +166,46 @@ export function ManualQuoteBuilderModal({
         name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
         category: 'mandatory_services',
         unitPrice: 5555,
+        unitCost: 5050,
         quantity: 1,
         totalPrice: 5555,
+        totalCost: 5050,
         description: 'High-efficiency heat pump with digital thermostat, pad, and plenum tie-in.'
       },
       {
         id: 'item-3',
+        sku: 'SITE-DIRTPAD',
+        name: 'Dirt Pad & Laser Site Grading (2 Loads)',
+        category: 'mandatory_services',
+        unitPrice: 2700,
+        unitCost: 1800,
+        quantity: 1,
+        totalPrice: 2700,
+        totalCost: 1800,
+        description: 'Clearing, clean fill dirt import, compacting, and laser leveling for solid home foundation.'
+      },
+      {
+        id: 'item-4',
         sku: 'SITE-SKIRTING-VINYL',
         name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
         category: 'mandatory_services',
         unitPrice: 3200,
+        unitCost: 2200,
         quantity: 1,
         totalPrice: 3200,
+        totalCost: 2200,
         description: 'Full perimeter vinyl skirting and 2 sets of code-compliant entrance stairs.'
       },
       {
-        id: 'item-4',
+        id: 'item-5',
         sku: 'SITE-PERMIT-PLAN',
         name: 'County Building, Zoning & Health Dept Permits',
         category: 'mandatory_services',
         unitPrice: 2650,
+        unitCost: 2650,
         quantity: 1,
         totalPrice: 2650,
+        totalCost: 2650,
         description: 'Hernando/Citrus county building permit processing and inspection fees.'
       }
     ]
@@ -169,18 +213,33 @@ export function ManualQuoteBuilderModal({
 
   // Selected Catalog Item Dropdown Helper
   const [selectedCatalogSku, setSelectedCatalogSku] = useState(SERVICE_CATALOG[0].sku);
-
-  // Financing & Loan Calculator
-  const [downPaymentPercent, setDownPaymentPercent] = useState<number>(existingQuote?.downPaymentPercent || 10);
-  const [interestRate, setInterestRate] = useState<number>(6.875);
-  const [loanTermYears, setLoanTermYears] = useState<number>(30);
-  const [notes, setNotes] = useState<string>(existingQuote?.notes || 'Standard turnkey package estimate for Central Florida.');
+  const [discounts, setDiscounts] = useState<number>(existingQuote?.discounts || 0);
+  const [notes, setNotes] = useState<string>(existingQuote?.notes || 'Standard turnkey package estimate for Central Florida with site prep, delivery, tie-downs, A/C, and permits.');
 
   useEffect(() => {
     if (selectedHome && selectedHomeSlug !== 'custom') {
       setCustomHomeName(`${selectedHome.manufacturer} ${selectedHome.name}`);
       setSelectedManufacturer(selectedHome.manufacturer);
       setCustomHomePrice(selectedHome.ehsPrice || selectedHome.msrp || 39888);
+      setCustomFactoryCost(selectedHome.estFactoryCost || Math.round((selectedHome.ehsPrice || 39888) * 0.72));
+
+      // Auto-update Block & Tie-down based on model dimensions
+      const homeClass = (selectedHome.width || 14) > 18 ? 'double' : 'single';
+      const bt = calculateBlockTieDown(selectedHome.length || 60, homeClass);
+      setLineItems((prev) =>
+        prev.map((item) =>
+          item.sku === 'SITE-BLOCK-TIEDOWN'
+            ? {
+                ...item,
+                unitPrice: bt.price,
+                unitCost: bt.cost,
+                totalPrice: bt.price * item.quantity,
+                totalCost: bt.cost * item.quantity,
+                description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (${bt.matchedLength}ft ${homeClass} table).`
+              }
+            : item
+        )
+      );
     }
   }, [selectedHomeSlug, selectedHome]);
 
@@ -205,26 +264,30 @@ export function ManualQuoteBuilderModal({
 
   const distinctBuilders = ['ALL', ...new Set(FULL_MASTER_CATALOG_HOMES.map((h) => h.manufacturer))];
 
-  // Calculate Turnkey Totals
+  // Calculate Turnkey Subtotals & Financial Metrics
   const subtotalHome = Number(customHomePrice) || 0;
   const subtotalLand = landOption === 'OWNED' ? 0 : Number(customLandPrice) || 0;
-  const subtotalLineItems = lineItems.reduce((acc, item) => acc + (Number(item.totalPrice) || 0), 0);
+  const siteWorkItems = lineItems.filter((i) => i.category === 'mandatory_services' || i.category === 'site_work');
+  const addOnItems = lineItems.filter((i) => i.category === 'addons' || i.category === 'options' || i.category === 'custom');
+
+  const subtotalSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item.totalPrice) || 0), 0);
+  const subtotalAddOns = addOnItems.reduce((acc, item) => acc + (Number(item.totalPrice) || 0), 0);
+  const costSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item.totalCost) || 0), 0);
+  const costAddOns = addOnItems.reduce((acc, item) => acc + (Number(item.totalCost) || 0), 0);
   const subtotalFreight = Number(freightPrice) || 0;
 
-  const totalTurnkeyPrice = subtotalHome + subtotalLand + subtotalLineItems + subtotalFreight;
-  const downPaymentAmount = Math.round((totalTurnkeyPrice * downPaymentPercent) / 100);
-  const loanPrincipal = totalTurnkeyPrice - downPaymentAmount;
-
-  // Monthly mortgage calculation (P&I)
-  const monthlyRate = interestRate / 100 / 12;
-  const numberOfPayments = loanTermYears * 12;
-  const estimatedMonthlyPayment =
-    monthlyRate > 0
-      ? Math.round(
-          (loanPrincipal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-            (Math.pow(1 + monthlyRate, numberOfPayments) - 1)
-        )
-      : 0;
+  const quoteTotals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
+    subtotalHome + subtotalLand,
+    subtotalFreight,
+    subtotalSiteWork,
+    subtotalAddOns,
+    discounts,
+    customFactoryCost,
+    freightCost,
+    costSiteWork,
+    costAddOns,
+    0.03
+  );
 
   // Trigger Auto Calculate Delivery Button
   const handleAutoCalculateDelivery = () => {
@@ -235,8 +298,9 @@ export function ManualQuoteBuilderModal({
       setDeliveryCalculation(res);
       setDeliveryMiles(res.miles);
       setFreightPrice(res.totalFreightPrice);
+      setFreightCost(res.totalFreightCost);
       setIsCalculatingDelivery(false);
-    }, 350);
+    }, 300);
   };
 
   // Add line item from service catalog dropdown
@@ -250,8 +314,10 @@ export function ManualQuoteBuilderModal({
       name: item.name,
       category: item.category,
       unitPrice: item.defaultPrice,
+      unitCost: item.defaultCost || Math.round(item.defaultPrice * 0.75),
       quantity: 1,
       totalPrice: item.defaultPrice,
+      totalCost: item.defaultCost || Math.round(item.defaultPrice * 0.75),
       description: item.description
     };
 
@@ -266,8 +332,10 @@ export function ManualQuoteBuilderModal({
       name: 'Custom Project Work / Add-On',
       category: 'custom',
       unitPrice: 1500,
+      unitCost: 1100,
       quantity: 1,
       totalPrice: 1500,
+      totalCost: 1100,
       description: 'Custom client request specification.'
     };
     setLineItems((prev) => [...prev, newItem]);
@@ -279,12 +347,15 @@ export function ManualQuoteBuilderModal({
         if (item.id !== id) return item;
         const qty = updates.quantity !== undefined ? updates.quantity : item.quantity;
         const price = updates.unitPrice !== undefined ? updates.unitPrice : item.unitPrice;
+        const cost = updates.unitCost !== undefined ? updates.unitCost : item.unitCost;
         return {
           ...item,
           ...updates,
           quantity: qty,
           unitPrice: price,
-          totalPrice: qty * price
+          unitCost: cost,
+          totalPrice: qty * price,
+          totalCost: qty * cost
         };
       })
     );
@@ -310,7 +381,9 @@ export function ManualQuoteBuilderModal({
       homeModel: customHomeName,
       manufacturer: selectedManufacturer,
       homePrice: subtotalHome,
+      factoryCost: customFactoryCost,
       homeWidth: selectedHome?.width || 14,
+      homeLength: selectedHome?.length || 60,
       propertyAddress:
         landOption === 'OWNED'
           ? deliveryAddress || 'Customer Owned Land'
@@ -318,21 +391,25 @@ export function ManualQuoteBuilderModal({
           ? `${selectedProperty.address}, ${selectedProperty.city}`
           : deliveryAddress,
       propertyPrice: subtotalLand,
-      siteWorkTotal: subtotalLineItems,
+      siteWorkTotal: subtotalSiteWork,
       freightDelivery: subtotalFreight,
       deliveryMiles,
       deliveryRouteType,
-      acSystem: lineItems.find((i) => i.sku.includes('HVAC'))?.totalPrice || 5400,
+      acSystem: lineItems.find((i) => i.sku.includes('HVAC'))?.totalPrice || 5555,
       permitsFees: lineItems.find((i) => i.sku.includes('PERMIT'))?.totalPrice || 2650,
       skirtingSteps: lineItems.find((i) => i.sku.includes('SKIRTING'))?.totalPrice || 3200,
-      totalTurnkeyPrice,
-      downPaymentPercent,
-      downPaymentAmount,
-      estimatedMonthlyPayment,
+      subtotal: quoteTotals.subtotal,
+      taxBasis: quoteTotals.tax_basis,
+      salesTax: quoteTotals.sales_tax_total,
+      totalTurnkeyPrice: quoteTotals.estimated_total,
+      estimatedTotal: quoteTotals.estimated_total,
       salesperson,
       status,
       lineItems,
+      discounts,
       notes,
+      shareToken: existingQuote?.shareToken || `ehs-share-${Date.now().toString(36)}`,
+      financialTotals: quoteTotals,
       createdAt: existingQuote?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -344,8 +421,8 @@ export function ManualQuoteBuilderModal({
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150 text-xs">
       <div className="bg-white rounded-[2rem] shadow-2xl border border-borderGray w-full max-w-5xl max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header with Easy HomeSource Palette */}
-        <div className="p-5 sm:p-6 border-b border-ehsBlue/10 bg-gradient-to-r from-ehsNavy via-ehsDeepBlue to-ehsBlue text-white flex items-center justify-between shadow-md">
+        {/* Header with Easy HomeSource Navy Palette */}
+        <div className="p-5 sm:p-6 border-b border-[#0F2A47]/20 bg-gradient-to-r from-[#0B1E38] via-[#0F2A47] to-[#1E6FA8] text-white flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shadow-xs">
               📋
@@ -359,7 +436,7 @@ export function ManualQuoteBuilderModal({
                   {FULL_MASTER_CATALOG_HOMES.length} Models Loaded
                 </span>
               </div>
-              <p className="text-[11px] text-ehsLightBlue font-medium">
+              <p className="text-[11px] text-[#A8C8E6] font-medium">
                 Live pricing from Master Spreadsheet: All {FULL_MASTER_CATALOG_HOMES.length} Models • Dropdown Line Items • Auto Delivery Calculation
               </p>
             </div>
@@ -367,21 +444,21 @@ export function ManualQuoteBuilderModal({
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer transition-colors"
           >
             ✕
           </button>
         </div>
 
         {/* 5-Step Navigation Ribbon */}
-        <div className="px-6 py-2.5 bg-ehsSoftBlue/60 border-b border-ehsBlue/10 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
+        <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { num: 1, label: '1. Customer Info' },
-              { num: 2, label: `2. All ${FULL_MASTER_CATALOG_HOMES.length} Homes & Land` },
+              { num: 2, label: `2. Homes & Land` },
               { num: 3, label: '3. Auto Calculate Delivery' },
               { num: 4, label: '4. Dropdown Line Items' },
-              { num: 5, label: '5. Summary & Financing' }
+              { num: 5, label: '5. Summary & Totals' }
             ].map((s) => (
               <button
                 key={s.num}
@@ -389,8 +466,8 @@ export function ManualQuoteBuilderModal({
                 onClick={() => setStep(s.num as any)}
                 className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
                   step === s.num
-                    ? 'bg-ehsDeepBlue text-white shadow-xs'
-                    : 'text-ehsNavy/70 hover:bg-white hover:text-ehsNavy'
+                    ? 'bg-[#0F2A47] text-white shadow-xs'
+                    : 'text-slate-600 hover:bg-white hover:text-slate-900 border border-transparent hover:border-slate-200'
                 }`}
               >
                 {s.label}
@@ -399,9 +476,9 @@ export function ManualQuoteBuilderModal({
           </div>
 
           <div className="text-right shrink-0">
-            <span className="text-[10px] text-ehsNavy/50 uppercase font-black block">Live Turnkey Total</span>
-            <span className="text-base font-black text-ehsNavy">
-              ${totalTurnkeyPrice.toLocaleString()}
+            <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Turnkey Total</span>
+            <span className="text-base font-black text-[#0F2A47]">
+              ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
         </div>
@@ -412,8 +489,8 @@ export function ManualQuoteBuilderModal({
           {step === 1 && (
             <div className="space-y-4">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">Step 1</span>
-                <h4 className="text-lg font-black text-ehsNavy">Customer Contact &amp; Assignment</h4>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 1</span>
+                <h4 className="text-lg font-black text-[#0B1E38]">Customer Contact &amp; Assignment</h4>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -425,7 +502,7 @@ export function ManualQuoteBuilderModal({
                     placeholder="e.g. Sarah Jenkins"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full px-3.5 py-2 border border-borderGray rounded-xl text-xs font-bold focus:outline-none focus:border-ehsBlue focus:ring-2 focus:ring-ehsLightBlue/40"
+                    className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-bold focus:outline-none focus:border-[#1E6FA8] focus:ring-2 focus:ring-[#1E6FA8]/20"
                   />
                 </div>
                 <div>
@@ -435,7 +512,7 @@ export function ManualQuoteBuilderModal({
                     placeholder="e.g. 352-555-0199"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full px-3.5 py-2 border border-borderGray rounded-xl text-xs font-semibold focus:outline-none focus:border-ehsBlue"
+                    className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#1E6FA8]"
                   />
                 </div>
               </div>
@@ -448,7 +525,7 @@ export function ManualQuoteBuilderModal({
                     placeholder="e.g. sarah.j@example.com"
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full px-3.5 py-2 border border-borderGray rounded-xl text-xs font-semibold focus:outline-none focus:border-ehsBlue"
+                    className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#1E6FA8]"
                   />
                 </div>
                 <div>
@@ -456,7 +533,7 @@ export function ManualQuoteBuilderModal({
                   <select
                     value={salesperson}
                     onChange={(e) => setSalesperson(e.target.value)}
-                    className="w-full px-3.5 py-2 border border-borderGray rounded-xl text-xs font-bold bg-white focus:outline-none focus:border-ehsBlue"
+                    className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
                   >
                     <option value="Ken License">Ken License (Senior Home Consultant)</option>
                     <option value="Kristen Overstreet">Kristen Overstreet (Sales Specialist)</option>
@@ -472,7 +549,7 @@ export function ManualQuoteBuilderModal({
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Notes on customer land status, timeline, financing pre-approval, trade-ins..."
-                  className="w-full px-3.5 py-2 border border-borderGray rounded-xl text-xs"
+                  className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs"
                 />
               </div>
             </div>
@@ -482,13 +559,13 @@ export function ManualQuoteBuilderModal({
           {step === 2 && (
             <div className="space-y-6">
               {/* Home Selection */}
-              <div className="p-5 bg-white border border-ehsBlue/10 rounded-[1.5rem] shadow-sm shadow-ehsNavy/5 space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-borderGray/60">
+              <div className="p-5 bg-white border border-slate-200 rounded-[1.5rem] shadow-sm space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-slate-100">
                   <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
                       Master Spreadsheet Catalog ({FULL_MASTER_CATALOG_HOMES.length} Models)
                     </span>
-                    <h4 className="font-black text-sm text-ehsNavy">
+                    <h4 className="font-black text-sm text-[#0B1E38]">
                       1. Select Base Manufactured Home
                     </h4>
                   </div>
@@ -497,7 +574,7 @@ export function ManualQuoteBuilderModal({
                     <select
                       value={builderFilter}
                       onChange={(e) => setBuilderFilter(e.target.value)}
-                      className="px-3 py-1.5 border border-borderGray rounded-xl text-xs font-bold bg-white"
+                      className="px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-bold bg-white"
                     >
                       {distinctBuilders.map((b) => (
                         <option key={b} value={b}>
@@ -511,7 +588,7 @@ export function ManualQuoteBuilderModal({
                       value={homeSearch}
                       onChange={(e) => setHomeSearch(e.target.value)}
                       placeholder={`Search all ${FULL_MASTER_CATALOG_HOMES.length} models...`}
-                      className="px-3 py-1.5 border border-borderGray rounded-xl text-xs font-semibold"
+                      className="px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -528,21 +605,22 @@ export function ManualQuoteBuilderModal({
                           setCustomHomeName(`${h.manufacturer} ${h.name}`);
                           setSelectedManufacturer(h.manufacturer);
                           setCustomHomePrice(h.ehsPrice || h.msrp || 39888);
+                          setCustomFactoryCost(h.estFactoryCost || Math.round((h.ehsPrice || 39888) * 0.72));
                         }}
                         className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
                           isSelected
-                            ? 'border-ehsBlue bg-ehsSoftBlue ring-2 ring-ehsBlue/20 shadow-xs'
-                            : 'border-borderGray hover:bg-slate-50'
+                            ? 'border-[#1E6FA8] bg-sky-50/50 ring-2 ring-[#1E6FA8]/20 shadow-xs'
+                            : 'border-slate-200 hover:bg-slate-50'
                         }`}
                       >
-                        <div className="font-black text-xs text-ehsNavy truncate">
+                        <div className="font-black text-xs text-[#0B1E38] truncate">
                           {h.name}
                         </div>
                         <div className="text-[10.5px] text-slate-500 font-medium">
                           {h.manufacturer} • {h.dimensions}
                         </div>
                         <div className="flex justify-between items-center mt-1">
-                          <span className="font-black text-xs text-ehsBlue">
+                          <span className="font-black text-xs text-[#1E6FA8]">
                             ${Math.round(h.ehsPrice || h.msrp || 50000).toLocaleString()}
                           </span>
                           <span className="text-[9px] text-slate-400 font-mono">
@@ -554,124 +632,91 @@ export function ManualQuoteBuilderModal({
                   })}
                 </div>
 
-                {/* Base Home Price Input & Override Reason */}
-                <div className="grid sm:grid-cols-3 gap-3 pt-2 border-t border-borderGray/60">
+                {/* Home Summary & Override */}
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl grid sm:grid-cols-3 gap-3 items-center">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                      Selected Model Name
-                    </label>
-                    <input
-                      type="text"
-                      value={customHomeName}
-                      onChange={(e) => setCustomHomeName(e.target.value)}
-                      className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-black text-ehsNavy"
-                    />
+                    <span className="text-[10px] text-slate-500 font-bold block uppercase">Selected Model</span>
+                    <span className="font-extrabold text-xs text-slate-900">{customHomeName}</span>
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                      Base Home Price ($ USD) *
-                    </label>
+                    <span className="text-[10px] text-slate-500 font-bold block uppercase">Base Home Price ($)</span>
                     <input
                       type="number"
                       value={customHomePrice}
-                      onChange={(e) => setCustomHomePrice(Number(e.target.value))}
-                      className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-black text-ehsNavy"
+                      onChange={(e) => setCustomHomePrice(Number(e.target.value) || 0)}
+                      className="w-full px-2.5 py-1 bg-white border border-slate-200 rounded-lg font-black text-xs text-[#1E6FA8]"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                      Price Override Reason (Optional)
-                    </label>
+                    <span className="text-[10px] text-slate-500 font-bold block uppercase">Est. Factory Cost ($)</span>
                     <input
-                      type="text"
-                      placeholder="e.g. Factory promotion, volume discount"
-                      value={homePriceOverrideReason}
-                      onChange={(e) => setHomePriceOverrideReason(e.target.value)}
-                      className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-semibold"
+                      type="number"
+                      value={customFactoryCost}
+                      onChange={(e) => setCustomFactoryCost(Number(e.target.value) || 0)}
+                      className="w-full px-2.5 py-1 bg-white border border-slate-200 rounded-lg font-semibold text-xs text-slate-700"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Land Selection */}
-              <div className="p-5 bg-white border border-ehsBlue/10 rounded-[1.5rem] shadow-sm shadow-ehsNavy/5 space-y-3">
-                <div className="flex justify-between items-center pb-2 border-b border-borderGray/60">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">
-                      Property Center Integration
-                    </span>
-                    <h4 className="font-black text-sm text-ehsNavy">
-                      2. Land &amp; Homesite Option
-                    </h4>
-                  </div>
-                  <span className="font-black text-xs text-ehsNavy">
-                    Land Price: ${subtotalLand.toLocaleString()}
-                  </span>
-                </div>
-
+              {/* Land / Homesite Selection */}
+              <div className="p-5 bg-white border border-slate-200 rounded-[1.5rem] shadow-sm space-y-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
+                  2. Land / Homesite Selection
+                </span>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setLandOption('PORTAL_PROPERTY')}
-                    className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
-                      landOption === 'PORTAL_PROPERTY'
-                        ? 'border-ehsBlue bg-ehsSoftBlue ring-2 ring-ehsBlue/20 shadow-xs'
-                        : 'border-borderGray hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="font-black text-xs text-ehsNavy">
-                      📍 Package with Property Center Parcel
-                    </div>
-                    <p className="text-[10.5px] text-slate-500 mt-0.5">
-                      Select available parcel from Homosassa, Spring Hill, Brooksville, or New Port Richey.
-                    </p>
-                  </button>
-
-                  <button
-                    type="button"
+                  <div
                     onClick={() => setLandOption('OWNED')}
-                    className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+                    className={`p-3.5 rounded-xl border cursor-pointer ${
                       landOption === 'OWNED'
-                        ? 'border-ehsBlue bg-ehsSoftBlue ring-2 ring-ehsBlue/20 shadow-xs'
-                        : 'border-borderGray hover:bg-slate-50'
+                        ? 'border-[#1E6FA8] bg-sky-50/50 ring-2 ring-[#1E6FA8]/20'
+                        : 'border-slate-200 hover:bg-slate-50'
                     }`}
                   >
-                    <div className="font-black text-xs text-ehsNavy">
-                      🏡 Customer Owns Land (Home-Only Setup)
-                    </div>
-                    <p className="text-[10.5px] text-slate-500 mt-0.5">
-                      Land purchase is $0. We configure site prep, well/septic &amp; freight directly on their lot.
+                    <div className="font-extrabold text-xs text-[#0B1E38]">Customer Owned Land</div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Client already owns private Florida property / lot ($0 land cost in quote).
                     </p>
-                  </button>
+                  </div>
+
+                  <div
+                    onClick={() => setLandOption('PORTAL_PROPERTY')}
+                    className={`p-3.5 rounded-xl border cursor-pointer ${
+                      landOption === 'PORTAL_PROPERTY'
+                        ? 'border-[#1E6FA8] bg-sky-50/50 ring-2 ring-[#1E6FA8]/20'
+                        : 'border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="font-extrabold text-xs text-[#0B1E38]">Central Florida Land &amp; Home Package</div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Bundle an active parcel in Citrus, Hernando, Pasco, or Sumter into turnkey package.
+                    </p>
+                  </div>
                 </div>
 
                 {landOption === 'PORTAL_PROPERTY' && (
                   <div className="grid sm:grid-cols-2 gap-3 pt-2">
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                        Choose Available Homesite
-                      </label>
+                      <label className="block font-bold text-slate-700 mb-1">Select Verified Parcel</label>
                       <select
                         value={selectedPropertyId}
                         onChange={(e) => setSelectedPropertyId(e.target.value)}
-                        className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-bold bg-white"
+                        className="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-bold bg-white"
                       >
                         {availableProperties.map((p) => (
                           <option key={p.id} value={p.id}>
-                            {p.address} ({p.city}, {p.county} Co.) - {p.price ? `$${p.price.toLocaleString()}` : 'Custom'}
+                            {p.address} ({p.city}, FL) - ${p.price?.toLocaleString()}
                           </option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                        Land Price ($ USD)
-                      </label>
+                      <label className="block font-bold text-slate-700 mb-1">Land Price ($)</label>
                       <input
                         type="number"
                         value={customLandPrice}
-                        onChange={(e) => setCustomLandPrice(Number(e.target.value))}
-                        className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-bold"
+                        onChange={(e) => setCustomLandPrice(Number(e.target.value) || 0)}
+                        className="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-bold"
                       />
                     </div>
                   </div>
@@ -684,212 +729,172 @@ export function ManualQuoteBuilderModal({
           {step === 3 && (
             <div className="space-y-5">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">Step 3</span>
-                <h4 className="text-lg font-black text-ehsNavy">
-                  Freight &amp; Delivery Engine (Auto Calculation)
-                </h4>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 3</span>
+                <h4 className="text-lg font-black text-[#0B1E38]">Auto Freight &amp; Delivery Engine</h4>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Calculate freight transport, transport sides, wide-load escorts, and route mileage from Brooksville HQ.
+                  Calculates freight using Florida DOT multi-section transport brackets, mileage rates, and escort requirements.
                 </p>
               </div>
 
-              <div className="p-5 bg-white border border-ehsBlue/10 rounded-[1.5rem] shadow-sm shadow-ehsNavy/5 space-y-4">
+              <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">
-                      Delivery Route Type
-                    </label>
-                    <select
-                      value={deliveryRouteType}
-                      onChange={(e) => setDeliveryRouteType(e.target.value as any)}
-                      className="w-full px-3.5 py-2 border border-borderGray rounded-xl font-bold bg-white text-xs"
-                    >
-                      <option value="dealer_to_customer">Dealership (Brooksville) to Customer Site</option>
-                      <option value="factory_to_customer">Factory Plant directly to Customer Site</option>
-                      <option value="factory_to_dealer">Factory Plant to Dealership Display Lot</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block font-bold text-slate-700 mb-1">
-                      Destination Delivery Address
-                    </label>
+                    <label className="block font-bold text-slate-700 mb-1">Delivery Destination Address *</label>
                     <input
                       type="text"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
                       placeholder="e.g. 6645 W Erlen Ln, Homosassa, FL 34446"
-                      className="w-full px-3.5 py-2 border border-borderGray rounded-xl font-semibold text-xs"
+                      className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-bold"
                     />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Delivery Route Type</label>
+                    <select
+                      value={deliveryRouteType}
+                      onChange={(e) => setDeliveryRouteType(e.target.value as any)}
+                      className="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-bold bg-white"
+                    >
+                      <option value="dealer_to_customer">Dealership to Customer Site (Brooksville Lot)</option>
+                      <option value="factory_to_customer">Factory Direct to Customer Site</option>
+                      <option value="factory_to_dealer">Factory to Dealership Lot</option>
+                    </select>
                   </div>
                 </div>
 
-                {/* Auto Calculate Delivery Button */}
-                <div className="pt-2 flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={handleAutoCalculateDelivery}
                     disabled={isCalculatingDelivery}
-                    className="px-6 py-2.5 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full shadow-md text-xs flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                    className="px-5 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs flex items-center gap-2 cursor-pointer shadow-sm transition-all"
                   >
-                    <span>{isCalculatingDelivery ? '⚡ Calculating...' : '⚡ Auto Calculate Delivery'}</span>
+                    <span>{isCalculatingDelivery ? 'Calculating...' : '⚡ Auto Calculate Delivery & Freight'}</span>
                   </button>
-
-                  <span className="text-xs font-bold text-slate-500">
-                    Calculated Freight Price: <strong className="text-ehsNavy text-sm">${freightPrice.toLocaleString()}</strong>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Origin: 9011 McIntyre Rd, Brooksville, FL 34601
                   </span>
                 </div>
 
-                {/* Auto Calculation Result Output */}
                 {deliveryCalculation && (
-                  <div className="p-4 bg-ehsSoftBlue/70 border border-ehsBlue/20 rounded-2xl space-y-2 animate-in fade-in">
-                    <div className="flex items-center justify-between font-black text-ehsNavy">
-                      <span>✓ Route Calculation Verified</span>
-                      <span>{deliveryCalculation.miles} Miles ({deliveryCalculation.durationText})</span>
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div>
+                      <span className="text-slate-500 font-medium block">Distance:</span>
+                      <span className="font-bold text-slate-900">{deliveryCalculation.miles} miles ({deliveryCalculation.durationText})</span>
                     </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] pt-1">
-                      <div className="p-2 bg-white rounded-lg border border-ehsBlue/10">
-                        <span className="text-slate-400 block">Transport Sides:</span>
-                        <span className="font-black text-ehsNavy">{deliveryCalculation.transportSides} Side(s)</span>
-                      </div>
-                      <div className="p-2 bg-white rounded-lg border border-ehsBlue/10">
-                        <span className="text-slate-400 block">Escort Vehicles:</span>
-                        <span className="font-black text-ehsNavy">{deliveryCalculation.escortCount} Escort(s)</span>
-                      </div>
-                      <div className="p-2 bg-white rounded-lg border border-ehsBlue/10">
-                        <span className="text-slate-400 block">Base Haul Rate:</span>
-                        <span className="font-black text-ehsNavy">${deliveryCalculation.baseHaulCost.toLocaleString()}</span>
-                      </div>
-                      <div className="p-2 bg-white rounded-lg border border-ehsBlue/10">
-                        <span className="text-slate-400 block">Total Freight Price:</span>
-                        <span className="font-black text-emerald-700">${deliveryCalculation.totalFreightPrice.toLocaleString()}</span>
-                      </div>
+                    <div>
+                      <span className="text-slate-500 font-medium block">Transport Sides:</span>
+                      <span className="font-bold text-slate-900">{deliveryCalculation.transportSides} {deliveryCalculation.transportSides > 1 ? 'Sides (Double Wide)' : 'Single Carrier'}</span>
                     </div>
-
-                    {deliveryCalculation.warning && (
-                      <p className="text-[11px] text-amber-800 font-semibold pt-1">
-                        ⚠️ {deliveryCalculation.warning}
-                      </p>
-                    )}
+                    <div>
+                      <span className="text-slate-500 font-medium block">Escort Vehicles:</span>
+                      <span className="font-bold text-slate-900">{deliveryCalculation.escortCount} Escort(s)</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 font-medium block">Freight Price:</span>
+                      <span className="font-black text-[#1E6FA8] text-sm">${deliveryCalculation.totalFreightPrice.toLocaleString()}</span>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
           )}
 
-          {/* STEP 4: Dropdown Line Items & Site Work */}
+          {/* STEP 4: Dropdown Line Items */}
           {step === 4 && (
             <div className="space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">Step 4</span>
-                  <h4 className="text-lg font-black text-ehsNavy">
-                    Itemized Site Work, Utilities &amp; Add-Ons
-                  </h4>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 4</span>
+                  <h4 className="text-lg font-black text-[#0B1E38]">Service Catalog &amp; Dropdown Line Items</h4>
                   <p className="text-xs text-slate-500">
-                    Add standard services from catalog dropdown or insert custom line items.
+                    Add mandatory services, site work, A/C heat pump matrices, permits, well/septic, and custom line items.
                   </p>
                 </div>
-                <div className="font-black text-sm text-ehsNavy">
-                  Site Work Total: <strong className="text-ehsBlue">${subtotalLineItems.toLocaleString()}</strong>
-                </div>
-              </div>
 
-              {/* Line Item Dropdown Adder */}
-              <div className="p-4 bg-ehsSoftBlue/50 border border-ehsBlue/15 rounded-2xl flex flex-wrap items-center gap-3">
-                <div className="flex-1 min-w-[280px]">
-                  <label className="block text-[11px] font-bold text-ehsNavy mb-1">
-                    Select Line Item from Service Catalog Dropdown
-                  </label>
+                <div className="flex items-center gap-2">
                   <select
                     value={selectedCatalogSku}
                     onChange={(e) => setSelectedCatalogSku(e.target.value)}
-                    className="w-full px-3 py-2 border border-borderGray rounded-xl text-xs font-bold bg-white focus:outline-none focus:border-ehsBlue"
+                    className="px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-bold bg-white max-w-xs"
                   >
-                    {SERVICE_CATALOG.map((item) => (
-                      <option key={item.sku} value={item.sku}>
-                        [{item.categoryTitle}] {item.name} (${item.defaultPrice.toLocaleString()})
+                    {SERVICE_CATALOG.map((s) => (
+                      <option key={s.sku} value={s.sku}>
+                        {s.name} - ${s.defaultPrice.toLocaleString()}
                       </option>
                     ))}
                   </select>
-                </div>
-
-                <div className="flex items-end gap-2 pt-4 sm:pt-0">
                   <button
                     type="button"
                     onClick={handleAddCatalogLineItem}
-                    className="px-4 py-2 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-xl text-xs shadow-xs cursor-pointer"
+                    className="px-3.5 py-1.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs cursor-pointer"
                   >
-                    + Add Dropdown Item
+                    + Add Item
                   </button>
                   <button
                     type="button"
                     onClick={handleAddCustomLineItem}
-                    className="px-4 py-2 bg-white hover:bg-slate-50 border border-borderGray text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs cursor-pointer border border-slate-200"
                   >
-                    + Custom Item
+                    + Custom
                   </button>
                 </div>
               </div>
 
-              {/* Line Items Table */}
-              <div className="bg-white border border-ehsBlue/10 rounded-2xl shadow-sm shadow-ehsNavy/5 overflow-hidden">
-                <table className="w-full text-left border-collapse text-xs">
+              {/* Itemized Line Items Table */}
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+                <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-borderGray bg-slate-50 text-[11px] font-black text-ehsNavy uppercase">
+                    <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-600">
                       <th className="py-2.5 px-3">Service / Line Item</th>
                       <th className="py-2.5 px-3">Category</th>
-                      <th className="py-2.5 px-3 w-28">Unit Price ($)</th>
-                      <th className="py-2.5 px-3 w-20">Qty</th>
-                      <th className="py-2.5 px-3 text-right">Total ($)</th>
-                      <th className="py-2.5 px-3 text-center w-12">Action</th>
+                      <th className="py-2.5 px-3">Unit Price ($)</th>
+                      <th className="py-2.5 px-3">Qty</th>
+                      <th className="py-2.5 px-3">Total ($)</th>
+                      <th className="py-2.5 px-3 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-700">
+                  <tbody className="divide-y divide-slate-100">
                     {lineItems.map((item) => (
-                      <tr key={item.id} className="hover:bg-ehsSoftBlue/20">
-                        <td className="py-2.5 px-3">
+                      <tr key={item.id} className="hover:bg-slate-50/60">
+                        <td className="py-2 px-3">
                           <input
                             type="text"
                             value={item.name}
                             onChange={(e) => handleUpdateLineItem(item.id, { name: e.target.value })}
-                            className="w-full font-bold text-slate-900 bg-transparent outline-none focus:bg-white px-1 rounded"
+                            className="font-bold text-xs text-slate-900 w-full bg-transparent outline-none focus:underline"
                           />
+                          <div className="text-[10px] text-slate-400 truncate max-w-sm">{item.description}</div>
                         </td>
-                        <td className="py-2.5 px-3 text-slate-400 font-semibold text-[10.5px]">
-                          {item.category.replace(/_/g, ' ')}
+                        <td className="py-2 px-3">
+                          <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                            {item.category}
+                          </span>
                         </td>
-                        <td className="py-2.5 px-3">
+                        <td className="py-2 px-3">
                           <input
                             type="number"
                             value={item.unitPrice}
-                            onChange={(e) =>
-                              handleUpdateLineItem(item.id, { unitPrice: Number(e.target.value) })
-                            }
-                            className="w-24 px-2 py-1 border border-borderGray rounded-lg font-bold"
+                            onChange={(e) => handleUpdateLineItem(item.id, { unitPrice: Number(e.target.value) || 0 })}
+                            className="w-20 px-2 py-1 border border-slate-200 rounded-lg text-xs font-bold"
                           />
                         </td>
-                        <td className="py-2.5 px-3">
+                        <td className="py-2 px-3">
                           <input
                             type="number"
-                            min="1"
                             value={item.quantity}
-                            onChange={(e) =>
-                              handleUpdateLineItem(item.id, { quantity: Math.max(1, Number(e.target.value)) })
-                            }
-                            className="w-16 px-2 py-1 border border-borderGray rounded-lg font-bold"
+                            onChange={(e) => handleUpdateLineItem(item.id, { quantity: Number(e.target.value) || 1 })}
+                            className="w-14 px-2 py-1 border border-slate-200 rounded-lg text-xs font-bold"
                           />
                         </td>
-                        <td className="py-2.5 px-3 text-right font-black text-slate-900">
-                          ${(item.totalPrice || 0).toLocaleString()}
+                        <td className="py-2 px-3 font-black text-slate-900">
+                          ${item.totalPrice.toLocaleString()}
                         </td>
-                        <td className="py-2.5 px-3 text-center">
+                        <td className="py-2 px-3 text-right">
                           <button
                             type="button"
                             onClick={() => handleRemoveLineItem(item.id)}
-                            className="text-rose-600 hover:text-rose-800 font-bold text-sm cursor-pointer"
-                            title="Remove Line Item"
+                            className="text-rose-500 hover:text-rose-700 font-bold p-1 cursor-pointer"
                           >
                             ✕
                           </button>
@@ -902,113 +907,125 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 5: Summary & Financing Calculator */}
+          {/* STEP 5: Summary & Totals (Customer Totals + 3% Florida Sales Tax + Internal Only Metrics) */}
           {step === 5 && (
             <div className="space-y-6">
-              {/* Grand Turnkey Quote Summary Card */}
-              <div className="p-6 bg-gradient-to-br from-ehsNavy via-ehsDeepBlue to-ehsBlue text-white rounded-[2rem] shadow-lg shadow-ehsNavy/15 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/15">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 5</span>
+                <h4 className="text-lg font-black text-[#0B1E38]">Formal Proposal Summary &amp; Financial Totals</h4>
+                <p className="text-xs text-slate-500">
+                  Verified breakdown matching the Easy HomeSource ERP spreadsheet with 3% Florida sales tax and internal metrics.
+                </p>
+              </div>
+
+              {/* Customer-Facing Summary Breakdown */}
+              <div className="p-6 bg-slate-50 border border-slate-200 rounded-[1.75rem] shadow-sm space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                   <div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-ehsLightBlue">
-                      Formal Proposal Summary
-                    </span>
-                    <h3 className="text-2xl font-black text-white">{customerName}</h3>
-                    <p className="text-xs text-white/80 mt-0.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">Customer Facing</span>
+                    <h5 className="font-extrabold text-sm text-slate-900">
                       {customHomeName} • {deliveryAddress}
-                    </p>
+                    </h5>
                   </div>
-                  <div className="text-left sm:text-right">
-                    <span className="text-[10px] text-white/70 uppercase font-bold block">
-                      Total Turnkey Investment
-                    </span>
-                    <span className="text-3xl font-black text-emerald-300">
-                      ${totalTurnkeyPrice.toLocaleString()}
+                  <div className="text-right">
+                    <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Total</span>
+                    <span className="text-xl font-black text-[#0F2A47]">
+                      ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
                 </div>
 
-                {/* 4 Key Pillars Breakdown */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1">
-                  <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-xs">
-                    <span className="text-[10px] text-white/70 block font-bold">1. Base Home</span>
-                    <span className="text-base font-black text-white">${subtotalHome.toLocaleString()}</span>
+                {/* Breakdown Line Items */}
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between text-slate-700">
+                    <span>Home:</span>
+                    <span className="font-semibold">${subtotalHome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-xs">
-                    <span className="text-[10px] text-white/70 block font-bold">2. Land / Lot</span>
-                    <span className="text-base font-black text-white">${subtotalLand.toLocaleString()}</span>
+                  <div className="flex justify-between text-slate-700">
+                    <span>Delivery:</span>
+                    <span className="font-semibold">${subtotalFreight.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-xs">
-                    <span className="text-[10px] text-white/70 block font-bold">3. Freight Delivery</span>
-                    <span className="text-base font-black text-white">${subtotalFreight.toLocaleString()}</span>
+                  <div className="flex justify-between text-slate-700">
+                    <span>Site Work:</span>
+                    <span className="font-semibold">${subtotalSiteWork.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-xs">
-                    <span className="text-[10px] text-white/70 block font-bold">4. Site Prep &amp; Utilities</span>
-                    <span className="text-base font-black text-white">${subtotalLineItems.toLocaleString()}</span>
+                  <div className="flex justify-between text-slate-700">
+                    <span>Add-ons:</span>
+                    <span className="font-semibold">${subtotalAddOns.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+
+                  <div className="my-2 border-t border-slate-200" />
+
+                  <div className="flex justify-between text-slate-800 font-bold">
+                    <span>Subtotal:</span>
+                    <span>${quoteTotals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>Financed subtotal:</span>
+                    <span>${quoteTotals.financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>Non-financed subtotal:</span>
+                    <span>${quoteTotals.non_financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>Tax basis:</span>
+                    <span>${quoteTotals.tax_basis.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-700 font-bold">
+                    <span>3% sales tax (3.00%):</span>
+                    <span className="text-[#1E6FA8]">${quoteTotals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+
+                  {/* Prominent Navy Estimated Total Banner matching screenshot */}
+                  <div className="flex items-center justify-between rounded-xl bg-[#0F2A47] text-white px-4 py-3 mt-3 shadow-md">
+                    <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
+                    <span className="font-black text-2xl tracking-tight">
+                      ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* Monthly Financing Calculator */}
-              <div className="p-5 bg-white border border-ehsBlue/10 rounded-[1.75rem] shadow-sm shadow-ehsNavy/5 space-y-4">
-                <div className="flex justify-between items-center pb-2 border-b border-borderGray/60">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">
-                      Florida Lender Calculator
-                    </span>
-                    <h4 className="font-black text-sm text-ehsNavy">
-                      Combined Land-Home Monthly Mortgage (P&amp;I)
-                    </h4>
+              {/* INTERNAL ONLY Section matching screenshot */}
+              <div className="p-5 bg-white border border-slate-200 rounded-2xl space-y-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                  INTERNAL ONLY (Dealership &amp; Commission Breakdown)
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1">
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Factory cost:</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.factory_cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-                  <span className="font-black text-sm text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                    Est. ${estimatedMonthlyPayment}/month
-                  </span>
-                </div>
-
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Down Payment ({downPaymentPercent}%)
-                    </label>
-                    <input
-                      type="number"
-                      value={downPaymentPercent}
-                      onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-borderGray rounded-xl text-xs font-bold"
-                    />
-                    <span className="text-[11px] text-slate-500 font-semibold mt-1 block">
-                      Required Cash: ${downPaymentAmount.toLocaleString()}
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Calculated EHS price:</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.ehs_price_calculated.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">House gross margin:</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.house_gross_margin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Commissionable margin:</span>
+                    <span className={`font-bold ${quoteTotals.commissionable_house_margin < 0 ? 'text-rose-600' : 'text-slate-900'}`}>
+                      ${quoteTotals.commissionable_house_margin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Interest Rate (%)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.125"
-                      value={interestRate}
-                      onChange={(e) => setInterestRate(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-borderGray rounded-xl text-xs font-bold"
-                    />
-                    <span className="text-[11px] text-slate-500 font-semibold mt-1 block">
-                      Finance Principal: ${loanPrincipal.toLocaleString()}
-                    </span>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Service profit:</span>
+                    <span className="font-bold text-emerald-700">${quoteTotals.service_profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Loan Term
-                    </label>
-                    <select
-                      value={loanTermYears}
-                      onChange={(e) => setLoanTermYears(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-borderGray rounded-xl text-xs font-bold bg-white"
-                    >
-                      <option value={30}>30 Years (360 Months)</option>
-                      <option value={20}>20 Years (240 Months)</option>
-                      <option value={15}>15 Years (180 Months)</option>
-                    </select>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Admin fee (5%):</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.admin_fee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Loan fee:</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.loan_fee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <span className="text-slate-500 font-medium block text-[10px] uppercase">Salesperson comm (20%):</span>
+                    <span className="font-bold text-slate-900">${quoteTotals.salesperson_commission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>
@@ -1016,54 +1033,42 @@ export function ManualQuoteBuilderModal({
           )}
         </div>
 
-        {/* Modal Footer Controls */}
-        <div className="p-5 border-t border-ehsBlue/10 bg-ehsSoftBlue/40 flex items-center justify-between">
-          <div>
-            {step > 1 ? (
-              <button
-                type="button"
-                onClick={() => setStep((s) => (s - 1) as any)}
-                className="px-5 py-2.5 bg-white border border-borderGray text-slate-700 font-bold rounded-full hover:bg-slate-50 transition-colors cursor-pointer"
-              >
-                ← Back
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-5 py-2.5 text-slate-500 font-bold hover:text-slate-900 cursor-pointer"
-              >
-                Cancel
-              </button>
-            )}
-          </div>
+        {/* Footer Navigation Actions */}
+        <div className="p-5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+          <button
+            type="button"
+            onClick={() => setStep((prev) => (prev > 1 ? ((prev - 1) as any) : 1))}
+            disabled={step === 1}
+            className="px-4 py-2 bg-white hover:bg-slate-100 disabled:opacity-40 text-slate-700 font-bold rounded-xl border border-slate-200 cursor-pointer"
+          >
+            ← Back
+          </button>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => handleSave('DRAFT')}
+              className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 font-bold rounded-xl border border-slate-200 shadow-2xs cursor-pointer"
+            >
+              Save as Draft
+            </button>
+
             {step < 5 ? (
               <button
                 type="button"
-                onClick={() => setStep((s) => (s + 1) as any)}
-                className="px-6 py-2.5 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                onClick={() => setStep((prev) => ((prev + 1) as any))}
+                className="px-5 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl shadow-xs cursor-pointer transition-colors"
               >
                 Next Step →
               </button>
             ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => handleSave('DRAFT')}
-                  className="px-5 py-2.5 bg-white border border-borderGray text-slate-700 font-bold rounded-full hover:bg-slate-50 cursor-pointer"
-                >
-                  Save as Draft
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSave('SENT_TO_BUYER')}
-                  className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-full shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95"
-                >
-                  ✓ Finalize &amp; Save to Library
-                </button>
-              </>
+              <button
+                type="button"
+                onClick={() => handleSave('SENT_TO_BUYER')}
+                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl shadow-xs cursor-pointer transition-colors"
+              >
+                ✓ Finalize &amp; Save to Library
+              </button>
             )}
           </div>
         </div>
