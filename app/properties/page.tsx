@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LandHomePackagesBrowser } from '@/components/LandHomePackagesBrowser';
 import { PublicFloridaPropertyMap } from '@/components/PublicFloridaPropertyMap';
+import { LandHomePackagesBrowser } from '@/components/LandHomePackagesBrowser';
 import { LeadForm } from '@/components/LeadForm';
 import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
 
 export default function PropertiesPage() {
-  const [activeTab, setActiveTab] = useState<'packages' | 'map'>('packages');
+  const [activeTab, setActiveTab] = useState<'map' | 'packages'>('map');
   const publicProperties = INITIAL_PROPERTIES.filter((p) => p.publicVisible);
 
   return (
@@ -28,19 +28,8 @@ export default function PropertiesPage() {
               </p>
             </div>
 
-            {/* View Switcher Toggle */}
+            {/* View Switcher Toggle (Map is now default!) */}
             <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-borderGray shadow-2xs shrink-0 self-start md:self-auto text-xs font-bold">
-              <button
-                type="button"
-                onClick={() => setActiveTab('packages')}
-                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
-                  activeTab === 'packages'
-                    ? 'bg-ehsDeepBlue text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                📋 Package Deals
-              </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('map')}
@@ -52,12 +41,23 @@ export default function PropertiesPage() {
               >
                 🗺️ Interactive Map
               </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('packages')}
+                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
+                  activeTab === 'packages'
+                    ? 'bg-ehsDeepBlue text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                📋 Package Deals Grid
+              </button>
             </div>
           </div>
 
           <div className="mt-5 grid gap-3 text-xs sm:text-sm font-bold text-ehsBlack sm:grid-cols-3">
             <div className="rounded-xl bg-white p-3.5 shadow-2xs">
-              🏡 Finished Homes &amp; Move-in Ready
+              🏡 Move-in Ready Homes &amp; Packages
             </div>
             <div className="rounded-xl bg-white p-3.5 shadow-2xs">
               🚜 Land Prep, Well &amp; Septic Support
@@ -68,7 +68,7 @@ export default function PropertiesPage() {
           </div>
         </section>
 
-        {/* View 1: Interactive Map View */}
+        {/* View 1: Moveable & Zoomable Interactive Map (Default View) */}
         {activeTab === 'map' && (
           <div className="space-y-4 animate-in fade-in duration-200">
             <PublicFloridaPropertyMap properties={publicProperties} />
