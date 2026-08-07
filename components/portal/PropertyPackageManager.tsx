@@ -20,64 +20,193 @@ interface PropertyPackageManagerProps {
   initialNav?: string;
 }
 
-export function PropertyPackageManager({ initialNav = 'property-packages' }: PropertyPackageManagerProps) {
+// Complete Original Quote Library Master Proposals
+const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
+  {
+    id: 'quote-1',
+    quoteNumber: 'Q-2026-0801',
+    customerName: 'Sarah Jenkins',
+    customerPhone: '352-555-0192',
+    customerEmail: 'sarah.j@example.com',
+    homeModel: 'Move on Up (3b/2ba)',
+    homePrice: 94900,
+    propertyAddress: '6645 W Erlen Ln, Homosassa',
+    propertyPrice: 49900,
+    siteWorkTotal: 34500,
+    freightDelivery: 3850,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3200,
+    totalTurnkeyPrice: 179300,
+    downPaymentPercent: 10,
+    downPaymentAmount: 17930,
+    estimatedMonthlyPayment: 1058,
+    salesperson: 'Ken License',
+    status: 'APPROVED',
+    notes: 'FHA pre-approval with local Florida manufactured lender. Site prep scheduled.',
+    createdAt: '2026-08-07T09:30:00Z',
+    updatedAt: '2026-08-07T09:30:00Z'
+  },
+  {
+    id: 'quote-2',
+    quoteNumber: 'Q-2026-0802',
+    customerName: 'Carlos Mendez',
+    customerPhone: '813-555-0481',
+    customerEmail: 'cmendez88@example.com',
+    homeModel: 'The Tulip ($39,888)',
+    homePrice: 39888,
+    propertyAddress: 'Buyer Owned Land (Spring Hill)',
+    propertyPrice: 0,
+    siteWorkTotal: 28900,
+    freightDelivery: 3850,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3200,
+    totalTurnkeyPrice: 68788,
+    downPaymentPercent: 10,
+    downPaymentAmount: 6878,
+    estimatedMonthlyPayment: 406,
+    salesperson: 'Kristen Overstreet',
+    status: 'SENT_TO_BUYER',
+    notes: 'Customer owns private 0.75 acre lot in Hernando County. Standard well & septic hookup.',
+    createdAt: '2026-08-07T08:45:00Z',
+    updatedAt: '2026-08-07T08:45:00Z'
+  },
+  {
+    id: 'quote-3',
+    quoteNumber: 'Q-2026-0803',
+    customerName: 'David & Michelle Miller',
+    customerPhone: '352-555-0331',
+    customerEmail: 'millerfamilyfl@example.com',
+    homeModel: 'Oak (4b/2ba Double Wide)',
+    homePrice: 84608,
+    propertyAddress: '9248 Denmarsh Dr, Brooksville',
+    propertyPrice: 47500,
+    siteWorkTotal: 66192,
+    freightDelivery: 4200,
+    acSystem: 5800,
+    permitsFees: 2850,
+    skirtingSteps: 3600,
+    totalTurnkeyPrice: 198300,
+    downPaymentPercent: 10,
+    downPaymentAmount: 19830,
+    estimatedMonthlyPayment: 1170,
+    salesperson: 'Kris Kinney',
+    status: 'IN_CONTRACT',
+    notes: 'Land & home package deal in Denmarsh Woods. Escrow earnest deposit received.',
+    createdAt: '2026-08-06T16:15:00Z',
+    updatedAt: '2026-08-06T16:15:00Z'
+  },
+  {
+    id: 'quote-4',
+    quoteNumber: 'Q-2026-0804',
+    customerName: 'Robert Vance Contracting',
+    customerPhone: '727-555-0819',
+    customerEmail: 'rvance.contracting@example.com',
+    homeModel: '15 On-Stilts Multi-Site Coastal Package',
+    homePrice: 0,
+    propertyAddress: '5043 Southtowne Loop, New Port Richey',
+    propertyPrice: 685000,
+    siteWorkTotal: 210000,
+    freightDelivery: 15000,
+    acSystem: 0,
+    permitsFees: 12500,
+    skirtingSteps: 0,
+    totalTurnkeyPrice: 895000,
+    downPaymentPercent: 20,
+    downPaymentAmount: 179000,
+    estimatedMonthlyPayment: 4725,
+    salesperson: 'Ken License',
+    status: 'LENDER_REVIEW',
+    notes: 'Institutional builder coastal development package with Pasco County site development approvals.',
+    createdAt: '2026-08-06T14:00:00Z',
+    updatedAt: '2026-08-06T14:00:00Z'
+  },
+  {
+    id: 'quote-5',
+    quoteNumber: 'Q-2026-0805',
+    customerName: 'Angela Robinson',
+    customerPhone: '352-555-0722',
+    customerEmail: 'arobinson.fl@example.com',
+    homeModel: 'Dogwood (2b/2ba Single Wide)',
+    homePrice: 61900,
+    propertyAddress: '9868 Lake Dr, Spring Hill',
+    propertyPrice: 54900,
+    siteWorkTotal: 51900,
+    freightDelivery: 3850,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3200,
+    totalTurnkeyPrice: 168700,
+    downPaymentPercent: 5,
+    downPaymentAmount: 8435,
+    estimatedMonthlyPayment: 995,
+    salesperson: 'Kristen Overstreet',
+    status: 'APPROVED',
+    notes: 'Approved for USDA Rural Development 100% financing option.',
+    createdAt: '2026-08-05T11:20:00Z',
+    updatedAt: '2026-08-05T11:20:00Z'
+  },
+  {
+    id: 'quote-6',
+    quoteNumber: 'Q-2026-0806',
+    customerName: 'Thomas & Brenda Wright',
+    customerPhone: '813-555-0914',
+    customerEmail: 'twright.tampa@example.com',
+    homeModel: 'Boujee XL 2 (4b/3ba Luxury Master)',
+    homePrice: 147374,
+    propertyAddress: '18810 St Paul Dr, Spring Hill',
+    propertyPrice: 199900,
+    siteWorkTotal: 50000,
+    freightDelivery: 4500,
+    acSystem: 6200,
+    permitsFees: 3100,
+    skirtingSteps: 4200,
+    totalTurnkeyPrice: 397274,
+    downPaymentPercent: 15,
+    downPaymentAmount: 59591,
+    estimatedMonthlyPayment: 2345,
+    salesperson: 'Ken License',
+    status: 'SENT_TO_BUYER',
+    notes: 'Luxury acreage package on 0.50-acre high-and-dry site.',
+    createdAt: '2026-08-04T15:40:00Z',
+    updatedAt: '2026-08-04T15:40:00Z'
+  },
+  {
+    id: 'quote-7',
+    quoteNumber: 'Q-2026-0807',
+    customerName: 'Patricia Cole',
+    customerPhone: '352-555-0648',
+    customerEmail: 'pcole.citrus@example.com',
+    homeModel: 'Born to Run (2b/2ba)',
+    homePrice: 89875,
+    propertyAddress: '7112 Fitzpatrick Ave, Brooksville',
+    propertyPrice: 49900,
+    siteWorkTotal: 34500,
+    freightDelivery: 3850,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3200,
+    totalTurnkeyPrice: 174275,
+    downPaymentPercent: 10,
+    downPaymentAmount: 17427,
+    estimatedMonthlyPayment: 1028,
+    salesperson: 'Kris Kinney',
+    status: 'DRAFT',
+    notes: 'Draft proposal prepared for Brooksville in-person consultation.',
+    createdAt: '2026-08-04T09:15:00Z',
+    updatedAt: '2026-08-04T09:15:00Z'
+  }
+];
+
+export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPackageManagerProps) {
+  // Default to 'dashboard' on page load!
   const [activeModule, setActiveModule] = useState<string>(initialNav);
 
   // Seed with verified production single source of truth data immediately
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
   const [stats, setStats] = useState<PropertyStats>(calculatePropertyStats());
-  const [quotes, setQuotes] = useState<SavedQuote[]>([
-    {
-      id: 'quote-1',
-      quoteNumber: 'Q-2026-0801',
-      customerName: 'Sarah Jenkins',
-      customerPhone: '352-555-0192',
-      customerEmail: 'sarah.j@example.com',
-      homeModel: 'Move on Up (3b/2ba)',
-      homePrice: 94900,
-      propertyAddress: '6645 W Erlen Ln, Homosassa',
-      propertyPrice: 49900,
-      siteWorkTotal: 34500,
-      freightDelivery: 3850,
-      acSystem: 5400,
-      permitsFees: 2650,
-      skirtingSteps: 3200,
-      totalTurnkeyPrice: 179300,
-      downPaymentPercent: 10,
-      downPaymentAmount: 17930,
-      estimatedMonthlyPayment: 1058,
-      salesperson: 'Ken License',
-      status: 'APPROVED',
-      notes: 'FHA pre-approval with local Florida manufactured lender.',
-      createdAt: '2026-08-07T09:30:00Z',
-      updatedAt: '2026-08-07T09:30:00Z'
-    },
-    {
-      id: 'quote-2',
-      quoteNumber: 'Q-2026-0802',
-      customerName: 'Carlos Mendez',
-      customerPhone: '813-555-0481',
-      customerEmail: 'cmendez88@example.com',
-      homeModel: 'The Tulip ($39,888)',
-      homePrice: 39888,
-      propertyAddress: 'Buyer Owned Land (Spring Hill)',
-      propertyPrice: 0,
-      siteWorkTotal: 28900,
-      freightDelivery: 3850,
-      acSystem: 5400,
-      permitsFees: 2650,
-      skirtingSteps: 3200,
-      totalTurnkeyPrice: 68788,
-      downPaymentPercent: 10,
-      downPaymentAmount: 6878,
-      estimatedMonthlyPayment: 406,
-      salesperson: 'Kristen Overstreet',
-      status: 'SENT_TO_BUYER',
-      notes: 'Customer owns land in Hernando County. Standard well & septic hookup.',
-      createdAt: '2026-08-07T08:45:00Z',
-      updatedAt: '2026-08-07T08:45:00Z'
-    }
-  ]);
+  const [quotes, setQuotes] = useState<SavedQuote[]>(ORIGINAL_SAVED_QUOTES);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeView, setActiveView] = useState<'table' | 'map' | 'kanban' | 'analytics'>('table');
@@ -93,7 +222,7 @@ export function PropertyPackageManager({ initialNav = 'property-packages' }: Pro
   const [isQuoteBuilderOpen, setIsQuoteBuilderOpen] = useState(false);
   const [quoteBuilderCustomer, setQuoteBuilderCustomer] = useState<string>('');
 
-  // Fetch properties from live Single Source API (background sync)
+  // Background sync
   const loadData = useCallback(async () => {
     try {
       const [propsRes, statsRes] = await Promise.all([
@@ -230,7 +359,7 @@ export function PropertyPackageManager({ initialNav = 'property-packages' }: Pro
       }}
     >
       <div className="p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
-        {/* 1. MODULE: Quote Dashboard */}
+        {/* 1. MODULE: Quote Dashboard (Default Root View) */}
         {activeModule === 'dashboard' && (
           <QuoteDashboardView
             onOpenNewQuote={() => {
@@ -248,7 +377,7 @@ export function PropertyPackageManager({ initialNav = 'property-packages' }: Pro
           <ReadyToQuoteView onStartQuoteForBuyer={handleStartQuoteForBuyer} />
         )}
 
-        {/* 3. MODULE: Quote Library */}
+        {/* 3. MODULE: Quote Library (Restored with all original proposals) */}
         {activeModule === 'library' && (
           <QuoteLibraryView
             quotes={quotes}
@@ -494,7 +623,7 @@ export function PropertyPackageManager({ initialNav = 'property-packages' }: Pro
               </div>
             </div>
 
-            {/* Main View Area (Instant synchronous render, 0 loading delay) */}
+            {/* Main View Area */}
             {activeView === 'table' && (
               <PropertyTable
                 properties={filteredProperties}
