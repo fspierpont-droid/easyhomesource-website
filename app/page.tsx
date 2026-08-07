@@ -193,15 +193,17 @@ function InfoBlock({ title, text, cta, href }: { title: string; text: string; ct
 
 function HomepageHomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
-  return <article className="group overflow-hidden rounded-[1.5rem] border border-ehsBlue/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-    <Link href={`/homes/${home.slug}`} className="block overflow-hidden bg-white" aria-label={`View ${home.displayName ?? home.name}`}>
-      <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} exterior`} className="h-44 rounded-none transition duration-500 group-hover:scale-105" />
-    </Link>
-    <div className="p-5">
-      <h3 className="text-xl font-black text-ehsNavy">{home.displayName ?? home.name}</h3>
-      <p className="mt-1 text-sm font-semibold text-ehsBlack/60">{home.bedrooms} beds • {home.bathrooms} baths • {home.squareFeet?.toLocaleString()} sq. ft.</p>
-      <p className="mt-3 text-2xl font-black text-ehsBlue">{formatHomePrice(home)}</p>
-      <Link href={`/homes/${home.slug}`} className="mt-4 inline-flex w-full justify-center rounded-full bg-ehsBlue px-5 py-2.5 text-sm font-black text-white transition hover:bg-ehsDeepBlue">View Home</Link>
-    </div>
-  </article>;
+  return (
+    <article className="group overflow-hidden rounded-2xl border border-ehsBlue/10 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+      <Link href={`/homes/${home.slug}`} className="block overflow-hidden bg-white" aria-label={`View ${home.displayName ?? home.name}`}>
+        <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} exterior`} className="h-40 sm:h-44 w-full rounded-none transition duration-500 group-hover:scale-105" />
+      </Link>
+      <div className="p-4">
+        <h3 className="text-base sm:text-lg font-black text-ehsNavy">{home.displayName ?? home.name}</h3>
+        <p className="mt-0.5 text-xs font-semibold text-ehsBlack/60">{home.bedrooms} beds • {home.bathrooms} baths • {home.squareFeet?.toLocaleString()} sq. ft.</p>
+        <p className="mt-2 text-xl font-black text-ehsBlue">{formatHomePrice(home)}</p>
+        <Link href={`/homes/${home.slug}`} className="mt-3 inline-flex w-full justify-center rounded-xl bg-ehsBlue px-4 py-2 text-xs font-bold text-white transition hover:bg-ehsDeepBlue text-center shadow-sm">View Home</Link>
+      </div>
+    </article>
+  );
 }
