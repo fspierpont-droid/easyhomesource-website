@@ -11,7 +11,7 @@ import { navLinks, siteInfo } from '@/data/site';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isPortal = pathname?.startsWith('/portal') || pathname?.startsWith('/property-packages');
+  const isPortal = pathname === '/' || pathname?.startsWith('/portal') || pathname?.startsWith('/property-packages');
 
   if (isPortal) {
     return <>{children}</>;
