@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { QuotePortalShell } from '@/components/portal/QuotePortalShell';
 import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function PortalPage() {
   return (
     <QuotePortalShell activeNav="property-packages">
-      <PropertyPackageManager />
+      <Suspense fallback={<div className="p-12 text-center text-slate-400 text-xs">Loading Quote Portal...</div>}>
+        <PropertyPackageManager />
+      </Suspense>
     </QuotePortalShell>
   );
 }
