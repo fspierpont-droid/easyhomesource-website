@@ -4,10 +4,10 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://easyhomesource.com"),
+  metadataBase: new URL("https://easyhomesource-website.vercel.app"),
   title: { default: "Easy HomeSource | Manufactured Homes in Brooksville & Central FL", template: "%s | Easy HomeSource" },
   description: "Shop top-quality manufactured & mobile homes in Brooksville, FL. Easy HomeSource offers transparent pricing, delivery, setup, and financing guidance.",
-  openGraph: { title: "Easy HomeSource | Manufactured Homes in Brooksville & Central FL", description: "Shop top-quality manufactured & mobile homes in Brooksville, FL. Easy HomeSource offers transparent pricing, delivery, setup, and financing guidance.", url: "https://easyhomesource.com", siteName: "Easy HomeSource", locale: "en_US", type: "website" },
+  openGraph: { title: "Easy HomeSource | Manufactured Homes in Brooksville & Central FL", description: "Shop top-quality manufactured & mobile homes in Brooksville, FL. Easy HomeSource offers transparent pricing, delivery, setup, and financing guidance.", url: "https://easyhomesource-website.vercel.app", siteName: "Easy HomeSource", locale: "en_US", type: "website" },
   keywords: ["manufactured homes", "mobile homes for sale", "Brooksville FL", "Hernando County", "Clayton Homes", "Palm Harbor", "TRU Homes", "modular homes", "Florida manufactured housing"]
 };
 
