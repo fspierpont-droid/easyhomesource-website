@@ -1,31 +1,59 @@
-import type { Metadata } from 'next';
-import { LandHomePackagesBrowser } from '@/components/LandHomePackagesBrowser';
-import { LeadForm } from '@/components/LeadForm';
-import { getPublicProperties } from '@/lib/db/propertyStore';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Land & Home Packages | Easy HomeSource',
-  description:
-    'Explore Easy HomeSource turnkey land and home packages, completed homes, build-ready lots, and package opportunities across Central Florida.'
-};
+import React, { useState } from 'react';
+import { LandHomePackagesBrowser } from '@/components/LandHomePackagesBrowser';
+import { PublicFloridaPropertyMap } from '@/components/PublicFloridaPropertyMap';
+import { LeadForm } from '@/components/LeadForm';
+import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
 
 export default function PropertiesPage() {
-  const publicProperties = getPublicProperties();
+  const [activeTab, setActiveTab] = useState<'packages' | 'map'>('packages');
+  const publicProperties = INITIAL_PROPERTIES.filter((p) => p.publicVisible);
 
   return (
     <main className="px-4 py-8 sm:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
         {/* Header Hero Section */}
         <section className="rounded-2xl bg-ehsSoftBlue p-5 sm:p-8">
-          <p className="text-xs font-black uppercase tracking-wider text-ehsBlue">
-            Turnkey Package Solutions
-          </p>
-          <h1 className="mt-1.5 text-2xl sm:text-4xl font-black text-ehsBlack">
-            Land &amp; Home Packages in Central Florida
-          </h1>
-          <p className="mt-2.5 max-w-4xl text-sm sm:text-base leading-relaxed text-ehsBlack/75">
-            Bring the property, manufactured home, delivery, site prep, permitting, and utilities together into one stress-free turnkey package. Compare available homesites and move-in ready properties across Hernando, Citrus, and Pasco counties.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-ehsBlue">
+                Turnkey Package Solutions
+              </p>
+              <h1 className="mt-1.5 text-2xl sm:text-4xl font-black text-ehsBlack">
+                Land &amp; Home Packages in Central Florida
+              </h1>
+              <p className="mt-2.5 max-w-4xl text-sm sm:text-base leading-relaxed text-ehsBlack/75">
+                Bring the property, manufactured home, delivery, site prep, permitting, and utilities together into one stress-free turnkey package. Compare available homesites and move-in ready properties across Hernando, Citrus, and Pasco counties.
+              </p>
+            </div>
+
+            {/* View Switcher Toggle */}
+            <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-borderGray shadow-2xs shrink-0 self-start md:self-auto text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setActiveTab('packages')}
+                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
+                  activeTab === 'packages'
+                    ? 'bg-ehsDeepBlue text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                📋 Package Deals
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('map')}
+                className={`px-4 py-2 rounded-xl transition-all cursor-pointer ${
+                  activeTab === 'map'
+                    ? 'bg-ehsDeepBlue text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                🗺️ Interactive Map
+              </button>
+            </div>
+          </div>
 
           <div className="mt-5 grid gap-3 text-xs sm:text-sm font-bold text-ehsBlack sm:grid-cols-3">
             <div className="rounded-xl bg-white p-3.5 shadow-2xs">
@@ -40,8 +68,19 @@ export default function PropertiesPage() {
           </div>
         </section>
 
-        {/* Live Packages Browser */}
-        <LandHomePackagesBrowser initialProperties={publicProperties} />
+        {/* View 1: Interactive Map View */}
+        {activeTab === 'map' && (
+          <div className="space-y-4 animate-in fade-in duration-200">
+            <PublicFloridaPropertyMap properties={publicProperties} />
+          </div>
+        )}
+
+        {/* View 2: Package Deals Browser */}
+        {activeTab === 'packages' && (
+          <div className="animate-in fade-in duration-200">
+            <LandHomePackagesBrowser initialProperties={publicProperties} />
+          </div>
+        )}
 
         {/* How Turnkey Packages Work */}
         <section className="rounded-2xl border border-borderGray bg-white p-6 sm:p-8 space-y-6">

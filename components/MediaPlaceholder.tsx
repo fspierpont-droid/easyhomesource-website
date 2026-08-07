@@ -1,10 +1,25 @@
-export function MediaPlaceholder({ title = "Photos coming soon", className = "" }: { title?: string; className?: string }) {
+export function MediaPlaceholder({
+  title = "Floor Plan & Specs Available",
+  className = ""
+}: {
+  title?: string;
+  className?: string;
+}) {
   return (
-    <div className={`flex h-full w-full min-h-36 items-center justify-center bg-gradient-to-br from-ehsSoftBlue via-white to-ehsLightBlue/30 p-4 text-center ${className}`}>
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-ehsBlue">Easy HomeSource</p>
-        <p className="mt-1 text-sm font-black text-ehsBlack">{title}</p>
-        <p className="mt-0.5 text-[11px] font-medium text-ehsBlack/50">Media updating soon</p>
+    <div
+      className={`flex h-full w-full min-h-36 items-center justify-center bg-gradient-to-br from-ehsSoftBlue via-white to-slate-100 p-4 text-center ${className}`}
+    >
+      <div className="space-y-1">
+        <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-[#0B4F86] font-bold text-sm mx-auto flex items-center justify-center border border-ehsBlue/20">
+          🏡
+        </div>
+        <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-ehsBlue">
+          Easy HomeSource
+        </p>
+        <p className="text-xs font-black text-slate-800">{title}</p>
+        <p className="text-[10px] font-medium text-slate-400">
+          Verified builder specs on file
+        </p>
       </div>
     </div>
   );

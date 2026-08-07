@@ -30,6 +30,9 @@ export function homeBadges(home: Home) {
 
 export function HomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
+  const isVerifiedPhoto = home.slug === 'tulip' && (primary?.src?.includes('api.claytonhomes.com') || false);
+  const photoSrc = isVerifiedPhoto ? primary?.src : null;
+
   const detailsHref = `/homes/${home.slug}`;
   const quoteHref = `/get-quote?home=${encodeURIComponent(home.slug)}`;
   const specs = [
@@ -48,12 +51,31 @@ export function HomeCard({ home }: { home: Home }) {
           className="block focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/70"
         >
           <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-ehsSoftBlue">
-            <HomeImage
-              src={primary?.src}
-              alt={primary?.alt ?? `${home.name} photo`}
-              className="h-full w-full rounded-none transition duration-500 group-hover:scale-105"
-              placeholderTitle="Photos coming soon"
-            />
+            {photoSrc ? (
+              <HomeImage
+                src={photoSrc}
+                alt={primary?.alt ?? `${home.name} photo`}
+                className="h-full w-full rounded-none transition duration-500 group-hover:scale-105"
+                placeholderTitle="Floor Plan & Specs Available"
+              />
+            ) : (
+              <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-ehsSoftBlue via-white to-slate-100 p-4 text-center">
+                <div className="space-y-1">
+                  <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-[#0B4F86] font-bold text-sm mx-auto flex items-center justify-center border border-ehsBlue/20">
+                    🏡
+                  </div>
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-ehsBlue">
+                    Easy HomeSource
+                  </p>
+                  <p className="text-xs font-black text-slate-800">
+                    {home.displayName ?? home.name}
+                  </p>
+                  <p className="text-[10px] font-medium text-slate-400">
+                    Verified builder specs on file
+                  </p>
+                </div>
+              </div>
+            )}
             <span className="absolute right-3 top-3">
               <StatusBadge status={home.status} />
             </span>

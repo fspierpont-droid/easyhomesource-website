@@ -1,6 +1,8 @@
 import { ButtonLink } from "@/components/ButtonLink";
 import { HomeImage } from "@/components/HomeImage";
 import { VideoCard } from "@/components/VideoCard";
+import { PublicFloridaPropertyMap } from "@/components/PublicFloridaPropertyMap";
+import { INITIAL_PROPERTIES } from "@/lib/db/propertyStore";
 import Link from "next/link";
 import { formatHomePrice, getFeaturedHomes, getHomeBySlug, type Home } from "@/data/homes";
 import { videos } from "@/data/videos";
@@ -32,6 +34,7 @@ export default function HomePage() {
   const tulip = getHomeBySlug("tulip");
   const dogwood = getHomeBySlug("dogwood");
   const bornToRun = getHomeBySlug("born-to-run");
+  const publicProperties = INITIAL_PROPERTIES.filter((p) => p.publicVisible);
 
   return (
     <main>
@@ -82,6 +85,23 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Interactive Florida Map Section */}
+      <section className="px-4 py-12 bg-white">
+        <div className="mx-auto max-w-6xl space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-ehsBlue">Florida Homesites &amp; Packages</p>
+              <h2 className="text-3xl font-black text-ehsBlack">Explore Central Florida Locations</h2>
+              <p className="text-sm text-ehsBlack/70 mt-1">
+                Browse available turnkey homesites across Hernando, Citrus, Pasco, and Sumter counties on our live interactive map.
+              </p>
+            </div>
+            <ButtonLink href="/properties" variant="secondary">View All Package Deals</ButtonLink>
+          </div>
+          <PublicFloridaPropertyMap properties={publicProperties} />
         </div>
       </section>
 
@@ -162,14 +182,14 @@ export default function HomePage() {
       </section>
 
       <section className="px-4 py-16">
-        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
+        <div className="mx-auto max-w-6xl gap-6 lg:grid-cols-2">
           <InfoBlock title="Turnkey home package guidance" text="Explore home-only purchases, land-and-home package options, budget expectations, lender questions, delivery, setup, site work, and the variables that affect your final path forward." cta="Get Pricing" href="/get-quote" />
           <InfoBlock title="Delivery, setup, and permits" text="Understand the steps after selecting a home, including freight, site work, setup, inspections, permitting timelines, and final quote variables." cta="Schedule a Tour" href="/get-quote" />
         </div>
       </section>
 
       <section className="bg-ehsSoftBlue px-4 py-16">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div className="mx-auto max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="font-black text-ehsBlue">Ready to browse?</p>
             <h2 className="mt-2 text-4xl font-black text-ehsBlack">Compare homes by price, size, beds, baths, and availability.</h2>
@@ -193,10 +213,29 @@ function InfoBlock({ title, text, cta, href }: { title: string; text: string; ct
 
 function HomepageHomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
+  const isVerifiedPhoto = home.slug === 'tulip' && (primary?.src?.includes('api.claytonhomes.com') || false);
+  const photoSrc = isVerifiedPhoto ? primary?.src : null;
+
   return (
     <article className="group overflow-hidden rounded-2xl border border-ehsBlue/10 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
       <Link href={`/homes/${home.slug}`} className="block overflow-hidden bg-white" aria-label={`View ${home.displayName ?? home.name}`}>
-        <HomeImage src={primary?.src} alt={primary?.alt ?? `${home.name} exterior`} className="h-40 sm:h-44 w-full rounded-none transition duration-500 group-hover:scale-105" />
+        {photoSrc ? (
+          <HomeImage src={photoSrc} alt={primary?.alt ?? `${home.name} exterior`} className="h-40 sm:h-44 w-full rounded-none transition duration-500 group-hover:scale-105" />
+        ) : (
+          <div className="h-40 sm:h-44 w-full flex items-center justify-center bg-gradient-to-br from-ehsSoftBlue via-white to-slate-100 p-4 text-center">
+            <div className="space-y-1">
+              <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-[#0B4F86] font-bold text-sm mx-auto flex items-center justify-center border border-ehsBlue/20">
+                🏡
+              </div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-ehsBlue">
+                Easy HomeSource
+              </p>
+              <p className="text-xs font-black text-slate-800">
+                {home.displayName ?? home.name}
+              </p>
+            </div>
+          </div>
+        )}
       </Link>
       <div className="p-4">
         <h3 className="text-base sm:text-lg font-black text-ehsNavy">{home.displayName ?? home.name}</h3>

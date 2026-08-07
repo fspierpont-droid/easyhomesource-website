@@ -7,6 +7,7 @@ import type {
 } from "@/types/property";
 
 // Single Source of Truth Seed Properties for Easy Home Source
+// Note: Photos are only attached when 100% verified to be the exact real house/parcel.
 export const INITIAL_PROPERTIES: Property[] = [
   {
     id: "EHS-001",
@@ -27,10 +28,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 1140,
     lotSize: "0.46 acres",
     parcelNumber: "18E-19S-24-0010-0040",
-    photos: [
-      "https://trove.b-cdn.net/images/544slnuvleg.jpeg",
-      "https://trove.b-cdn.net/images/pz3trw21p3f.jpeg"
-    ],
+    photos: [],
     description: "Move-in ready finished manufactured home on private homesite in Homosassa. Turnkey package with well, septic, and A/C installed.",
     salesperson: "Ken License",
     publicVisible: true,
@@ -71,9 +69,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 900,
     lotSize: "0.33 acres",
     parcelNumber: "R32-323-17-5110-0680-0190",
-    photos: [
-      "https://trove.b-cdn.net/images/lujivqtifam.jpeg"
-    ],
+    photos: [],
     description: "Charming 2-bed, 2-bath turnkey home in desirable Spring Hill location. Split floor plan with open kitchen.",
     salesperson: "Kristen Overstreet",
     publicVisible: true,
@@ -113,9 +109,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 1068,
     lotSize: "0.50 acres",
     parcelNumber: "R18-223-18-0000-0140-0010",
-    photos: [
-      "https://trove.b-cdn.net/images/544slnuvleg.jpeg"
-    ],
+    photos: [],
     description: "Spacious 3-bed home on high-and-dry half-acre lot near Pasco/Hernando county line.",
     salesperson: "Kris Kinney",
     publicVisible: true,
@@ -155,9 +149,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: null,
     lotSize: "0.48 acres",
     parcelNumber: "R04-222-19-1940-0000-0180",
-    photos: [
-      "https://trove.b-cdn.net/images/jt8x77rys.jpeg"
-    ],
+    photos: [],
     description: "Build-ready vacant lot zoned for manufactured homes. Flat topography with mature oak perimeter.",
     salesperson: "Ken License",
     publicVisible: true,
@@ -197,9 +189,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: null,
     lotSize: "0.52 acres",
     parcelNumber: "R05-222-19-1940-0020-0040",
-    photos: [
-      "https://trove.b-cdn.net/images/0h5o716vepmq.jpeg"
-    ],
+    photos: [],
     description: "Vacant half-acre lot ready for home setup. Paired with adjacent 9254 Denmarsh for multi-unit potential.",
     salesperson: "Kris Kinney",
     publicVisible: true,
@@ -331,9 +321,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: null,
     lotSize: "15 lots on-stilts",
     parcelNumber: "PAS-33-26-16-0040-0010-0150",
-    photos: [
-      "https://trove.b-cdn.net/images/4kzbpen1xjw.jpeg"
-    ],
+    photos: [],
     description: "Institutional developer package: 15 on-stilts coastal home lots in New Port Richey. Ideal for builder staging.",
     salesperson: "Ken License",
     publicVisible: true,
@@ -366,9 +354,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: null,
     lotSize: "23 lots / 0.5-acre sites",
     parcelNumber: "19E-18S-12-0000-0010",
-    photos: [
-      "https://trove.b-cdn.net/images/chsd69aabrr.jpeg"
-    ],
+    photos: [],
     description: "Major 23-lot subdivision project in Citrus County. Engineered for turnkey land-and-home customer builds.",
     salesperson: "Ken License",
     publicVisible: true,
@@ -401,9 +387,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 1394,
     lotSize: "0.75 acres",
     parcelNumber: "R11-222-19-0000-0320-0010",
-    photos: [
-      "https://trove.b-cdn.net/images/fz9zshsmurd.jpeg"
-    ],
+    photos: [],
     description: "New 3-bed craftsman spec home currently in setup stage. Expected move-in readiness within 60 days.",
     salesperson: "Kris Kinney",
     publicVisible: true,
@@ -443,9 +427,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 1264,
     lotSize: "0.50 acres",
     parcelNumber: "PAS-14-26-21-0020-0000-0440",
-    photos: [
-      "https://trove.b-cdn.net/images/fdfd6y96cy5.jpeg"
-    ],
+    photos: [],
     description: "Fully renovated and modern spec home in Zephyrhills with new deck, skirting, and modern roof.",
     salesperson: "Kristen Overstreet",
     publicVisible: true,
@@ -478,9 +460,7 @@ export const INITIAL_PROPERTIES: Property[] = [
     squareFeet: 1080,
     lotSize: "1.00 acres",
     parcelNumber: "R13-223-19-0000-0190-0020",
-    photos: [
-      "https://trove.b-cdn.net/images/544slnuvleg.jpeg"
-    ],
+    photos: [],
     description: "Turnkey 3-bed home on full acre lot under contract with approved FHA buyer.",
     salesperson: "Ken License",
     publicVisible: true,
