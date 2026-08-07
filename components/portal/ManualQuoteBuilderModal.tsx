@@ -68,7 +68,7 @@ export function ManualQuoteBuilderModal({
   availableProperties,
   existingQuote = null
 }: ManualQuoteBuilderModalProps) {
-  // Step state (1: Customer -> 2: All 388 Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing)
+  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing)
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
   // Customer Details
@@ -77,7 +77,7 @@ export function ManualQuoteBuilderModal({
   const [customerEmail, setCustomerEmail] = useState(existingQuote?.customerEmail || '');
   const [salesperson, setSalesperson] = useState(existingQuote?.salesperson || 'Ken License');
 
-  // Selected Home (from all 388 homes in the Master Catalog!)
+  // Selected Home (from verified Master Catalog)
   const [homeSearch, setHomeSearch] = useState('');
   const [builderFilter, setBuilderFilter] = useState('ALL');
   const [selectedHomeSlug, setSelectedHomeSlug] = useState<string>(
@@ -195,7 +195,7 @@ export function ManualQuoteBuilderModal({
 
   if (!isOpen) return null;
 
-  // Filter 388 homes by search and builder
+  // Filter homes by search and builder
   const filteredHomeCatalog = FULL_MASTER_CATALOG_HOMES.filter((h) => {
     if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
     if (!homeSearch.trim()) return true;
@@ -360,7 +360,7 @@ export function ManualQuoteBuilderModal({
                 </span>
               </div>
               <p className="text-[11px] text-ehsLightBlue font-medium">
-                Live pricing from Master Spreadsheet: All 388 Homes • Dropdown Line Items • Auto Delivery Calculation
+                Live pricing from Master Spreadsheet: All {FULL_MASTER_CATALOG_HOMES.length} Models • Dropdown Line Items • Auto Delivery Calculation
               </p>
             </div>
           </div>
@@ -478,7 +478,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 2: All 388 Homes & Land Selection */}
+          {/* STEP 2: Homes & Land Selection */}
           {step === 2 && (
             <div className="space-y-6">
               {/* Home Selection */}
@@ -510,13 +510,13 @@ export function ManualQuoteBuilderModal({
                       type="text"
                       value={homeSearch}
                       onChange={(e) => setHomeSearch(e.target.value)}
-                      placeholder="Search all 388 models..."
+                      placeholder={`Search all ${FULL_MASTER_CATALOG_HOMES.length} models...`}
                       className="px-3 py-1.5 border border-borderGray rounded-xl text-xs font-semibold"
                     />
                   </div>
                 </div>
 
-                {/* All 388 Homes Selection Grid */}
+                {/* All Homes Selection Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-64 overflow-y-auto pr-1">
                   {filteredHomeCatalog.map((h) => {
                     const isSelected = selectedHomeSlug === h.slug;
