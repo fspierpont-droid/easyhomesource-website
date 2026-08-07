@@ -3,11 +3,11 @@ import { QuotePortalShell } from '@/components/portal/QuotePortalShell';
 import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
 
 export const metadata: Metadata = {
-  title: 'Easy HomeSource Portal | Property Center',
-  description: 'Production operational hub and single source of truth for Easy HomeSource manufactured homes, lots, packages, and inventory.'
+  title: 'Property Package Manager | Easy HomeSource Quote Portal',
+  description: 'Maintain land, completed homes, in-progress properties, pricing, and sales details from the authenticated quote portal.'
 };
 
-export default function PortalPage() {
+export default function PropertyPackagesPage() {
   return (
     <QuotePortalShell activeNav="property-packages">
       <PropertyPackageManager />
