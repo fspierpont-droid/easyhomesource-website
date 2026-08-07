@@ -1,27 +1,24 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 interface QuotePortalShellProps {
   children: React.ReactNode;
-  activeNav?: string;
+  activeNav: string;
+  onNavChange: (navId: string) => void;
   onNewManualQuote?: () => void;
 }
 
 export function QuotePortalShell({
   children,
   activeNav = 'property-packages',
+  onNavChange,
   onNewManualQuote
 }: QuotePortalShellProps) {
-  const pathname = usePathname();
-
   const navItems = [
     {
-      id: 'quote-dashboard',
+      id: 'dashboard',
       label: 'Quote Dashboard',
-      href: '/portal?module=dashboard',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -29,9 +26,8 @@ export function QuotePortalShell({
       )
     },
     {
-      id: 'ready-to-quote',
+      id: 'ready',
       label: 'Ready to Quote',
-      href: '/portal?module=ready',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -39,9 +35,8 @@ export function QuotePortalShell({
       )
     },
     {
-      id: 'quote-library',
+      id: 'library',
       label: 'Quote Library',
-      href: '/portal?module=library',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -49,9 +44,8 @@ export function QuotePortalShell({
       )
     },
     {
-      id: 'home-catalog',
+      id: 'catalog',
       label: 'Home Catalog',
-      href: '/homes',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -59,9 +53,8 @@ export function QuotePortalShell({
       )
     },
     {
-      id: 'home-inventory',
+      id: 'inventory',
       label: 'Home Inventory',
-      href: '/portal?module=inventory',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -71,7 +64,6 @@ export function QuotePortalShell({
     {
       id: 'property-packages',
       label: 'Property Packages',
-      href: '/property-packages',
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -81,7 +73,7 @@ export function QuotePortalShell({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex antialiased">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex antialiased w-full">
       {/* Left Sidebar */}
       <aside className="w-64 border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen">
         {/* Brand Header */}
@@ -103,8 +95,8 @@ export function QuotePortalShell({
         <div className="p-4">
           <button
             type="button"
-            onClick={onNewManualQuote || (() => alert('Ready to configure a new quote. Property Center single source data is loaded!'))}
-            className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-bold py-2.5 px-4 rounded-full text-xs flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.01] active:scale-95"
+            onClick={onNewManualQuote}
+            className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-bold py-2.5 px-4 rounded-full text-xs flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.01] active:scale-95 cursor-pointer"
           >
             <span className="w-4 h-4 rounded-full border border-white/40 flex items-center justify-center text-[11px] font-bold">
               +
@@ -116,17 +108,22 @@ export function QuotePortalShell({
         {/* Navigation */}
         <nav className="flex-1 px-3 space-y-1">
           {navItems.map((item) => {
-            const isActive =
-              item.id === activeNav ||
-              (item.id === 'property-packages' && (pathname === '/property-packages' || pathname === '/portal'));
+            const isActive = item.id === activeNav;
 
             return (
-              <Link
+              <button
                 key={item.id}
-                href={item.href}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                type="button"
+                onClick={() => {
+                  if (item.id === 'catalog') {
+                    window.open('/homes', '_blank');
+                  } else {
+                    onNavChange(item.id);
+                  }
+                }}
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-colors text-left cursor-pointer ${
                   isActive
-                    ? 'bg-[#E8F3FA] text-[#0B4F86] font-extrabold'
+                    ? 'bg-[#E8F3FA] text-[#0B4F86] font-extrabold shadow-2xs'
                     : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
@@ -134,7 +131,7 @@ export function QuotePortalShell({
                   {item.icon}
                 </span>
                 <span>{item.label}</span>
-              </Link>
+              </button>
             );
           })}
         </nav>
