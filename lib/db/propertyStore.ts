@@ -7,7 +7,7 @@ import type {
 } from "@/types/property";
 
 // Single Source of Truth Seed Properties for Easy Home Source
-const INITIAL_PROPERTIES: Property[] = [
+export const INITIAL_PROPERTIES: Property[] = [
   {
     id: "EHS-001",
     address: "6645 W Erlen Ln",
