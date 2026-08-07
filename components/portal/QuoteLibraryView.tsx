@@ -2,24 +2,59 @@
 
 import React, { useState } from 'react';
 import type { SavedQuote } from '@/components/portal/ManualQuoteBuilderModal';
+import { EditQuoteModal } from '@/components/portal/EditQuoteModal';
 
 interface QuoteLibraryViewProps {
   quotes: SavedQuote[];
   onOpenQuoteBuilder: () => void;
+  onUpdateQuote?: (updatedQuote: SavedQuote) => void;
+  onDeleteQuote?: (id: string) => void;
 }
 
-export function QuoteLibraryView({ quotes, onOpenQuoteBuilder }: QuoteLibraryViewProps) {
+export function QuoteLibraryView({
+  quotes,
+  onOpenQuoteBuilder,
+  onUpdateQuote,
+  onDeleteQuote
+}: QuoteLibraryViewProps) {
   const [search, setSearch] = useState('');
-  const [selectedQuote, setSelectedQuote] = useState<SavedQuote | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
+  const [selectedQuoteForPreview, setSelectedQuoteForPreview] = useState<SavedQuote | null>(null);
+  const [selectedQuoteForEdit, setSelectedQuoteForEdit] = useState<SavedQuote | null>(null);
 
   const filteredQuotes = quotes.filter((q) => {
+    if (statusFilter !== 'ALL' && q.status !== statusFilter) return false;
     if (!search.trim()) return true;
-    const text = [q.customerName, q.quoteNumber, q.homeModel, q.propertyAddress, q.salesperson]
+    const text = [
+      q.customerName,
+      q.quoteNumber,
+      q.homeModel,
+      q.propertyAddress,
+      q.salesperson,
+      q.notes,
+      q.customerPhone,
+      q.customerEmail
+    ]
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
     return text.includes(search.toLowerCase().trim());
   });
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'APPROVED':
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      case 'IN_CONTRACT':
+        return 'bg-indigo-50 text-indigo-700 border-indigo-200';
+      case 'LENDER_REVIEW':
+        return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'SENT_TO_BUYER':
+        return 'bg-sky-50 text-sky-700 border-sky-200';
+      default:
+        return 'bg-slate-50 text-slate-600 border-slate-200';
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -39,135 +74,275 @@ export function QuoteLibraryView({ quotes, onOpenQuoteBuilder }: QuoteLibraryVie
 
         <button
           onClick={onOpenQuoteBuilder}
-          className="px-4 py-2 bg-[#0B1E38] hover:bg-[#081628] text-white font-bold rounded-xl text-xs shadow-xs"
+          className="px-4 py-2 bg-[#0B1E38] hover:bg-[#081628] text-white font-bold rounded-xl text-xs shadow-xs cursor-pointer flex items-center gap-1.5"
         >
-          + New Quote
+          <span>+</span>
+          <span>New Quote</span>
         </button>
       </div>
 
-      {/* Search Filter */}
-      <div className="p-3 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3">
+      {/* Search & Status Filters */}
+      <div className="p-3 bg-white border border-slate-200 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-2xs">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by quote #, customer name, home model..."
-          className="w-full max-w-sm px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#0B4F86]"
+          placeholder="Search quote #, customer name, model, address..."
+          className="w-full max-w-sm px-3.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#0B4F86]"
         />
-        <span className="text-xs font-bold text-slate-400">
-          {filteredQuotes.length} proposals found
-        </span>
+
+        <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => setStatusFilter('ALL')}
+            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+              statusFilter === 'ALL'
+                ? 'bg-[#0B4F86] text-white border-[#0B4F86]'
+                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+            }`}
+          >
+            All ({quotes.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatusFilter('APPROVED')}
+            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+              statusFilter === 'APPROVED'
+                ? 'bg-emerald-700 text-white border-emerald-700'
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100/50'
+            }`}
+          >
+            Approved
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatusFilter('IN_CONTRACT')}
+            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+              statusFilter === 'IN_CONTRACT'
+                ? 'bg-indigo-700 text-white border-indigo-700'
+                : 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100/50'
+            }`}
+          >
+            In Contract
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatusFilter('LENDER_REVIEW')}
+            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+              statusFilter === 'LENDER_REVIEW'
+                ? 'bg-amber-700 text-white border-amber-700'
+                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100/50'
+            }`}
+          >
+            Lender Review
+          </button>
+        </div>
       </div>
 
-      {/* Table */}
+      {/* Proposals Table */}
       <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
-        <table className="w-full text-left border-collapse text-xs">
-          <thead>
-            <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase">
-              <th className="py-3 px-4">Quote #</th>
-              <th className="py-3 px-4">Customer Name</th>
-              <th className="py-3 px-4">Home Model</th>
-              <th className="py-3 px-4">Homesite / Address</th>
-              <th className="py-3 px-4">Turnkey Total</th>
-              <th className="py-3 px-4">Est. Monthly</th>
-              <th className="py-3 px-4">Status</th>
-              <th className="py-3 px-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-700">
-            {filteredQuotes.map((q) => (
-              <tr key={q.id} className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-4 font-mono font-bold text-[#0B4F86]">{q.quoteNumber}</td>
-                <td className="py-3 px-4 font-bold text-slate-900">{q.customerName}</td>
-                <td className="py-3 px-4">{q.homeModel}</td>
-                <td className="py-3 px-4 text-slate-500 truncate max-w-[180px]">{q.propertyAddress}</td>
-                <td className="py-3 px-4 font-black text-slate-900">${q.totalTurnkeyPrice.toLocaleString()}</td>
-                <td className="py-3 px-4 font-bold text-emerald-700">${q.estimatedMonthlyPayment}/mo</td>
-                <td className="py-3 px-4">
-                  <span className="bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full border border-emerald-200 text-[10px]">
-                    {q.status}
-                  </span>
-                </td>
-                <td className="py-3 px-4 text-right">
-                  <button
-                    onClick={() => setSelectedQuote(q)}
-                    className="text-[#0B4F86] hover:underline font-bold"
-                  >
-                    View Sheet
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <th className="py-3 px-4">Quote #</th>
+                <th className="py-3 px-4">Customer Name</th>
+                <th className="py-3 px-4">Home Model</th>
+                <th className="py-3 px-4">Homesite / Address</th>
+                <th className="py-3 px-4">Turnkey Total</th>
+                <th className="py-3 px-4">Est. Monthly</th>
+                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-slate-700">
+              {filteredQuotes.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-12 text-center text-slate-400 font-semibold">
+                    No proposals match your search criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredQuotes.map((q) => (
+                  <tr key={q.id} className="hover:bg-slate-50/80 transition-colors group">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#0B4F86]">
+                      {q.quoteNumber}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <div className="font-bold text-slate-900">{q.customerName}</div>
+                      <div className="text-[10px] text-slate-400 font-medium">{q.customerPhone}</div>
+                    </td>
+                    <td className="py-3.5 px-4 font-medium text-slate-800">{q.homeModel}</td>
+                    <td className="py-3.5 px-4 text-slate-500 truncate max-w-[200px]" title={q.propertyAddress}>
+                      {q.propertyAddress}
+                    </td>
+                    <td className="py-3.5 px-4 font-black text-slate-900">
+                      ${q.totalTurnkeyPrice.toLocaleString()}
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-emerald-700">
+                      ${q.estimatedMonthlyPayment}/mo
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span
+                        className={`font-bold px-2 py-0.5 rounded-full border text-[10px] ${getStatusBadge(
+                          q.status
+                        )}`}
+                      >
+                        {q.status}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedQuoteForPreview(q)}
+                          className="text-[#0B4F86] hover:underline font-bold"
+                        >
+                          View Sheet
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedQuoteForEdit(q)}
+                          className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-md text-[11px]"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm(`Delete quote ${q.quoteNumber} for ${q.customerName}?`)) {
+                              onDeleteQuote?.(q.id);
+                            }
+                          }}
+                          className="text-rose-600 hover:text-rose-800 p-1 font-bold"
+                          title="Delete Quote"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* Quote Preview Modal */}
-      {selectedQuote && (
+      {/* Quote Preview & Printable Sheet Modal */}
+      {selectedQuoteForPreview && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-slate-200 space-y-4 text-xs">
+          <div className="bg-white rounded-3xl p-6 max-w-xl w-full shadow-2xl border border-slate-200 space-y-4 text-xs">
             <div className="flex justify-between items-start pb-3 border-b border-slate-100">
               <div>
-                <span className="text-[10px] font-mono text-slate-400 font-bold">{selectedQuote.quoteNumber}</span>
-                <h3 className="text-lg font-black text-slate-900">{selectedQuote.customerName}</h3>
-                <p className="text-slate-500">{selectedQuote.homeModel} • {selectedQuote.propertyAddress}</p>
+                <span className="text-[10px] font-mono text-slate-400 font-bold">
+                  {selectedQuoteForPreview.quoteNumber}
+                </span>
+                <h3 className="text-xl font-black text-slate-900">
+                  {selectedQuoteForPreview.customerName}
+                </h3>
+                <p className="text-slate-500 text-xs">
+                  {selectedQuoteForPreview.homeModel} • {selectedQuoteForPreview.propertyAddress}
+                </p>
               </div>
               <button
-                onClick={() => setSelectedQuote(null)}
+                onClick={() => setSelectedQuoteForPreview(null)}
                 className="text-slate-400 hover:text-slate-700 font-bold text-base"
               >
                 ✕
               </button>
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-xl space-y-1.5">
-              <div className="flex justify-between font-bold">
-                <span>Base Home:</span>
-                <span>${selectedQuote.homePrice.toLocaleString()}</span>
+            <div className="p-4 bg-slate-50 rounded-2xl space-y-2 border border-slate-200/80">
+              <div className="flex justify-between font-bold text-slate-700">
+                <span>Base Home Package:</span>
+                <span>${selectedQuoteForPreview.homePrice.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between font-bold">
+              <div className="flex justify-between font-bold text-slate-700">
                 <span>Land / Homesite:</span>
-                <span>${selectedQuote.propertyPrice.toLocaleString()}</span>
+                <span>${selectedQuoteForPreview.propertyPrice.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between font-bold">
-                <span>Site Work & Logistics:</span>
-                <span>${selectedQuote.siteWorkTotal.toLocaleString()}</span>
+              <div className="flex justify-between font-bold text-slate-700">
+                <span>Turnkey Freight, Prep &amp; Utilities:</span>
+                <span>${selectedQuoteForPreview.siteWorkTotal.toLocaleString()}</span>
               </div>
-              <div className="pt-2 border-t border-slate-200 flex justify-between font-black text-sm text-slate-900">
-                <span>Total Turnkey Price:</span>
-                <span className="text-emerald-700">${selectedQuote.totalTurnkeyPrice.toLocaleString()}</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="p-2 bg-slate-50 rounded-lg">
-                <span className="text-slate-400 block">Down Payment:</span>
-                <span className="font-bold text-slate-800">${selectedQuote.downPaymentAmount.toLocaleString()} ({selectedQuote.downPaymentPercent}%)</span>
-              </div>
-              <div className="p-2 bg-slate-50 rounded-lg">
-                <span className="text-slate-400 block">Est. Monthly:</span>
-                <span className="font-bold text-emerald-700">${selectedQuote.estimatedMonthlyPayment}/month</span>
+              <div className="pt-2 border-t border-slate-200 flex justify-between font-black text-base text-slate-900">
+                <span>Total Turnkey Investment:</span>
+                <span className="text-emerald-700">
+                  ${selectedQuoteForPreview.totalTurnkeyPrice.toLocaleString()}
+                </span>
               </div>
             </div>
 
-            <div className="pt-2 flex justify-end gap-2">
+            <div className="grid grid-cols-2 gap-3 text-[11px]">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block font-medium">Down Payment ({selectedQuoteForPreview.downPaymentPercent}%):</span>
+                <span className="font-black text-sm text-slate-900">
+                  ${selectedQuoteForPreview.downPaymentAmount.toLocaleString()}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block font-medium">Est. Monthly Mortgage (P&amp;I):</span>
+                <span className="font-black text-sm text-emerald-700">
+                  ${selectedQuoteForPreview.estimatedMonthlyPayment}/month
+                </span>
+              </div>
+            </div>
+
+            {selectedQuoteForPreview.notes && (
+              <p className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl text-xs font-medium">
+                📝 {selectedQuoteForPreview.notes}
+              </p>
+            )}
+
+            <div className="pt-2 flex justify-between items-center">
               <button
+                type="button"
                 onClick={() => {
-                  window.print();
+                  setSelectedQuoteForEdit(selectedQuoteForPreview);
+                  setSelectedQuoteForPreview(null);
                 }}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                className="text-[#0B4F86] hover:underline font-bold"
               >
-                🖨️ Print Quote
+                ✎ Edit Line Items
               </button>
-              <button
-                onClick={() => setSelectedQuote(null)}
-                className="px-4 py-2 bg-[#0B1E38] text-white rounded-xl font-bold"
-              >
-                Close
-              </button>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                >
+                  🖨️ Print Quote Sheet
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedQuoteForPreview(null)}
+                  className="px-5 py-2 bg-[#0B1E38] text-white rounded-xl font-bold"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Edit Quote Modal */}
+      {selectedQuoteForEdit && (
+        <EditQuoteModal
+          quote={selectedQuoteForEdit}
+          isOpen={Boolean(selectedQuoteForEdit)}
+          onClose={() => setSelectedQuoteForEdit(null)}
+          onSaveQuote={(updated) => {
+            onUpdateQuote?.(updated);
+            setSelectedQuoteForEdit(null);
+          }}
+          onDeleteQuote={(id) => {
+            onDeleteQuote?.(id);
+            setSelectedQuoteForEdit(null);
+          }}
+        />
       )}
     </div>
   );
