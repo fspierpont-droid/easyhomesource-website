@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import type { DisplayHomeRecord, DisplayStatus } from '@/types/displayInventory';
 import { INITIAL_DISPLAY_INVENTORY } from '@/types/displayInventory';
+import Link from 'next/link';
 
 export function HomeInventoryView() {
   const [displayHomes, setDisplayHomes] = useState<DisplayHomeRecord[]>(INITIAL_DISPLAY_INVENTORY);
@@ -41,7 +42,7 @@ export function HomeInventoryView() {
       case 'ON_LOT_DISPLAY':
         return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'SETUP_IN_PROGRESS':
-        return 'bg-blue-50 text-[#0B4F86] border-blue-200';
+        return 'bg-ehsSoftBlue text-ehsDeepBlue border-ehsBlue/20';
       case 'IN_TRANSIT':
         return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'ORDERED_AT_FACTORY':
@@ -100,20 +101,20 @@ export function HomeInventoryView() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <span className="text-[11px] font-black uppercase tracking-wider text-[#0284c7]">
+          <span className="text-[11px] font-black uppercase tracking-wider text-ehsBlue">
             DEALERSHIP FLOORPLAN &amp; DISPLAY ALLOCATIONS
           </span>
-          <h2 className="text-2xl font-black text-slate-900 mt-0.5">
+          <h2 className="text-2xl sm:text-3xl font-black text-ehsNavy mt-0.5">
             Home Inventory &amp; Display Tracker ({displayHomes.length} Ordered Units)
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-ehsNavy/65 font-medium mt-1">
             Internal inventory: Track wholesale orders, serial/VIN numbers, floorplan lenders, financed balances, transport freight, and display staging in Brooksville (Not for sale).
           </p>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="px-4 py-2 bg-[#0B1E38] hover:bg-[#081628] text-white font-bold rounded-xl text-xs shadow-xs cursor-pointer flex items-center gap-1.5"
+          className="px-5 py-2.5 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full text-xs shadow-lg shadow-ehsBlue/20 cursor-pointer flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
         >
           <span>+</span>
           <span>Add Display Order</span>
@@ -122,77 +123,77 @@ export function HomeInventoryView() {
 
       {/* 4 Financial & Operational Floorplan Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
           <div className="flex items-start justify-between">
-            <span className="text-xs font-bold text-slate-500">Floorplan Drawn Balance</span>
-            <div className="w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
+            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Floorplan Balance</span>
+            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-emerald-600 font-bold flex items-center justify-center text-xs">
               🏦
             </div>
           </div>
-          <div className="mt-2 text-2xl font-black text-emerald-700 tracking-tight">
+          <div className="mt-2 text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight">
             ${totalFloorplanFinanced.toLocaleString()}
           </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">Active credit line balance</p>
+          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Active credit line balance</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
           <div className="flex items-start justify-between">
-            <span className="text-xs font-bold text-slate-500">On-Lot Display Models</span>
-            <div className="w-7 h-7 rounded-full bg-blue-50 text-[#0B4F86] flex items-center justify-center text-xs">
+            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">On-Lot Display Models</span>
+            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-ehsDeepBlue font-bold flex items-center justify-center text-xs">
               🏡
             </div>
           </div>
-          <div className="mt-2 text-2xl font-black text-slate-900 tracking-tight">
+          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
             {onLotCount} Displays
           </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">9011 McIntyre Rd, Brooksville</p>
+          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">9011 McIntyre Rd, Brooksville</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
           <div className="flex items-start justify-between">
-            <span className="text-xs font-bold text-slate-500">Total Transport Invested</span>
-            <div className="w-7 h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Transport Invested</span>
+            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-amber-600 font-bold flex items-center justify-center text-xs">
               🚚
             </div>
           </div>
-          <div className="mt-2 text-2xl font-black text-slate-900 tracking-tight">
+          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
             ${totalTransportCost.toLocaleString()}
           </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">Factory-to-lot freight total</p>
+          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Factory-to-lot freight total</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
           <div className="flex items-start justify-between">
-            <span className="text-xs font-bold text-slate-500">Lot Setup &amp; Staging</span>
-            <div className="w-7 h-7 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-xs">
+            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Lot Setup &amp; Staging</span>
+            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-purple-600 font-bold flex items-center justify-center text-xs">
               🪜
             </div>
           </div>
-          <div className="mt-2 text-2xl font-black text-slate-900 tracking-tight">
+          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
             ${totalSetupCost.toLocaleString()}
           </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">Pads, stairs, skirting &amp; A/C</p>
+          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Pads, stairs, skirting &amp; A/C</p>
         </div>
       </div>
 
       {/* Search & Filter Controls */}
-      <div className="p-3 bg-white border border-slate-200 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-2xs">
+      <div className="p-4 bg-white border border-ehsBlue/10 rounded-[1.5rem] flex flex-wrap items-center justify-between gap-3 shadow-sm shadow-ehsNavy/5">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search stock #, model, serial/VIN, lender, pad location..."
-          className="w-full max-w-sm px-3.5 py-1.5 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#0B4F86]"
+          className="w-full max-w-sm px-4 py-2 border border-borderGray rounded-full text-xs font-semibold focus:outline-none focus:border-ehsBlue focus:ring-2 focus:ring-ehsLightBlue/50"
         />
 
-        <div className="flex flex-wrap items-center gap-1.5 font-bold">
+        <div className="flex flex-wrap items-center gap-1.5 font-bold text-xs">
           <button
             type="button"
             onClick={() => setStatusFilter('ALL')}
-            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'ALL'
-                ? 'bg-[#0B4F86] text-white border-[#0B4F86]'
-                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                ? 'bg-ehsDeepBlue text-white border-ehsDeepBlue'
+                : 'bg-ehsSoftBlue text-ehsNavy border-ehsBlue/20 hover:bg-white'
             }`}
           >
             All Units ({displayHomes.length})
@@ -200,7 +201,7 @@ export function HomeInventoryView() {
           <button
             type="button"
             onClick={() => setStatusFilter('ON_LOT_DISPLAY')}
-            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'ON_LOT_DISPLAY'
                 ? 'bg-emerald-700 text-white border-emerald-700'
                 : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100/50'
@@ -211,7 +212,7 @@ export function HomeInventoryView() {
           <button
             type="button"
             onClick={() => setStatusFilter('IN_TRANSIT')}
-            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'IN_TRANSIT'
                 ? 'bg-amber-700 text-white border-amber-700'
                 : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100/50'
@@ -222,7 +223,7 @@ export function HomeInventoryView() {
           <button
             type="button"
             onClick={() => setStatusFilter('ORDERED_AT_FACTORY')}
-            className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'ORDERED_AT_FACTORY'
                 ? 'bg-purple-700 text-white border-purple-700'
                 : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100/50'
@@ -234,40 +235,40 @@ export function HomeInventoryView() {
       </div>
 
       {/* Display Home Inventory Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden">
+      <div className="bg-white border border-ehsBlue/10 rounded-[1.75rem] shadow-sm shadow-ehsNavy/5 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                <th className="py-3 px-3">Stock #</th>
-                <th className="py-3 px-3">Model &amp; Builder</th>
-                <th className="py-3 px-3">Serial / VIN #</th>
-                <th className="py-3 px-3">Status &amp; Pad</th>
-                <th className="py-3 px-3">Floorplan Lender</th>
-                <th className="py-3 px-3">Financed Balance</th>
-                <th className="py-3 px-3">Freight &amp; Setup</th>
-                <th className="py-3 px-3">Keybox</th>
-                <th className="py-3 px-3 text-right">Actions</th>
+              <tr className="border-b border-ehsBlue/10 bg-ehsSoftBlue/70 text-[11px] font-black text-ehsNavy uppercase tracking-wider">
+                <th className="py-3 px-4">Stock #</th>
+                <th className="py-3 px-4">Model &amp; Builder</th>
+                <th className="py-3 px-4">Serial / VIN #</th>
+                <th className="py-3 px-4">Status &amp; Pad</th>
+                <th className="py-3 px-4">Floorplan Lender</th>
+                <th className="py-3 px-4">Financed Balance</th>
+                <th className="py-3 px-4">Freight &amp; Setup</th>
+                <th className="py-3 px-4">Keybox</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
               {filteredList.map((home) => (
-                <tr key={home.id} className="hover:bg-slate-50/80 transition-colors group">
-                  <td className="py-3 px-3 font-mono font-bold text-[#0B4F86]">
+                <tr key={home.id} className="hover:bg-ehsSoftBlue/30 transition-colors group">
+                  <td className="py-3.5 px-4 font-mono font-bold text-ehsBlue">
                     {home.stockNumber}
                   </td>
-                  <td className="py-3 px-3">
-                    <div className="font-bold text-slate-900">{home.modelName}</div>
+                  <td className="py-3.5 px-4">
+                    <div className="font-black text-ehsNavy">{home.modelName}</div>
                     <div className="text-[10px] text-slate-400 font-medium">
                       {home.manufacturer} • {home.dimensions}
                     </div>
                   </td>
-                  <td className="py-3 px-3 font-mono text-slate-600 font-bold text-[11px]">
+                  <td className="py-3.5 px-4 font-mono text-slate-700 font-bold text-[11px]">
                     {home.serialNumber}
                   </td>
-                  <td className="py-3 px-3">
+                  <td className="py-3.5 px-4">
                     <span
-                      className={`font-bold px-2 py-0.5 rounded-full border text-[10px] inline-block ${getStatusBadge(
+                      className={`font-black px-2.5 py-0.5 rounded-full border text-[10px] inline-block ${getStatusBadge(
                         home.displayStatus
                       )}`}
                     >
@@ -277,16 +278,16 @@ export function HomeInventoryView() {
                       {home.padLocation}
                     </div>
                   </td>
-                  <td className="py-3 px-3">
-                    <div className="font-semibold text-slate-800">{home.bankUsed}</div>
+                  <td className="py-3.5 px-4">
+                    <div className="font-semibold text-slate-900">{home.bankUsed}</div>
                     <div className="text-[10px] text-slate-400 font-medium">
                       Rate: {home.interestRateFloorplan}%
                     </div>
                   </td>
-                  <td className="py-3 px-3 font-black text-slate-900">
+                  <td className="py-3.5 px-4 font-black text-ehsNavy text-sm">
                     ${home.financeAmount.toLocaleString()}
                   </td>
-                  <td className="py-3 px-3">
+                  <td className="py-3.5 px-4">
                     <div className="font-semibold text-slate-800">
                       Freight: ${home.transportCost.toLocaleString()}
                     </div>
@@ -294,14 +295,14 @@ export function HomeInventoryView() {
                       Setup: ${home.lotSetupCost.toLocaleString()}
                     </div>
                   </td>
-                  <td className="py-3 px-3 font-mono font-bold text-amber-700 bg-amber-50/50 rounded text-center">
+                  <td className="py-3.5 px-4 font-mono font-bold text-amber-800 bg-amber-50 rounded text-center">
                     🔑 {home.keyBoxCode}
                   </td>
-                  <td className="py-3 px-3 text-right">
+                  <td className="py-3.5 px-4 text-right">
                     <button
                       type="button"
                       onClick={() => setEditingHome(home)}
-                      className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition-colors cursor-pointer"
+                      className="px-3 py-1 bg-ehsSoftBlue hover:bg-ehsLightBlue/40 text-ehsDeepBlue font-black rounded-lg text-xs border border-ehsBlue/20 cursor-pointer"
                     >
                       Edit
                     </button>
@@ -315,9 +316,9 @@ export function HomeInventoryView() {
 
       {/* Edit Display Home Drawer */}
       {editingHome && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex justify-end animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 overflow-hidden bg-ehsNavy/60 backdrop-blur-xs flex justify-end animate-in fade-in duration-150">
           <div className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-200">
-            <div className="p-5 border-b border-slate-100 bg-[#0B1E38] text-white flex items-center justify-between">
+            <div className="p-5 border-b border-ehsBlue/10 bg-gradient-to-r from-ehsNavy to-ehsDeepBlue text-white flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-mono text-ehsLightBlue font-bold">
                   {editingHome.stockNumber}
@@ -328,7 +329,7 @@ export function HomeInventoryView() {
               </div>
               <button
                 onClick={() => setEditingHome(null)}
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold"
+                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer"
               >
                 ✕
               </button>
@@ -394,8 +395,8 @@ export function HomeInventoryView() {
               </div>
 
               {/* Floorplan & Bank Financing Details */}
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                <h4 className="font-extrabold text-xs text-slate-900 uppercase">
+              <div className="p-4 bg-ehsSoftBlue/50 border border-ehsBlue/10 rounded-2xl space-y-3">
+                <h4 className="font-extrabold text-xs text-ehsNavy uppercase">
                   Floorplan Financing &amp; Wholesale Invoicing
                 </h4>
 
@@ -483,7 +484,7 @@ export function HomeInventoryView() {
                 <button
                   type="button"
                   onClick={() => handleDeleteHome(editingHome.id)}
-                  className="px-3.5 py-2 text-rose-600 hover:bg-rose-50 rounded-xl font-bold"
+                  className="px-3.5 py-2 text-rose-600 hover:bg-rose-50 rounded-full font-bold cursor-pointer"
                 >
                   Decommission Unit
                 </button>
@@ -491,13 +492,13 @@ export function HomeInventoryView() {
                   <button
                     type="button"
                     onClick={() => setEditingHome(null)}
-                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full font-bold cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 bg-[#0B4F86] hover:bg-[#083860] text-white font-bold rounded-xl shadow-xs"
+                    className="px-5 py-2 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full shadow-md cursor-pointer"
                   >
                     Save Unit Record
                   </button>
@@ -510,11 +511,11 @@ export function HomeInventoryView() {
 
       {/* Add New Display Unit Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-slate-200 space-y-4">
+        <div className="fixed inset-0 z-50 overflow-hidden bg-ehsNavy/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2rem] p-6 max-w-lg w-full shadow-2xl border border-ehsBlue/20 space-y-4">
             <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-              <h3 className="text-base font-black text-slate-900">Add Ordered Display Unit</h3>
-              <button onClick={() => setIsAddModalOpen(false)} className="text-slate-400 font-bold">
+              <h3 className="text-base font-black text-ehsNavy">Add Ordered Display Unit</h3>
+              <button onClick={() => setIsAddModalOpen(false)} className="text-slate-400 font-bold cursor-pointer">
                 ✕
               </button>
             </div>
@@ -614,13 +615,13 @@ export function HomeInventoryView() {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 rounded-xl font-bold"
+                  className="px-4 py-2 bg-slate-100 rounded-full font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#0B1E38] text-white rounded-xl font-bold shadow-xs"
+                  className="px-5 py-2 bg-ehsBlue hover:bg-ehsDeepBlue text-white rounded-full font-black shadow-md cursor-pointer"
                 >
                   Add Display Unit
                 </button>
