@@ -30,8 +30,7 @@ export function homeBadges(home: Home) {
 
 export function HomeCard({ home }: { home: Home }) {
   const primary = home.gallery.find((item) => item.isPrimary) ?? home.gallery[0];
-  const isVerifiedPhoto = home.slug === 'tulip' && (primary?.src?.includes('api.claytonhomes.com') || false);
-  const photoSrc = isVerifiedPhoto ? primary?.src : null;
+  const photoSrc = primary?.src || (home.images && home.images[0]) || null;
 
   const detailsHref = `/homes/${home.slug}`;
   const quoteHref = `/get-quote?home=${encodeURIComponent(home.slug)}`;
