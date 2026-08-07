@@ -1,0 +1,68 @@
+javascript:(()=>{ 
+  "use strict"; 
+  
+  // This bookmarklet is meant to be run ON A SINGLE HOME'S DETAIL PAGE in the Trove Admin Dashboard.
+  
+  const output = { 
+     sourceUrl: location.href,
+     timestamp: new Date().toISOString(),
+     name: document.title,
+     specs: {},
+     images: []
+  };
+
+  // Try to find specs based on common labels
+  const textNodes = Array.from(document.querySelectorAll('div, span, p, label, th, td'));
+  textNodes.forEach(node => {
+      const text = node.innerText ? node.innerText.trim().toLowerCase() : '';
+      const nextText = node.nextElementSibling ? node.nextElementSibling.innerText : '';
+      
+      if (text.includes('bed') && text.length < 15) output.specs.bedrooms = nextText || text;
+      if (text.includes('bath') && text.length < 15) output.specs.bathrooms = nextText || text;
+      if (text.includes('sq') && text.includes('ft')) output.specs.sqft = nextText || text;
+      if (text.includes('price') || text.includes('$')) output.specs.price = nextText || text;
+      if (text.includes('width')) output.specs.width = nextText || text;
+      if (text.includes('length')) output.specs.length = nextText || text;
+      if (text.includes('manufacturer') || text.includes('builder')) output.specs.manufacturer = nextText || text;
+      if (text.includes('model') || text.includes('series')) output.specs.model = nextText || text;
+  });
+
+  // Try to find all image URLs on the page (even background images)
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+      if (img.src && !img.src.includes('logo') && !img.src.includes('avatar') && !img.src.includes('icon')) {
+          output.images.push(img.src);
+      }
+  });
+
+  // Check background images of divs
+  const divs = document.querySelectorAll('div');
+  divs.forEach(div => {
+      const bg = window.getComputedStyle(div).backgroundImage;
+      if (bg && bg !== 'none' && bg.includes('url(')) {
+          const url = bg.slice(5, -2).replace(/["']/g, "");
+          if (url && !url.includes('logo') && !url.includes('icon')) {
+              output.images.push(url);
+          }
+      }
+  });
+
+  // Deduplicate images
+  output.images = [...new Set(output.images)];
+
+  // Try to find intercepted raw data
+  output.interceptedData = window.__EHS_INTERCEPTED_DATA__ || [];
+
+  const json = JSON.stringify(output, null, 2); 
+  const html = `<!doctype html><title>EHS Single Home Capture</title><style>body{font-family:system-ui;margin:24px}textarea{width:100%;height:75vh;font-family:ui-monospace,monospace}</style><h1>EHS Single Home Capture</h1><p>Copy this JSON and send it to the AI.</p><textarea autofocus>${json.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</textarea>`; 
+  
+  const win = window.open("", "_blank"); 
+  if (win) { 
+    win.document.open(); 
+    win.document.write(html); 
+    win.document.close(); 
+  } else { 
+    navigator.clipboard?.writeText(json).catch(() => {}); 
+    alert("Data copied to clipboard!"); 
+  }
+})();
