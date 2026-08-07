@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { homes } from '@/data/homes';
+import React, { useState, useEffect, useMemo } from 'react';
 import type { Property } from '@/types/property';
+import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
 import { SERVICE_CATALOG, autoCalculateDelivery, type ServiceCatalogItem, type DeliveryCalculationResult } from '@/data/pricingSpreadsheet';
 
 export interface SelectedQuoteLineItem {
@@ -23,6 +23,7 @@ export interface SavedQuote {
   customerPhone: string;
   customerEmail: string;
   homeModel: string;
+  manufacturer: string;
   homePrice: number;
   homeWidth: number;
   propertyAddress: string;
@@ -62,26 +63,40 @@ export function ManualQuoteBuilderModal({
   onClose,
   onSaveQuote,
   initialCustomerName = '',
-  initialHomeModel = 'tulip',
+  initialHomeModel = '',
   initialPropertyId = '',
   availableProperties,
   existingQuote = null
 }: ManualQuoteBuilderModalProps) {
-  // Step state (1: Customer -> 2: Home & Land -> 3: Delivery -> 4: Line Items -> 5: Financing)
+  // Step state (1: Customer -> 2: All 388 Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing)
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
-  // Customer
+  // Customer Details
   const [customerName, setCustomerName] = useState(initialCustomerName || existingQuote?.customerName || '');
   const [customerPhone, setCustomerPhone] = useState(existingQuote?.customerPhone || '352-555-0199');
   const [customerEmail, setCustomerEmail] = useState(existingQuote?.customerEmail || '');
   const [salesperson, setSalesperson] = useState(existingQuote?.salesperson || 'Ken License');
 
-  // Selected Home (from all 28+ homes)
+  // Selected Home (from all 388 homes in the Master Catalog!)
   const [homeSearch, setHomeSearch] = useState('');
-  const [selectedHomeSlug, setSelectedHomeSlug] = useState(existingQuote?.homeModel ? 'custom' : initialHomeModel || 'tulip');
-  const selectedHome = homes.find((h) => h.slug === selectedHomeSlug) || homes[0];
-  const [customHomeName, setCustomHomeName] = useState(existingQuote?.homeModel || selectedHome?.displayName || selectedHome?.name || 'Manufactured Home');
-  const [customHomePrice, setCustomHomePrice] = useState<number>(existingQuote?.homePrice ?? selectedHome?.startingPrice ?? 39888);
+  const [builderFilter, setBuilderFilter] = useState('ALL');
+  const [selectedHomeSlug, setSelectedHomeSlug] = useState<string>(
+    existingQuote?.homeModel ? 'custom' : FULL_MASTER_CATALOG_HOMES[0]?.slug || ''
+  );
+  
+  const selectedHome: MasterCatalogHome | undefined = useMemo(() => {
+    return FULL_MASTER_CATALOG_HOMES.find((h) => h.slug === selectedHomeSlug) || FULL_MASTER_CATALOG_HOMES[0];
+  }, [selectedHomeSlug]);
+
+  const [customHomeName, setCustomHomeName] = useState<string>(
+    existingQuote?.homeModel || selectedHome?.name || 'Manufactured Home'
+  );
+  const [selectedManufacturer, setSelectedManufacturer] = useState<string>(
+    existingQuote?.manufacturer || selectedHome?.manufacturer || 'CAVCO Plant City'
+  );
+  const [customHomePrice, setCustomHomePrice] = useState<number>(
+    existingQuote?.homePrice ?? selectedHome?.ehsPrice ?? 39888
+  );
   const [homePriceOverrideReason, setHomePriceOverrideReason] = useState<string>('');
 
   // Selected Property / Land
@@ -99,61 +114,63 @@ export function ManualQuoteBuilderModal({
     existingQuote?.propertyAddress || selectedProperty?.address || 'Spring Hill, FL 34606'
   );
 
-  // Delivery & Freight Calculation
+  // Delivery & Freight Calculation Engine
   const [deliveryRouteType, setDeliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('dealer_to_customer');
   const [deliveryMiles, setDeliveryMiles] = useState<number>(existingQuote?.deliveryMiles || 25);
   const [deliveryCalculation, setDeliveryCalculation] = useState<DeliveryCalculationResult | null>(null);
   const [freightPrice, setFreightPrice] = useState<number>(existingQuote?.freightDelivery || 3850);
   const [isCalculatingDelivery, setIsCalculatingDelivery] = useState(false);
 
-  // Itemized Line Items
-  const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>([
-    {
-      id: 'item-1',
-      sku: 'SITE-BLOCK-TIEDOWN',
-      name: 'Block & Hurricane Tie-Down Installation',
-      category: 'mandatory_services',
-      unitPrice: 4500,
-      quantity: 1,
-      totalPrice: 4500,
-      description: 'Concrete pier pads, leveling, and Florida wind zone hurricane ground anchors.'
-    },
-    {
-      id: 'item-2',
-      sku: 'HVAC-HP-3TON',
-      name: '3.0-Ton Central A/C Heat Pump System',
-      category: 'mandatory_services',
-      unitPrice: 5555,
-      quantity: 1,
-      totalPrice: 5555,
-      description: 'High-efficiency heat pump with digital thermostat, pad, and plenum tie-in.'
-    },
-    {
-      id: 'item-3',
-      sku: 'SITE-SKIRTING-VINYL',
-      name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
-      category: 'mandatory_services',
-      unitPrice: 3200,
-      quantity: 1,
-      totalPrice: 3200,
-      description: 'Full perimeter vinyl skirting and 2 sets of code-compliant entrance stairs.'
-    },
-    {
-      id: 'item-4',
-      sku: 'SITE-PERMIT-PLAN',
-      name: 'County Building, Zoning & Health Dept Permits',
-      category: 'mandatory_services',
-      unitPrice: 2650,
-      quantity: 1,
-      totalPrice: 2650,
-      description: 'Hernando/Citrus county building permit processing and inspection fees.'
-    }
-  ]);
+  // Itemized Line Items (Initialized from ERP Standard Services)
+  const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>(
+    existingQuote?.lineItems || [
+      {
+        id: 'item-1',
+        sku: 'SITE-BLOCK-TIEDOWN',
+        name: 'Block & Hurricane Tie-Down Installation',
+        category: 'mandatory_services',
+        unitPrice: 4500,
+        quantity: 1,
+        totalPrice: 4500,
+        description: 'Concrete pier pads, leveling, and Florida wind zone hurricane ground anchors.'
+      },
+      {
+        id: 'item-2',
+        sku: 'HVAC-HP-3TON',
+        name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
+        category: 'mandatory_services',
+        unitPrice: 5555,
+        quantity: 1,
+        totalPrice: 5555,
+        description: 'High-efficiency heat pump with digital thermostat, pad, and plenum tie-in.'
+      },
+      {
+        id: 'item-3',
+        sku: 'SITE-SKIRTING-VINYL',
+        name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
+        category: 'mandatory_services',
+        unitPrice: 3200,
+        quantity: 1,
+        totalPrice: 3200,
+        description: 'Full perimeter vinyl skirting and 2 sets of code-compliant entrance stairs.'
+      },
+      {
+        id: 'item-4',
+        sku: 'SITE-PERMIT-PLAN',
+        name: 'County Building, Zoning & Health Dept Permits',
+        category: 'mandatory_services',
+        unitPrice: 2650,
+        quantity: 1,
+        totalPrice: 2650,
+        description: 'Hernando/Citrus county building permit processing and inspection fees.'
+      }
+    ]
+  );
 
   // Selected Catalog Item Dropdown Helper
   const [selectedCatalogSku, setSelectedCatalogSku] = useState(SERVICE_CATALOG[0].sku);
 
-  // Financing
+  // Financing & Loan Calculator
   const [downPaymentPercent, setDownPaymentPercent] = useState<number>(existingQuote?.downPaymentPercent || 10);
   const [interestRate, setInterestRate] = useState<number>(6.875);
   const [loanTermYears, setLoanTermYears] = useState<number>(30);
@@ -161,8 +178,9 @@ export function ManualQuoteBuilderModal({
 
   useEffect(() => {
     if (selectedHome && selectedHomeSlug !== 'custom') {
-      setCustomHomeName(selectedHome.displayName ?? selectedHome.name);
-      setCustomHomePrice(selectedHome.startingPrice || 39888);
+      setCustomHomeName(`${selectedHome.manufacturer} ${selectedHome.name}`);
+      setSelectedManufacturer(selectedHome.manufacturer);
+      setCustomHomePrice(selectedHome.ehsPrice || selectedHome.msrp || 39888);
     }
   }, [selectedHomeSlug, selectedHome]);
 
@@ -177,12 +195,15 @@ export function ManualQuoteBuilderModal({
 
   if (!isOpen) return null;
 
-  // Filter homes in selector
-  const filteredHomeCatalog = homes.filter((h) => {
+  // Filter 388 homes by search and builder
+  const filteredHomeCatalog = FULL_MASTER_CATALOG_HOMES.filter((h) => {
+    if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
     if (!homeSearch.trim()) return true;
-    const text = [h.name, h.displayName, h.manufacturer, h.modelNumber, h.size].filter(Boolean).join(' ').toLowerCase();
+    const text = [h.name, h.manufacturer, h.series, h.dimensions, h.squareFeet].filter(Boolean).join(' ').toLowerCase();
     return text.includes(homeSearch.toLowerCase().trim());
   });
+
+  const distinctBuilders = ['ALL', ...new Set(FULL_MASTER_CATALOG_HOMES.map((h) => h.manufacturer))];
 
   // Calculate Turnkey Totals
   const subtotalHome = Number(customHomePrice) || 0;
@@ -287,6 +308,7 @@ export function ManualQuoteBuilderModal({
       customerPhone: customerPhone.trim(),
       customerEmail: customerEmail.trim(),
       homeModel: customHomeName,
+      manufacturer: selectedManufacturer,
       homePrice: subtotalHome,
       homeWidth: selectedHome?.width || 14,
       propertyAddress:
@@ -322,7 +344,7 @@ export function ManualQuoteBuilderModal({
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150 text-xs">
       <div className="bg-white rounded-[2rem] shadow-2xl border border-borderGray w-full max-w-5xl max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header */}
+        {/* Header with Easy HomeSource Palette */}
         <div className="p-5 sm:p-6 border-b border-ehsBlue/10 bg-gradient-to-r from-ehsNavy via-ehsDeepBlue to-ehsBlue text-white flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shadow-xs">
@@ -331,14 +353,14 @@ export function ManualQuoteBuilderModal({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-black tracking-tight text-white">
-                  Master Turnkey Quote Tool (ERP V05)
+                  Master Turnkey Quote Tool (Spreadsheet Engine)
                 </h3>
                 <span className="bg-emerald-400/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[10px] border border-emerald-300/30">
-                  Spreadsheet Auto-Calculation
+                  {FULL_MASTER_CATALOG_HOMES.length} Models Loaded
                 </span>
               </div>
               <p className="text-[11px] text-ehsLightBlue font-medium">
-                Live line-item quoting: All 28+ Homes • Auto Delivery Calculation • Dropdown Line Items • Financing
+                Live pricing from Master Spreadsheet: All 388 Homes • Dropdown Line Items • Auto Delivery Calculation
               </p>
             </div>
           </div>
@@ -351,12 +373,12 @@ export function ManualQuoteBuilderModal({
           </button>
         </div>
 
-        {/* 5-Step Navigation Tabs */}
+        {/* 5-Step Navigation Ribbon */}
         <div className="px-6 py-2.5 bg-ehsSoftBlue/60 border-b border-ehsBlue/10 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { num: 1, label: '1. Customer Info' },
-              { num: 2, label: '2. All Homes & Land' },
+              { num: 2, label: `2. All ${FULL_MASTER_CATALOG_HOMES.length} Homes & Land` },
               { num: 3, label: '3. Auto Calculate Delivery' },
               { num: 4, label: '4. Dropdown Line Items' },
               { num: 5, label: '5. Summary & Financing' }
@@ -456,7 +478,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 2: All 28+ Homes & Land Selection */}
+          {/* STEP 2: All 388 Homes & Land Selection */}
           {step === 2 && (
             <div className="space-y-6">
               {/* Home Selection */}
@@ -464,23 +486,38 @@ export function ManualQuoteBuilderModal({
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-borderGray/60">
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">
-                      All Catalog Homes ({homes.length} Models)
+                      Master Spreadsheet Catalog ({FULL_MASTER_CATALOG_HOMES.length} Models)
                     </span>
                     <h4 className="font-black text-sm text-ehsNavy">
                       1. Select Base Manufactured Home
                     </h4>
                   </div>
-                  <input
-                    type="text"
-                    value={homeSearch}
-                    onChange={(e) => setHomeSearch(e.target.value)}
-                    placeholder="Search all 28+ models..."
-                    className="px-3 py-1.5 border border-borderGray rounded-full text-xs font-semibold"
-                  />
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <select
+                      value={builderFilter}
+                      onChange={(e) => setBuilderFilter(e.target.value)}
+                      className="px-3 py-1.5 border border-borderGray rounded-xl text-xs font-bold bg-white"
+                    >
+                      {distinctBuilders.map((b) => (
+                        <option key={b} value={b}>
+                          {b === 'ALL' ? 'All Builders' : b}
+                        </option>
+                      ))}
+                    </select>
+
+                    <input
+                      type="text"
+                      value={homeSearch}
+                      onChange={(e) => setHomeSearch(e.target.value)}
+                      placeholder="Search all 388 models..."
+                      className="px-3 py-1.5 border border-borderGray rounded-xl text-xs font-semibold"
+                    />
+                  </div>
                 </div>
 
-                {/* 28+ Homes Selection Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-56 overflow-y-auto pr-1">
+                {/* All 388 Homes Selection Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-64 overflow-y-auto pr-1">
                   {filteredHomeCatalog.map((h) => {
                     const isSelected = selectedHomeSlug === h.slug;
                     return (
@@ -488,8 +525,9 @@ export function ManualQuoteBuilderModal({
                         key={h.slug}
                         onClick={() => {
                           setSelectedHomeSlug(h.slug);
-                          setCustomHomeName(h.displayName ?? h.name);
-                          setCustomHomePrice(h.startingPrice || 39888);
+                          setCustomHomeName(`${h.manufacturer} ${h.name}`);
+                          setSelectedManufacturer(h.manufacturer);
+                          setCustomHomePrice(h.ehsPrice || h.msrp || 39888);
                         }}
                         className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
                           isSelected
@@ -498,13 +536,18 @@ export function ManualQuoteBuilderModal({
                         }`}
                       >
                         <div className="font-black text-xs text-ehsNavy truncate">
-                          {h.displayName ?? h.name}
+                          {h.name}
                         </div>
                         <div className="text-[10.5px] text-slate-500 font-medium">
-                          {h.bedrooms ? `${h.bedrooms}b / ${h.bathrooms}ba` : 'Catalog'} • {h.squareFeet || ''} sq ft
+                          {h.manufacturer} • {h.dimensions}
                         </div>
-                        <div className="font-black text-xs text-ehsBlue mt-0.5">
-                          {h.startingPrice ? `$${Math.round(h.startingPrice).toLocaleString()}` : 'Call for MSRP'}
+                        <div className="flex justify-between items-center mt-1">
+                          <span className="font-black text-xs text-ehsBlue">
+                            ${Math.round(h.ehsPrice || h.msrp || 50000).toLocaleString()}
+                          </span>
+                          <span className="text-[9px] text-slate-400 font-mono">
+                            {h.bedrooms ? `${h.bedrooms}b/${h.bathrooms}ba` : `${h.squareFeet}sf`}
+                          </span>
                         </div>
                       </div>
                     );
@@ -512,10 +555,21 @@ export function ManualQuoteBuilderModal({
                 </div>
 
                 {/* Base Home Price Input & Override Reason */}
-                <div className="grid sm:grid-cols-2 gap-3 pt-2 border-t border-borderGray/60">
+                <div className="grid sm:grid-cols-3 gap-3 pt-2 border-t border-borderGray/60">
                   <div>
                     <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
-                      Base Home Sales Price ($ USD) *
+                      Selected Model Name
+                    </label>
+                    <input
+                      type="text"
+                      value={customHomeName}
+                      onChange={(e) => setCustomHomeName(e.target.value)}
+                      className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-black text-ehsNavy"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                      Base Home Price ($ USD) *
                     </label>
                     <input
                       type="number"
@@ -530,7 +584,7 @@ export function ManualQuoteBuilderModal({
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Factory promotion, display markdown"
+                      placeholder="e.g. Factory promotion, volume discount"
                       value={homePriceOverrideReason}
                       onChange={(e) => setHomePriceOverrideReason(e.target.value)}
                       className="w-full px-3 py-1.5 border border-borderGray rounded-xl text-xs font-semibold"
