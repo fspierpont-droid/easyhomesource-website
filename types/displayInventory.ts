@@ -17,7 +17,7 @@ export interface DisplayHomeRecord {
   baths: number;
   squareFeet: number;
   displayStatus: DisplayStatus;
-  padLocation: string; // e.g. "Pad #1 - Highway Frontage"
+  padLocation: string; // e.g. "Pad #1 - Front Highway Entrance"
   orderDate: string;
   deliveryDate?: string;
   
@@ -28,7 +28,7 @@ export interface DisplayHomeRecord {
   transportCost: number; // Freight from plant to Brooksville
   lotSetupCost: number; // Blocking, tie-downs, A/C, skirting, stairs
   interestRateFloorplan: number; // e.g. 7.25%
-  monthlyCurtailment?: number; // Monthly floorplan holding fee
+  monthlyCurtailment?: number; // Monthly floorplan fee
 
   optionsIncluded: string[];
   notes: string;
@@ -65,7 +65,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       '50-gallon water heater upgrade',
       'Full vinyl linoleum flooring'
     ],
-    notes: 'Featured starting at $39,888 display leader. Heavy foot traffic walkthrough model.',
+    notes: 'Featured starting at $39,888 display leader. Heavy foot traffic walkthrough model. NOT FOR SALE (Display only).',
     keyBoxCode: '4920',
     updatedAt: '2026-08-07'
   },
@@ -96,7 +96,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Deluxe kitchen appliance package (black)',
       'Front porch landing steps'
     ],
-    notes: 'On display in Brooksville. Clean interior staging.',
+    notes: 'On display in Brooksville. Clean interior staging. Model unit.',
     keyBoxCode: '1049',
     updatedAt: '2026-08-06'
   },
@@ -127,7 +127,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Walk-in primary closet',
       'Hardwood cabinetry upgrades'
     ],
-    notes: 'Very popular 3-bedroom display layout.',
+    notes: 'Very popular 3-bedroom display layout. Staged with living room furnishings.',
     keyBoxCode: '4921',
     updatedAt: '2026-08-06'
   },
@@ -158,7 +158,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Luxury vinyl plank flooring throughout',
       'Recessed LED can lighting'
     ],
-    notes: 'Contemporary modern exterior finish on lot.',
+    notes: 'Contemporary modern exterior finish on lot. Not for sale.',
     keyBoxCode: '0981',
     updatedAt: '2026-08-05'
   },
@@ -189,7 +189,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Upgraded residential 2x6 exterior walls',
       'Stainless steel kitchen suite'
     ],
-    notes: 'Highest lead conversion 3-bedroom on display.',
+    notes: 'Highest conversion 3-bedroom on display. Staged for customer walkthroughs.',
     keyBoxCode: '7719',
     updatedAt: '2026-08-05'
   },
@@ -220,7 +220,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Double vanity in master suite',
       'Dual section crane and set tie-downs'
     ],
-    notes: 'Affordable family double wide under $100k MSRP.',
+    notes: 'Affordable family double wide under $100k MSRP. Floorplan model.',
     keyBoxCode: '0481',
     updatedAt: '2026-08-04'
   },
@@ -251,7 +251,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Craftsman exterior trim & shutters',
       'Designer ceramic tile accents'
     ],
-    notes: 'Premium luxury Palm Harbor model on lot.',
+    notes: 'Premium luxury Palm Harbor model on lot. Display unit.',
     keyBoxCode: '9920',
     updatedAt: '2026-08-04'
   },
@@ -282,7 +282,7 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
       'Chef entertainment kitchen with double island',
       '3 full designer bathrooms'
     ],
-    notes: 'Flagship luxury home on Brooksville display lot.',
+    notes: 'Flagship luxury home on Brooksville display lot. Not for sale.',
     keyBoxCode: '4412',
     updatedAt: '2026-08-03'
   },
@@ -377,6 +377,161 @@ export const INITIAL_DISPLAY_INVENTORY: DisplayHomeRecord[] = [
     ],
     notes: 'Delivered to Brooksville lot August 2; setup crew currently finishing drywall marriage line and stairs.',
     keyBoxCode: '3301',
+    updatedAt: '2026-08-07'
+  },
+  {
+    id: 'disp-012',
+    stockNumber: 'DISP-2026-12',
+    modelName: 'Hey Jude (HJ-28685 5-Bed)',
+    manufacturer: 'Clayton Addison',
+    series: 'Tempo Series',
+    serialNumber: 'CLY-ADD-2026-28685-AB',
+    dimensions: "28' x 68'",
+    beds: 5,
+    baths: 2,
+    squareFeet: 1896,
+    displayStatus: 'ON_LOT_DISPLAY',
+    padLocation: 'Pad #12 - Family Model Row',
+    orderDate: '2026-06-28',
+    deliveryDate: '2026-07-30',
+    bankUsed: '21st Mortgage Floorplan',
+    financeAmount: 92000,
+    wholesaleInvoice: 89500,
+    transportCost: 5300,
+    lotSetupCost: 6800,
+    interestRateFloorplan: 7.25,
+    monthlyCurtailment: 1010,
+    optionsIncluded: [
+      '5 full bedrooms with dual living areas',
+      'Thermal zone 3 package',
+      'Walk-in pantry with wire shelving'
+    ],
+    notes: 'Largest bedroom display home. On display at 9011 McIntyre Rd.',
+    keyBoxCode: '2868',
+    updatedAt: '2026-08-06'
+  },
+  {
+    id: 'disp-013',
+    stockNumber: 'DISP-2026-13',
+    modelName: 'Craft Select 28603A',
+    manufacturer: 'Cavco Plant City',
+    series: 'Craft Select',
+    serialNumber: 'CAV-PC-2026-28603-A',
+    dimensions: "28' x 60'",
+    beds: 3,
+    baths: 2,
+    squareFeet: 1680,
+    displayStatus: 'ON_LOT_DISPLAY',
+    padLocation: 'Pad #13 - Craftsman Row',
+    orderDate: '2026-07-02',
+    deliveryDate: '2026-08-01',
+    bankUsed: '21st Mortgage Floorplan',
+    financeAmount: 96000,
+    wholesaleInvoice: 93800,
+    transportCost: 5500,
+    lotSetupCost: 7100,
+    interestRateFloorplan: 7.25,
+    monthlyCurtailment: 1060,
+    optionsIncluded: [
+      'Craftsman trim and interior barn doors',
+      'Farmhouse apron front sink',
+      'Glamor primary bathroom with double sinks'
+    ],
+    notes: 'On display in Brooksville. Model staging complete.',
+    keyBoxCode: '2860',
+    updatedAt: '2026-08-06'
+  },
+  {
+    id: 'disp-014',
+    stockNumber: 'DISP-2026-14',
+    modelName: 'Atmos 28603N Architectural',
+    manufacturer: 'Cavco Plant City',
+    series: 'Alpha Series',
+    serialNumber: 'CAV-ATM-2026-2860-AB',
+    dimensions: "28' x 60'",
+    beds: 3,
+    baths: 2,
+    squareFeet: 1600,
+    displayStatus: 'ON_LOT_DISPLAY',
+    padLocation: 'Pad #14 - Modern Display Row',
+    orderDate: '2026-07-08',
+    deliveryDate: '2026-08-04',
+    bankUsed: 'Triad Financial Services',
+    financeAmount: 112000,
+    wholesaleInvoice: 109500,
+    transportCost: 5600,
+    lotSetupCost: 7400,
+    interestRateFloorplan: 6.95,
+    monthlyCurtailment: 1230,
+    optionsIncluded: [
+      'Sleek modern roofline & architectural windows',
+      'High-efficiency Florida HVAC heat pump package',
+      'Spa shower with rain head'
+    ],
+    notes: 'Contemporary model on display at dealership.',
+    keyBoxCode: '2863',
+    updatedAt: '2026-08-05'
+  },
+  {
+    id: 'disp-015',
+    stockNumber: 'DISP-2026-15',
+    modelName: 'Buttercup Mini (TRT1236)',
+    manufacturer: 'Clayton TRU',
+    series: 'TRU Mini',
+    serialNumber: 'CLY-TRU-2026-1236-A',
+    dimensions: "12' x 36'",
+    beds: 1,
+    baths: 1,
+    squareFeet: 432,
+    displayStatus: 'ORDERED_AT_FACTORY',
+    padLocation: 'Pad #15 - Compact Row',
+    orderDate: '2026-08-01',
+    deliveryDate: '2026-08-26',
+    bankUsed: '21st Mortgage Floorplan',
+    financeAmount: 24500,
+    wholesaleInvoice: 23900,
+    transportCost: 2600,
+    lotSetupCost: 3200,
+    interestRateFloorplan: 7.25,
+    monthlyCurtailment: 270,
+    optionsIncluded: [
+      'Compact 1-bed tiny home layout',
+      'Efficiency kitchen and full bath',
+      'Factory floorplan order'
+    ],
+    notes: 'Factory offline scheduled for August 20. Target delivery August 26.',
+    keyBoxCode: 'TBD',
+    updatedAt: '2026-08-07'
+  },
+  {
+    id: 'disp-016',
+    stockNumber: 'DISP-2026-16',
+    modelName: 'Waverly 15471A',
+    manufacturer: 'Palm Harbor Plant City',
+    series: 'Lifestyle Series',
+    serialNumber: 'PH-PC-2026-15471-A',
+    dimensions: "15' x 76'",
+    beds: 3,
+    baths: 2,
+    squareFeet: 1140,
+    displayStatus: 'IN_TRANSIT',
+    padLocation: 'Pad #16 - East Row',
+    orderDate: '2026-07-28',
+    deliveryDate: '2026-08-14',
+    bankUsed: 'Triad Financial Services',
+    financeAmount: 71000,
+    wholesaleInvoice: 69200,
+    transportCost: 4100,
+    lotSetupCost: 4900,
+    interestRateFloorplan: 6.95,
+    monthlyCurtailment: 780,
+    optionsIncluded: [
+      '15-wide single section layout',
+      'Residential drywall package in living areas',
+      'High insulation value floor & ceiling'
+    ],
+    notes: 'Transport carrier in transit from Plant City to Brooksville lot.',
+    keyBoxCode: '1547',
     updatedAt: '2026-08-07'
   }
 ];

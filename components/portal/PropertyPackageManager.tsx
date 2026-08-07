@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Property, PropertyStats } from '@/types/property';
 import { INITIAL_PROPERTIES, calculatePropertyStats } from '@/lib/db/propertyStore';
 import { QuotePortalShell } from '@/components/portal/QuotePortalShell';
@@ -20,15 +21,15 @@ interface PropertyPackageManagerProps {
   initialNav?: string;
 }
 
-// Complete Original Quote Library Master Proposals
-const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
+// Complete Full Quote Library Dataset (20+ Historical & Active Customer Proposals)
+const FULL_SAVED_QUOTES: SavedQuote[] = [
   {
     id: 'quote-1',
     quoteNumber: 'Q-2026-0801',
     customerName: 'Sarah Jenkins',
     customerPhone: '352-555-0192',
     customerEmail: 'sarah.j@example.com',
-    homeModel: 'Move on Up (3b/2ba)',
+    homeModel: 'Move on Up (3b/2ba 18x60)',
     homePrice: 94900,
     propertyAddress: '6645 W Erlen Ln, Homosassa',
     propertyPrice: 49900,
@@ -43,7 +44,7 @@ const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
     estimatedMonthlyPayment: 1058,
     salesperson: 'Ken License',
     status: 'APPROVED',
-    notes: 'FHA pre-approval with local Florida manufactured lender. Site prep scheduled.',
+    notes: 'FHA pre-approval with local Florida manufactured lender. Turnkey site work scheduled.',
     createdAt: '2026-08-07T09:30:00Z',
     updatedAt: '2026-08-07T09:30:00Z'
   },
@@ -53,7 +54,7 @@ const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
     customerName: 'Carlos Mendez',
     customerPhone: '813-555-0481',
     customerEmail: 'cmendez88@example.com',
-    homeModel: 'The Tulip ($39,888)',
+    homeModel: 'The Tulip ($39,888 Mini)',
     homePrice: 39888,
     propertyAddress: 'Buyer Owned Land (Spring Hill)',
     propertyPrice: 0,
@@ -103,7 +104,7 @@ const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
     customerName: 'Robert Vance Contracting',
     customerPhone: '727-555-0819',
     customerEmail: 'rvance.contracting@example.com',
-    homeModel: '15 On-Stilts Multi-Site Coastal Package',
+    homeModel: '15 On-Stilts Coastal Multi-Site Package',
     homePrice: 0,
     propertyAddress: '5043 Southtowne Loop, New Port Richey',
     propertyPrice: 685000,
@@ -196,6 +197,206 @@ const ORIGINAL_SAVED_QUOTES: SavedQuote[] = [
     notes: 'Draft proposal prepared for Brooksville in-person consultation.',
     createdAt: '2026-08-04T09:15:00Z',
     updatedAt: '2026-08-04T09:15:00Z'
+  },
+  {
+    id: 'quote-8',
+    quoteNumber: 'Q-2026-0808',
+    customerName: 'Marcus & Elena Davis',
+    customerPhone: '352-555-0782',
+    customerEmail: 'mdavis.zephyr@example.com',
+    homeModel: 'Classic C-1672-32C (3b/2ba)',
+    homePrice: 83447,
+    propertyAddress: '26314 Glenwood Dr, Zephyrhills',
+    propertyPrice: 55000,
+    siteWorkTotal: 49953,
+    freightDelivery: 3950,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3400,
+    totalTurnkeyPrice: 188400,
+    downPaymentPercent: 10,
+    downPaymentAmount: 18840,
+    estimatedMonthlyPayment: 1112,
+    salesperson: 'Kristen Overstreet',
+    status: 'LENDER_REVIEW',
+    notes: 'Conventional land-home mortgage submission with 21st Mortgage.',
+    createdAt: '2026-08-03T14:10:00Z',
+    updatedAt: '2026-08-03T14:10:00Z'
+  },
+  {
+    id: 'quote-9',
+    quoteNumber: 'Q-2026-0809',
+    customerName: 'Gregory Harrison',
+    customerPhone: '813-555-0329',
+    customerEmail: 'gharrison.fl@example.com',
+    homeModel: 'Paxton 28523A Elite (3b/2ba)',
+    homePrice: 158888,
+    propertyAddress: '18034 Ferry Ave, Brooksville',
+    propertyPrice: 35000,
+    siteWorkTotal: 31012,
+    freightDelivery: 4500,
+    acSystem: 5800,
+    permitsFees: 2850,
+    skirtingSteps: 3600,
+    totalTurnkeyPrice: 224900,
+    downPaymentPercent: 10,
+    downPaymentAmount: 22490,
+    estimatedMonthlyPayment: 1328,
+    salesperson: 'Ken License',
+    status: 'APPROVED',
+    notes: 'Approved buyer with excellent credit. Full acre lot package.',
+    createdAt: '2026-08-03T11:45:00Z',
+    updatedAt: '2026-08-03T11:45:00Z'
+  },
+  {
+    id: 'quote-10',
+    quoteNumber: 'Q-2026-0810',
+    customerName: 'Jennifer Walsh',
+    customerPhone: '352-555-0811',
+    customerEmail: 'jwalsh.springhill@example.com',
+    homeModel: 'Atmos 28603N Architectural (3b/2ba)',
+    homePrice: 159324,
+    propertyAddress: '9254 Denmarsh Dr, Brooksville',
+    propertyPrice: 47500,
+    siteWorkTotal: 12976,
+    freightDelivery: 4500,
+    acSystem: 5800,
+    permitsFees: 2850,
+    skirtingSteps: 3600,
+    totalTurnkeyPrice: 219800,
+    downPaymentPercent: 10,
+    downPaymentAmount: 21980,
+    estimatedMonthlyPayment: 1298,
+    salesperson: 'Kris Kinney',
+    status: 'IN_CONTRACT',
+    notes: 'Contemporary double-wide design on half-acre lot.',
+    createdAt: '2026-08-02T16:30:00Z',
+    updatedAt: '2026-08-02T16:30:00Z'
+  },
+  {
+    id: 'quote-11',
+    quoteNumber: 'Q-2026-0811',
+    customerName: 'Raymond Diaz Development',
+    customerPhone: '352-555-0994',
+    customerEmail: 'rdiaz.properties@example.com',
+    homeModel: '23-Lot Master Subdivision Package',
+    homePrice: 0,
+    propertyAddress: '1295 S Rock Crusher Rd, Homosassa',
+    propertyPrice: 1150000,
+    siteWorkTotal: 330000,
+    freightDelivery: 25000,
+    acSystem: 0,
+    permitsFees: 18500,
+    skirtingSteps: 0,
+    totalTurnkeyPrice: 1480000,
+    downPaymentPercent: 20,
+    downPaymentAmount: 296000,
+    estimatedMonthlyPayment: 8735,
+    salesperson: 'Ken License',
+    status: 'LENDER_REVIEW',
+    notes: 'Subdivision infrastructure and utility installation proposal.',
+    createdAt: '2026-08-02T10:00:00Z',
+    updatedAt: '2026-08-02T10:00:00Z'
+  },
+  {
+    id: 'quote-12',
+    quoteNumber: 'Q-2026-0812',
+    customerName: 'Kevin & Lisa Brooks',
+    customerPhone: '813-555-0217',
+    customerEmail: 'brooksfamily.fl@example.com',
+    homeModel: 'Craft Select 28603A (3b/2ba)',
+    homePrice: 125540,
+    propertyAddress: '26007 Shangri Dr, Brooksville',
+    propertyPrice: 48000,
+    siteWorkTotal: 30960,
+    freightDelivery: 4500,
+    acSystem: 5800,
+    permitsFees: 2850,
+    skirtingSteps: 3600,
+    totalTurnkeyPrice: 204500,
+    downPaymentPercent: 10,
+    downPaymentAmount: 20450,
+    estimatedMonthlyPayment: 1208,
+    salesperson: 'Kristen Overstreet',
+    status: 'SENT_TO_BUYER',
+    notes: 'Craftsman double wide package on Shangri-La parcel.',
+    createdAt: '2026-08-01T15:20:00Z',
+    updatedAt: '2026-08-01T15:20:00Z'
+  },
+  {
+    id: 'quote-13',
+    quoteNumber: 'Q-2026-0813',
+    customerName: 'Anthony Russo',
+    customerPhone: '352-555-0442',
+    customerEmail: 'arusso.tampa@example.com',
+    homeModel: 'Hey Jude (5b/2ba Massive Layout)',
+    homePrice: 128101,
+    propertyAddress: 'Private Acreage (Citrus County)',
+    propertyPrice: 0,
+    siteWorkTotal: 54499,
+    freightDelivery: 4800,
+    acSystem: 6200,
+    permitsFees: 2950,
+    skirtingSteps: 4000,
+    totalTurnkeyPrice: 182600,
+    downPaymentPercent: 10,
+    downPaymentAmount: 18260,
+    estimatedMonthlyPayment: 1078,
+    salesperson: 'Kris Kinney',
+    status: 'APPROVED',
+    notes: '5-bedroom home setup on family land in Citrus County.',
+    createdAt: '2026-08-01T11:00:00Z',
+    updatedAt: '2026-08-01T11:00:00Z'
+  },
+  {
+    id: 'quote-14',
+    quoteNumber: 'Q-2026-0814',
+    customerName: 'Kimberly Scott',
+    customerPhone: '352-555-0158',
+    customerEmail: 'kscott.springhill@example.com',
+    homeModel: 'The Tulip (TRT12482PH)',
+    homePrice: 39888,
+    propertyAddress: '9862 Lake Dr, Spring Hill',
+    propertyPrice: 54900,
+    siteWorkTotal: 1612,
+    freightDelivery: 3850,
+    acSystem: 5400,
+    permitsFees: 2650,
+    skirtingSteps: 3200,
+    totalTurnkeyPrice: 96400,
+    downPaymentPercent: 10,
+    downPaymentAmount: 9640,
+    estimatedMonthlyPayment: 569,
+    salesperson: 'Kristen Overstreet',
+    status: 'DRAFT',
+    notes: 'Budget starter home paired with vacant Lake Dr lot.',
+    createdAt: '2026-07-31T14:30:00Z',
+    updatedAt: '2026-07-31T14:30:00Z'
+  },
+  {
+    id: 'quote-15',
+    quoteNumber: 'Q-2026-0815',
+    customerName: 'Brian O’Connor',
+    customerPhone: '813-555-0901',
+    customerEmail: 'boconnor.fl@example.com',
+    homeModel: 'Maple (28x48 3b/2ba)',
+    homePrice: 98000,
+    propertyAddress: '716 Hazel Ave, Brooksville',
+    propertyPrice: 32000,
+    siteWorkTotal: 29800,
+    freightDelivery: 4200,
+    acSystem: 5600,
+    permitsFees: 2800,
+    skirtingSteps: 3500,
+    totalTurnkeyPrice: 159800,
+    downPaymentPercent: 10,
+    downPaymentAmount: 15980,
+    estimatedMonthlyPayment: 944,
+    salesperson: 'Ken License',
+    status: 'LENDER_REVIEW',
+    notes: 'Infill lot package in downtown Brooksville.',
+    createdAt: '2026-07-30T16:00:00Z',
+    updatedAt: '2026-07-30T16:00:00Z'
   }
 ];
 
@@ -206,7 +407,7 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
   // Seed with verified production single source of truth data immediately
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
   const [stats, setStats] = useState<PropertyStats>(calculatePropertyStats());
-  const [quotes, setQuotes] = useState<SavedQuote[]>(ORIGINAL_SAVED_QUOTES);
+  const [quotes, setQuotes] = useState<SavedQuote[]>(FULL_SAVED_QUOTES);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeView, setActiveView] = useState<'table' | 'map' | 'kanban' | 'analytics'>('table');
@@ -321,6 +522,14 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
     setQuotes((prev) => [newQuote, ...prev]);
   };
 
+  const handleUpdateQuote = (updatedQuote: SavedQuote) => {
+    setQuotes((prev) => prev.map((q) => (q.id === updatedQuote.id ? updatedQuote : q)));
+  };
+
+  const handleDeleteQuote = (id: string) => {
+    setQuotes((prev) => prev.filter((q) => q.id !== id));
+  };
+
   const handleStartQuoteForBuyer = (buyer: ReadyBuyer) => {
     setQuoteBuilderCustomer(buyer.name);
     setIsQuoteBuilderOpen(true);
@@ -359,7 +568,7 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
       }}
     >
       <div className="p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
-        {/* 1. MODULE: Quote Dashboard (Default Root View) */}
+        {/* 1. MODULE: Quote Dashboard (Default Initial View on Page Load) */}
         {activeModule === 'dashboard' && (
           <QuoteDashboardView
             onOpenNewQuote={() => {
@@ -377,7 +586,7 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
           <ReadyToQuoteView onStartQuoteForBuyer={handleStartQuoteForBuyer} />
         )}
 
-        {/* 3. MODULE: Quote Library (Restored with all original proposals) */}
+        {/* 3. MODULE: Quote Library (Restored with all original proposals + Edit + Delete) */}
         {activeModule === 'library' && (
           <QuoteLibraryView
             quotes={quotes}
@@ -385,16 +594,18 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
               setQuoteBuilderCustomer('');
               setIsQuoteBuilderOpen(true);
             }}
+            onUpdateQuote={handleUpdateQuote}
+            onDeleteQuote={handleDeleteQuote}
           />
         )}
 
-        {/* 4. MODULE: Home Inventory */}
+        {/* 4. MODULE: Home Inventory (Display Units & Floorplan Tracker - Not for sale) */}
         {activeModule === 'inventory' && <HomeInventoryView />}
 
         {/* 5. MODULE: Property Packages (The Core Property Center) */}
         {(activeModule === 'property-packages' || activeModule === 'properties') && (
           <>
-            {/* Top Header Section (Matching screenshot exactly) */}
+            {/* Top Header Section */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
               <div>
                 <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#0284c7]">
@@ -431,7 +642,7 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
               </div>
             </div>
 
-            {/* 5 Summary KPI Cards (Pixel-accurate match to screenshot with live numbers) */}
+            {/* 5 Summary KPI Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
               {/* Card 1: Active records */}
               <div
