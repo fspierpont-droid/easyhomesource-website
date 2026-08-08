@@ -7,6 +7,7 @@ import {
   SERVICE_CATALOG,
   autoCalculateDelivery,
   calculateBlockTieDown,
+  calculateSkirtingByDimensions,
   calculateComprehensiveQuoteTotals,
   type ServiceCatalogItem,
   type DeliveryCalculationResult,
@@ -142,10 +143,14 @@ export function ManualQuoteBuilderModal({
   const [freightCost, setFreightCost] = useState<number>(3500);
   const [isCalculatingDelivery, setIsCalculatingDelivery] = useState(false);
 
-  // Line Items (Permits $2,000 standard)
+  // Line Items (Permits $2,000 standard, Block & Tie-Down matrix, Skirting linear ft)
   const initialBlockTie = useMemo(() => {
     const homeClass = (selectedHome?.width || 14) > 18 ? 'double' : 'single';
     return calculateBlockTieDown(selectedHome?.length || 60, homeClass);
+  }, [selectedHome]);
+
+  const initialSkirting = useMemo(() => {
+    return calculateSkirtingByDimensions(selectedHome?.width || 14, selectedHome?.length || 60);
   }, [selectedHome]);
 
   const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>(
@@ -191,12 +196,12 @@ export function ManualQuoteBuilderModal({
         sku: 'SITE-SKIRTING-VINYL',
         name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
         category: 'mandatory_services',
-        unitPrice: 3200,
-        unitCost: 2200,
+        unitPrice: initialSkirting.price || 3200,
+        unitCost: initialSkirting.cost || 2200,
         quantity: 1,
-        totalPrice: 3200,
-        totalCost: 2200,
-        description: 'Full perimeter vinyl skirting and 2 sets of code-compliant entrance stairs.'
+        totalPrice: initialSkirting.price || 3200,
+        totalCost: initialSkirting.cost || 2200,
+        description: `Full perimeter vinyl skirting (${initialSkirting.linearFeet} linear ft) and 2 sets of code stairs.`
       },
       {
         id: 'item-5',
@@ -208,7 +213,7 @@ export function ManualQuoteBuilderModal({
         quantity: 1,
         totalPrice: 2000,
         totalCost: 2000,
-        description: 'Hernando/Citrus county building permit processing and inspection fees ($2,000 standard).'
+        description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).'
       }
     ]
   );
@@ -234,19 +239,32 @@ export function ManualQuoteBuilderModal({
 
       const homeClass = (selectedHome.width || 14) > 18 ? 'double' : 'single';
       const bt = calculateBlockTieDown(selectedHome.length || 60, homeClass);
+      const sk = calculateSkirtingByDimensions(selectedHome.width || 14, selectedHome.length || 60);
+
       setLineItems((prev) =>
-        prev.map((item) =>
-          item.sku === 'SITE-BLOCK-TIEDOWN'
-            ? {
-                ...item,
-                unitPrice: bt.price,
-                unitCost: bt.cost,
-                totalPrice: bt.price * item.quantity,
-                totalCost: bt.cost * item.quantity,
-                description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (${bt.matchedLength}ft ${homeClass} table).`
-              }
-            : item
-        )
+        prev.map((item) => {
+          if (item.sku === 'SITE-BLOCK-TIEDOWN') {
+            return {
+              ...item,
+              unitPrice: bt.price,
+              unitCost: bt.cost,
+              totalPrice: bt.price * item.quantity,
+              totalCost: bt.cost * item.quantity,
+              description: `Concrete pier pads, cinder blocks, leveling, and ground anchors (${bt.matchedLength}ft ${homeClass} table).`
+            };
+          }
+          if (item.sku === 'SITE-SKIRTING-VINYL') {
+            return {
+              ...item,
+              unitPrice: sk.price,
+              unitCost: sk.cost,
+              totalPrice: sk.price * item.quantity,
+              totalCost: sk.cost * item.quantity,
+              description: `Full perimeter vinyl skirting (${sk.linearFeet} linear ft) and 2 sets of code stairs.`
+            };
+          }
+          return item;
+        })
       );
     }
   }, [selectedHomeSlug, selectedHome]);
@@ -285,7 +303,8 @@ export function ManualQuoteBuilderModal({
   const subtotalFreight = Number(freightPrice) || 0;
 
   const quoteTotals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
-    subtotalHome + subtotalLand,
+    subtotalHome,
+    subtotalLand,
     subtotalFreight,
     subtotalSiteWork,
     subtotalAddOns,
@@ -448,7 +467,7 @@ export function ManualQuoteBuilderModal({
           </button>
         </div>
 
-        {/* 6-Step Navigation Ribbon */}
+        {/* 6-Step Navigation Ribbon (Clean Ribbon without duplicated total box) */}
         <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
@@ -475,7 +494,7 @@ export function ManualQuoteBuilderModal({
           </div>
 
           <div className="text-right shrink-0">
-            <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Turnkey Total</span>
+            <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Total</span>
             <span className="text-base font-black text-[#0F2A47]">
               ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
@@ -612,8 +631,12 @@ export function ManualQuoteBuilderModal({
                             : 'border-slate-200 hover:bg-slate-50'
                         }`}
                       >
-                        <div className="font-black text-xs text-[#0B1E38] truncate">{h.name}</div>
-                        <div className="text-[10.5px] text-slate-500 font-medium">{h.manufacturer} • {h.dimensions}</div>
+                        <div className="font-black text-xs text-[#0B1E38] truncate">
+                          {h.name}
+                        </div>
+                        <div className="text-[10.5px] text-slate-500 font-medium">
+                          {h.manufacturer} • {h.dimensions}
+                        </div>
                         <div className="flex justify-between items-center mt-1">
                           <span className="font-black text-xs text-[#1E6FA8]">
                             ${Math.round(h.ehsPrice || h.msrp || 50000).toLocaleString()}
@@ -719,7 +742,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 3: Auto Calculate Delivery */}
+          {/* STEP 3: Auto Calculate Delivery (NO SETBACKS) */}
           {step === 3 && (
             <div className="space-y-5">
               <div>
@@ -975,7 +998,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 6: Summary & Totals */}
+          {/* STEP 6: Summary & Totals (Itemized Land & Exact Mathematical Sum) */}
           {step === 6 && (
             <div className="space-y-6">
               <div>
@@ -1003,12 +1026,20 @@ export function ManualQuoteBuilderModal({
                   </div>
                 </div>
 
-                {/* Breakdown Line Items */}
+                {/* Breakdown Line Items (Every line item explicitly listed with exact sum) */}
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between text-slate-700">
                     <span>Home:</span>
                     <span className="font-semibold">${subtotalHome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
+
+                  {subtotalLand > 0 && (
+                    <div className="flex justify-between text-slate-700">
+                      <span>Land / Lot:</span>
+                      <span className="font-semibold">${subtotalLand.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                  )}
+
                   <div className="flex justify-between text-slate-700">
                     <span>Delivery:</span>
                     <span className="font-semibold">${subtotalFreight.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
@@ -1021,6 +1052,13 @@ export function ManualQuoteBuilderModal({
                     <span>Add-ons:</span>
                     <span className="font-semibold">${subtotalAddOns.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
+
+                  {discounts > 0 && (
+                    <div className="flex justify-between text-rose-600 font-semibold">
+                      <span>Discounts:</span>
+                      <span>- ${discounts.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                  )}
 
                   <div className="my-2 border-t border-slate-200" />
 

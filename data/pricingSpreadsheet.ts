@@ -320,6 +320,18 @@ export function calculateBlockTieDown(
   };
 }
 
+// Helper: Calculate Perimeter Linear Feet & Skirting
+export function calculateSkirtingByDimensions(
+  width: number = 14,
+  length: number = 60
+): { linearFeet: number; price: number; cost: number } {
+  const linearFeet = 2 * (Number(width || 14) + Number(length || 60));
+  // Standard V05 StyleCrest vinyl rate
+  const cost = linearFeet * 14;
+  const price = Math.round(cost * 1.45);
+  return { linearFeet, price, cost };
+}
+
 // Delivery calculation engine
 export interface DeliveryCalculationResult {
   routeType: 'factory_to_customer' | 'factory_to_dealer' | 'dealer_to_customer';
@@ -434,6 +446,7 @@ export function autoCalculateDelivery(
 
 export interface QuoteFinancialTotals {
   home_subtotal: number;
+  land_subtotal: number;
   delivery_total: number;
   site_work_total: number;
   addons_total: number;
@@ -462,6 +475,7 @@ export interface QuoteFinancialTotals {
 
 export function calculateComprehensiveQuoteTotals(
   homePrice: number,
+  landPrice: number,
   deliveryPrice: number,
   siteWorkPrice: number,
   addonsPrice: number,
@@ -473,12 +487,14 @@ export function calculateComprehensiveQuoteTotals(
   taxRate: number = 0.03
 ): QuoteFinancialTotals {
   const home_subtotal = Number(homePrice) || 0;
+  const land_subtotal = Number(landPrice) || 0;
   const delivery_total = Number(deliveryPrice) || 0;
   const site_work_total = Number(siteWorkPrice) || 0;
   const addons_total = Number(addonsPrice) || 0;
   const discounts_total = Number(discountsPrice) || 0;
 
-  const subtotal = home_subtotal + delivery_total + site_work_total + addons_total - discounts_total;
+  // Exact mathematical addition of all visible line items
+  const subtotal = home_subtotal + land_subtotal + delivery_total + site_work_total + addons_total - discounts_total;
   const financed_subtotal = subtotal;
   const non_financed_subtotal = 0;
   const tax_basis = subtotal;
@@ -508,6 +524,7 @@ export function calculateComprehensiveQuoteTotals(
 
   return {
     home_subtotal,
+    land_subtotal,
     delivery_total,
     site_work_total,
     addons_total,

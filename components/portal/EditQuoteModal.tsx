@@ -46,7 +46,8 @@ export function EditQuoteModal({
       const discounts = Number(field === 'discounts' ? num : updated.discounts) || 0;
 
       const totals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
-        subtotalHome + subtotalLand,
+        subtotalHome,
+        subtotalLand,
         subtotalFreight,
         subtotalSiteWork,
         0,
@@ -87,7 +88,8 @@ export function EditQuoteModal({
   };
 
   const totals: QuoteFinancialTotals = formData.financialTotals || calculateComprehensiveQuoteTotals(
-    (formData.homePrice || 0) + (formData.propertyPrice || 0),
+    formData.homePrice || 0,
+    formData.propertyPrice || 0,
     formData.freightDelivery || 0,
     formData.siteWorkTotal || 0,
     0,
@@ -102,7 +104,7 @@ export function EditQuoteModal({
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150 text-xs">
       <div className="bg-white rounded-[2rem] shadow-2xl border border-slate-200 w-full max-w-4xl max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header matching Easy HomeSource Staging */}
+        {/* Header */}
         <div className="p-5 border-b border-[#0F2A47]/20 bg-gradient-to-r from-[#0B1E38] via-[#0F2A47] to-[#1E6FA8] text-white flex items-center justify-between shadow-md">
           <div>
             <div className="flex items-center gap-2">
@@ -183,7 +185,7 @@ export function EditQuoteModal({
             </div>
           </div>
 
-          {/* Customer Facing Totals Panel matching Screenshot */}
+          {/* Customer Facing Totals Panel */}
           <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-200">
               <span className="text-[11px] font-black uppercase tracking-wider text-slate-500">
@@ -194,13 +196,22 @@ export function EditQuoteModal({
               </span>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-3">
+            <div className="grid sm:grid-cols-4 gap-3">
               <div>
                 <label className="block font-medium text-slate-600 mb-0.5">Home Price ($)</label>
                 <input
                   type="number"
                   value={formData.homePrice}
                   onChange={(e) => handleNumberChange('homePrice', e.target.value)}
+                  className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
+                />
+              </div>
+              <div>
+                <label className="block font-medium text-slate-600 mb-0.5">Land / Parcel ($)</label>
+                <input
+                  type="number"
+                  value={formData.propertyPrice}
+                  onChange={(e) => handleNumberChange('propertyPrice', e.target.value)}
                   className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
                 />
               </div>
@@ -224,9 +235,30 @@ export function EditQuoteModal({
               </div>
             </div>
 
-            {/* Subtotal, Tax, and Estimated Total Banner matching user screenshot */}
+            {/* Subtotal, Tax, and Estimated Total Banner */}
             <div className="pt-3 border-t border-slate-200 space-y-1.5 text-xs">
               <div className="flex justify-between text-slate-700 font-semibold">
+                <span>Home:</span>
+                <span>${(formData.homePrice || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+              {formData.propertyPrice > 0 && (
+                <div className="flex justify-between text-slate-700 font-semibold">
+                  <span>Land / Lot:</span>
+                  <span>${formData.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-slate-700 font-semibold">
+                <span>Delivery:</span>
+                <span>${(formData.freightDelivery || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+              <div className="flex justify-between text-slate-700 font-semibold">
+                <span>Site Work:</span>
+                <span>${(formData.siteWorkTotal || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+
+              <div className="my-1.5 border-t border-slate-200" />
+
+              <div className="flex justify-between text-slate-800 font-bold">
                 <span>Subtotal:</span>
                 <span>${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
@@ -257,7 +289,7 @@ export function EditQuoteModal({
             </div>
           </div>
 
-          {/* INTERNAL ONLY Section matching screenshot */}
+          {/* INTERNAL ONLY Section */}
           <div className="p-4 bg-white border border-slate-200 rounded-2xl space-y-2.5">
             <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
               INTERNAL ONLY (Margin, Service Profit, Admin &amp; Loan Fees)
