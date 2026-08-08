@@ -1,8 +1,10 @@
+export type UserRole = 'Admin' | 'Manager' | 'Associate';
+
 export interface TeamUser {
   id: string;
   name: string;
   email: string;
-  role: 'Admin' | 'Manager' | 'Associate';
+  role: UserRole;
   active: boolean;
   ghlLinked: boolean;
   phone?: string;
@@ -103,3 +105,19 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
 ];
 
 export const CURRENT_LOGGED_IN_USER: TeamUser = VERIFIED_TEAM_USERS[6]; // Scott Pierpont (Admin)
+
+// Permission & Role Check Helpers
+export function canAccessSettings(user?: TeamUser | null): boolean {
+  if (!user) return false;
+  return user.role === 'Admin' || user.role === 'Manager';
+}
+
+export function canEditBasePrices(user?: TeamUser | null): boolean {
+  if (!user) return false;
+  return user.role === 'Admin' || user.role === 'Manager';
+}
+
+export function isSalesAssociate(user?: TeamUser | null): boolean {
+  if (!user) return true;
+  return user.role === 'Associate';
+}
