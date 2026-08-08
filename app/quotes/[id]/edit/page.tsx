@@ -26,6 +26,27 @@ import {
   type DepositItem
 } from '@/data/quotesStore';
 
+type EditTabKey = 'customer' | 'home' | 'site' | 'pricing' | 'financing' | 'notes' | 'review';
+
+interface StepInfo {
+  key: EditTabKey;
+  stepNum: number;
+  label: string;
+  shortLabel: string;
+  icon: string;
+  desc: string;
+}
+
+const STEPS: StepInfo[] = [
+  { key: 'customer', stepNum: 1, label: '1. Customer & Rep', shortLabel: 'Customer', icon: '👤', desc: 'Customer contact details & assigned consultant' },
+  { key: 'home', stepNum: 2, label: '2. Home Selection', shortLabel: 'Home', icon: '🏡', desc: 'Select from 225 models or customize specs' },
+  { key: 'site', stepNum: 3, label: '3. Land & Freight', shortLabel: 'Land & Freight', icon: '🚚', desc: 'Owned land ($0 default), parcels & freight delivery' },
+  { key: 'pricing', stepNum: 4, label: '4. Line Items & Services', shortLabel: 'Line Items', icon: '🛠️', desc: 'Site work, tie-downs, A/C, well, septic, skirting & permits ($2,000)' },
+  { key: 'financing', stepNum: 5, label: '5. Financing & Deposits', shortLabel: 'Financing', icon: '💳', desc: 'Loan officer ($1,000 fee toggle), milestones & deposits' },
+  { key: 'notes', stepNum: 6, label: '6. Notes & Terms', shortLabel: 'Notes', icon: '📝', desc: 'Customer proposal notes & private consultant records' },
+  { key: 'review', stepNum: 7, label: '7. Review & Summary', shortLabel: 'Review', icon: '📊', desc: 'Verify itemized totals, tax, margins & print PDF' }
+];
+
 export default function EditQuotePage() {
   const params = useParams();
   const router = useRouter();
@@ -33,8 +54,26 @@ export default function EditQuotePage() {
   const rawId = (params?.id as string) || '2026_06_29_PIERPONT_NEW';
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'customer' | 'home' | 'site' | 'pricing' | 'financing' | 'notes' | 'review'>('customer');
+  const [activeTab, setActiveTab] = useState<EditTabKey>('customer');
   const [savedSuccessMsg, setSavedSuccessMsg] = useState<string | null>(null);
+
+  // Step indices
+  const currentStepIndex = STEPS.findIndex((s) => s.key === activeTab);
+  const currentStep = STEPS[currentStepIndex] || STEPS[0];
+
+  const goToNextStep = () => {
+    if (currentStepIndex < STEPS.length - 1) {
+      setActiveTab(STEPS[currentStepIndex + 1].key);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const goToPrevStep = () => {
+    if (currentStepIndex > 0) {
+      setActiveTab(STEPS[currentStepIndex - 1].key);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   // 1. Customer & Consultant Details
   const [quoteId, setQuoteId] = useState(rawId);
@@ -635,7 +674,7 @@ export default function EditQuotePage() {
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-          {/* Header */}
+          {/* Top Header */}
           <header className="bg-white border-b border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 shadow-xs">
             <div className="flex items-center gap-3">
               <button
@@ -710,42 +749,53 @@ export default function EditQuotePage() {
 
           {/* Success Toast */}
           {savedSuccessMsg && (
-            <div className="bg-emerald-600 text-white px-6 py-2 text-xs font-bold flex items-center justify-between animate-in fade-in">
+            <div className="bg-emerald-600 text-white px-6 py-2.5 text-xs font-bold flex items-center justify-between shadow-xs animate-in fade-in">
               <span>{savedSuccessMsg}</span>
               <button
                 onClick={() => setSavedSuccessMsg(null)}
-                className="text-white hover:text-emerald-200 font-bold cursor-pointer"
+                className="text-white hover:text-emerald-200 font-bold cursor-pointer ml-4"
               >
                 ✕
               </button>
             </div>
           )}
 
-          {/* Tab Navigation */}
-          <div className="bg-white border-b border-slate-200 px-6 flex items-center gap-2 overflow-x-auto">
-            {[
-              { id: 'customer', label: '1. Customer & Rep', icon: '👤' },
-              { id: 'home', label: '2. Home Selection', icon: '🏡' },
-              { id: 'site', label: '3. Land & Freight', icon: '🚚' },
-              { id: 'pricing', label: '4. Line Items & Services', icon: '🛠️' },
-              { id: 'financing', label: '5. Financing & Deposits', icon: '💳' },
-              { id: 'notes', label: '6. Notes & Terms', icon: '📝' },
-              { id: 'review', label: '7. Review & Summary', icon: '📊' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`py-3 px-4 text-xs font-black border-b-2 flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === tab.id
-                    ? 'border-[#1E6FA8] text-[#0B1E38] bg-slate-50/80'
-                    : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
-                }`}
-              >
-                <span>{tab.icon}</span>
-                <span>{tab.label}</span>
-              </button>
-            ))}
+          {/* Prominent Visual Step Wizard & Navigation Bar */}
+          <div className="bg-white border-b border-slate-200 px-6 py-2 shadow-2xs">
+            <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1">
+              {STEPS.map((step) => {
+                const isActive = activeTab === step.key;
+                const isPast = step.stepNum < currentStep.stepNum;
+
+                return (
+                  <button
+                    key={step.key}
+                    type="button"
+                    onClick={() => setActiveTab(step.key)}
+                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? 'bg-[#0B1E38] text-white shadow-sm ring-2 ring-[#0B1E38]/20'
+                        : isPast
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100/70'
+                        : 'bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-900'
+                    }`}
+                  >
+                    <span
+                      className={`w-5 h-5 rounded-full text-[10px] font-black flex items-center justify-center ${
+                        isActive
+                          ? 'bg-white text-[#0B1E38]'
+                          : isPast
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-slate-200 text-slate-700'
+                      }`}
+                    >
+                      {isPast ? '✓' : step.stepNum}
+                    </span>
+                    <span>{step.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Editor Body Grid: Form on Left, Sticky Real-Time Math on Right */}
@@ -754,15 +804,17 @@ export default function EditQuotePage() {
             <div className="lg:col-span-2 space-y-6">
               {/* TAB 1: CUSTOMER & SALESPERSON */}
               {activeTab === 'customer' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
-                  <div className="border-b border-slate-100 pb-3">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
-                      STEP 1 OF 7
-                    </span>
-                    <h2 className="text-lg font-black text-[#0B1E38]">Customer &amp; Consultant Information</h2>
-                    <p className="text-xs text-slate-500">
-                      Configure proposal recipient, quote reference number, status, and housing consultant.
-                    </p>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
+                  <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
+                        STEP 1 OF 7
+                      </span>
+                      <h2 className="text-lg font-black text-[#0B1E38]">Customer &amp; Consultant Information</h2>
+                      <p className="text-xs text-slate-500">
+                        Configure proposal recipient, quote reference number, status, and housing consultant.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4 text-xs">
@@ -773,8 +825,8 @@ export default function EditQuotePage() {
                         required
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold focus:outline-none focus:border-[#1E6FA8] focus:ring-1 focus:ring-[#1E6FA8]"
-                        placeholder="e.g. Sarah Jenkins"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-bold focus:outline-none focus:border-[#1E6FA8] focus:ring-1 focus:ring-[#1E6FA8]"
+                        placeholder="e.g. Angie Floyd"
                       />
                     </div>
                     <div>
@@ -784,8 +836,8 @@ export default function EditQuotePage() {
                         required
                         value={customerPhone}
                         onChange={(e) => setCustomerPhone(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
-                        placeholder="e.g. 352-555-0192"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
+                        placeholder="e.g. 352-568-6946"
                       />
                     </div>
                     <div>
@@ -795,8 +847,8 @@ export default function EditQuotePage() {
                         required
                         value={customerEmail}
                         onChange={(e) => setCustomerEmail(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
-                        placeholder="e.g. sarah.j@example.com"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
+                        placeholder="e.g. angielynn011477@gmail.com"
                       />
                     </div>
                     <div>
@@ -805,8 +857,8 @@ export default function EditQuotePage() {
                         type="text"
                         value={customerAddress}
                         onChange={(e) => setCustomerAddress(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
-                        placeholder="e.g. 6645 W Erlen Ln, Homosassa, FL 34446"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-[#1E6FA8]"
+                        placeholder="e.g. Homosassa, FL 34446"
                       />
                     </div>
                   </div>
@@ -817,7 +869,7 @@ export default function EditQuotePage() {
                       <select
                         value={salesperson}
                         onChange={(e) => handleSalespersonChange(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
                       >
                         {VERIFIED_TEAM_USERS.map((u) => (
                           <option key={u.id} value={u.name}>
@@ -836,7 +888,7 @@ export default function EditQuotePage() {
                         type="text"
                         value={quoteNumber}
                         onChange={(e) => setQuoteNumber(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono font-bold focus:outline-none focus:border-[#1E6FA8]"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-mono font-bold focus:outline-none focus:border-[#1E6FA8]"
                       />
                     </div>
 
@@ -845,7 +897,7 @@ export default function EditQuotePage() {
                       <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value as any)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl font-bold bg-white focus:outline-none focus:border-[#1E6FA8]"
                       >
                         <option value="DRAFT">Draft</option>
                         <option value="SENT_TO_BUYER">Sent to Buyer</option>
@@ -855,12 +907,32 @@ export default function EditQuotePage() {
                       </select>
                     </div>
                   </div>
+
+                  {/* Step 1 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleSaveQuote()}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      💾 Save Changes
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={goToNextStep}
+                      className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>Continue to Step 2: Home Selection</span>
+                      <span>→</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
               {/* TAB 2: MANUFACTURED HOME SELECTION & CUSTOMIZATION */}
               {activeTab === 'home' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
                   <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
                     <div>
                       <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
@@ -993,7 +1065,7 @@ export default function EditQuotePage() {
                       value={homeSearch}
                       onChange={(e) => setHomeSearch(e.target.value)}
                       placeholder="Search 225 models by name, beds, sq ft, series..."
-                      className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#1E6FA8]"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#1E6FA8]"
                     />
 
                     {/* Catalog Grid */}
@@ -1024,12 +1096,42 @@ export default function EditQuotePage() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Step 2 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 1: Customer
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSaveQuote()}
+                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                      >
+                        💾 Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={goToNextStep}
+                        className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                      >
+                        <span>Continue to Step 3: Land &amp; Freight</span>
+                        <span>→</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {/* TAB 3: LAND & DELIVERY FREIGHT */}
               {activeTab === 'site' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
                   <div className="border-b border-slate-100 pb-3">
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
                       STEP 3 OF 7
@@ -1049,7 +1151,7 @@ export default function EditQuotePage() {
                       <button
                         type="button"
                         onClick={() => handleLandOptionChange('OWNED')}
-                        className={`p-3 rounded-xl border text-left cursor-pointer transition-colors ${
+                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors ${
                           landOption === 'OWNED'
                             ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
                             : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
@@ -1062,7 +1164,7 @@ export default function EditQuotePage() {
                       <button
                         type="button"
                         onClick={() => handleLandOptionChange('PARCEL')}
-                        className={`p-3 rounded-xl border text-left cursor-pointer transition-colors ${
+                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors ${
                           landOption === 'PARCEL'
                             ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
                             : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
@@ -1075,7 +1177,7 @@ export default function EditQuotePage() {
                       <button
                         type="button"
                         onClick={() => handleLandOptionChange('CUSTOM')}
-                        className={`p-3 rounded-xl border text-left cursor-pointer transition-colors ${
+                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors ${
                           landOption === 'CUSTOM'
                             ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
                             : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
@@ -1184,6 +1286,36 @@ export default function EditQuotePage() {
                           className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold"
                         />
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 2: Home Selection
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSaveQuote()}
+                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                      >
+                        💾 Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={goToNextStep}
+                        className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                      >
+                        <span>Continue to Step 4: Line Items &amp; Services</span>
+                        <span>→</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1380,6 +1512,36 @@ export default function EditQuotePage() {
                       />
                     </div>
                   </div>
+
+                  {/* Step 4 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 3: Land &amp; Freight
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSaveQuote()}
+                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                      >
+                        💾 Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={goToNextStep}
+                        className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                      >
+                        <span>Continue to Step 5: Financing &amp; Deposits</span>
+                        <span>→</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -1546,12 +1708,42 @@ export default function EditQuotePage() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Step 5 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 4: Line Items
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSaveQuote()}
+                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                      >
+                        💾 Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={goToNextStep}
+                        className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                      >
+                        <span>Continue to Step 6: Notes &amp; Terms</span>
+                        <span>→</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {/* TAB 6: NOTES & DOCUMENTATION */}
               {activeTab === 'notes' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
                   <div className="border-b border-slate-100 pb-3">
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
                       STEP 6 OF 7
@@ -1587,6 +1779,36 @@ export default function EditQuotePage() {
                         className="w-full px-3 py-2 border border-slate-200 rounded-xl leading-relaxed"
                         placeholder="e.g. FHA underwriting in progress. Site visit scheduled with county contractor..."
                       />
+                    </div>
+                  </div>
+
+                  {/* Step 6 Bottom Navigation Bar */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 5: Financing
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSaveQuote()}
+                        className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                      >
+                        💾 Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={goToNextStep}
+                        className="px-6 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-xl text-xs shadow-md flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                      >
+                        <span>Continue to Step 7: Review &amp; Summary</span>
+                        <span>→</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1630,17 +1852,27 @@ export default function EditQuotePage() {
                   <div className="flex flex-wrap items-center gap-3 pt-2">
                     <button
                       type="button"
+                      onClick={goToPrevStep}
+                      className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                    >
+                      ← Back to Step 6: Notes
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={() => handleSaveQuote('SENT_TO_BUYER')}
                       className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-xs cursor-pointer"
                     >
                       ✓ Save &amp; Mark as Sent to Buyer
                     </button>
+
                     <Link
                       href={`/quotes/${quoteId}`}
                       className="px-5 py-2.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs shadow-xs"
                     >
                       👁️ View Proposal Sheet
                     </Link>
+
                     <button
                       type="button"
                       onClick={handleDelete}
@@ -1654,8 +1886,70 @@ export default function EditQuotePage() {
             </div>
 
             {/* LIVE MATHEMATICAL PRECISION TOTALS PANEL (Sticky Right Column) */}
-            <div className="space-y-4 sticky top-24 self-start">
-              {/* CUSTOMER-FACING Section */}
+            <div className="space-y-4 sticky top-20 self-start">
+              {/* Step Navigation Quick Controller */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs space-y-3 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
+                    STEP {currentStep.stepNum} OF 7: {currentStep.shortLabel}
+                  </span>
+                  <span className="text-[11px] font-bold text-slate-400">
+                    {Math.round((currentStep.stepNum / 7) * 100)}% Complete
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                  <div
+                    className="bg-[#1E6FA8] h-full transition-all duration-300"
+                    style={{ width: `${(currentStep.stepNum / 7) * 100}%` }}
+                  />
+                </div>
+
+                {/* Step Pill Buttons */}
+                <div className="grid grid-cols-7 gap-1 pt-1">
+                  {STEPS.map((s) => (
+                    <button
+                      key={s.key}
+                      type="button"
+                      onClick={() => setActiveTab(s.key)}
+                      className={`py-1.5 rounded-lg text-center font-black text-xs transition-colors cursor-pointer ${
+                        activeTab === s.key
+                          ? 'bg-[#0B1E38] text-white'
+                          : s.stepNum < currentStep.stepNum
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100'
+                          : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                      }`}
+                      title={s.label}
+                    >
+                      {s.stepNum}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Step Forward / Back Buttons in Sticky Panel */}
+                <div className="flex items-center gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={goToPrevStep}
+                    disabled={currentStepIndex === 0}
+                    className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                  >
+                    ← Back
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={goToNextStep}
+                    disabled={currentStepIndex === STEPS.length - 1}
+                    className="flex-1 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] disabled:opacity-40 disabled:hover:bg-[#0F2A47] text-white font-black rounded-xl text-xs transition-colors cursor-pointer shadow-xs"
+                  >
+                    Next Step →
+                  </button>
+                </div>
+              </div>
+
+              {/* CUSTOMER-FACING Breakdown Section */}
               <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-4 text-xs">
                 <div>
                   <div className="text-[10px] uppercase font-black tracking-wider text-slate-400">
