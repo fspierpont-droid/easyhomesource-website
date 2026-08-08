@@ -109,16 +109,16 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
   const handleTouchEnd = () => setIsDragging(false);
 
   return (
-    <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col h-[650px] relative">
+    <div className="relative isolate bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col h-[650px] w-full">
       {/* Top Header & Filter Ribbon */}
-      <div className="p-3.5 sm:p-4 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10">
+      <div className="p-3.5 sm:p-4 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10 shrink-0">
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
             Interactive Florida Map
           </span>
           <span className="text-slate-300 hidden sm:inline">•</span>
           <span className="text-xs font-bold text-[#0B1E38]">
-            Moveable &amp; Zoomable ({filteredProperties.length} Properties in Citrus, Hernando, Pasco, Sumter)
+            Moveable &amp; Zoomable ({filteredProperties.length} Properties)
           </span>
         </div>
 
@@ -161,7 +161,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
       </div>
 
       {/* Main Map Workspace (Split View on Desktop: High-Contrast White Map Canvas with Right Side Inspector) */}
-      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF]">
+      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF] min-h-0">
         {/* Moveable & Zoomable White Canvas */}
         <div
           ref={mapContainerRef}
@@ -173,7 +173,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          className={`flex-1 relative overflow-hidden select-none transition-cursor bg-[#F4F8FC] ${
+          className={`flex-1 relative overflow-hidden select-none transition-cursor bg-[#F4F8FC] h-full ${
             isDragging ? 'cursor-grabbing' : 'cursor-grab'
           }`}
         >
@@ -322,7 +322,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
           </div>
 
           {/* Floating Map HUD Controls (Zoom In, Zoom Out, Reset, Center Brooksville) */}
-          <div className="map-hud-control absolute top-4 left-4 z-30 flex flex-col gap-1.5 bg-white/95 backdrop-blur-xs p-1.5 rounded-2xl border border-slate-200 shadow-md">
+          <div className="map-hud-control absolute top-4 left-4 z-10 flex flex-col gap-1.5 bg-white/95 backdrop-blur-xs p-1.5 rounded-2xl border border-slate-200 shadow-md">
             <button
               type="button"
               onClick={handleZoomIn}
@@ -359,7 +359,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
           </div>
 
           {/* Map Legend Overlay */}
-          <div className="absolute bottom-4 left-4 z-30 bg-white/95 backdrop-blur-xs px-3 py-2 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-700 shadow-sm flex items-center gap-3">
+          <div className="absolute bottom-4 left-4 z-10 bg-white/95 backdrop-blur-xs px-3 py-2 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-700 shadow-sm flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
               <span>Available</span>
@@ -375,10 +375,10 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
           </div>
         </div>
 
-        {/* Right Docked Property Inspector Panel (Always clear and visible, never obstructing pins) */}
+        {/* Right Docked Property Inspector Panel (Always docked strictly inside the map container) */}
         <div
-          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-30 flex flex-col shrink-0 ${
-            isPanelCollapsed ? 'w-full md:w-12 h-12 md:h-full' : 'w-full md:w-96 h-auto md:h-full'
+          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-10 flex flex-col shrink-0 h-full ${
+            isPanelCollapsed ? 'w-full md:w-12' : 'w-full md:w-80 lg:w-96'
           }`}
         >
           {isPanelCollapsed ? (
@@ -391,7 +391,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
               <span className="hidden md:inline vertical-lr text-[11px]">Inspect Property</span>
             </button>
           ) : (
-            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4">
+            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4 max-h-[570px]">
               <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
                   <span className="text-[10px] font-mono font-bold text-[#1E6FA8]">
