@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useAuth } from '@/lib/auth/AuthContext';
+import { AuthGate } from '@/components/portal/AuthGate';
 import type { Property, PropertyStats } from '@/types/property';
 import { INITIAL_PROPERTIES, calculatePropertyStats } from '@/lib/db/propertyStore';
 import { QuotePortalShell } from '@/components/portal/QuotePortalShell';
@@ -426,6 +428,7 @@ const FULL_SAVED_QUOTES: SavedQuote[] = RAW_SAVED_QUOTES.map((q) => {
 
 export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPackageManagerProps) {
   const searchParams = useSearchParams();
+  const { user, loading } = useAuth();
   const [activeModule, setActiveModule] = useState<string>(initialNav);
 
   useEffect(() => {
@@ -588,6 +591,14 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
     }
     return true;
   });
+
+  if (loading) {
+    return <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs text-slate-400 font-bold">Checking dealership authorization...</div>;
+  }
+
+  if (!user) {
+    return <AuthGate><div /></AuthGate>;
+  }
 
   return (
     <QuotePortalShell

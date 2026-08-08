@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SiteLogo } from '@/components/SiteLogo';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 interface QuotePortalShellProps {
   children: React.ReactNode;
@@ -17,6 +18,8 @@ export function QuotePortalShell({
   onNavChange,
   onNewManualQuote
 }: QuotePortalShellProps) {
+  const { user, logout } = useAuth();
+
   const navItems = [
     {
       id: 'dashboard',
@@ -74,15 +77,43 @@ export function QuotePortalShell({
     }
   ];
 
+  const userInitials = user?.name
+    ? user.name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'SP';
+
+  const handleSignOut = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('ehs_token');
+      localStorage.removeItem('ehs_user');
+    }
+    logout();
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex antialiased w-full">
       {/* Left Sidebar matching exact staging screenshot */}
       <aside className="w-64 border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xs">
         {/* Brand Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <SiteLogo />
-          </div>
+        <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between">
+          <Link href="/portal" className="flex items-center gap-2.5 text-slate-900 group">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-xs flex items-center justify-center shadow-xs">
+              EHS
+            </div>
+            <div>
+              <div className="font-extrabold text-xs tracking-tight text-slate-900 flex items-center gap-1.5">
+                <span>QUOTE PORTAL</span>
+                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.2 rounded border border-emerald-200">
+                  ERP V05
+                </span>
+              </div>
+              <p className="text-[10px] text-slate-400 font-medium">Operations Single Source</p>
+            </div>
+          </Link>
         </div>
 
         {/* New Manual Quote Action Button */}
@@ -155,14 +186,18 @@ export function QuotePortalShell({
             </Link>
           </div>
 
-          {/* Scott Pierpont (Admin) Profile Card */}
+          {/* Logged in User Profile Card */}
           <div className="p-2.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
-              SP
+              {userInitials}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-black text-slate-900 truncate">Scott Pierpont</p>
-              <p className="text-[10px] text-slate-500 font-semibold truncate">Admin</p>
+              <p className="text-xs font-black text-slate-900 truncate">
+                {user?.name || 'Scott Pierpont'}
+              </p>
+              <p className="text-[10px] text-slate-500 font-semibold truncate">
+                {user?.role || 'Admin'}
+              </p>
             </div>
           </div>
 
@@ -176,13 +211,14 @@ export function QuotePortalShell({
               <span>Change Password</span>
             </Link>
 
-            <Link
-              href="/portal"
-              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-rose-50 hover:text-rose-700 transition-colors"
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-rose-50 hover:text-rose-700 transition-colors text-left cursor-pointer"
             >
               <span>↪</span>
               <span>Sign Out</span>
-            </Link>
+            </button>
           </div>
         </div>
       </aside>
