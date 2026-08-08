@@ -900,164 +900,203 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
   },
   "boujee-xl-2": {
     "slug": "boujee-xl-2",
-    "sourcePage": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2",
-    "startingPrice": 159900,
-    "priceLabel": "Starting Price",
+    "sourcePage": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2",
+    "startingPrice": null,
+    "priceLabel": "Call/Text for starting price",
     "media": {
       "slug": "boujee-xl-2",
       "gallery": [
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Ffdfd6y96cy5.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 elevation and exterior home features\" draggable=\"false\" width=\"1400\" heig",
-          "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2",
-          "isPrimary": true
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Frkm3xkavtdl.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 hero, elevation, and exterior home features\" draggable=\"false\" width=\"140",
-          "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Frgmy02raz4h.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 elevation and exterior home features\" draggable=\"false\" width=\"1400\" heig",
-          "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Favsgjrzkjad.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 elevation and exterior home features\" draggable=\"false\" width=\"1400\" heig",
-          "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F2wri99mqybs.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 bathroom home features\" draggable=\"false\" width=\"1400\" height=\"788\" decod",
-          "category": "bathroom",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Ft8j6mufumom.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 bathroom home features\" draggable=\"false\" width=\"1400\" height=\"788\" decod",
-          "category": "bathroom",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Ft65buhoyx1k.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 bedroom home features\" draggable=\"false\" width=\"1400\" height=\"788\" decodi",
-          "category": "bedroom",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fd4yblp7lsqf.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 interior home features\" draggable=\"false\" width=\"1400\" height=\"788\" decod",
-          "category": "interior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fx65306wwuio.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 kitchen home features\" draggable=\"false\" width=\"1400\" height=\"788\" decodi",
-          "category": "kitchen",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fkcmcq0la7hh.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 kitchen home features\" draggable=\"false\" width=\"1400\" height=\"788\" decodi",
-          "category": "kitchen",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fbjvq4yngdje.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 interior home features\" draggable=\"false\" width=\"1400\" height=\"788\" decod",
-          "category": "interior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fuyyg6rvhnx.jpeg&w=3840",
-          "alt": "alt=\"Boujee xl 2 interior home features\" draggable=\"false\" width=\"1400\" height=\"788\" decod",
-          "category": "interior",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F0h5o716vepmq.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fbqi90s5mzjo.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F1lhf3hvu8u5h.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fxonzbyavkt.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Frbary39ljqd.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fo2gsudzhif.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fxjqbvpzj6mi.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fg7hhxvniinc.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2F4hqab27l7pr.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fqw4vbdo2y.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fphk7uciz8ag.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        },
-        {
-          "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fv4vizfjwocq.jpeg&w=3840",
-          "alt": "raw media link",
-          "category": "other",
-          "sourceUrl": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-        }
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/SnM9U1aPYHnyDtPzeYS9.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 floorplan 0",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/c4uBzkscLqGBpgiJmQtW.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 exterior 1",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/ShyGaUnm81S5xFSD7TNs.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 2",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/uBWfTFenmz5o6gxQ6gPg.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 3",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/LUJQ47VYnuoyfj6EbVqR.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 4",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/xeAqR2irXrzKzFhWgcPC.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 5",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/5ezdwvGH2RZXqmQSiXSk.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 6",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/wg2y1stNyU6YzvUi7B37.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 7",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/FtwBvC2ZdqNYb4byy7fu.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 8",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/utFXgmgTLYTt4ncWBDds.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 9",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/JUqhQz1r8gHyp1iaPSoW.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 10",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/DFY1RbeCacbUYFXaq442.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 11",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/cwkusPWTesw4UM2e7HUk.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 12",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/ua8kXitCnRZFbnCtCLKj.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 13",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/ZKBCdH8dxzvAUasc79Xh.png?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 14",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/wP2dbb646wCh1KYQraNQ.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 15",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/7oBkM7ZvhKqPSPitFfFV.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 16",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/4v9pHspcYKGMtEXMXaLX.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 17",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/3MdFgsT1s3P5MUyAsjfy.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 18",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/tvBdoNjDeCHGTrKUTDFV.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 19",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/avXN1cTnNSRNaTJMCCZn.png?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 20",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/gVDAS1rt7Wsp4PzuiycB.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 21",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/ETn6w5yBejNwJFVpUQym.png?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 22",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/7dJ8VdNQYDnmvenczTQy.png?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 23",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/yctg5wGa4c4Ya92gAZix.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 24",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            },
+            {
+                  "src": "https://media.ffycdn.net/us/clayton-homes/g7yC2pctWTcY6DTMaRaF.jpg?cid=client-tvbsssmtbhwqgn8r",
+                  "alt": "Boujee XL 2 interior 25",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+            }
       ],
-      "floorPlanImage": null,
+      "floorPlanImage": "https://media.ffycdn.net/us/clayton-homes/SnM9U1aPYHnyDtPzeYS9.jpg?cid=client-tvbsssmtbhwqgn8r",
       "brochureUrl": null,
       "videoUrl": null,
       "virtualTourUrl": null,
-      "sourcePage": "https://easyhomesource.com/homes/clayton-addison-boujee-series-boujee-xl-2"
-    }
+      "sourcePage": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/boujee-xl-2"
+}
+  }
+  }
   },
   "paxton": {
     "slug": "paxton",
