@@ -30,7 +30,7 @@ export default function EditQuotePage() {
   const params = useParams();
   const router = useRouter();
   const { user } = useAuth();
-  const rawId = (params?.id as string) || 'quote-1';
+  const rawId = (params?.id as string) || '2026_06_29_PIERPONT_NEW';
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'customer' | 'home' | 'site' | 'pricing' | 'financing' | 'notes' | 'review'>('customer');
@@ -38,130 +38,166 @@ export default function EditQuotePage() {
 
   // 1. Customer & Consultant Details
   const [quoteId, setQuoteId] = useState(rawId);
-  const [quoteNumber, setQuoteNumber] = useState('Q-2026-0801');
-  const [quoteDate, setQuoteDate] = useState('2026-08-01');
-  const [customerName, setCustomerName] = useState('Sarah Jenkins');
-  const [customerPhone, setCustomerPhone] = useState('352-555-0192');
-  const [customerEmail, setCustomerEmail] = useState('sarah.j@example.com');
-  const [customerAddress, setCustomerAddress] = useState('6645 W Erlen Ln, Homosassa, FL 34446');
+  const [quoteNumber, setQuoteNumber] = useState('2026_06_29_PIERPONT_NEW');
+  const [quoteDate, setQuoteDate] = useState('2026-06-29');
+  const [customerName, setCustomerName] = useState('Angie Floyd');
+  const [customerPhone, setCustomerPhone] = useState('352-568-6946');
+  const [customerEmail, setCustomerEmail] = useState('angielynn011477@gmail.com');
+  const [customerAddress, setCustomerAddress] = useState('Homosassa, FL 34446');
   const [salesperson, setSalesperson] = useState('Scott Pierpont');
   const [salespersonEmail, setSalespersonEmail] = useState('scott@easyhomesource.com');
   const [status, setStatus] = useState<'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT'>('APPROVED');
-  const [shareToken, setShareToken] = useState('quote-1');
+  const [shareToken, setShareToken] = useState('2026_06_29_PIERPONT_NEW');
 
   // 2. Manufactured Home
   const [homeSearch, setHomeSearch] = useState('');
   const [builderFilter, setBuilderFilter] = useState('ALL');
-  const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0]);
-  const [homeModel, setHomeModel] = useState('Move on Up (18x60 3b/2ba)');
-  const [manufacturer, setManufacturer] = useState('CLAYTON Addison');
-  const [series, setSeries] = useState('Tempo Series');
-  const [beds, setBeds] = useState<number>(3);
+  const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0] || null);
+  const [homeModel, setHomeModel] = useState('Sebastian 32644D');
+  const [manufacturer, setManufacturer] = useState('Cavco Douglas');
+  const [series, setSeries] = useState('Douglas Collection');
+  const [beds, setBeds] = useState<number>(4);
   const [baths, setBaths] = useState<number>(2);
-  const [sqft, setSqft] = useState<number>(1080);
-  const [dimensions, setDimensions] = useState("18' x 60'");
-  const [homeWidth, setHomeWidth] = useState<number>(18);
-  const [homeLength, setHomeLength] = useState<number>(60);
-  const [basePrice, setBasePrice] = useState<number>(94900);
-  const [factoryCost, setFactoryCost] = useState<number>(68328);
-  const [homeDescription, setHomeDescription] = useState('Move on Up by Clayton Addison offers 3 bedrooms, 2 bathrooms, modern open-concept kitchen, and Florida energy efficiency package.');
+  const [sqft, setSqft] = useState<number>(1920);
+  const [dimensions, setDimensions] = useState('32 x 64');
+  const [homeWidth, setHomeWidth] = useState<number>(32);
+  const [homeLength, setHomeLength] = useState<number>(64);
+  const [basePrice, setBasePrice] = useState<number>(144776.71);
+  const [factoryCost, setFactoryCost] = useState<number>(104239.23);
+  const [homeDescription, setHomeDescription] = useState('The Sebastian 32644D built by Cavco Douglas is a spacious 4-bedroom, 2-bath ranch-style home offering 1,920 sq. ft. of well-designed living space across two sections.');
 
-  // 3. Land / Site & Delivery Freight
+  // 3. Land / Site & Delivery Freight (Defaulted to Owned Land $0.00)
   const [landOption, setLandOption] = useState<'OWNED' | 'PARCEL' | 'CUSTOM'>('OWNED');
   const [selectedParcelId, setSelectedParcelId] = useState('');
-  const [propertyAddress, setPropertyAddress] = useState('6645 W Erlen Ln, Homosassa, FL 34446');
-  const [propertyPrice, setPropertyPrice] = useState<number>(0);
-  const [deliveryRouteType, setDeliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('dealer_to_customer');
-  const [deliveryMiles, setDeliveryMiles] = useState<number>(32);
-  const [escortsCount, setEscortsCount] = useState<number>(1);
-  const [deliveryFreightPrice, setDeliveryFreightPrice] = useState<number>(3850);
-  const [deliveryFreightCost, setDeliveryFreightCost] = useState<number>(3500);
+  const [propertyAddress, setPropertyAddress] = useState('Homosassa, FL 34446');
+  const [propertyPrice, setPropertyPrice] = useState<number>(0.00);
+  const [deliveryRouteType, setDeliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('factory_to_dealer');
+  const [deliveryMiles, setDeliveryMiles] = useState<number>(50);
+  const [escortsCount, setEscortsCount] = useState<number>(2);
+  const [deliveryFreightPrice, setDeliveryFreightPrice] = useState<number>(2860);
+  const [deliveryFreightCost, setDeliveryFreightCost] = useState<number>(2600);
 
-  // 4. Line Items & Services
+  // 4. Line Items & Services (Permits $2,000 flat)
   const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>([
     {
-      id: 'li-1',
-      sku: 'SITE-BLOCK-TIEDOWN',
-      name: 'Block & Hurricane Tie-Down Installation',
-      description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors.',
+      id: 'sw-1',
+      sku: 'SITE-STEPS-WOOD',
+      name: 'Wooden Steps — Two Sets',
       category: 'mandatory_services',
-      unitPrice: 5835,
-      unitCost: 4668,
+      unitPrice: 2500.00,
+      unitCost: 1800.00,
       quantity: 1,
-      totalPrice: 5835,
-      totalCost: 4668
+      totalPrice: 2500.00,
+      totalCost: 1800.00,
+      description: 'Two sets of pressure-treated wooden code-compliant entrance stairs with handrails.'
     },
     {
-      id: 'li-2',
-      sku: 'HVAC-HP-3TON',
-      name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
-      description: 'High-efficiency heat pump with digital thermostat, equipment pad, and plenum tie-in.',
-      category: 'mandatory_services',
-      unitPrice: 5555,
-      unitCost: 5050,
-      quantity: 1,
-      totalPrice: 5555,
-      totalCost: 5050
-    },
-    {
-      id: 'li-3',
-      sku: 'SITE-DIRTPAD',
-      name: 'Dirt Pad & Laser Site Grading (2 Loads)',
-      description: 'Clearing, clean fill dirt import, compacting, and laser leveling for solid home pad.',
-      category: 'mandatory_services',
-      unitPrice: 2700,
-      unitCost: 1800,
-      quantity: 1,
-      totalPrice: 2700,
-      totalCost: 1800
-    },
-    {
-      id: 'li-4',
-      sku: 'SITE-WELL-4INCH',
-      name: '4-Inch Potable Water Well System',
-      description: 'Drilling up to 120ft, submersible pump, pressure tank, and plumbing tie-in.',
-      category: 'mandatory_services',
-      unitPrice: 7500,
-      unitCost: 5800,
-      quantity: 1,
-      totalPrice: 7500,
-      totalCost: 5800
-    },
-    {
-      id: 'li-5',
-      sku: 'SITE-SEPTIC-1050',
-      name: '1,050-Gallon Septic Tank & Drainfield',
-      description: 'Standard concrete septic tank, header line, distribution box, and gravity drainfield.',
-      category: 'mandatory_services',
-      unitPrice: 6800,
-      unitCost: 5200,
-      quantity: 1,
-      totalPrice: 6800,
-      totalCost: 5200
-    },
-    {
-      id: 'li-6',
+      id: 'sw-2',
       sku: 'SITE-PERMIT-PLAN',
       name: 'County Building, Zoning & Health Dept Permits',
-      description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 flat standard).',
       category: 'mandatory_services',
-      unitPrice: 2000,
-      unitCost: 2000,
+      unitPrice: 2000.00,
+      unitCost: 2000.00,
       quantity: 1,
-      totalPrice: 2000,
-      totalCost: 2000
+      totalPrice: 2000.00,
+      totalCost: 2000.00,
+      description: 'Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 flat standard).'
     },
     {
-      id: 'li-7',
-      sku: 'SITE-SKIRTING-VINYL',
-      name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
-      description: 'Full perimeter vinyl skirting with ground channel and 2 sets of code stairs.',
+      id: 'sw-3',
+      sku: 'SITE-BLOCK-TIEDOWN',
+      name: "Block & Tie-Down (Double · 66' table)",
       category: 'mandatory_services',
-      unitPrice: 3200,
-      unitCost: 2200,
+      unitPrice: 11000.00,
+      unitCost: 8800.00,
       quantity: 1,
-      totalPrice: 3200,
-      totalCost: 2200
+      totalPrice: 11000.00,
+      totalCost: 8800.00,
+      description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (Double wide 66ft table).'
+    },
+    {
+      id: 'sw-4',
+      sku: 'SITE-TRIMOUT',
+      name: 'Trim Out',
+      category: 'mandatory_services',
+      unitPrice: 1500.00,
+      unitCost: 1100.00,
+      quantity: 1,
+      totalPrice: 1500.00,
+      totalCost: 1100.00,
+      description: 'Interior and exterior marriage line trim out and final finishing.'
+    },
+    {
+      id: 'sw-5',
+      sku: 'SITE-ELEC-PANEL',
+      name: 'Electric Pole & Panel',
+      category: 'mandatory_services',
+      unitPrice: 1850.00,
+      unitCost: 1400.00,
+      quantity: 1,
+      totalPrice: 1850.00,
+      totalCost: 1400.00,
+      description: '200A utility disconnect pole, meter socket, and underground conduit riser.'
+    },
+    {
+      id: 'sw-6',
+      sku: 'SITE-ELEC-HOOKUP',
+      name: 'Electric Hookups',
+      category: 'mandatory_services',
+      unitPrice: 2300.00,
+      unitCost: 1700.00,
+      quantity: 1,
+      totalPrice: 2300.00,
+      totalCost: 1700.00,
+      description: 'Main panel feeder cable connection, grounding rods, and electrical inspection readiness.'
+    },
+    {
+      id: 'sw-7',
+      sku: 'HVAC-HP-4TON',
+      name: 'AC Unit & Installation (4 ton · Package · Straight Cool)',
+      category: 'mandatory_services',
+      unitPrice: 5200.00,
+      unitCost: 4700.00,
+      quantity: 1,
+      totalPrice: 5200.00,
+      totalCost: 4700.00,
+      description: '4.0-Ton high-efficiency package air conditioning unit with equipment pad and supply plenum tie-in.'
+    },
+    {
+      id: 'sw-8',
+      sku: 'SITE-WELL-SYSTEM',
+      name: 'Well System',
+      category: 'mandatory_services',
+      unitPrice: 9400.00,
+      unitCost: 7200.00,
+      quantity: 1,
+      totalPrice: 9400.00,
+      totalCost: 7200.00,
+      description: '4-inch deep potable water well drilling, submersible pump, pressure tank, and waterline hookup.'
+    },
+    {
+      id: 'sw-9',
+      sku: 'SITE-SEPTIC-SYSTEM',
+      name: 'Septic System',
+      category: 'mandatory_services',
+      unitPrice: 8500.00,
+      unitCost: 6500.00,
+      quantity: 1,
+      totalPrice: 8500.00,
+      totalCost: 6500.00,
+      description: '1,050-gallon concrete septic tank, header line, distribution box, and gravity drainfield.'
+    },
+    {
+      id: 'sw-10',
+      sku: 'SITE-SKIRTING-VALOR',
+      name: 'Skirting Basic Valor (192 Linear Feet @ $8.00/ft)',
+      category: 'mandatory_services',
+      unitPrice: 1536.00,
+      unitCost: 1050.00,
+      quantity: 192,
+      totalPrice: 1536.00,
+      totalCost: 1050.00,
+      description: 'Vented vinyl perimeter skirting around 192 linear ft (2 * (32 + 64)) with top trim and ground track.'
     }
   ]);
   const [selectedServiceSku, setSelectedServiceSku] = useState(SERVICE_CATALOG[0]?.sku || 'SITE-PERMIT-PLAN');
@@ -176,33 +212,34 @@ export default function EditQuotePage() {
   // 5. Financing Tab (Loan Officer, Deposits & Milestones)
   const [purchaseType, setPurchaseType] = useState<'cash' | 'financing'>('financing');
   const [financingStatus, setFinancingStatus] = useState('approved');
-  const [preApprovalAmount, setPreApprovalAmount] = useState<number>(190000);
-  const [targetBudget, setTargetBudget] = useState<number>(185000);
+  const [preApprovalAmount, setPreApprovalAmount] = useState<number>(220000);
+  const [targetBudget, setTargetBudget] = useState<number>(210000);
   const [ehsLoanOfficerUsed, setEhsLoanOfficerUsed] = useState<boolean>(false);
   const [deposits, setDeposits] = useState<DepositItem[]>([
-    { id: 'dep-1', name: 'Initial Binder Deposit', amount: 1000, date: '2026-08-01', status: 'Received' }
+    { id: 'dep-1', name: 'Initial Binder Deposit', amount: 2500, date: '2026-06-29', status: 'Received' }
   ]);
-  const [loanApprovalDate, setLoanApprovalDate] = useState('2026-08-03');
-  const [loanClosingDate, setLoanClosingDate] = useState('2026-08-15');
-  const [permitApprovalDate, setPermitApprovalDate] = useState('2026-08-18');
-  const [siteReadyDate, setSiteReadyDate] = useState('2026-08-22');
-  const [deliveryDate, setDeliveryDate] = useState('2026-08-25');
-  const [installationDate, setInstallationDate] = useState('2026-08-28');
-  const [walkthroughDate, setWalkthroughDate] = useState('2026-09-02');
-  const [moveInDate, setMoveInDate] = useState('2026-09-05');
+  const [loanApprovalDate, setLoanApprovalDate] = useState('2026-07-05');
+  const [loanClosingDate, setLoanClosingDate] = useState('2026-07-20');
+  const [permitApprovalDate, setPermitApprovalDate] = useState('2026-07-25');
+  const [siteReadyDate, setSiteReadyDate] = useState('2026-08-01');
+  const [deliveryDate, setDeliveryDate] = useState('2026-08-05');
+  const [installationDate, setInstallationDate] = useState('2026-08-10');
+  const [walkthroughDate, setWalkthroughDate] = useState('2026-08-15');
+  const [moveInDate, setMoveInDate] = useState('2026-08-20');
 
   // 6. Notes
-  const [notes, setNotes] = useState('Turnkey land and manufactured home package for Central Florida.');
-  const [notesCustomer, setNotesCustomer] = useState('Standard turnkey package estimate for Central Florida with site prep, delivery, tie-downs, A/C, and permits.');
-  const [notesInternal, setNotesInternal] = useState('FHA pre-approval active.');
+  const [notes, setNotes] = useState('Turnkey land and home package proposal for Homosassa homesite.');
+  const [notesCustomer, setNotesCustomer] = useState('Complete turnkey setup including well, septic, 4-ton AC, permits, 200A electric, vinyl skirting, and wooden stairs.');
+  const [notesInternal, setNotesInternal] = useState('FHA loan in underwriting. Ready for site visit verification.');
 
-  // Load Existing Quote from Store
+  // Load Existing Quote from Store on Mount
   useEffect(() => {
+    if (!rawId) return;
     const existing = getSavedQuoteById(rawId);
     if (existing) {
-      setQuoteId(existing.id);
-      setQuoteNumber(existing.quoteNumber || existing.id);
-      setQuoteDate(existing.quoteDate || '2026-08-01');
+      setQuoteId(existing.id || rawId);
+      setQuoteNumber(existing.quoteNumber || existing.id || rawId);
+      setQuoteDate(existing.quoteDate || '2026-06-29');
       setCustomerName(existing.customerName || '');
       setCustomerPhone(existing.customerPhone || '');
       setCustomerEmail(existing.customerEmail || '');
@@ -210,11 +247,11 @@ export default function EditQuotePage() {
       setSalesperson(existing.salesperson || user?.name || 'Scott Pierpont');
       setSalespersonEmail(existing.salespersonEmail || 'scott@easyhomesource.com');
       setStatus(existing.status || 'APPROVED');
-      setShareToken(existing.shareToken || existing.id);
+      setShareToken(existing.shareToken || existing.id || rawId);
 
       // Home
       setHomeModel(existing.homeModel || '');
-      setManufacturer(existing.manufacturer || '');
+      setManufacturer(existing.manufacturer || 'Cavco');
       setSeries(existing.series || '');
       setBeds(existing.beds || 3);
       setBaths(existing.baths || 2);
@@ -222,33 +259,33 @@ export default function EditQuotePage() {
       setDimensions(existing.dimensions || "24' x 50'");
       setHomeWidth(existing.homeWidth || 24);
       setHomeLength(existing.homeLength || 50);
-      setBasePrice(existing.homePrice || 0);
-      setFactoryCost(existing.factoryCost || Math.round((existing.homePrice || 0) * 0.72));
+      setBasePrice(Number(existing.homePrice) || 0);
+      setFactoryCost(Number(existing.factoryCost) || Math.round((Number(existing.homePrice) || 0) * 0.72));
       setHomeDescription(existing.homeDescription || '');
 
       // Land & Delivery
       setPropertyAddress(existing.propertyAddress || '');
-      setPropertyPrice(existing.propertyPrice || 0);
-      setLandOption(existing.propertyPrice > 0 ? 'PARCEL' : 'OWNED');
-      setDeliveryRouteType((existing.deliveryRouteType as any) || 'dealer_to_customer');
-      setDeliveryMiles(existing.deliveryMiles || 32);
-      setEscortsCount(existing.escortsCount || 1);
-      setDeliveryFreightPrice(existing.freightDelivery || 3850);
-      setDeliveryFreightCost(existing.freightCost || 3500);
+      setPropertyPrice(Number(existing.propertyPrice) || 0);
+      setLandOption(Number(existing.propertyPrice) > 0 ? 'PARCEL' : 'OWNED');
+      setDeliveryRouteType((existing.deliveryRouteType as any) || 'factory_to_dealer');
+      setDeliveryMiles(existing.deliveryMiles || 50);
+      setEscortsCount(existing.escortsCount || 2);
+      setDeliveryFreightPrice(Number(existing.freightDelivery) || 2860);
+      setDeliveryFreightCost(Number(existing.freightCost) || 2600);
 
       // Line items
-      if (existing.lineItems && existing.lineItems.length > 0) {
+      if (Array.isArray(existing.lineItems) && existing.lineItems.length > 0) {
         setLineItems(existing.lineItems);
       }
-      setDiscounts(existing.discounts || 0);
+      setDiscounts(Number(existing.discounts) || 0);
 
       // Financing
       setPurchaseType(existing.purchaseType || 'financing');
       setFinancingStatus(existing.financingStatus || 'approved');
-      setPreApprovalAmount(existing.preApprovalAmount || 180000);
-      setTargetBudget(existing.targetBudget || 180000);
-      setEhsLoanOfficerUsed(existing.ehsLoanOfficerUsed || false);
-      if (existing.deposits && existing.deposits.length > 0) {
+      setPreApprovalAmount(Number(existing.preApprovalAmount) || 220000);
+      setTargetBudget(Number(existing.targetBudget) || 210000);
+      setEhsLoanOfficerUsed(!!existing.ehsLoanOfficerUsed);
+      if (Array.isArray(existing.deposits) && existing.deposits.length > 0) {
         setDeposits(existing.deposits);
       }
       setLoanApprovalDate(existing.loanApprovalDate || '');
@@ -267,7 +304,7 @@ export default function EditQuotePage() {
 
       // Match home in catalog if possible
       const matched = FULL_MASTER_CATALOG_HOMES.find(
-        (h) => h.modelName.toLowerCase() === (existing.homeModel || '').toLowerCase()
+        (h) => (h.modelName || '').toLowerCase() === (existing.homeModel || '').toLowerCase()
       );
       if (matched) setSelectedHome(matched);
     }
@@ -284,8 +321,9 @@ export default function EditQuotePage() {
 
   // Home Selection from verified catalog
   const handleSelectCatalogHome = (h: MasterCatalogHome) => {
+    if (!h) return;
     setSelectedHome(h);
-    setHomeModel(h.modelName);
+    setHomeModel(h.modelName || '');
     setManufacturer(h.manufacturer || 'Cavco');
     setSeries(h.series || '');
     setBeds(h.beds || 3);
@@ -309,8 +347,8 @@ export default function EditQuotePage() {
             ...item,
             unitPrice: bt.price,
             unitCost: bt.cost,
-            totalPrice: bt.price * item.quantity,
-            totalCost: bt.cost * item.quantity,
+            totalPrice: bt.price * (item.quantity || 1),
+            totalCost: bt.cost * (item.quantity || 1),
             description: `Concrete pier pads, cinder blocks, leveling, and ground anchors (${bt.matchedLength}ft ${homeClass} table).`
           };
         }
@@ -440,19 +478,20 @@ export default function EditQuotePage() {
   };
 
   // Math Calculations (100% Exact Precision)
-  const siteWorkItems = lineItems.filter((i) => i.category === 'mandatory_services' || i.category === 'site_work');
-  const addOnItems = lineItems.filter((i) => i.category === 'addons' || i.category === 'options' || i.category === 'custom');
+  const siteWorkItems = lineItems.filter((i) => i && (i.category === 'mandatory_services' || i.category === 'site_work'));
+  const addOnItems = lineItems.filter((i) => i && (i.category === 'addons' || i.category === 'options' || i.category === 'custom'));
 
-  const subtotalSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item.totalPrice) || 0), 0);
-  const subtotalAddOns = addOnItems.reduce((acc, item) => acc + (Number(item.totalPrice) || 0), 0);
-  const costSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item.totalCost) || 0), 0);
-  const costAddOns = addOnItems.reduce((acc, item) => acc + (Number(item.totalCost) || 0), 0);
+  const subtotalSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item?.totalPrice || item?.unitPrice) || 0), 0);
+  const subtotalAddOns = addOnItems.reduce((acc, item) => acc + (Number(item?.totalPrice || item?.unitPrice) || 0), 0);
+  const costSiteWork = siteWorkItems.reduce((acc, item) => acc + (Number(item?.totalCost || item?.unitCost) || 0), 0);
+  const costAddOns = addOnItems.reduce((acc, item) => acc + (Number(item?.totalCost || item?.unitCost) || 0), 0);
 
   const activeLoanFee = ehsLoanOfficerUsed ? 1000 : 0;
 
   const quoteTotals: QuoteFinancialTotals = useMemo(() => {
     return calculateComprehensiveQuoteTotals(
-      basePrice + propertyPrice,
+      basePrice,
+      propertyPrice,
       deliveryFreightPrice,
       subtotalSiteWork,
       subtotalAddOns,
@@ -460,7 +499,7 @@ export default function EditQuotePage() {
       factoryCost,
       deliveryFreightCost,
       costSiteWork + costAddOns,
-      activeLoanFee,
+      0,
       0.03
     );
   }, [
@@ -473,19 +512,19 @@ export default function EditQuotePage() {
     factoryCost,
     deliveryFreightCost,
     costSiteWork,
-    costAddOns,
-    activeLoanFee
+    costAddOns
   ]);
 
-  const netTakeHome = quoteTotals.house_gross_margin + quoteTotals.service_profit - quoteTotals.admin_fee - quoteTotals.loan_fee - quoteTotals.salesperson_commission;
+  const netTakeHome = (quoteTotals.house_gross_margin || 0) + (quoteTotals.service_profit || 0) - (quoteTotals.admin_fee || 0) - activeLoanFee - (quoteTotals.salesperson_commission || 0);
   const targetMet = netTakeHome >= 20000;
 
   // Filter Catalog Homes for Home Selection Step
   const filteredCatalog = useMemo(() => {
     return FULL_MASTER_CATALOG_HOMES.filter((h) => {
+      if (!h) return false;
       if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
       if (!homeSearch.trim()) return true;
-      const text = `${h.modelName} ${h.manufacturer} ${h.series} ${h.beds} bed ${h.baths} bath ${h.sqft}`.toLowerCase();
+      const text = `${h.modelName || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.beds || ''} bed ${h.baths || ''} bath ${h.sqft || ''}`.toLowerCase();
       return text.includes(homeSearch.toLowerCase().trim());
     });
   }, [builderFilter, homeSearch]);
@@ -497,7 +536,7 @@ export default function EditQuotePage() {
       id: quoteId,
       quoteNumber,
       quoteDate,
-      customerName,
+      customerName: customerName.trim() || 'Valued Customer',
       customerPhone,
       customerEmail,
       customerAddress,
@@ -602,7 +641,7 @@ export default function EditQuotePage() {
               <button
                 type="button"
                 onClick={() => setMobileOpen(true)}
-                className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
               >
                 ☰
               </button>
@@ -623,7 +662,7 @@ export default function EditQuotePage() {
                   </span>
                 </div>
                 <h1 className="text-xl font-black text-[#0B1E38] mt-0.5">
-                  Full Master Quote System — {customerName || 'New Proposal'}
+                  Full Master Quote System — {customerName || 'Proposal Builder'}
                 </h1>
               </div>
             </div>
@@ -675,7 +714,7 @@ export default function EditQuotePage() {
               <span>{savedSuccessMsg}</span>
               <button
                 onClick={() => setSavedSuccessMsg(null)}
-                className="text-white hover:text-emerald-200 font-bold"
+                className="text-white hover:text-emerald-200 font-bold cursor-pointer"
               >
                 ✕
               </button>
@@ -931,7 +970,7 @@ export default function EditQuotePage() {
                       <h3 className="font-black text-xs uppercase tracking-wider text-slate-700">
                         Choose From 225 Verified Catalog Models
                       </h3>
-                      <div className="flex items-center gap-1 text-[11px] font-bold">
+                      <div className="flex flex-wrap items-center gap-1 text-[11px] font-bold">
                         {['ALL', 'CAVCO Plant City', 'CLAYTON Addison', 'CLAYTON TRU', 'LEGACY', 'Timber Creek'].map((m) => (
                           <button
                             key={m}
@@ -1454,7 +1493,7 @@ export default function EditQuotePage() {
                           <button
                             type="button"
                             onClick={() => handleRemoveDeposit(dep.id)}
-                            className="text-rose-600 hover:text-rose-800 p-1 font-bold"
+                            className="text-rose-600 hover:text-rose-800 p-1 font-bold cursor-pointer"
                           >
                             ✕
                           </button>

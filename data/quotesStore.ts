@@ -1015,19 +1015,20 @@ export function getSavedQuotes(): SavedQuote[] {
 }
 
 export function getSavedQuoteById(id: string): SavedQuote | null {
+  if (!id) return null;
   const all = getSavedQuotes();
   const found = all.find(
-    (q) => q.id === id || q.quoteNumber === id || q.shareToken === id
+    (q) => q && (q.id === id || q.quoteNumber === id || q.shareToken === id)
   );
   if (found) return found;
 
-  // Fallback match by removing prefix/special characters
-  const cleanId = id.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cleanId = String(id).toLowerCase().replace(/[^a-z0-9]/g, '');
   return (
     all.find((q) => {
-      const qClean = q.id.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const numClean = q.quoteNumber.toLowerCase().replace(/[^a-z0-9]/g, '');
-      return qClean.includes(cleanId) || numClean.includes(cleanId);
+      if (!q) return false;
+      const qClean = String(q.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      const numClean = String(q.quoteNumber || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      return (qClean && qClean.includes(cleanId)) || (numClean && numClean.includes(cleanId));
     }) || null
   );
 }
@@ -1035,7 +1036,7 @@ export function getSavedQuoteById(id: string): SavedQuote | null {
 export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
   const all = getSavedQuotes();
   const existingIdx = all.findIndex(
-    (q) => q.id === quote.id || q.quoteNumber === quote.quoteNumber
+    (q) => q && (q.id === quote.id || q.quoteNumber === quote.quoteNumber)
   );
 
   let updatedList: SavedQuote[];
@@ -1070,7 +1071,7 @@ export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
 
 export function deleteQuoteFromStore(id: string): boolean {
   const all = getSavedQuotes();
-  const updatedList = all.filter((q) => q.id !== id && q.quoteNumber !== id);
+  const updatedList = all.filter((q) => q && q.id !== id && q.quoteNumber !== id);
 
   if (typeof window !== 'undefined') {
     try {
