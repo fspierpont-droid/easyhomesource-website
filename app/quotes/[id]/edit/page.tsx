@@ -15,6 +15,14 @@ import {
 import { AuthGate } from '@/components/portal/AuthGate';
 import { useAuth } from '@/lib/auth/AuthContext';
 
+interface DepositItem {
+  id: string;
+  name: string;
+  amount: number;
+  date: string;
+  status: string;
+}
+
 export default function EditQuotePage() {
   const params = useParams();
   const router = useRouter();
@@ -29,7 +37,7 @@ export default function EditQuotePage() {
     { key: 'home', title: 'Home', description: 'Choose the manufactured home' },
     { key: 'site', title: 'Site & Delivery', description: 'Where is it going?' },
     { key: 'pricing', title: 'Pricing', description: 'Line items, services, add-ons' },
-    { key: 'financing', title: 'Financing', description: 'Payment & loan officer' },
+    { key: 'financing', title: 'Financing', description: 'Deposits, milestones, loan officer' },
     { key: 'notes', title: 'Notes', description: 'Customer & internal notes' },
     { key: 'review', title: 'Review', description: 'Generate & send' }
   ];
@@ -57,7 +65,7 @@ export default function EditQuotePage() {
   const [deliveryFreightPrice, setDeliveryFreightPrice] = useState(6600);
   const [deliveryFreightCost, setDeliveryFreightCost] = useState(5500);
 
-  // Line Items & Services
+  // Line Items & Services (Permits $2,000)
   const [lineItems, setLineItems] = useState<any[]>([
     {
       id: 'li-1',
@@ -135,13 +143,13 @@ export default function EditQuotePage() {
       id: 'li-7',
       sku: 'SITE-PERMIT-PLAN',
       name: 'County Building, Zoning & Health Dept Permits',
-      description: 'Hernando/Citrus county building permit processing and inspection fees.',
+      description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).',
       category: 'mandatory_services',
-      unitPrice: 2650,
-      unitCost: 2650,
+      unitPrice: 2000,
+      unitCost: 2000,
       quantity: 1,
-      totalPrice: 2650,
-      totalCost: 2650
+      totalPrice: 2000,
+      totalCost: 2000
     },
     {
       id: 'li-8',
@@ -159,12 +167,25 @@ export default function EditQuotePage() {
   const [selectedServiceSku, setSelectedServiceSku] = useState(SERVICE_CATALOG[0].sku);
   const [discounts, setDiscounts] = useState(0);
 
-  // Financing Tab (Optional Loan Officer)
+  // Financing Tab (Optional Loan Officer & Deposits)
   const [purchaseType, setPurchaseType] = useState<'cash' | 'financing'>('financing');
   const [financingStatus, setFinancingStatus] = useState('approved');
   const [preApprovalAmount, setPreApprovalAmount] = useState(180000);
   const [targetBudget, setTargetBudget] = useState(180000);
   const [ehsLoanOfficerUsed, setEhsLoanOfficerUsed] = useState(false);
+  const [deposits, setDeposits] = useState<DepositItem[]>([
+    { id: 'dep-1', name: 'Initial Binder Deposit', amount: 1000, date: '2026-08-01', status: 'Received' }
+  ]);
+
+  // Timeline (optional internal milestones)
+  const [loanApprovalDate, setLoanApprovalDate] = useState('2026-08-03');
+  const [loanClosingDate, setLoanClosingDate] = useState('2026-08-15');
+  const [permitApprovalDate, setPermitApprovalDate] = useState('2026-08-18');
+  const [siteReadyDate, setSiteReadyDate] = useState('2026-08-22');
+  const [deliveryDate, setDeliveryDate] = useState('2026-08-25');
+  const [installationDate, setInstallationDate] = useState('2026-08-28');
+  const [moveInDate, setMoveInDate] = useState('2026-09-05');
+  const [walkthroughDate, setWalkthroughDate] = useState('2026-09-08');
 
   // Notes
   const [notesCustomer, setNotesCustomer] = useState('Turnkey land and home package proposal for Homosassa homesite.');
@@ -220,6 +241,17 @@ export default function EditQuotePage() {
     setLineItems((prev) => prev.filter((i) => i.id !== id));
   };
 
+  const handleAddDeposit = () => {
+    const newDep: DepositItem = {
+      id: `dep-${Date.now()}`,
+      name: `Deposit ${deposits.length + 1}`,
+      amount: 1500,
+      date: new Date().toISOString().slice(0, 10),
+      status: 'Pending'
+    };
+    setDeposits((prev) => [...prev, newDep]);
+  };
+
   // Calculate Totals
   const siteWorkItems = lineItems.filter((i) => i.category === 'mandatory_services' || i.category === 'site_work');
   const addOnItems = lineItems.filter((i) => i.category === 'addons' || i.category === 'options');
@@ -260,7 +292,7 @@ export default function EditQuotePage() {
     setTimeout(() => {
       setSavingStatus('saved');
       router.push('/portal?view=library');
-    }, 500);
+    }, 400);
   };
 
   return (
@@ -574,77 +606,193 @@ export default function EditQuotePage() {
                 </div>
               )}
 
-              {/* STEP 5: FINANCING TAB (OPTIONAL LOAN OFFICER & DEPOSITS) */}
+              {/* STEP 5: FINANCING TAB (MATCHING USER SCREENSHOT: DEPOSITS & TIMELINE) */}
               {currentStep === 4 && (
-                <div className="space-y-4 text-xs">
-                  <div>
-                    <h3 className="text-base font-black text-[#0B1E38]">Payment &amp; Financing (Optional Loan Officer)</h3>
-                    <p className="text-xs text-slate-500 font-medium">
-                      Tracks payment type, lender status, and whether an EHS loan officer is assigned to the sale.
-                    </p>
+                <div className="space-y-6 text-xs">
+                  {/* Payment & Financing */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-4">
+                    <div>
+                      <h3 className="text-base font-black text-[#0B1E38]">Payment &amp; Financing (Loan Officer)</h3>
+                      <p className="text-xs text-slate-500 font-medium mt-0.5">
+                        Tracks payment method, lender pre-approval status, and loan officer fee allocation.
+                      </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Purchase Type</label>
+                        <select
+                          value={purchaseType}
+                          onChange={(e) => setPurchaseType(e.target.value as any)}
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white text-xs"
+                        >
+                          <option value="cash">Cash / Self-Pay Sale</option>
+                          <option value="financing">Lender Financing</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Financing Status</label>
+                        <select
+                          value={financingStatus}
+                          onChange={(e) => setFinancingStatus(e.target.value)}
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white text-xs"
+                        >
+                          <option value="not_applicable">Not applicable</option>
+                          <option value="pending">Pending Application</option>
+                          <option value="pre_approved">Pre-approved</option>
+                          <option value="approved">Approved</option>
+                          <option value="declined">Declined</option>
+                        </select>
+                      </div>
+
+                      <div className="sm:col-span-2 p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                        <div>
+                          <div className="font-bold text-sm text-slate-900">EHS loan officer used?</div>
+                          <div className="text-xs text-slate-500">Adds $1,000.00 loan fee to internal calculations.</div>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={ehsLoanOfficerUsed}
+                          onChange={(e) => setEhsLoanOfficerUsed(e.target.checked)}
+                          className="w-5 h-5 rounded text-[#0F2A47] cursor-pointer"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Customer Target Budget ($)</label>
+                        <input
+                          type="number"
+                          value={targetBudget}
+                          onChange={(e) => setTargetBudget(Number(e.target.value) || 0)}
+                          placeholder="e.g. 180000"
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-xs"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Pre-approval Amount ($)</label>
+                        <input
+                          type="number"
+                          value={preApprovalAmount}
+                          onChange={(e) => setPreApprovalAmount(Number(e.target.value) || 0)}
+                          placeholder="e.g. 200000"
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-xs"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Purchase Type</label>
-                      <select
-                        value={purchaseType}
-                        onChange={(e) => setPurchaseType(e.target.value as any)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
-                      >
-                        <option value="cash">Cash / Self-Pay Sale</option>
-                        <option value="financing">Lender Financing</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Financing Status</label>
-                      <select
-                        value={financingStatus}
-                        onChange={(e) => setFinancingStatus(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
-                      >
-                        <option value="not_applicable">Not applicable</option>
-                        <option value="pending">Pending Application</option>
-                        <option value="pre_approved">Pre-approved</option>
-                        <option value="approved">Approved</option>
-                        <option value="declined">Declined</option>
-                      </select>
-                    </div>
-
-                    <div className="sm:col-span-2 p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                  {/* Deposits Card matching Screenshot */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold text-sm text-slate-900">EHS loan officer used?</div>
-                        <div className="text-xs text-slate-500">Adds $1,000.00 loan fee to internal calculations.</div>
+                        <h4 className="font-bold text-sm text-slate-900">Deposits</h4>
+                        <p className="text-xs text-slate-500">Track refundable deposits as they are paid.</p>
                       </div>
-                      <input
-                        type="checkbox"
-                        checked={ehsLoanOfficerUsed}
-                        onChange={(e) => setEhsLoanOfficerUsed(e.target.checked)}
-                        className="w-5 h-5 rounded text-[#0F2A47] cursor-pointer"
-                      />
+                      <button
+                        type="button"
+                        onClick={handleAddDeposit}
+                        className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs border border-slate-200 cursor-pointer"
+                      >
+                        + Add deposit
+                      </button>
                     </div>
 
+                    {deposits.length === 0 ? (
+                      <p className="text-xs text-slate-400 italic py-2">No deposits added yet.</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {deposits.map((dep) => (
+                          <div key={dep.id} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                            <span className="font-bold text-slate-800">{dep.name}</span>
+                            <span className="font-black text-emerald-700">${dep.amount.toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Timeline (optional) Card matching Screenshot */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-3">
                     <div>
-                      <label className="block font-bold text-slate-700 mb-1">Customer Target Budget ($)</label>
-                      <input
-                        type="number"
-                        value={targetBudget}
-                        onChange={(e) => setTargetBudget(Number(e.target.value) || 0)}
-                        placeholder="e.g. 180000"
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
-                      />
+                      <h4 className="font-bold text-sm text-slate-900">Timeline (optional)</h4>
+                      <p className="text-xs text-slate-500">Internal milestones — not shown to customer.</p>
                     </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Pre-approval Amount ($)</label>
-                      <input
-                        type="number"
-                        value={preApprovalAmount}
-                        onChange={(e) => setPreApprovalAmount(Number(e.target.value) || 0)}
-                        placeholder="e.g. 200000"
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
-                      />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Loan approval</label>
+                        <input
+                          type="date"
+                          value={loanApprovalDate}
+                          onChange={(e) => setLoanApprovalDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Loan closing</label>
+                        <input
+                          type="date"
+                          value={loanClosingDate}
+                          onChange={(e) => setLoanClosingDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Permit approval</label>
+                        <input
+                          type="date"
+                          value={permitApprovalDate}
+                          onChange={(e) => setPermitApprovalDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Site ready</label>
+                        <input
+                          type="date"
+                          value={siteReadyDate}
+                          onChange={(e) => setSiteReadyDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Delivery</label>
+                        <input
+                          type="date"
+                          value={deliveryDate}
+                          onChange={(e) => setDeliveryDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Installation</label>
+                        <input
+                          type="date"
+                          value={installationDate}
+                          onChange={(e) => setInstallationDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Move-in</label>
+                        <input
+                          type="date"
+                          value={moveInDate}
+                          onChange={(e) => setMoveInDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Walkthrough</label>
+                        <input
+                          type="date"
+                          value={walkthroughDate}
+                          onChange={(e) => setWalkthroughDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -723,7 +871,7 @@ export default function EditQuotePage() {
                 ) : (
                   <button
                     type="button"
-                    onClick={() => handleSaveQuote('SENT_TO_BUYER')}
+                    onClick={() => handleSaveQuote('DRAFT')}
                     className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-xs cursor-pointer"
                   >
                     Save Changes
@@ -854,4 +1002,3 @@ export default function EditQuotePage() {
     </AuthGate>
   );
 }
-EOF

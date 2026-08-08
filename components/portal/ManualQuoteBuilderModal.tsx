@@ -86,7 +86,7 @@ export function ManualQuoteBuilderModal({
   availableProperties,
   existingQuote = null
 }: ManualQuoteBuilderModalProps) {
-  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing / Loan Officer -> 6: Summary & Totals)
+  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Line Items -> 5: Financing / Loan Officer -> 6: Summary & Totals)
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
 
   // Customer Details & Assigned Consultant
@@ -142,7 +142,7 @@ export function ManualQuoteBuilderModal({
   const [freightCost, setFreightCost] = useState<number>(3500);
   const [isCalculatingDelivery, setIsCalculatingDelivery] = useState(false);
 
-  // Line Items
+  // Line Items (Permits $2,000 standard)
   const initialBlockTie = useMemo(() => {
     const homeClass = (selectedHome?.width || 14) > 18 ? 'double' : 'single';
     return calculateBlockTieDown(selectedHome?.length || 60, homeClass);
@@ -203,12 +203,12 @@ export function ManualQuoteBuilderModal({
         sku: 'SITE-PERMIT-PLAN',
         name: 'County Building, Zoning & Health Dept Permits',
         category: 'mandatory_services',
-        unitPrice: 2650,
-        unitCost: 2650,
+        unitPrice: 2000,
+        unitCost: 2000,
         quantity: 1,
-        totalPrice: 2650,
-        totalCost: 2650,
-        description: 'Hernando/Citrus county building permit processing and inspection fees.'
+        totalPrice: 2000,
+        totalCost: 2000,
+        description: 'Hernando/Citrus county building permit processing and inspection fees ($2,000 standard).'
       }
     ]
   );
@@ -315,7 +315,7 @@ export function ManualQuoteBuilderModal({
     }, 300);
   };
 
-  // Add line item
+  // Add line item from catalog
   const handleAddCatalogLineItem = () => {
     const item = SERVICE_CATALOG.find((s) => s.sku === selectedCatalogSku);
     if (!item) return;
@@ -393,7 +393,7 @@ export function ManualQuoteBuilderModal({
       deliveryMiles,
       deliveryRouteType,
       acSystem: lineItems.find((i) => i.sku.includes('HVAC'))?.totalPrice || 5555,
-      permitsFees: lineItems.find((i) => i.sku.includes('PERMIT'))?.totalPrice || 2650,
+      permitsFees: lineItems.find((i) => i.sku.includes('PERMIT'))?.totalPrice || 2000,
       skirtingSteps: lineItems.find((i) => i.sku.includes('SKIRTING'))?.totalPrice || 3200,
       subtotal: quoteTotals.subtotal,
       taxBasis: quoteTotals.tax_basis,
@@ -719,7 +719,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 3: Auto Calculate Delivery (NO SETBACKS) */}
+          {/* STEP 3: Auto Calculate Delivery */}
           {step === 3 && (
             <div className="space-y-5">
               <div>
@@ -802,7 +802,7 @@ export function ManualQuoteBuilderModal({
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 4</span>
                   <h4 className="text-lg font-black text-[#0B1E38]">Service Catalog &amp; Dropdown Line Items</h4>
                   <p className="text-xs text-slate-500">
-                    Add mandatory services, site work, A/C heat pump matrices, permits, well/septic, and custom line items.
+                    Mandatory services, A/C heat pump matrices, permits ($2,000), well/septic, and site work.
                   </p>
                 </div>
 
@@ -894,7 +894,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 5: FINANCING (OPTIONAL LOAN OFFICER & DEPOSITS) */}
+          {/* STEP 5: Financing (Optional Loan Officer & Deposits) */}
           {step === 5 && (
             <div className="space-y-5">
               <div>
@@ -975,7 +975,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 6: SUMMARY & TOTALS (Exact 100% Match to Screenshot) */}
+          {/* STEP 6: Summary & Totals */}
           {step === 6 && (
             <div className="space-y-6">
               <div>
@@ -1045,7 +1045,7 @@ export function ManualQuoteBuilderModal({
                     <span className="text-[#1E6FA8]">${quoteTotals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
 
-                  {/* Prominent Navy Estimated Total Banner matching screenshot */}
+                  {/* Prominent Navy Estimated Total Banner */}
                   <div className="flex items-center justify-between rounded-xl bg-[#0F2A47] text-white px-4 py-3 mt-3 shadow-md">
                     <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
                     <span className="font-black text-2xl tracking-tight">

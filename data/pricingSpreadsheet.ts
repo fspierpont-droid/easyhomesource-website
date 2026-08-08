@@ -18,7 +18,7 @@ export const BLOCK_TIE_DOWN_MATRIX = {
   }
 };
 
-// V05 A/C & Heating Matrices
+// V05 A/C & Heating Matrices (14.3 SEER2 Systems)
 export const AC_HEATING_MATRIX: Record<string, { packageCost: number; packagePrice: number; splitCost: number; splitPrice: number }> = {
   '2|straight_cool': { packageCost: 4500, packagePrice: 4950, splitCost: 3800, splitPrice: 4180 },
   '2|heat_pump': { packageCost: 4700, packagePrice: 5170, splitCost: 4050, splitPrice: 4455 },
@@ -71,9 +71,9 @@ export interface ServiceCatalogItem {
   requiresBid?: boolean;
 }
 
-// Complete Standard Service Catalog (Dropdown Line Items from QS Master Quote ERP V05)
+// Complete Standard Service Catalog (ERP V05 Setup, Install & Extra Services)
 export const SERVICE_CATALOG: ServiceCatalogItem[] = [
-  // Mandatory Services & Site Work
+  // Setup & Install
   {
     sku: 'SITE-BLOCK-TIEDOWN',
     name: 'Block & Hurricane Tie-Down Installation',
@@ -145,9 +145,9 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     name: 'County Building, Zoning & Health Dept Permits',
     category: 'mandatory_services',
     categoryTitle: 'Site Work & Setup',
-    defaultPrice: 2650,
-    defaultCost: 2650,
-    description: 'Hernando, Citrus, Pasco, or Sumter county building permit processing and inspection fees.',
+    defaultPrice: 2000,
+    defaultCost: 2000,
+    description: 'County building permit processing, plan review, zoning, and health department inspection fees ($2,000 standard).',
     calcType: 'flat',
     unit: 'permit'
   },
@@ -346,8 +346,7 @@ export function autoCalculateDelivery(
   const originAddress = '9011 McIntyre Rd, Brooksville, FL 34601';
   const cleanDest = (destinationAddress || '').toLowerCase();
 
-  // Estimate distance based on Central Florida destination
-  let miles = 25; // Default Hernando / Brooksville area
+  let miles = 25;
   let durationText = '35 mins';
 
   if (cleanDest.includes('homosassa') || cleanDest.includes('crystal river') || cleanDest.includes('34446') || cleanDest.includes('34448')) {
@@ -373,13 +372,9 @@ export function autoCalculateDelivery(
     durationText = '34 mins';
   }
 
-  // Multi-section vs single section transport sides
   const transportSides = homeWidth > 18 ? 2 : 1;
-
-  // Escorts required in FL if width > 14ft or distance > 50 miles
   const escortCount = homeWidth > 14 || miles > 50 ? (transportSides > 1 ? 2 : 1) : 0;
 
-  // Out of state factory route flat rate calculation if factory direct
   if (routeType !== 'dealer_to_customer' && homeOrigin === 'outside_florida') {
     const costPerSide = 6000;
     const pricePerSide = Math.round(costPerSide * 1.1);
@@ -402,8 +397,6 @@ export function autoCalculateDelivery(
     };
   }
 
-  // V05 Standard Delivery Freight Formula:
-  // Base 800 + 250*escorts + 8.5*(miles-50) + 2*(miles-50)*escorts per side
   const overMiles = Math.max(0, miles - 50);
   const costPerSide = 800 + 250 * escortCount + 8.5 * overMiles + 2 * overMiles * escortCount;
   const pricePerSide = Math.round(costPerSide * 1.1);
@@ -439,7 +432,6 @@ export function autoCalculateDelivery(
   };
 }
 
-// Full Quote Totals Engine (matching V05 ERP and the exact customer-facing + internal layout)
 export interface QuoteFinancialTotals {
   home_subtotal: number;
   delivery_total: number;
@@ -499,7 +491,7 @@ export function calculateComprehensiveQuoteTotals(
   const fCost = Number(factoryCost) || Math.round(home_subtotal * 0.72);
   const ehs_price_calculated = home_subtotal;
   const house_gross_margin = home_subtotal - fCost;
-  const commissionable_house_margin = house_gross_margin - 1000;
+  const commissionable_house_margin = Math.max(0, house_gross_margin - 1000);
 
   const dCost = Number(deliveryCost) || Math.round(delivery_total / 1.1);
   const sCost = Number(siteWorkCost) || Math.round(site_work_total * 0.75);
@@ -507,11 +499,11 @@ export function calculateComprehensiveQuoteTotals(
 
   const service_profit = (delivery_total - dCost) + (site_work_total - sCost) + (addons_total - aCost);
   const admin_fee = Math.round(subtotal * 0.05 * 100) / 100;
-  const loan_fee = 1000;
+  const loan_fee = 0;
   const salesperson_commission = commissionable_house_margin > 0 ? Math.round(commissionable_house_margin * 0.2 * 100) / 100 : 0;
 
   const net_take_home = (house_gross_margin + service_profit) - (admin_fee + loan_fee + salesperson_commission);
-  const take_home_floor = Math.round(subtotal * 0.12);
+  const take_home_floor = 20000;
   const target_met = net_take_home >= take_home_floor;
 
   return {

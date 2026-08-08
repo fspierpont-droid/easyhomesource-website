@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PortalSidebar } from '@/components/portal/PortalSidebar';
@@ -8,15 +8,21 @@ import { VERIFIED_TEAM_USERS } from '@/data/teamMembers';
 import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
 import {
   SERVICE_CATALOG,
-  autoCalculateDelivery,
   calculateBlockTieDown,
   calculateComprehensiveQuoteTotals,
   type ServiceCatalogItem,
-  type DeliveryCalculationResult,
   type QuoteFinancialTotals
 } from '@/data/pricingSpreadsheet';
 import { AuthGate } from '@/components/portal/AuthGate';
 import { useAuth } from '@/lib/auth/AuthContext';
+
+interface DepositItem {
+  id: string;
+  name: string;
+  amount: number;
+  date: string;
+  status: string;
+}
 
 export default function NewQuoteBuilderPage() {
   const router = useRouter();
@@ -29,7 +35,7 @@ export default function NewQuoteBuilderPage() {
     { key: 'home', title: 'Home', description: 'Choose the manufactured home' },
     { key: 'site', title: 'Site & Delivery', description: 'Where is it going?' },
     { key: 'pricing', title: 'Pricing', description: 'Line items, services, add-ons' },
-    { key: 'financing', title: 'Financing', description: 'Payment & loan officer' },
+    { key: 'financing', title: 'Financing', description: 'Deposits, milestones, loan officer' },
     { key: 'notes', title: 'Notes', description: 'Customer & internal notes' },
     { key: 'review', title: 'Review', description: 'Generate & send' }
   ];
@@ -53,14 +59,10 @@ export default function NewQuoteBuilderPage() {
   const [landBudget, setLandBudget] = useState(0);
   const [deliveryRouteType, setDeliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('dealer_to_customer');
   const [deliveryAddress, setDeliveryAddress] = useState('6645 W Erlen Ln, Homosassa, FL 34446');
-  const [deliveryCity, setDeliveryCity] = useState('Homosassa');
-  const [deliveryState, setDeliveryState] = useState('FL');
-  const [deliveryZip, setDeliveryZip] = useState('34446');
-  const [deliveryMiles, setDeliveryMiles] = useState(32);
   const [deliveryFreightPrice, setDeliveryFreightPrice] = useState(6600);
   const [deliveryFreightCost, setDeliveryFreightCost] = useState(5500);
 
-  // 4. Line Items / Services / Pricing
+  // 4. Line Items / Setup & Install / Extra Services (Permits $2,000)
   const [lineItems, setLineItems] = useState<any[]>([
     {
       id: 'li-1',
@@ -138,13 +140,13 @@ export default function NewQuoteBuilderPage() {
       id: 'li-7',
       sku: 'SITE-PERMIT-PLAN',
       name: 'County Building, Zoning & Health Dept Permits',
-      description: 'Hernando/Citrus county building permit processing and inspection fees.',
+      description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).',
       category: 'mandatory_services',
-      unitPrice: 2650,
-      unitCost: 2650,
+      unitPrice: 2000,
+      unitCost: 2000,
       quantity: 1,
-      totalPrice: 2650,
-      totalCost: 2650
+      totalPrice: 2000,
+      totalCost: 2000
     },
     {
       id: 'li-8',
@@ -162,23 +164,30 @@ export default function NewQuoteBuilderPage() {
   const [selectedServiceSku, setSelectedServiceSku] = useState(SERVICE_CATALOG[0].sku);
   const [discounts, setDiscounts] = useState(0);
 
-  // 5. Financing Tab (Optional Loan Officer & Deposits)
+  // 5. Financing Tab (Deposits, Timeline, Optional Loan Officer)
   const [purchaseType, setPurchaseType] = useState<'cash' | 'financing'>('financing');
   const [financingStatus, setFinancingStatus] = useState('pending');
   const [preApprovalAmount, setPreApprovalAmount] = useState(0);
   const [targetBudget, setTargetBudget] = useState(0);
   const [ehsLoanOfficerUsed, setEhsLoanOfficerUsed] = useState(false);
-  const [notesCustomerFinancing, setNotesCustomerFinancing] = useState('');
-  const [notesInternalFinancing, setNotesInternalFinancing] = useState('');
+  const [deposits, setDeposits] = useState<DepositItem[]>([]);
+
+  // Timeline (optional internal milestones)
+  const [loanApprovalDate, setLoanApprovalDate] = useState('');
+  const [loanClosingDate, setLoanClosingDate] = useState('');
+  const [permitApprovalDate, setPermitApprovalDate] = useState('');
+  const [siteReadyDate, setSiteReadyDate] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState('');
+  const [installationDate, setInstallationDate] = useState('');
+  const [moveInDate, setMoveInDate] = useState('');
+  const [walkthroughDate, setWalkthroughDate] = useState('');
 
   // 6. Notes
   const [notesCustomer, setNotesCustomer] = useState('Standard turnkey package proposal for Central Florida.');
   const [notesInternal, setNotesInternal] = useState('');
-
-  // 7. Review & Share
   const [savingStatus, setSavingStatus] = useState<string | null>(null);
 
-  // Auto-Update Block & Tie-Down when Home changes
+  // Handle Home Selection
   const handleSelectHome = (h: MasterCatalogHome) => {
     setSelectedHome(h);
     setBasePrice(h.ehsPrice || 0);
@@ -203,7 +212,6 @@ export default function NewQuoteBuilderPage() {
     );
   };
 
-  // Add line item from Service Catalog
   const handleAddLineItem = () => {
     const item = SERVICE_CATALOG.find((s) => s.sku === selectedServiceSku);
     if (!item) return;
@@ -228,7 +236,18 @@ export default function NewQuoteBuilderPage() {
     setLineItems((prev) => prev.filter((i) => i.id !== id));
   };
 
-  // Calculate Comprehensive Totals
+  const handleAddDeposit = () => {
+    const newDep: DepositItem = {
+      id: `dep-${Date.now()}`,
+      name: `Deposit ${deposits.length + 1}`,
+      amount: 1000,
+      date: new Date().toISOString().slice(0, 10),
+      status: 'Received'
+    };
+    setDeposits((prev) => [...prev, newDep]);
+  };
+
+  // Calculate Totals
   const siteWorkItems = lineItems.filter((i) => i.category === 'mandatory_services' || i.category === 'site_work');
   const addOnItems = lineItems.filter((i) => i.category === 'addons' || i.category === 'options');
 
@@ -250,12 +269,10 @@ export default function NewQuoteBuilderPage() {
     0.03
   );
 
-  // If EHS loan officer is used, include $1,000 loan fee; otherwise $0
   const activeLoanFee = ehsLoanOfficerUsed ? 1000 : 0;
   const netTakeHome = (quoteTotals.house_gross_margin + quoteTotals.service_profit) - (quoteTotals.admin_fee + activeLoanFee + quoteTotals.salesperson_commission);
   const targetMet = netTakeHome >= 20000;
 
-  // Filter Catalog
   const filteredCatalog = FULL_MASTER_CATALOG_HOMES.filter((h) => {
     if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
     if (!homeSearch.trim()) return true;
@@ -265,12 +282,12 @@ export default function NewQuoteBuilderPage() {
 
   const distinctBuilders = ['ALL', ...new Set(FULL_MASTER_CATALOG_HOMES.map((h) => h.manufacturer))];
 
-  const handleSaveQuote = (status: 'DRAFT' | 'SENT_TO_BUYER' = 'DRAFT') => {
+  const handleSaveQuote = (status: 'DRAFT' | 'SENT_TO_BUYER' = 'SENT_TO_BUYER') => {
     setSavingStatus('saving');
     setTimeout(() => {
       setSavingStatus('saved');
       router.push('/portal?view=library');
-    }, 500);
+    }, 400);
   };
 
   return (
@@ -586,77 +603,193 @@ export default function NewQuoteBuilderPage() {
                 </div>
               )}
 
-              {/* STEP 5: FINANCING TAB (OPTIONAL LOAN OFFICER & DEPOSITS) */}
+              {/* STEP 5: FINANCING TAB (MATCHING USER SCREENSHOT: DEPOSITS & TIMELINE) */}
               {currentStep === 4 && (
-                <div className="space-y-4 text-xs">
-                  <div>
-                    <h3 className="text-base font-black text-[#0B1E38]">Payment &amp; Financing (Optional Loan Officer)</h3>
-                    <p className="text-xs text-slate-500 font-medium">
-                      Tracks payment type, lender status, and whether an EHS loan officer is assigned to the sale.
-                    </p>
+                <div className="space-y-6 text-xs">
+                  {/* Payment & Financing */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-4">
+                    <div>
+                      <h3 className="text-base font-black text-[#0B1E38]">Payment &amp; Financing (Loan Officer)</h3>
+                      <p className="text-xs text-slate-500 font-medium mt-0.5">
+                        Tracks payment method, lender pre-approval status, and loan officer fee allocation.
+                      </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Purchase Type</label>
+                        <select
+                          value={purchaseType}
+                          onChange={(e) => setPurchaseType(e.target.value as any)}
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
+                        >
+                          <option value="cash">Cash / Self-Pay Sale</option>
+                          <option value="financing">Lender Financing</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Financing Status</label>
+                        <select
+                          value={financingStatus}
+                          onChange={(e) => setFinancingStatus(e.target.value)}
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
+                        >
+                          <option value="not_applicable">Not applicable</option>
+                          <option value="pending">Pending Application</option>
+                          <option value="pre_approved">Pre-approved</option>
+                          <option value="approved">Approved</option>
+                          <option value="declined">Declined</option>
+                        </select>
+                      </div>
+
+                      <div className="sm:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                        <div>
+                          <div className="font-bold text-sm text-slate-900">EHS loan officer used?</div>
+                          <div className="text-xs text-slate-500">Adds $1,000.00 loan fee to internal calculations.</div>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={ehsLoanOfficerUsed}
+                          onChange={(e) => setEhsLoanOfficerUsed(e.target.checked)}
+                          className="w-5 h-5 rounded text-[#0F2A47] cursor-pointer"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Customer Target Budget ($)</label>
+                        <input
+                          type="number"
+                          value={targetBudget}
+                          onChange={(e) => setTargetBudget(Number(e.target.value) || 0)}
+                          placeholder="e.g. 180000"
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Pre-approval Amount ($)</label>
+                        <input
+                          type="number"
+                          value={preApprovalAmount}
+                          onChange={(e) => setPreApprovalAmount(Number(e.target.value) || 0)}
+                          placeholder="e.g. 200000"
+                          className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Purchase Type</label>
-                      <select
-                        value={purchaseType}
-                        onChange={(e) => setPurchaseType(e.target.value as any)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
-                      >
-                        <option value="cash">Cash / Self-Pay Sale</option>
-                        <option value="financing">Lender Financing</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Financing Status</label>
-                      <select
-                        value={financingStatus}
-                        onChange={(e) => setFinancingStatus(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
-                      >
-                        <option value="not_applicable">Not applicable</option>
-                        <option value="pending">Pending Application</option>
-                        <option value="pre_approved">Pre-approved</option>
-                        <option value="approved">Approved</option>
-                        <option value="declined">Declined</option>
-                      </select>
-                    </div>
-
-                    <div className="sm:col-span-2 p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                  {/* Deposits Card matching Screenshot */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold text-sm text-slate-900">EHS loan officer used?</div>
-                        <div className="text-xs text-slate-500">Adds $1,000.00 loan fee to internal calculations.</div>
+                        <h4 className="font-bold text-sm text-slate-900">Deposits</h4>
+                        <p className="text-xs text-slate-500">Track refundable deposits as they are paid.</p>
                       </div>
-                      <input
-                        type="checkbox"
-                        checked={ehsLoanOfficerUsed}
-                        onChange={(e) => setEhsLoanOfficerUsed(e.target.checked)}
-                        className="w-5 h-5 rounded text-[#0F2A47] cursor-pointer"
-                      />
+                      <button
+                        type="button"
+                        onClick={handleAddDeposit}
+                        className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs border border-slate-200 cursor-pointer"
+                      >
+                        + Add deposit
+                      </button>
                     </div>
 
+                    {deposits.length === 0 ? (
+                      <p className="text-xs text-slate-400 italic py-2">No deposits added yet.</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {deposits.map((dep) => (
+                          <div key={dep.id} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                            <span className="font-bold text-slate-800">{dep.name}</span>
+                            <span className="font-black text-emerald-700">${dep.amount.toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Timeline (optional) Card matching Screenshot */}
+                  <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-3">
                     <div>
-                      <label className="block font-bold text-slate-700 mb-1">Customer Target Budget ($)</label>
-                      <input
-                        type="number"
-                        value={targetBudget}
-                        onChange={(e) => setTargetBudget(Number(e.target.value) || 0)}
-                        placeholder="e.g. 180000"
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
-                      />
+                      <h4 className="font-bold text-sm text-slate-900">Timeline (optional)</h4>
+                      <p className="text-xs text-slate-500">Internal milestones — not shown to customer.</p>
                     </div>
 
-                    <div>
-                      <label className="block font-bold text-slate-700 mb-1">Pre-approval Amount ($)</label>
-                      <input
-                        type="number"
-                        value={preApprovalAmount}
-                        onChange={(e) => setPreApprovalAmount(Number(e.target.value) || 0)}
-                        placeholder="e.g. 200000"
-                        className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
-                      />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Loan approval</label>
+                        <input
+                          type="date"
+                          value={loanApprovalDate}
+                          onChange={(e) => setLoanApprovalDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Loan closing</label>
+                        <input
+                          type="date"
+                          value={loanClosingDate}
+                          onChange={(e) => setLoanClosingDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Permit approval</label>
+                        <input
+                          type="date"
+                          value={permitApprovalDate}
+                          onChange={(e) => setPermitApprovalDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Site ready</label>
+                        <input
+                          type="date"
+                          value={siteReadyDate}
+                          onChange={(e) => setSiteReadyDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Delivery</label>
+                        <input
+                          type="date"
+                          value={deliveryDate}
+                          onChange={(e) => setDeliveryDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Installation</label>
+                        <input
+                          type="date"
+                          value={installationDate}
+                          onChange={(e) => setInstallationDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Move-in</label>
+                        <input
+                          type="date"
+                          value={moveInDate}
+                          onChange={(e) => setMoveInDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10.5px] font-semibold text-slate-500 mb-1">Walkthrough</label>
+                        <input
+                          type="date"
+                          value={walkthroughDate}
+                          onChange={(e) => setWalkthroughDate(e.target.value)}
+                          className="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
