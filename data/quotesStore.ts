@@ -1061,6 +1061,13 @@ export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
       window.dispatchEvent(new Event('ehs_quotes_updated'));
+
+      // Also sync to server background API
+      fetch('/api/portal/quotes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(quote)
+      }).catch((err) => console.warn('Background server sync:', err));
     } catch (err) {
       console.error('Failed to save quotes to storage:', err);
     }
@@ -1077,6 +1084,10 @@ export function deleteQuoteFromStore(id: string): boolean {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
       window.dispatchEvent(new Event('ehs_quotes_updated'));
+
+      fetch(`/api/portal/quotes/${id}`, {
+        method: 'DELETE'
+      }).catch((err) => console.warn('Background server delete:', err));
     } catch (err) {
       console.error('Failed to delete quote from storage:', err);
       return false;
