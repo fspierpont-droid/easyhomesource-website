@@ -13,12 +13,18 @@ import { PropertyKanban } from '@/components/portal/PropertyKanban';
 import { PropertyEditor } from '@/components/portal/PropertyEditor';
 import { AddPropertyModal } from '@/components/portal/AddPropertyModal';
 import { PropertyAnalyticsView } from '@/components/portal/PropertyAnalyticsView';
-import { ManualQuoteBuilderModal, type SavedQuote } from '@/components/portal/ManualQuoteBuilderModal';
+import { ManualQuoteBuilderModal } from '@/components/portal/ManualQuoteBuilderModal';
 import { calculateComprehensiveQuoteTotals } from '@/data/pricingSpreadsheet';
 import { QuoteDashboardView } from '@/components/portal/QuoteDashboardView';
 import { ReadyToQuoteView, type ReadyBuyer } from '@/components/portal/ReadyToQuoteView';
 import { QuoteLibraryView } from '@/components/portal/QuoteLibraryView';
 import { HomeInventoryView } from '@/components/portal/HomeInventoryView';
+import {
+  getSavedQuotes,
+  saveQuoteToStore,
+  deleteQuoteFromStore,
+  type SavedQuote
+} from '@/data/quotesStore';
 
 interface PropertyPackageManagerProps {
   initialNav?: string;
@@ -441,7 +447,20 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
   // Seed with verified production single source of truth data immediately
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
   const [stats, setStats] = useState<PropertyStats>(calculatePropertyStats());
-  const [quotes, setQuotes] = useState<SavedQuote[]>(FULL_SAVED_QUOTES);
+  const [quotes, setQuotes] = useState<SavedQuote[]>([]);
+
+  useEffect(() => {
+    setQuotes(getSavedQuotes());
+    const handleQuotesUpdated = () => {
+      setQuotes(getSavedQuotes());
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('ehs_quotes_updated', handleQuotesUpdated);
+      return () => {
+        window.removeEventListener('ehs_quotes_updated', handleQuotesUpdated);
+      };
+    }
+  }, []);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeView, setActiveView] = useState<'table' | 'map' | 'kanban' | 'analytics'>('table');
@@ -553,15 +572,18 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
   };
 
   const handleSaveNewQuote = (newQuote: SavedQuote) => {
-    setQuotes((prev) => [newQuote, ...prev]);
+    saveQuoteToStore(newQuote);
+    setQuotes(getSavedQuotes());
   };
 
   const handleUpdateQuote = (updatedQuote: SavedQuote) => {
-    setQuotes((prev) => prev.map((q) => (q.id === updatedQuote.id ? updatedQuote : q)));
+    saveQuoteToStore(updatedQuote);
+    setQuotes(getSavedQuotes());
   };
 
   const handleDeleteQuote = (id: string) => {
-    setQuotes((prev) => prev.filter((q) => q.id !== id));
+    deleteQuoteFromStore(id);
+    setQuotes(getSavedQuotes());
   };
 
   const handleStartQuoteForBuyer = (buyer: ReadyBuyer) => {

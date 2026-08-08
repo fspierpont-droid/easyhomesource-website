@@ -1,67 +1,84 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SiteLogo } from '@/components/SiteLogo';
-import { calculateComprehensiveQuoteTotals, type QuoteFinancialTotals } from '@/data/pricingSpreadsheet';
+import { getSavedQuoteById, type SavedQuote } from '@/data/quotesStore';
 
 export default function QuoteDetailPage() {
   const params = useParams();
   const quoteId = (params?.id as string) || '2026_06_29_PIERPONT_NEW';
   const [copied, setCopied] = useState(false);
+  const [quoteData, setQuoteData] = useState<SavedQuote | null>(null);
+
+  useEffect(() => {
+    const existing = getSavedQuoteById(quoteId);
+    if (existing) {
+      setQuoteData(existing);
+    }
+  }, [quoteId]);
 
   // Proposal state matching official EHS structure
   const quote = {
-    id: quoteId,
-    quoteNumber: quoteId.startsWith('quote-') ? '2026_06_29_PIERPONT_NEW' : quoteId,
-    quoteDate: '2026-06-29',
-    customerName: 'Angie Floyd',
-    customerPhone: '352-568-6946',
-    customerEmail: 'angielynn011477@gmail.com',
-    customerAddress: 'Homosassa, FL 34446',
-    salesperson: 'Scott Pierpont',
-    salespersonEmail: 'scott@easyhomesource.com',
-    homeModel: 'Sebastian 32644D',
-    manufacturer: 'Cavco Douglas',
-    series: 'Douglas Collection',
-    beds: 4,
-    baths: 2.0,
-    sqft: 1920,
-    dimensions: '32 x 64',
-    homePrice: 144776.71,
-    propertyPrice: 0.00, // Customer owns land default ($0.00)
+    id: quoteData?.id || quoteId,
+    quoteNumber: quoteData?.quoteNumber || (quoteId.startsWith('quote-') ? '2026_06_29_PIERPONT_NEW' : quoteId),
+    quoteDate: quoteData?.quoteDate || '2026-06-29',
+    customerName: quoteData?.customerName || 'Angie Floyd',
+    customerPhone: quoteData?.customerPhone || '352-568-6946',
+    customerEmail: quoteData?.customerEmail || 'angielynn011477@gmail.com',
+    customerAddress: quoteData?.customerAddress || quoteData?.propertyAddress || 'Homosassa, FL 34446',
+    salesperson: quoteData?.salesperson || 'Scott Pierpont',
+    salespersonEmail: quoteData?.salespersonEmail || 'scott@easyhomesource.com',
+    homeModel: quoteData?.homeModel || 'Sebastian 32644D',
+    manufacturer: quoteData?.manufacturer || 'Cavco Douglas',
+    series: quoteData?.series || 'Douglas Collection',
+    beds: quoteData?.beds || 4,
+    baths: quoteData?.baths || 2.0,
+    sqft: quoteData?.sqft || 1920,
+    dimensions: quoteData?.dimensions || '32 x 64',
+    homePrice: Number(quoteData?.homePrice) || 144776.71,
+    propertyPrice: Number(quoteData?.propertyPrice) || 0.00,
+    freightDelivery: Number(quoteData?.freightDelivery) || 2860.00,
+    siteWorkTotal: Number(quoteData?.siteWorkTotal) || 49486.00,
     deliveryItems: [
       {
         id: 'del-1',
-        item: 'Freight (Factory To Dealer · 50 mi · 2 side(s))',
+        item: `Freight (${quoteData?.deliveryRouteType === 'dealer_to_customer' ? 'Dealer to Site' : 'Factory To Dealer'} · ${quoteData?.deliveryMiles || 50} mi · ${quoteData?.escortsCount || 2} escort/side)`,
         qty: 1,
-        amount: 2860.00
+        amount: Number(quoteData?.freightDelivery) || 2860.00
       }
     ],
-    siteWorkItems: [
-      { id: 'sw-1', item: 'Wooden Steps — Two Sets', qty: 1, amount: 2500.00 },
-      { id: 'sw-2', item: 'Permit & Site Plan', qty: 1, amount: 2000.00 },
-      { id: 'sw-3', item: "Block & Tie-Down (Double · 66' table)", qty: 1, amount: 11000.00 },
-      { id: 'sw-4', item: 'Trim Out', qty: 1, amount: 1500.00 },
-      { id: 'sw-5', item: 'Electric Pole & Panel', qty: 1, amount: 1850.00 },
-      { id: 'sw-6', item: 'Electric Hookups', qty: 1, amount: 2300.00 },
-      { id: 'sw-7', item: 'AC Unit & Installation (4 ton · Package · Straight Cool)', qty: 1, amount: 5200.00 },
-      { id: 'sw-8', item: 'Well System', qty: 1, amount: 9400.00 },
-      { id: 'sw-9', item: 'Septic System', qty: 1, amount: 8500.00 },
-      { id: 'sw-10', item: 'Skirting Basic Valor (192 Linear Feet @ $8.00/ft)', qty: 192, amount: 1536.00 }
-    ],
+    siteWorkItems: (quoteData?.lineItems && quoteData.lineItems.length > 0)
+      ? quoteData.lineItems.map((li) => ({
+          id: li.id,
+          item: li.name,
+          qty: li.quantity || 1,
+          amount: Number(li.totalPrice || li.unitPrice || 0)
+        }))
+      : [
+          { id: 'sw-1', item: 'Wooden Steps — Two Sets', qty: 1, amount: 2500.00 },
+          { id: 'sw-2', item: 'Permit & Site Plan', qty: 1, amount: 2000.00 },
+          { id: 'sw-3', item: "Block & Tie-Down (Double · 66' table)", qty: 1, amount: 11000.00 },
+          { id: 'sw-4', item: 'Trim Out', qty: 1, amount: 1500.00 },
+          { id: 'sw-5', item: 'Electric Pole & Panel', qty: 1, amount: 1850.00 },
+          { id: 'sw-6', item: 'Electric Hookups', qty: 1, amount: 2300.00 },
+          { id: 'sw-7', item: 'AC Unit & Installation (4 ton · Package · Straight Cool)', qty: 1, amount: 5200.00 },
+          { id: 'sw-8', item: 'Well System', qty: 1, amount: 9400.00 },
+          { id: 'sw-9', item: 'Septic System', qty: 1, amount: 8500.00 },
+          { id: 'sw-10', item: 'Skirting Basic Valor (192 Linear Feet @ $8.00/ft)', qty: 192, amount: 1536.00 }
+        ],
     addons: [] as any[],
-    homeDescription: 'The Sebastian 32644D built by Cavco Douglas is a spacious 4-bedroom, 2-bath ranch-style home offering 1,920 sq. ft. of well-designed living space across two sections. Inside, you’ll find 8-foot flat ceilings, recessed lighting throughout, a farm sink with spring faucet, 42-inch overhead cabinets, and pendant lights that add a warm glow to the kitchen.'
+    homeDescription: quoteData?.homeDescription || 'The Sebastian 32644D built by Cavco Douglas is a spacious 4-bedroom, 2-bath ranch-style home offering 1,920 sq. ft. of well-designed living space across two sections. Inside, you’ll find 8-foot flat ceilings, recessed lighting throughout, a farm sink with spring faucet, 42-inch overhead cabinets, and pendant lights that add a warm glow to the kitchen.'
   };
 
   const deliveryTotal = quote.deliveryItems.reduce((acc, i) => acc + i.amount, 0);
   const siteWorkTotal = quote.siteWorkItems.reduce((acc, i) => acc + i.amount, 0);
   const addonsTotal = quote.addons.reduce((acc, i) => acc + (i.amount || 0), 0);
 
-  const subtotal = quote.homePrice + quote.propertyPrice + deliveryTotal + siteWorkTotal + addonsTotal;
-  const salesTax = Math.round(subtotal * 0.03 * 100) / 100;
-  const estimatedTotal = Math.round((subtotal + salesTax) * 100) / 100;
+  const subtotal = quoteData?.subtotal || (quote.homePrice + quote.propertyPrice + deliveryTotal + siteWorkTotal + addonsTotal);
+  const salesTax = quoteData?.salesTax || Math.round(subtotal * 0.03 * 100) / 100;
+  const estimatedTotal = quoteData?.estimatedTotal || Math.round((subtotal + salesTax) * 100) / 100;
 
   const handlePrint = () => {
     window.print();
@@ -103,12 +120,14 @@ export default function QuoteDetailPage() {
             <span>{copied ? 'Link Copied!' : 'Copy Share Link'}</span>
           </button>
 
+          {/* Full Quote System Direct Edit Button */}
           <Link
             href={`/quotes/${quote.id}/edit`}
-            className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+            title="Edit absolutely everything in the full quote system"
           >
             <span>✏️</span>
-            <span>Edit Quote</span>
+            <span>Edit Full Quote</span>
           </Link>
 
           <button
@@ -287,6 +306,12 @@ export default function QuoteDetailPage() {
                 <span>Home Subtotal</span>
                 <span className="font-mono font-bold text-slate-900">${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
+              {quote.propertyPrice > 0 && (
+                <div className="flex justify-between font-semibold">
+                  <span>Land / Homesite Parcel</span>
+                  <span className="font-mono font-bold text-slate-900">${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              )}
               <div className="flex justify-between font-semibold">
                 <span>Delivery</span>
                 <span className="font-mono font-bold text-slate-900">${deliveryTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
@@ -295,10 +320,12 @@ export default function QuoteDetailPage() {
                 <span>Site Work</span>
                 <span className="font-mono font-bold text-slate-900">${siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
-              <div className="flex justify-between font-semibold">
-                <span>Add-ons</span>
-                <span className="font-mono font-bold text-slate-900">${addonsTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              </div>
+              {addonsTotal > 0 && (
+                <div className="flex justify-between font-semibold">
+                  <span>Add-ons</span>
+                  <span className="font-mono font-bold text-slate-900">${addonsTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              )}
 
               <div className="my-2 border-t border-slate-200" />
 
