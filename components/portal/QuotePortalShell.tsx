@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { SiteLogo } from '@/components/SiteLogo';
 import { useAuth } from '@/lib/auth/AuthContext';
@@ -19,6 +19,7 @@ export function QuotePortalShell({
   onNewManualQuote
 }: QuotePortalShellProps) {
   const { user, logout } = useAuth();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
     {
@@ -94,13 +95,72 @@ export function QuotePortalShell({
     logout();
   };
 
+  const handleNavClick = (id: string) => {
+    setMobileOpen(false);
+    if (id === 'catalog') {
+      window.open('/homes', '_blank');
+    } else {
+      onNavChange(id);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex antialiased w-full">
-      {/* Left Sidebar matching exact staging screenshot */}
-      <aside className="w-64 border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xs">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col lg:flex-row antialiased w-full overflow-x-hidden">
+      {/* Mobile Top Header Bar (Only visible on small screens < lg) */}
+      <header className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className="p-2 -ml-1 text-slate-700 hover:bg-slate-100 rounded-xl cursor-pointer transition-colors"
+            aria-label="Open Navigation Menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <Link href="/portal" className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-[11px] flex items-center justify-center shadow-xs">
+              EHS
+            </div>
+            <div>
+              <div className="font-extrabold text-xs text-slate-900 leading-tight">
+                QUOTE PORTAL
+              </div>
+              <div className="text-[9px] font-bold text-emerald-600">ERP V05</div>
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onNewManualQuote}
+            className="px-3 py-1.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-lg text-xs shadow-xs transition-all active:scale-95 cursor-pointer"
+          >
+            + New Quote
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs lg:hidden transition-opacity"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Responsive Left Sidebar */}
+      <aside
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 max-w-[85vw] border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xl lg:shadow-2xs transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         {/* Brand Header */}
         <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between">
-          <Link href="/portal" className="flex items-center gap-2.5 text-slate-900 group">
+          <Link href="/portal" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5 text-slate-900 group">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-xs flex items-center justify-center shadow-xs">
               EHS
             </div>
@@ -114,13 +174,25 @@ export function QuotePortalShell({
               <p className="text-[10px] text-slate-400 font-medium">Operations Single Source</p>
             </div>
           </Link>
+
+          <button
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            className="lg:hidden p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer"
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
         </div>
 
         {/* New Manual Quote Action Button */}
         <div className="p-4">
           <button
             type="button"
-            onClick={onNewManualQuote}
+            onClick={() => {
+              setMobileOpen(false);
+              onNewManualQuote?.();
+            }}
             className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-extrabold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-[1.01] active:scale-95 cursor-pointer"
           >
             <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[11px] font-black">
@@ -131,7 +203,7 @@ export function QuotePortalShell({
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 px-3 space-y-1">
+        <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = item.id === activeNav;
 
@@ -139,13 +211,7 @@ export function QuotePortalShell({
               <button
                 key={item.id}
                 type="button"
-                onClick={() => {
-                  if (item.id === 'catalog') {
-                    window.open('/homes', '_blank');
-                  } else {
-                    onNavChange(item.id);
-                  }
-                }}
+                onClick={() => handleNavClick(item.id)}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
                   isActive
                     ? 'bg-slate-100 text-slate-900 shadow-2xs'
@@ -161,12 +227,13 @@ export function QuotePortalShell({
           })}
         </nav>
 
-        {/* Bottom Sidebar Settings & User Profile Section matching screenshot */}
+        {/* Bottom Sidebar Settings & User Profile Section */}
         <div className="p-3 border-t border-slate-100 bg-slate-50/50 space-y-2.5">
           {/* GHL & Pricing / Users Links */}
           <div className="space-y-1">
             <Link
               href="/settings?tab=imports"
+              onClick={() => setMobileOpen(false)}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white hover:text-slate-900 transition-colors"
             >
               <span>⚡</span>
@@ -175,6 +242,7 @@ export function QuotePortalShell({
 
             <Link
               href="/settings?tab=users"
+              onClick={() => setMobileOpen(false)}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                 activeNav === 'settings'
                   ? 'bg-white text-slate-900 shadow-2xs border border-slate-200'
@@ -205,6 +273,7 @@ export function QuotePortalShell({
           <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
             <Link
               href="/settings?tab=users"
+              onClick={() => setMobileOpen(false)}
               className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white hover:text-slate-800 transition-colors"
             >
               <span>🔑</span>

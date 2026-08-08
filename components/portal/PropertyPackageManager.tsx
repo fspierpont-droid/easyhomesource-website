@@ -631,7 +631,7 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
         setIsQuoteBuilderOpen(true);
       }}
     >
-      <div className="p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-5 sm:space-y-6 overflow-x-hidden">
         {/* 1. MODULE: Quote Dashboard (Default Initial View on Page Load) */}
         {activeModule === 'dashboard' && (
           <QuoteDashboardView

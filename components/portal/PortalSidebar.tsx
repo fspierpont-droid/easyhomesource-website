@@ -6,18 +6,29 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 interface PortalSidebarProps {
-  mobileOpen: boolean;
-  setMobileOpen: (open: boolean) => void;
-  totalPropertiesCount: number;
+  mobileOpen?: boolean;
+  setMobileOpen?: (open: boolean) => void;
+  onCloseMobile?: () => void;
+  activeNav?: string;
+  onNavChange?: (nav: string) => void;
+  totalPropertiesCount?: number;
 }
 
 export function PortalSidebar({
-  mobileOpen,
+  mobileOpen = false,
   setMobileOpen,
-  totalPropertiesCount
+  onCloseMobile,
+  activeNav,
+  onNavChange,
+  totalPropertiesCount = 17
 }: PortalSidebarProps) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
+
+  const handleClose = () => {
+    if (onCloseMobile) onCloseMobile();
+    if (setMobileOpen) setMobileOpen(false);
+  };
 
   const navItems = [
     {
@@ -81,20 +92,20 @@ export function PortalSidebar({
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden"
-          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs lg:hidden transition-opacity"
+          onClick={handleClose}
         />
       )}
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-slate-200 bg-white flex flex-col transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 max-w-[85vw] border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xl lg:shadow-2xs transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Portal Header */}
-        <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between">
-          <Link href="/portal" className="flex items-center gap-2.5 text-slate-900 group">
+        <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between shrink-0">
+          <Link href="/portal" onClick={handleClose} className="flex items-center gap-2.5 text-slate-900 group">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-xs flex items-center justify-center shadow-xs">
               EHS
             </div>
@@ -109,8 +120,10 @@ export function PortalSidebar({
             </div>
           </Link>
           <button
-            onClick={() => setMobileOpen(false)}
-            className="text-slate-400 hover:text-slate-700 lg:hidden p-1 cursor-pointer"
+            type="button"
+            onClick={handleClose}
+            className="text-slate-400 hover:text-slate-700 lg:hidden p-1.5 rounded-lg hover:bg-slate-100 cursor-pointer"
+            aria-label="Close menu"
           >
             ✕
           </button>
@@ -124,12 +137,16 @@ export function PortalSidebar({
             </div>
             <nav className="space-y-0.5">
               {navItems.map((item) => {
-                const isActive = item.href === pathname || (item.id === 'dashboard' && pathname === '/portal');
+                const isActive = activeNav === item.id || item.href === pathname || (item.id === 'dashboard' && pathname === '/portal');
 
                 return (
                   <Link
                     key={item.id}
                     href={item.href}
+                    onClick={() => {
+                      handleClose();
+                      onNavChange?.(item.id);
+                    }}
                     className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                       isActive
                         ? 'bg-slate-100 text-slate-900 shadow-2xs'
@@ -159,6 +176,7 @@ export function PortalSidebar({
             <nav className="space-y-0.5">
               <Link
                 href="/settings?tab=imports"
+                onClick={handleClose}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
               >
                 <span>⚡</span>
@@ -166,6 +184,7 @@ export function PortalSidebar({
               </Link>
               <Link
                 href="/settings?tab=users"
+                onClick={handleClose}
                 className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                   pathname === '/settings'
                     ? 'bg-white text-slate-900 shadow-2xs border border-slate-200'
@@ -180,7 +199,7 @@ export function PortalSidebar({
         </div>
 
         {/* Authenticated Team User Card */}
-        <div className="p-3 border-t border-slate-100 bg-slate-50/60 space-y-2">
+        <div className="p-3 border-t border-slate-100 bg-slate-50/60 space-y-2 shrink-0">
           <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
@@ -201,6 +220,7 @@ export function PortalSidebar({
           <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
             <Link
               href="/settings?tab=users"
+              onClick={handleClose}
               className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white hover:text-slate-800 transition-colors"
             >
               <span>🔑</span>

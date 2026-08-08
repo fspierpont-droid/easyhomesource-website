@@ -265,22 +265,34 @@ function SettingsContent() {
 
         <div className="flex-1 flex flex-col min-w-0">
           {/* Top Header */}
-          <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-            <div>
-              <div className="text-[11px] font-black uppercase tracking-wider text-[#1E6FA8]">
-                DEALERSHIP CONFIGURATION
+          <div className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setMobileOpen(true)}
+                className="lg:hidden p-2 -ml-1 text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer"
+                aria-label="Open Navigation Menu"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <div>
+                <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#1E6FA8]">
+                  DEALERSHIP CONFIGURATION
+                </div>
+                <h1 className="text-xl sm:text-2xl font-black text-[#0B1E38] tracking-tight">
+                  Settings
+                </h1>
+                <p className="text-xs text-slate-500 font-medium mt-0.5 hidden sm:block">
+                  Configure how your dealership quotes look and price.
+                </p>
               </div>
-              <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
-                Settings
-              </h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Configure how your dealership quotes look and price.
-              </p>
             </div>
 
             <Link
               href="/portal"
-              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span>← Back to dashboard</span>
             </Link>
