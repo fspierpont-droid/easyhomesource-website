@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { SiteLogo } from '@/components/SiteLogo';
 
 interface QuotePortalShellProps {
@@ -74,22 +75,22 @@ export function QuotePortalShell({
   ];
 
   return (
-    <div className="min-h-screen bg-ehsSoftBlue/40 text-ehsBlack font-sans flex antialiased w-full">
-      {/* Left Sidebar */}
-      <aside className="w-64 border-r border-ehsBlue/10 bg-white flex flex-col shrink-0 min-h-screen shadow-sm shadow-ehsNavy/5">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex antialiased w-full">
+      {/* Left Sidebar matching exact staging screenshot */}
+      <aside className="w-64 border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xs">
         {/* Brand Header */}
-        <div className="p-5 border-b border-ehsBlue/10 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <SiteLogo />
           </div>
         </div>
 
-        {/* New Manual Quote Action Button (Matching website's bold CTA style) */}
+        {/* New Manual Quote Action Button */}
         <div className="p-4">
           <button
             type="button"
             onClick={onNewManualQuote}
-            className="w-full bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black py-3 px-4 rounded-full text-xs flex items-center justify-center gap-2 shadow-lg shadow-ehsBlue/20 transition-all hover:scale-[1.01] active:scale-95 cursor-pointer focus:outline-none focus:ring-4 focus:ring-ehsLightBlue/60"
+            className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-extrabold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-[1.01] active:scale-95 cursor-pointer"
           >
             <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[11px] font-black">
               +
@@ -98,7 +99,7 @@ export function QuotePortalShell({
           </button>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation Items */}
         <nav className="flex-1 px-3 space-y-1">
           {navItems.map((item) => {
             const isActive = item.id === activeNav;
@@ -114,13 +115,13 @@ export function QuotePortalShell({
                     onNavChange(item.id);
                   }
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-xs font-black transition-all text-left cursor-pointer ${
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
                   isActive
-                    ? 'bg-ehsSoftBlue text-ehsDeepBlue ring-1 ring-ehsBlue/20 shadow-xs'
-                    : 'text-ehsNavy/70 hover:bg-ehsSoftBlue/60 hover:text-ehsDeepBlue'
+                    ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
-                <span className={isActive ? 'text-ehsBlue' : 'text-ehsNavy/40'}>
+                <span className={isActive ? 'text-[#0B1E38]' : 'text-slate-400'}>
                   {item.icon}
                 </span>
                 <span>{item.label}</span>
@@ -129,20 +130,65 @@ export function QuotePortalShell({
           })}
         </nav>
 
-        {/* Footer info */}
-        <div className="p-4 border-t border-ehsBlue/10 bg-ehsSoftBlue/30 text-[11px] text-ehsNavy/60 space-y-1.5 rounded-b-2xl m-3">
-          <div className="flex items-center justify-between font-black text-ehsNavy">
-            <span>Single Source System</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        {/* Bottom Sidebar Settings & User Profile Section matching screenshot */}
+        <div className="p-3 border-t border-slate-100 bg-slate-50/50 space-y-2.5">
+          {/* GHL & Pricing / Users Links */}
+          <div className="space-y-1">
+            <Link
+              href="/settings"
+              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white hover:text-slate-900 transition-colors"
+            >
+              <span>⚡</span>
+              <span>GHL Import Settings</span>
+            </Link>
+
+            <Link
+              href="/settings"
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                activeNav === 'settings'
+                  ? 'bg-white text-slate-900 shadow-2xs border border-slate-200'
+                  : 'text-slate-600 hover:bg-white hover:text-slate-900'
+              }`}
+            >
+              <span>⚙️</span>
+              <span>Pricing / Users</span>
+            </Link>
           </div>
-          <p className="text-[10.5px] leading-relaxed text-ehsNavy/55 font-medium">
-            Authenticated operational portal. Single source of truth for quoting &amp; inventory.
-          </p>
+
+          {/* Scott Pierpont (Admin) Profile Card */}
+          <div className="p-2.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
+              SP
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-black text-slate-900 truncate">Scott Pierpont</p>
+              <p className="text-[10px] text-slate-500 font-semibold truncate">Admin</p>
+            </div>
+          </div>
+
+          {/* Change Password & Sign Out */}
+          <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
+            <Link
+              href="/settings"
+              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white hover:text-slate-800 transition-colors"
+            >
+              <span>🔑</span>
+              <span>Change Password</span>
+            </Link>
+
+            <Link
+              href="/portal"
+              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-rose-50 hover:text-rose-700 transition-colors"
+            >
+              <span>↪</span>
+              <span>Sign Out</span>
+            </Link>
+          </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 bg-ehsSoftBlue/20">
+      <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 overflow-y-auto">
         {children}
       </div>
     </div>

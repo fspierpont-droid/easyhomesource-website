@@ -425,8 +425,15 @@ const FULL_SAVED_QUOTES: SavedQuote[] = RAW_SAVED_QUOTES.map((q) => {
 });
 
 export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPackageManagerProps) {
-  // Default to 'dashboard' on page load!
+  const searchParams = useSearchParams();
   const [activeModule, setActiveModule] = useState<string>(initialNav);
+
+  useEffect(() => {
+    const view = searchParams.get('view');
+    if (view) {
+      setActiveModule(view);
+    }
+  }, [searchParams]);
 
   // Seed with verified production single source of truth data immediately
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);

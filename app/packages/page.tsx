@@ -1,11 +1,16 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
 
 export const metadata: Metadata = {
   title: 'Property Packages | Easy HomeSource Portal',
-  description: 'Maintain land, completed homes, in-progress properties, pricing, and sales details from the authenticated quote portal.'
+  description: 'Operations single source of truth for Central Florida land and manufactured home packages.'
 };
 
 export default function PackagesPage() {
-  return <PropertyPackageManager initialNav="property-packages" />;
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Packages...</div>}>
+      <PropertyPackageManager initialNav="property-packages" />
+    </Suspense>
+  );
 }
