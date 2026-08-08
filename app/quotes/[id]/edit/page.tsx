@@ -289,8 +289,9 @@ export default function EditQuotePage() {
       setShareToken(existing.shareToken || existing.id || rawId);
 
       // Home
-      setHomeModel(existing.homeModel || '');
-      setManufacturer(existing.manufacturer || 'Cavco');
+      const loadedModelName = existing.homeModel || '';
+      setHomeModel(loadedModelName);
+      setManufacturer(existing.manufacturer || 'Cavco Douglas');
       setSeries(existing.series || '');
       setBeds(existing.beds || 3);
       setBaths(existing.baths || 2);
@@ -343,7 +344,7 @@ export default function EditQuotePage() {
 
       // Match home in catalog if possible
       const matched = FULL_MASTER_CATALOG_HOMES.find(
-        (h) => (h.modelName || '').toLowerCase() === (existing.homeModel || '').toLowerCase()
+        (h) => (h.name || '').toLowerCase() === loadedModelName.toLowerCase()
       );
       if (matched) setSelectedHome(matched);
     }
@@ -361,14 +362,20 @@ export default function EditQuotePage() {
   // Home Selection from verified catalog
   const handleSelectCatalogHome = (h: MasterCatalogHome) => {
     if (!h) return;
+    const homeDisplayName = h.name || 'Manufactured Home';
+    const bedCount = h.bedrooms ?? 3;
+    const bathCount = h.bathrooms ?? 2;
+    const sqftCount = h.squareFeet ?? 1200;
+    const dimText = h.dimensions || `${h.width || 24}' x ${h.length || 50}'`;
+
     setSelectedHome(h);
-    setHomeModel(h.modelName || '');
-    setManufacturer(h.manufacturer || 'Cavco');
+    setHomeModel(homeDisplayName);
+    setManufacturer(h.manufacturer || 'CAVCO Plant City');
     setSeries(h.series || '');
-    setBeds(h.beds || 3);
-    setBaths(h.baths || 2);
-    setSqft(h.sqft || 1200);
-    setDimensions(`${h.width || 24}' x ${h.length || 50}'`);
+    setBeds(bedCount);
+    setBaths(bathCount);
+    setSqft(sqftCount);
+    setDimensions(dimText);
     setHomeWidth(h.width || 24);
     setHomeLength(h.length || 50);
     setBasePrice(h.ehsPrice || 0);
@@ -563,7 +570,7 @@ export default function EditQuotePage() {
       if (!h) return false;
       if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
       if (!homeSearch.trim()) return true;
-      const text = `${h.modelName || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.beds || ''} bed ${h.baths || ''} bath ${h.sqft || ''}`.toLowerCase();
+      const text = `${h.name || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.bedrooms || ''} bed ${h.bathrooms || ''} bath ${h.squareFeet || ''}`.toLowerCase();
       return text.includes(homeSearch.toLowerCase().trim());
     });
   }, [builderFilter, homeSearch]);
@@ -643,8 +650,8 @@ export default function EditQuotePage() {
 
     saveQuoteToStore(finalQuote);
     setStatus(finalStatus);
-    setSavedSuccessMsg(`✓ Quote ${quoteNumber} saved successfully! All updates are live.`);
-    setTimeout(() => setSavedSuccessMsg(null), 4000);
+    setSavedSuccessMsg(`✓ Quote ${quoteNumber} for ${finalQuote.customerName} saved successfully!`);
+    setTimeout(() => setSavedSuccessMsg(null), 5000);
   };
 
   const handleDelete = () => {
@@ -747,21 +754,38 @@ export default function EditQuotePage() {
             </div>
           </header>
 
-          {/* Success Toast */}
+          {/* Floating Save Confirmation Banner */}
           {savedSuccessMsg && (
-            <div className="bg-emerald-600 text-white px-6 py-2.5 text-xs font-bold flex items-center justify-between shadow-xs animate-in fade-in">
-              <span>{savedSuccessMsg}</span>
-              <button
-                onClick={() => setSavedSuccessMsg(null)}
-                className="text-white hover:text-emerald-200 font-bold cursor-pointer ml-4"
-              >
-                ✕
-              </button>
+            <div className="bg-emerald-600 text-white px-6 py-2.5 text-xs font-bold flex flex-wrap items-center justify-between gap-3 shadow-md animate-in fade-in sticky top-16 z-20">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">✓</span>
+                <span>{savedSuccessMsg}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/quotes/${quoteId}`}
+                  className="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-[11px] font-black transition-colors"
+                >
+                  View Executive Sheet ↗
+                </Link>
+                <Link
+                  href="/portal?view=library"
+                  className="px-3 py-1 bg-white text-emerald-900 rounded-lg text-[11px] font-black transition-colors"
+                >
+                  Go to Quote Library
+                </Link>
+                <button
+                  onClick={() => setSavedSuccessMsg(null)}
+                  className="text-white hover:text-emerald-200 font-bold cursor-pointer ml-2"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
           )}
 
           {/* Prominent Visual Step Wizard & Navigation Bar */}
-          <div className="bg-white border-b border-slate-200 px-6 py-2 shadow-2xs">
+          <div className="bg-white border-b border-slate-200 px-6 py-2.5 shadow-2xs">
             <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1">
               {STEPS.map((step) => {
                 const isActive = activeTab === step.key;
@@ -940,7 +964,7 @@ export default function EditQuotePage() {
                       </span>
                       <h2 className="text-lg font-black text-[#0B1E38]">Manufactured Home Selection &amp; Pricing</h2>
                       <p className="text-xs text-slate-500">
-                        Choose from 225 verified models across Cavco, Clayton, Legacy, and Timber Creek, or customize freely.
+                        Choose from all 225 verified models across Cavco, Clayton Addison, Clayton TRU, Legacy, and Timber Creek, or customize freely.
                       </p>
                     </div>
                   </div>
@@ -958,7 +982,7 @@ export default function EditQuotePage() {
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
                       <div>
-                        <label className="block font-bold text-slate-600 mb-0.5">Model Name</label>
+                        <label className="block font-bold text-slate-600 mb-0.5">Model Name *</label>
                         <input
                           type="text"
                           value={homeModel}
@@ -976,7 +1000,7 @@ export default function EditQuotePage() {
                         />
                       </div>
                       <div>
-                        <label className="block font-bold text-slate-600 mb-0.5">Base EHS Price ($)</label>
+                        <label className="block font-bold text-slate-600 mb-0.5">Base EHS Price ($) *</label>
                         <input
                           type="number"
                           value={basePrice}
@@ -1048,7 +1072,7 @@ export default function EditQuotePage() {
                             key={m}
                             type="button"
                             onClick={() => setBuilderFilter(m)}
-                            className={`px-2 py-1 rounded-lg border transition-colors cursor-pointer ${
+                            className={`px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
                               builderFilter === m
                                 ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -1064,36 +1088,44 @@ export default function EditQuotePage() {
                       type="text"
                       value={homeSearch}
                       onChange={(e) => setHomeSearch(e.target.value)}
-                      placeholder="Search 225 models by name, beds, sq ft, series..."
+                      placeholder="Search 225 models by name (e.g. Atmos, Dogwood, Tulip, Boujee, Oak, Paxton)..."
                       className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#1E6FA8]"
                     />
 
                     {/* Catalog Grid */}
-                    <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl">
-                      {filteredCatalog.slice(0, 30).map((h) => (
-                        <div
-                          key={h.id}
-                          onClick={() => handleSelectCatalogHome(h)}
-                          className={`p-3 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-colors text-xs ${
-                            selectedHome?.id === h.id ? 'bg-sky-50/70 border-l-4 border-[#1E6FA8]' : ''
-                          }`}
-                        >
-                          <div>
-                            <div className="font-bold text-[#0B1E38]">{h.modelName}</div>
-                            <div className="text-[11px] text-slate-500">
-                              {h.manufacturer} • {h.beds}b/{h.baths}ba • {h.sqft} sq ft • {h.width}x{h.length}
+                    <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl">
+                      {filteredCatalog.map((h) => {
+                        const homeDisplayName = h.name || 'Manufactured Home';
+                        const bedCount = h.bedrooms ?? 3;
+                        const bathCount = h.bathrooms ?? 2;
+                        const sqftCount = h.squareFeet ?? 1200;
+                        const dimText = h.dimensions || `${h.width || 24}' x ${h.length || 50}'`;
+
+                        return (
+                          <div
+                            key={h.slug || h.name}
+                            onClick={() => handleSelectCatalogHome(h)}
+                            className={`p-3 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-colors text-xs ${
+                              (selectedHome?.name === h.name || homeModel === homeDisplayName) ? 'bg-sky-50/80 border-l-4 border-[#1E6FA8]' : ''
+                            }`}
+                          >
+                            <div>
+                              <div className="font-black text-[#0B1E38] text-sm">{homeDisplayName}</div>
+                              <div className="text-[11px] text-slate-500 font-semibold mt-0.5">
+                                {h.manufacturer} • {h.series ? `${h.series} • ` : ''}{bedCount}b/{bathCount}ba • {sqftCount.toLocaleString()} sq ft • {dimText}
+                              </div>
+                            </div>
+                            <div className="text-right shrink-0">
+                              <div className="font-black text-[#0F2A47] text-sm">
+                                ${(h.ehsPrice || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              </div>
+                              <div className="text-[10px] text-slate-400 font-medium">
+                                Cost: ${(h.estFactoryCost || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              </div>
                             </div>
                           </div>
-                          <div className="text-right shrink-0">
-                            <div className="font-black text-[#0F2A47]">
-                              ${(h.ehsPrice || 0).toLocaleString()}
-                            </div>
-                            <div className="text-[10px] text-slate-400">
-                              Cost: ${(h.estFactoryCost || 0).toLocaleString()}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
 

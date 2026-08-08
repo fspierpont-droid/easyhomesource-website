@@ -45,18 +45,18 @@ export default function NewQuoteBuilderPage() {
   // 2. Selected Home (from verified Master Catalog)
   const [homeSearch, setHomeSearch] = useState('');
   const [builderFilter, setBuilderFilter] = useState('ALL');
-  const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0]);
-  const [homeModel, setHomeModel] = useState(FULL_MASTER_CATALOG_HOMES[0]?.modelName || 'Move on Up (18x60 3b/2ba)');
+  const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0] || null);
+  const [homeModel, setHomeModel] = useState(FULL_MASTER_CATALOG_HOMES[0]?.name || 'Move on Up (18x60 3b/2ba)');
   const [manufacturer, setManufacturer] = useState(FULL_MASTER_CATALOG_HOMES[0]?.manufacturer || 'CLAYTON Addison');
   const [series, setSeries] = useState(FULL_MASTER_CATALOG_HOMES[0]?.series || 'Tempo Series');
-  const [beds, setBeds] = useState<number>(3);
-  const [baths, setBaths] = useState<number>(2);
-  const [sqft, setSqft] = useState<number>(1080);
-  const [dimensions, setDimensions] = useState("18' x 60'");
-  const [homeWidth, setHomeWidth] = useState<number>(18);
-  const [homeLength, setHomeLength] = useState<number>(60);
-  const [basePrice, setBasePrice] = useState<number>(94900);
-  const [factoryCost, setFactoryCost] = useState<number>(68328);
+  const [beds, setBeds] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.bedrooms || 3);
+  const [baths, setBaths] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.bathrooms || 2);
+  const [sqft, setSqft] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.squareFeet || 1080);
+  const [dimensions, setDimensions] = useState(FULL_MASTER_CATALOG_HOMES[0]?.dimensions || "18' x 60'");
+  const [homeWidth, setHomeWidth] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.width || 18);
+  const [homeLength, setHomeLength] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.length || 60);
+  const [basePrice, setBasePrice] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.ehsPrice || 94900);
+  const [factoryCost, setFactoryCost] = useState<number>(FULL_MASTER_CATALOG_HOMES[0]?.estFactoryCost || 68328);
 
   // 3. Site & Delivery
   const [landOption, setLandOption] = useState<'OWNED' | 'PARCEL' | 'CUSTOM'>('OWNED');
@@ -173,14 +173,21 @@ export default function NewQuoteBuilderPage() {
 
   // Handle Home Selection
   const handleSelectHome = (h: MasterCatalogHome) => {
+    if (!h) return;
+    const homeDisplayName = h.name || 'Manufactured Home';
+    const bedCount = h.bedrooms ?? 3;
+    const bathCount = h.bathrooms ?? 2;
+    const sqftCount = h.squareFeet ?? 1200;
+    const dimText = h.dimensions || `${h.width || 24}' x ${h.length || 50}'`;
+
     setSelectedHome(h);
-    setHomeModel(h.modelName);
-    setManufacturer(h.manufacturer || 'Cavco');
+    setHomeModel(homeDisplayName);
+    setManufacturer(h.manufacturer || 'CAVCO Plant City');
     setSeries(h.series || '');
-    setBeds(h.beds || 3);
-    setBaths(h.baths || 2);
-    setSqft(h.sqft || 1200);
-    setDimensions(`${h.width || 24}' x ${h.length || 50}'`);
+    setBeds(bedCount);
+    setBaths(bathCount);
+    setSqft(sqftCount);
+    setDimensions(dimText);
     setHomeWidth(h.width || 24);
     setHomeLength(h.length || 50);
     setBasePrice(h.ehsPrice || 0);
@@ -197,8 +204,8 @@ export default function NewQuoteBuilderPage() {
             ...item,
             unitPrice: bt.price,
             unitCost: bt.cost,
-            totalPrice: bt.price * item.quantity,
-            totalCost: bt.cost * item.quantity,
+            totalPrice: bt.price * (item.quantity || 1),
+            totalCost: bt.cost * (item.quantity || 1),
             description: `Concrete pier pads, cinder blocks, leveling, and ground anchors (${bt.matchedLength}ft ${homeClass} table).`
           };
         }
@@ -281,9 +288,10 @@ export default function NewQuoteBuilderPage() {
 
   const filteredCatalog = useMemo(() => {
     return FULL_MASTER_CATALOG_HOMES.filter((h) => {
+      if (!h) return false;
       if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
       if (!homeSearch.trim()) return true;
-      const text = `${h.modelName} ${h.manufacturer} ${h.series} ${h.beds} bed ${h.baths} bath ${h.sqft}`.toLowerCase();
+      const text = `${h.name || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.bedrooms || ''} bed ${h.bathrooms || ''} bath ${h.squareFeet || ''}`.toLowerCase();
       return text.includes(homeSearch.toLowerCase().trim());
     });
   }, [builderFilter, homeSearch]);
@@ -486,22 +494,39 @@ export default function NewQuoteBuilderPage() {
                     placeholder="Search 225 models by name, beds, sqft..."
                     className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold"
                   />
-                  <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl text-xs">
-                    {filteredCatalog.slice(0, 30).map((h) => (
-                      <div
-                        key={h.id}
-                        onClick={() => handleSelectHome(h)}
-                        className={`p-3 flex items-center justify-between hover:bg-slate-50 cursor-pointer ${
-                          selectedHome?.id === h.id ? 'bg-sky-50 border-l-4 border-[#1E6FA8]' : ''
-                        }`}
-                      >
-                        <div>
-                          <div className="font-bold text-[#0B1E38]">{h.modelName}</div>
-                          <div className="text-[11px] text-slate-500">{h.manufacturer} • {h.beds}b/{h.baths}ba • {h.sqft} sq ft</div>
+                  <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl text-xs">
+                    {filteredCatalog.slice(0, 40).map((h) => {
+                      const homeDisplayName = h.name || 'Manufactured Home';
+                      const bedCount = h.bedrooms ?? 3;
+                      const bathCount = h.bathrooms ?? 2;
+                      const sqftCount = h.squareFeet ?? 1200;
+                      const dimText = h.dimensions || `${h.width || 24}' x ${h.length || 50}'`;
+
+                      return (
+                        <div
+                          key={h.slug || h.name}
+                          onClick={() => handleSelectHome(h)}
+                          className={`p-3 flex items-center justify-between hover:bg-slate-50 cursor-pointer ${
+                            (selectedHome?.name === h.name || homeModel === homeDisplayName) ? 'bg-sky-50 border-l-4 border-[#1E6FA8]' : ''
+                          }`}
+                        >
+                          <div>
+                            <div className="font-bold text-[#0B1E38] text-sm">{homeDisplayName}</div>
+                            <div className="text-[11px] text-slate-500 font-semibold mt-0.5">
+                              {h.manufacturer} • {h.series ? `${h.series} • ` : ''}{bedCount}b/{bathCount}ba • {sqftCount.toLocaleString()} sq ft • {dimText}
+                            </div>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <div className="font-black text-[#0F2A47] text-sm">
+                              ${(h.ehsPrice || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </div>
+                            <div className="text-[10px] text-slate-400 font-medium">
+                              Cost: ${(h.estFactoryCost || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </div>
+                          </div>
                         </div>
-                        <div className="font-black text-[#0F2A47]">${(h.ehsPrice || 0).toLocaleString()}</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
