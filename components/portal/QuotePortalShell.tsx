@@ -166,7 +166,7 @@ export function QuotePortalShell({
           {/* GHL & Pricing / Users Links */}
           <div className="space-y-1">
             <Link
-              href="/settings"
+              href="/settings?tab=imports"
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white hover:text-slate-900 transition-colors"
             >
               <span>⚡</span>
@@ -174,7 +174,7 @@ export function QuotePortalShell({
             </Link>
 
             <Link
-              href="/settings"
+              href="/settings?tab=users"
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                 activeNav === 'settings'
                   ? 'bg-white text-slate-900 shadow-2xs border border-slate-200'
@@ -204,7 +204,7 @@ export function QuotePortalShell({
           {/* Change Password & Sign Out */}
           <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
             <Link
-              href="/settings"
+              href="/settings?tab=users"
               className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white hover:text-slate-800 transition-colors"
             >
               <span>🔑</span>

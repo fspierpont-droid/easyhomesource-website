@@ -68,6 +68,14 @@ export function PortalSidebar({
         .toUpperCase()
     : 'SP';
 
+  const handleSignOut = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('ehs_token');
+      localStorage.removeItem('ehs_user');
+    }
+    logout();
+  };
+
   return (
     <>
       {/* Mobile backdrop */}
@@ -115,23 +123,31 @@ export function PortalSidebar({
               Turnkey Quoting Engine
             </div>
             <nav className="space-y-0.5">
-              {navItems.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-sm">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const isActive = item.href === pathname || (item.id === 'dashboard' && pathname === '/portal');
+
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                      isActive
+                        ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-sm">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
@@ -142,15 +158,19 @@ export function PortalSidebar({
             </div>
             <nav className="space-y-0.5">
               <Link
-                href="/settings"
+                href="/settings?tab=imports"
                 className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
               >
                 <span>⚡</span>
                 <span>GHL Import Settings</span>
               </Link>
               <Link
-                href="/settings"
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                href="/settings?tab=users"
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                  pathname === '/settings'
+                    ? 'bg-white text-slate-900 shadow-2xs border border-slate-200'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
               >
                 <span>⚙️</span>
                 <span>Pricing / Users</span>
@@ -178,15 +198,19 @@ export function PortalSidebar({
           </div>
 
           {/* Change Password & Sign Out Action */}
-          <div className="flex items-center justify-between px-1 text-[11px] font-bold text-slate-500">
-            <Link href="/settings" className="hover:text-slate-800 flex items-center gap-1">
+          <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
+            <Link
+              href="/settings?tab=users"
+              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white hover:text-slate-800 transition-colors"
+            >
               <span>🔑</span>
               <span>Change Password</span>
             </Link>
+
             <button
               type="button"
-              onClick={logout}
-              className="hover:text-rose-600 flex items-center gap-1 cursor-pointer"
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-rose-50 hover:text-rose-700 transition-colors text-left cursor-pointer"
             >
               <span>↪</span>
               <span>Sign Out</span>

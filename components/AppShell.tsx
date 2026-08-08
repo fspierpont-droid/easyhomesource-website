@@ -14,7 +14,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isPortal =
     pathname?.startsWith('/portal') ||
     pathname?.startsWith('/packages') ||
-    pathname?.startsWith('/property-packages');
+    pathname?.startsWith('/property-packages') ||
+    pathname?.startsWith('/settings') ||
+    pathname?.startsWith('/login') ||
+    pathname?.startsWith('/quotes') ||
+    pathname?.startsWith('/quote');
 
   if (isPortal) {
     return <>{children}</>;
