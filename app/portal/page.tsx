@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
+import { AuthGate } from '@/components/portal/AuthGate';
 
 export const metadata: Metadata = {
   title: 'Easy HomeSource Quote Portal | Operational Hub',
@@ -9,8 +10,10 @@ export const metadata: Metadata = {
 
 export default function PortalPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
-      <PropertyPackageManager initialNav="dashboard" />
-    </Suspense>
+    <AuthGate>
+      <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
+        <PropertyPackageManager initialNav="dashboard" />
+      </Suspense>
+    </AuthGate>
   );
 }

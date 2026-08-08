@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { PortalSidebar } from '@/components/portal/PortalSidebar';
 import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
+import { AuthGate } from '@/components/portal/AuthGate';
 import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
 import { SERVICE_CATALOG, type ServiceCatalogItem } from '@/data/pricingSpreadsheet';
 
@@ -222,6 +223,7 @@ export default function SettingsPage() {
   });
 
   return (
+    <AuthGate>
     <div className="min-h-screen bg-slate-50 text-slate-800 flex antialiased">
       {/* Portal Sidebar with Scott Pierpont */}
       <PortalSidebar
@@ -1193,5 +1195,6 @@ export default function SettingsPage() {
         </div>
       )}
     </div>
+    </AuthGate>
   );
 }

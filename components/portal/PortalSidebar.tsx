@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 interface PortalSidebarProps {
   mobileOpen: boolean;
@@ -16,6 +17,7 @@ export function PortalSidebar({
   totalPropertiesCount
 }: PortalSidebarProps) {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
 
   const navItems = [
     {
@@ -56,6 +58,15 @@ export function PortalSidebar({
       badge: totalPropertiesCount > 0 ? String(totalPropertiesCount) : undefined
     }
   ];
+
+  const userInitials = user?.name
+    ? user.name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'SP';
 
   return (
     <>
@@ -139,7 +150,7 @@ export function PortalSidebar({
               </Link>
               <Link
                 href="/settings"
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold bg-[#0F2A47]/5 text-[#0F2A47] border border-[#0F2A47]/10"
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
               >
                 <span>⚙️</span>
                 <span>Pricing / Users</span>
@@ -148,29 +159,38 @@ export function PortalSidebar({
           </div>
         </div>
 
-        {/* Verified User: Scott Pierpont (Admin) */}
+        {/* Authenticated Team User Card */}
         <div className="p-3 border-t border-slate-100 bg-slate-50/60 space-y-2">
           <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
-                SP
+                {userInitials}
               </div>
-              <div className="min-w-0">
-                <p className="text-xs font-black text-slate-900 truncate">Scott Pierpont</p>
-                <p className="text-[10px] text-slate-500 font-semibold truncate">Admin</p>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-black text-slate-900 truncate">
+                  {user?.name || 'Scott Pierpont'}
+                </p>
+                <p className="text-[10px] text-slate-500 font-semibold truncate">
+                  {user?.role || 'Admin'}
+                </p>
               </div>
             </div>
           </div>
 
+          {/* Change Password & Sign Out Action */}
           <div className="flex items-center justify-between px-1 text-[11px] font-bold text-slate-500">
             <Link href="/settings" className="hover:text-slate-800 flex items-center gap-1">
               <span>🔑</span>
               <span>Change Password</span>
             </Link>
-            <Link href="/portal" className="hover:text-rose-600 flex items-center gap-1">
+            <button
+              type="button"
+              onClick={logout}
+              className="hover:text-rose-600 flex items-center gap-1 cursor-pointer"
+            >
               <span>↪</span>
               <span>Sign Out</span>
-            </Link>
+            </button>
           </div>
         </div>
       </aside>
