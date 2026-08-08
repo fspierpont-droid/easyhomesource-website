@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { calculateComprehensiveQuoteTotals, type QuoteFinancialTotals } from '@/data/pricingSpreadsheet';
 
 export default function CustomerShareQuotePage() {
   const params = useParams();
-  const token = params?.shareToken as string;
+  const token = (params?.shareToken as string) || 'quote-1';
   const [copied, setCopied] = useState(false);
 
   // Proposal state
-  const quote = {
+  const [quote, setQuote] = useState({
     quoteNumber: 'Q-2026-0801',
     customerName: 'Sarah Jenkins',
     customerPhone: '352-555-0192',
@@ -23,75 +23,58 @@ export default function CustomerShareQuotePage() {
     baths: 2,
     sqft: 1080,
     dimensions: "18' x 60'",
-    homePrice: 94900,
+    homePrice: 129475.03,
     propertyAddress: '6645 W Erlen Ln, Homosassa, FL 34446',
-    propertyPrice: 49900,
+    propertyPrice: 189900.00,
     deliveryRoute: 'Dealership to Customer Site',
     deliveryMiles: 32,
-    freightDelivery: 3850,
-    siteWorkTotal: 34500,
+    freightDelivery: 2860.00,
+    siteWorkTotal: 25650.00,
     discounts: 0,
     salesperson: 'Scott Pierpont',
-    salespersonTitle: 'Senior Housing Consultant',
+    salespersonTitle: 'Operations & Principal Consultant',
     salespersonPhone: '(352) 558-8888',
     salespersonEmail: 'scott@easyhomesource.com',
     status: 'APPROVED',
-    notes: 'Turnkey land and home package proposal for Homosassa homesite. Includes county building permits, site prep, potable water well, 1050-gal septic system, 200A electric panel, 3.0-ton heat pump, vented vinyl skirting, and code steps.',
+    notes: 'Complete turnkey land and manufactured home package for Homosassa homesite. Includes county building permits, site prep, potable water well, 1050-gal septic system, 200A electric panel, 3.0-ton heat pump, vented vinyl skirting, and code entrance stairs.',
     lineItems: [
       {
         id: 'li-1',
         name: 'Block & Hurricane Tie-Down Installation',
-        description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (60ft single wide matrix).',
-        price: 5835
+        description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (60ft double table).',
+        price: 12195.00
       },
       {
         id: 'li-2',
         name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
         description: 'High-efficiency heat pump with digital programmable thermostat, outdoor equipment pad, whip, and ductwork plenum tie-in.',
-        price: 5555
+        price: 5555.00
       },
       {
         id: 'li-3',
         name: 'Dirt Pad & Laser Site Grading (2 Loads)',
         description: 'Land clearing, clean fill dirt import, compacting, and laser leveling for solid home foundation.',
-        price: 2700
+        price: 2700.00
       },
       {
         id: 'li-4',
-        name: '4-Inch Potable Water Well System',
-        description: 'Drilling up to 120ft, submersible pump, pressure tank, control box, and plumbing tie-in to home inlet.',
-        price: 7500
+        name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
+        description: 'Full perimeter vinyl skirting with top rail, ground track, access door, and 2 sets of code stairs.',
+        price: 3200.00
       },
       {
         id: 'li-5',
-        name: '1,050-Gallon Septic Tank & Drainfield',
-        description: 'Standard concrete septic tank, header line, distribution box, and gravity drainfield system with county health approval.',
-        price: 6800
-      },
-      {
-        id: 'li-6',
-        name: '200-Amp Electric Pole & Meter Panel',
-        description: '200A service disconnect, utility pole/riser, ground rod, and electrical conduit hookup to power provider.',
-        price: 2450
-      },
-      {
-        id: 'li-7',
         name: 'County Building, Zoning & Health Dept Permits',
-        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees.',
-        price: 2650
-      },
-      {
-        id: 'li-8',
-        name: 'Vented Vinyl Perimeter Skirting & 2 Sets Code Steps',
-        description: 'Full perimeter vinyl skirting with ground channel, top rail, access door, and 2 sets of code-compliant entrance stairs.',
-        price: 3200
+        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees ($2,000 standard).',
+        price: 2000.00
       }
     ],
     createdAt: 'August 7, 2026'
-  };
+  });
 
   const totals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
-    (quote.homePrice || 0) + (quote.propertyPrice || 0),
+    quote.homePrice || 0,
+    quote.propertyPrice || 0,
     quote.freightDelivery || 0,
     quote.siteWorkTotal || 0,
     0,
@@ -307,49 +290,49 @@ export default function CustomerShareQuotePage() {
             <div className="space-y-2 text-xs text-slate-700">
               <div className="flex justify-between font-semibold">
                 <span>1. Base Manufactured Home:</span>
-                <span>${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular font-bold text-slate-900">${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               {quote.propertyPrice > 0 && (
                 <div className="flex justify-between font-semibold">
                   <span>2. Land / Homesite Parcel:</span>
-                  <span>${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="tabular font-bold text-slate-900">${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               )}
 
               <div className="flex justify-between font-semibold">
                 <span>3. Freight Delivery:</span>
-                <span>${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular font-bold text-slate-900">${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               <div className="flex justify-between font-semibold">
                 <span>4. Site Work, Utilities &amp; Permits:</span>
-                <span>${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular font-bold text-slate-900">${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               <div className="my-2 border-t border-slate-200" />
 
-              <div className="flex justify-between font-bold text-slate-900">
+              <div className="flex justify-between font-bold text-slate-900 text-sm">
                 <span>Subtotal:</span>
-                <span>${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-600 text-[11px]">
                 <span>Financed subtotal:</span>
-                <span>${totals.financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-600 text-[11px]">
                 <span>Tax basis:</span>
-                <span>${totals.tax_basis.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.tax_basis.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between font-bold text-[#1E6FA8]">
                 <span>3% Florida Sales Tax (3.00%):</span>
-                <span>${totals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
-              {/* Prominent Dark Navy ESTIMATED TOTAL banner matching user screenshot */}
+              {/* Prominent Dark Navy ESTIMATED TOTAL banner */}
               <div className="flex items-center justify-between rounded-2xl bg-[#0F2A47] text-white px-5 py-4 mt-3 shadow-lg">
                 <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
-                <span className="font-black text-3xl tracking-tight">
+                <span className="font-black text-3xl tracking-tight tabular">
                   ${totals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>

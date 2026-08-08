@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import type { SavedQuote } from '@/components/portal/ManualQuoteBuilderModal';
 import { EditQuoteModal } from '@/components/portal/EditQuoteModal';
 
@@ -57,8 +58,13 @@ export function QuoteLibraryView({
     }
   };
 
+  const getShareUrl = (q: SavedQuote) => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    return `${origin}/quote/${q.shareToken || q.id}`;
+  };
+
   const handleCopyShareLink = (q: SavedQuote) => {
-    const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/portal?view=quote&token=${q.shareToken || q.id}`;
+    const url = getShareUrl(q);
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
       setCopiedToken(q.id);
@@ -179,9 +185,15 @@ export function QuoteLibraryView({
                 </tr>
               ) : (
                 filteredQuotes.map((q) => {
-                  const subtotal = q.subtotal || ((q.homePrice || 0) + (q.propertyPrice || 0) + (q.freightDelivery || 0) + (q.siteWorkTotal || 0));
+                  const homeP = Number(q.homePrice) || 0;
+                  const landP = Number(q.propertyPrice) || 0;
+                  const freightP = Number(q.freightDelivery) || 0;
+                  const siteP = Number(q.siteWorkTotal) || 0;
+                  const disc = Number(q.discounts) || 0;
+
+                  const subtotal = q.subtotal || (homeP + landP + freightP + siteP - disc);
                   const tax = q.salesTax || Math.round(subtotal * 0.03 * 100) / 100;
-                  const estimatedTotal = q.estimatedTotal || q.totalTurnkeyPrice || (subtotal + tax);
+                  const estimatedTotal = q.estimatedTotal || q.totalTurnkeyPrice || Math.round((subtotal + tax) * 100) / 100;
 
                   return (
                     <tr key={q.id} className="hover:bg-slate-50/80 transition-colors group">
@@ -253,12 +265,12 @@ export function QuoteLibraryView({
         </div>
       </div>
 
-      {/* Quote Preview & Printable Sheet Modal */}
+      {/* Quote Preview Modal (Sized Generously: max-w-4xl max-h-[92vh] so nothing is squished) */}
       {selectedQuoteForPreview && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto print:p-0 print:bg-white">
-          <div className="bg-white rounded-[2rem] p-6 sm:p-8 max-w-2xl w-full shadow-2xl border border-slate-200 space-y-5 text-xs print:border-none print:shadow-none print:max-w-full">
-            {/* Printable Header */}
-            <div className="flex justify-between items-start pb-4 border-b border-slate-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-[2rem] max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden text-xs">
+            {/* Modal Header */}
+            <div className="p-6 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-xs text-[#1E6FA8] font-bold">
@@ -268,140 +280,165 @@ export function QuoteLibraryView({
                     {selectedQuoteForPreview.status}
                   </span>
                 </div>
-                <h3 className="text-xl font-black text-[#0B1E38] mt-0.5">
+                <h3 className="text-xl font-black text-[#0B1E38] mt-1">
                   {selectedQuoteForPreview.customerName}
                 </h3>
                 <p className="text-slate-500 text-xs">
                   {selectedQuoteForPreview.homeModel} • {selectedQuoteForPreview.propertyAddress}
                 </p>
-                <p className="text-slate-400 text-[11px]">
-                  Phone: {selectedQuoteForPreview.customerPhone} • Consultant: {selectedQuoteForPreview.salesperson}
-                </p>
               </div>
 
-              <div className="flex items-center gap-2 print:hidden">
+              <div className="flex items-center gap-2">
+                <a
+                  href={getShareUrl(selectedQuoteForPreview)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-2 bg-white hover:bg-slate-100 text-[#0F2A47] font-bold rounded-xl text-xs border border-slate-200 shadow-2xs flex items-center gap-1.5 transition-colors"
+                >
+                  <span>🌐</span>
+                  <span>Open Customer View ↗</span>
+                </a>
+
                 <button
                   type="button"
                   onClick={handlePrintQuote}
-                  className="px-3.5 py-1.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs cursor-pointer shadow-xs flex items-center gap-1"
+                  className="px-4 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>📄</span>
                   <span>Download / Print PDF</span>
                 </button>
+
                 <button
                   onClick={() => setSelectedQuoteForPreview(null)}
-                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm cursor-pointer ml-1"
                 >
                   ✕
                 </button>
               </div>
             </div>
 
-            {/* Financial Summary Box */}
-            <div className="p-5 bg-slate-50 rounded-2xl space-y-3 border border-slate-200">
-              <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                Turnkey Project Investment Breakdown
-              </span>
-
-              <div className="space-y-1.5 text-xs text-slate-700">
-                <div className="flex justify-between font-semibold">
-                  <span>Base Manufactured Home:</span>
-                  <span>${selectedQuoteForPreview.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                </div>
-
-                {selectedQuoteForPreview.propertyPrice > 0 && (
-                  <div className="flex justify-between font-semibold">
-                    <span>Land / Homesite Parcel:</span>
-                    <span>${selectedQuoteForPreview.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                  </div>
-                )}
-
-                <div className="flex justify-between font-semibold">
-                  <span>Freight Transport &amp; Delivery:</span>
-                  <span>${selectedQuoteForPreview.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                </div>
-
-                <div className="flex justify-between font-semibold">
-                  <span>Site Work, Prep &amp; Utilities:</span>
-                  <span>${selectedQuoteForPreview.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                </div>
-
-                <div className="my-2 border-t border-slate-200" />
+            {/* Modal Scrollable Body */}
+            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6">
+              {/* Financial Breakdown Box (100% Mathematically Exact) */}
+              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
+                  Itemized Turnkey Investment Breakdown
+                </span>
 
                 {(() => {
-                  const subtotal = selectedQuoteForPreview.subtotal || ((selectedQuoteForPreview.homePrice || 0) + (selectedQuoteForPreview.propertyPrice || 0) + (selectedQuoteForPreview.freightDelivery || 0) + (selectedQuoteForPreview.siteWorkTotal || 0));
-                  const tax = selectedQuoteForPreview.salesTax || Math.round(subtotal * 0.03 * 100) / 100;
-                  const estimatedTotal = selectedQuoteForPreview.estimatedTotal || selectedQuoteForPreview.totalTurnkeyPrice || (subtotal + tax);
+                  const homeP = Number(selectedQuoteForPreview.homePrice) || 0;
+                  const landP = Number(selectedQuoteForPreview.propertyPrice) || 0;
+                  const freightP = Number(selectedQuoteForPreview.freightDelivery) || 0;
+                  const siteP = Number(selectedQuoteForPreview.siteWorkTotal) || 0;
+                  const disc = Number(selectedQuoteForPreview.discounts) || 0;
+
+                  const subtotal = homeP + landP + freightP + siteP - disc;
+                  const tax = Math.round(subtotal * 0.03 * 100) / 100;
+                  const estimatedTotal = Math.round((subtotal + tax) * 100) / 100;
 
                   return (
-                    <>
-                      <div className="flex justify-between font-bold text-slate-900">
+                    <div className="space-y-2 text-xs text-slate-700">
+                      <div className="flex justify-between font-semibold">
+                        <span>Base Manufactured Home:</span>
+                        <span className="tabular font-bold text-slate-900">${homeP.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+
+                      {landP > 0 && (
+                        <div className="flex justify-between font-semibold">
+                          <span>Land / Homesite Parcel:</span>
+                          <span className="tabular font-bold text-slate-900">${landP.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                      )}
+
+                      <div className="flex justify-between font-semibold">
+                        <span>Freight Transport &amp; Delivery:</span>
+                        <span className="tabular font-bold text-slate-900">${freightP.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+
+                      <div className="flex justify-between font-semibold">
+                        <span>Site Work, Prep &amp; Utilities:</span>
+                        <span className="tabular font-bold text-slate-900">${siteP.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+
+                      {disc > 0 && (
+                        <div className="flex justify-between font-semibold text-rose-600">
+                          <span>Discounts &amp; Adjustments:</span>
+                          <span className="tabular font-bold">- ${disc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                      )}
+
+                      <div className="my-2 border-t border-slate-200" />
+
+                      <div className="flex justify-between font-bold text-slate-900 text-sm">
                         <span>Subtotal:</span>
-                        <span>${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between text-slate-600 text-[11px]">
                         <span>Financed subtotal:</span>
-                        <span>${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between text-slate-600 text-[11px]">
                         <span>Tax basis:</span>
-                        <span>${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                       <div className="flex justify-between font-bold text-[#1E6FA8]">
                         <span>3% Florida Sales Tax (3.00%):</span>
-                        <span>${tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className="tabular">${tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
 
-                      {/* Prominent Navy ESTIMATED TOTAL banner */}
-                      <div className="flex justify-between items-center bg-[#0F2A47] text-white p-3.5 rounded-xl shadow-md mt-2">
+                      {/* Prominent Dark Navy ESTIMATED TOTAL banner */}
+                      <div className="flex justify-between items-center bg-[#0F2A47] text-white p-4 rounded-xl shadow-md mt-3">
                         <span className="font-extrabold text-xs uppercase tracking-wider">ESTIMATED TOTAL</span>
-                        <span className="font-black text-2xl tracking-tight">
+                        <span className="font-black text-2xl tracking-tight tabular">
                           ${estimatedTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                       </div>
-                    </>
+                    </div>
                   );
                 })()}
               </div>
-            </div>
 
-            {/* Line Items Detail */}
-            {selectedQuoteForPreview.lineItems && selectedQuoteForPreview.lineItems.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                  Itemized Scope of Services
-                </span>
-                <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden text-xs">
-                  {selectedQuoteForPreview.lineItems.map((item) => (
-                    <div key={item.id} className="p-2.5 flex justify-between items-center bg-white hover:bg-slate-50">
-                      <div>
-                        <div className="font-bold text-slate-900">{item.name}</div>
-                        <div className="text-[10px] text-slate-500">{item.description}</div>
+              {/* Itemized Line Items Detail */}
+              {selectedQuoteForPreview.lineItems && selectedQuoteForPreview.lineItems.length > 0 && (
+                <div className="space-y-3">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block">
+                    Itemized Scope of Services
+                  </span>
+                  <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden text-xs">
+                    {selectedQuoteForPreview.lineItems.map((item) => (
+                      <div key={item.id} className="p-3 flex justify-between items-center bg-white hover:bg-slate-50/80">
+                        <div>
+                          <div className="font-bold text-slate-900">{item.name}</div>
+                          <div className="text-[10.5px] text-slate-500">{item.description}</div>
+                        </div>
+                        <div className="font-black text-slate-900 ml-4 shrink-0 tabular">
+                          ${(item.totalPrice || item.unitPrice || 0).toLocaleString()}
+                        </div>
                       </div>
-                      <div className="font-black text-slate-900 ml-4 shrink-0">
-                        ${item.totalPrice.toLocaleString()}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+              )}
+
+              {/* Consultant Notes */}
+              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 leading-relaxed space-y-1">
+                <span className="font-bold text-slate-900 block">Consultant Notes:</span>
+                <p>{selectedQuoteForPreview.notes || 'Standard turnkey package estimate for Central Florida with site prep, delivery, tie-downs, A/C, and permits.'}</p>
               </div>
-            )}
 
-            {/* Notes & Disclaimer */}
-            <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 leading-relaxed">
-              <span className="font-bold text-slate-800 block mb-0.5">Consultant Notes:</span>
-              {selectedQuoteForPreview.notes || 'Standard turnkey package estimate for Central Florida with delivery, site prep, blocking, tie-downs, A/C, and permits.'}
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-[10px] text-slate-400 print:text-black">
-              <span>Easy HomeSource • 9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888</span>
-              <button
-                type="button"
-                onClick={() => handleCopyShareLink(selectedQuoteForPreview)}
-                className="text-[#1E6FA8] hover:underline font-bold print:hidden cursor-pointer"
-              >
-                {copiedToken === selectedQuoteForPreview.id ? '✓ Copied Share Link!' : '🔗 Copy Customer Share Link'}
-              </button>
+              {/* Footer Share Actions */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
+                <span className="text-[11px] text-slate-400">
+                  Easy HomeSource • 9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleCopyShareLink(selectedQuoteForPreview)}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F2A47] font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                >
+                  {copiedToken === selectedQuoteForPreview.id ? '✓ Copied Share Link!' : '🔗 Copy Customer Share Link'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
