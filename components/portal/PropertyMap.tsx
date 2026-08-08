@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { Property } from '@/types/property';
 import { PROPERTY_STATUS_CONFIG } from '@/types/property';
 
@@ -21,109 +21,151 @@ export function PropertyMap({
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [isPanelCollapsed, setIsPanelCollapsed] = useState<boolean>(false);
 
-  // Pan & Zoom State
-  const [zoom, setZoom] = useState<number>(1);
-  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-
-  // Florida Bounding Box coordinates
-  const MIN_LAT = 28.1;
-  const MAX_LAT = 28.95;
-  const MIN_LNG = -82.85;
-  const MAX_LNG = -82.05;
-
-  const projectToMap = (lat: number, lng: number) => {
-    const x = ((lng - MIN_LNG) / (MAX_LNG - MIN_LNG)) * 100;
-    const y = 100 - ((lat - MIN_LAT) / (MAX_LAT - MIN_LAT)) * 100;
-    return {
-      x: Math.max(6, Math.min(94, x)),
-      y: Math.max(10, Math.min(90, y))
-    };
-  };
+  const mapElementRef = useRef<HTMLDivElement>(null);
+  const leafletMapRef = useRef<any>(null);
+  const markersLayerRef = useRef<any>(null);
 
   const filteredProperties = properties.filter((p) => {
     if (statusFilter === 'ALL') return true;
     return p.status === statusFilter;
   });
 
-  // Zoom controls
-  const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.35, 3.2));
-  const handleZoomOut = () => {
-    setZoom((prev) => {
-      const next = Math.max(prev - 0.35, 0.9);
-      if (next <= 1) setPan({ x: 0, y: 0 });
-      return next;
+  // Initialize Real Leaflet Map with CartoDB Positron / Clean White Real-Estate Tiles
+  useEffect(() => {
+    let isMounted = true;
+
+    async function initMap() {
+      if (!mapElementRef.current || leafletMapRef.current) return;
+
+      try {
+        const L = (await import('leaflet')).default;
+
+        if (!isMounted || !mapElementRef.current) return;
+
+        const map = L.map(mapElementRef.current, {
+          center: [28.5553, -82.42], // Central Florida / Brooksville
+          zoom: 10,
+          minZoom: 8,
+          maxZoom: 17,
+          zoomControl: false,
+          scrollWheelZoom: true
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          subdomains: 'abcd',
+          maxZoom: 19
+        }).addTo(map);
+
+        const markersGroup = L.layerGroup().addTo(map);
+        markersLayerRef.current = { L, map, markersGroup };
+        leafletMapRef.current = map;
+      } catch (err) {
+        console.warn('Portal map init:', err);
+      }
+    }
+
+    initMap();
+
+    return () => {
+      isMounted = false;
+      if (leafletMapRef.current) {
+        leafletMapRef.current.remove();
+        leafletMapRef.current = null;
+      }
+    };
+  }, []);
+
+  // Sync Markers
+  useEffect(() => {
+    if (!markersLayerRef.current || !leafletMapRef.current) return;
+    const { L, map, markersGroup } = markersLayerRef.current;
+
+    markersGroup.clearLayers();
+
+    // Dealership HQ Marker
+    const hqIcon = L.divIcon({
+      className: 'ehs-portal-hq-pin',
+      html: `
+        <div style="display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -100%); cursor: pointer;">
+          <div style="background: #0F2A47; color: white; border: 2px solid #F59E0B; border-radius: 9999px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 4px 12px rgba(15,42,71,0.35);">
+            ⭐
+          </div>
+          <div style="margin-top: 4px; background: white; color: #0F2A47; font-weight: 900; font-size: 10px; padding: 2px 8px; border-radius: 9999px; border: 1px solid #CBD5E1; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            EHS Dealership HQ
+          </div>
+        </div>
+      `,
+      iconSize: [30, 42],
+      iconAnchor: [15, 42]
     });
+
+    L.marker([28.5553, -82.3879], { icon: hqIcon }).addTo(markersGroup);
+
+    // Property Pins
+    filteredProperties.forEach((p) => {
+      const isSelected = activeProperty?.id === p.id;
+      const bg = p.status === 'AVAILABLE' ? '#059669' : p.status === 'COMING_SOON' ? '#D97706' : '#4F46E5';
+      const border = isSelected ? '#0F2A47' : '#FFFFFF';
+      const scale = isSelected ? 'scale(1.2)' : 'scale(1)';
+
+      const pinIcon = L.divIcon({
+        className: `ehs-portal-pin-${p.id}`,
+        html: `
+          <div style="display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -100%) ${scale}; transition: transform 0.15s ease; cursor: pointer;">
+            <div style="background: ${bg}; color: white; border: 2px solid ${border}; border-radius: 9999px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 11px; box-shadow: 0 4px 10px rgba(0,0,0,0.25);">
+              ${p.propertyType === 'HOME' ? '🏠' : '📍'}
+            </div>
+            <div style="margin-top: 3px; background: white; color: #0F2A47; font-weight: 900; font-size: 10px; padding: 2px 7px; border-radius: 9999px; border: 1.5px solid ${isSelected ? '#0F2A47' : '#CBD5E1'}; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12);">
+              $${(p.price || 0).toLocaleString()}
+            </div>
+          </div>
+        `,
+        iconSize: [26, 38],
+        iconAnchor: [13, 38]
+      });
+
+      const marker = L.marker([p.latitude || 28.5553, p.longitude || -82.3879], { icon: pinIcon }).addTo(markersGroup);
+
+      marker.on('click', () => {
+        setActiveProperty(p);
+        setIsPanelCollapsed(false);
+        onSelectProperty(p);
+      });
+    });
+  }, [filteredProperties, activeProperty, onSelectProperty]);
+
+  // Controls
+  const handleZoomIn = () => {
+    if (leafletMapRef.current) leafletMapRef.current.zoomIn();
+  };
+
+  const handleZoomOut = () => {
+    if (leafletMapRef.current) leafletMapRef.current.zoomOut();
   };
 
   const handleResetView = () => {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
+    if (leafletMapRef.current) {
+      leafletMapRef.current.setView([28.5553, -82.42], 10);
+    }
   };
 
   const handleCenterBrooksville = () => {
-    setZoom(1.4);
-    setPan({ x: 10, y: -20 });
-  };
-
-  // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('.map-hud-control') || (e.target as HTMLElement).closest('.property-pin')) {
-      return;
-    }
-    setIsDragging(true);
-    dragStartRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    const maxOffset = 200 * zoom;
-    const newX = Math.max(-maxOffset, Math.min(maxOffset, e.clientX - dragStartRef.current.x));
-    const newY = Math.max(-maxOffset, Math.min(maxOffset, e.clientY - dragStartRef.current.y));
-    setPan({ x: newX, y: newY });
-  };
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  // Wheel zoom handler
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY * -0.0015;
-    setZoom((prev) => Math.min(Math.max(prev + delta, 0.9), 3.2));
-  };
-
-  // Touch drag for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      setIsDragging(true);
-      dragStartRef.current = {
-        x: e.touches[0].clientX - pan.x,
-        y: e.touches[0].clientY - pan.y
-      };
+    if (leafletMapRef.current) {
+      leafletMapRef.current.setView([28.5553, -82.3879], 12);
     }
   };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || e.touches.length !== 1) return;
-    setPan({
-      x: e.touches[0].clientX - dragStartRef.current.x,
-      y: e.touches[0].clientY - dragStartRef.current.y
-    });
-  };
-
-  const handleTouchEnd = () => setIsDragging(false);
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden flex flex-col h-[650px] relative">
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden flex flex-col h-[650px] relative w-full">
       {/* Map Control Toolbar */}
-      <div className="p-3.5 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10">
+      <div className="p-3.5 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10 shrink-0">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-slate-800">
             📍 Central Florida Map ({filteredProperties.length} Pins)
           </span>
           <span className="text-[11px] text-slate-400">
-            Moveable &amp; Zoomable • Drag to Pan
+            Real GIS Tile Map • Drag to Pan
           </span>
         </div>
 
@@ -133,7 +175,7 @@ export function PropertyMap({
             onClick={() => setStatusFilter('ALL')}
             className={`px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
               statusFilter === 'ALL'
-                ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
+                ? 'bg-slate-900 text-white border-slate-900'
                 : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
             }`}
           >
@@ -172,171 +214,19 @@ export function PropertyMap({
         </div>
       </div>
 
-      {/* Main Map Workspace (Split View on Desktop: High-Contrast White Canvas with Side Inspector) */}
-      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF]">
-        {/* Moveable & Zoomable White Canvas */}
-        <div
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          className={`flex-1 relative overflow-hidden select-none transition-cursor bg-[#F4F8FC] ${
-            isDragging ? 'cursor-grabbing' : 'cursor-grab'
-          }`}
-        >
-          {/* Zoom & Pan Transform Layer */}
-          <div
-            className="absolute inset-0 transition-transform duration-75 origin-center"
-            style={{
-              transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`
-            }}
-          >
-            {/* Clean Light Grid Dots */}
-            <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
-
-            {/* Geographic Highway Network SVG */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 1000 650"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              {/* Gulf Coast Water Feature */}
-              <path
-                d="M 0 0 L 140 0 Q 180 260 210 650 L 0 650 Z"
-                fill="#E0F2FE"
-                opacity="0.85"
-              />
-              <path
-                d="M 140 0 Q 180 260 210 650"
-                stroke="#38BDF8"
-                strokeWidth="2.5"
-              />
-
-              {/* County Boundaries */}
-              <line x1="140" y1="210" x2="850" y2="210" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.6" />
-              <line x1="180" y1="430" x2="900" y2="430" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.6" />
-              <line x1="580" y1="0" x2="580" y2="650" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.5" />
-
-              {/* US-19 Highway Corridor */}
-              <path
-                d="M 210 50 Q 240 280 280 600"
-                stroke="#0284C7"
-                strokeWidth="2.5"
-                strokeDasharray="5 5"
-              />
-
-              {/* I-75 Highway Corridor */}
-              <path
-                d="M 720 50 Q 660 300 630 600"
-                stroke="#2563EB"
-                strokeWidth="2.5"
-                strokeDasharray="5 5"
-              />
-
-              {/* SR-50 East-West Corridor */}
-              <path
-                d="M 150 340 L 920 350"
-                stroke="#64748B"
-                strokeWidth="2"
-                strokeDasharray="4 4"
-              />
-            </svg>
-
-            {/* Gulf of Mexico Label */}
-            <div className="absolute top-12 left-6 text-[#0369A1]/60 font-black text-xs uppercase tracking-widest pointer-events-none">
-              🌊 Gulf of Mexico
-            </div>
-
-            {/* Regional County Labels */}
-            <div className="absolute top-8 left-48 text-slate-700 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
-              Citrus County (Homosassa / Crystal River)
-            </div>
-            <div className="absolute top-[48%] left-32 text-slate-800 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
-              Hernando County (Brooksville / Spring Hill)
-            </div>
-            <div className="absolute bottom-8 left-48 text-slate-700 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
-              Pasco County (New Port Richey / Zephyrhills)
-            </div>
-
-            {/* Central Dealership Marker (Brooksville HQ) */}
-            <div
-              className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none"
-              style={{
-                left: `${projectToMap(28.5553, -82.3879).x}%`,
-                top: `${projectToMap(28.5553, -82.3879).y}%`
-              }}
-            >
-              <div className="w-6 h-6 rounded-full bg-[#0F2A47] text-white border-2 border-amber-400 flex items-center justify-center text-xs shadow-lg ring-4 ring-[#0F2A47]/10 animate-bounce">
-                ⭐
-              </div>
-              <span className="mt-1 text-[10px] font-black text-[#0B1E38] bg-white px-2.5 py-0.5 rounded-full border border-slate-300 whitespace-nowrap shadow-md">
-                EHS Dealership HQ (Brooksville)
-              </span>
-            </div>
-
-            {/* Interactive Property Pins */}
-            {filteredProperties.map((p) => {
-              const { x, y } = projectToMap(p.latitude, p.longitude);
-              const isSelected = activeProperty?.id === p.id;
-              const statusConfig =
-                PROPERTY_STATUS_CONFIG[p.status] || PROPERTY_STATUS_CONFIG.STATUS_TO_CONFIRM;
-
-              return (
-                <div
-                  key={p.id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveProperty(p);
-                    setIsPanelCollapsed(false);
-                    onSelectProperty(p);
-                  }}
-                  className="property-pin absolute z-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform duration-150 hover:scale-125"
-                  style={{ left: `${x}%`, top: `${y}%` }}
-                >
-                  <div className="relative group flex flex-col items-center">
-                    {/* Pin Marker */}
-                    <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-lg transition-all border-2 ${
-                        isSelected
-                          ? 'bg-[#0F2A47] border-white ring-4 ring-[#1E6FA8]/40 scale-125 shadow-xl'
-                          : p.status === 'AVAILABLE'
-                          ? 'bg-emerald-600 border-white hover:bg-emerald-700'
-                          : p.status === 'COMING_SOON'
-                          ? 'bg-amber-500 border-white hover:bg-amber-600'
-                          : 'bg-indigo-600 border-white'
-                      }`}
-                    >
-                      <span>{p.propertyType === 'HOME' ? '🏠' : '📍'}</span>
-                    </div>
-
-                    {/* High-Contrast White Price Badge on the Pin */}
-                    <div
-                      className={`mt-1 px-2 py-0.5 rounded-full text-[10px] font-black tracking-tight border shadow-sm whitespace-nowrap transition-all ${
-                        isSelected
-                          ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
-                          : 'bg-white text-slate-800 border-slate-300 hover:border-slate-400 group-hover:scale-105'
-                      }`}
-                    >
-                      ${(p.price || 0).toLocaleString()}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {/* Main Map Workspace (Real Leaflet Map Tiles with Side Inspector) */}
+      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF] min-h-0">
+        {/* Real Leaflet Map Container */}
+        <div className="flex-1 relative overflow-hidden h-full">
+          <div ref={mapElementRef} className="w-full h-full" />
 
           {/* Floating Map HUD Controls */}
-          <div className="map-hud-control absolute top-4 left-4 z-30 flex flex-col gap-1.5 bg-white/95 backdrop-blur-xs p-1.5 rounded-2xl border border-slate-200 shadow-md">
+          <div className="map-hud-control absolute top-4 left-4 z-[400] flex flex-col gap-1.5 bg-white/95 backdrop-blur-xs p-1.5 rounded-2xl border border-slate-200 shadow-md">
             <button
               type="button"
               onClick={handleZoomIn}
               title="Zoom In"
-              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer shadow-2xs"
             >
               +
             </button>
@@ -344,7 +234,7 @@ export function PropertyMap({
               type="button"
               onClick={handleZoomOut}
               title="Zoom Out"
-              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer shadow-2xs"
             >
               −
             </button>
@@ -353,7 +243,7 @@ export function PropertyMap({
               type="button"
               onClick={handleResetView}
               title="Reset View"
-              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center transition-colors cursor-pointer shadow-2xs"
             >
               ⟲
             </button>
@@ -361,14 +251,14 @@ export function PropertyMap({
               type="button"
               onClick={handleCenterBrooksville}
               title="Center Brooksville Dealership"
-              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#1E6FA8] font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#1E6FA8] font-bold text-xs flex items-center justify-center transition-colors cursor-pointer shadow-2xs"
             >
               ⭐
             </button>
           </div>
 
           {/* Map Legend Overlay */}
-          <div className="absolute bottom-4 left-4 z-30 bg-white/95 backdrop-blur-xs px-3 py-2 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-700 shadow-sm flex items-center gap-3">
+          <div className="absolute bottom-4 left-4 z-[400] bg-white/95 backdrop-blur-xs px-3 py-2 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-700 shadow-sm flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
               <span>Available</span>
@@ -379,15 +269,15 @@ export function PropertyMap({
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-[#0F2A47]" />
-              <span>Dealership</span>
+              <span>Brooksville HQ</span>
             </div>
           </div>
         </div>
 
-        {/* Right Docked Property Inspector Panel (Always visible, never obstructing pins) */}
+        {/* Right Docked Property Inspector Panel */}
         <div
-          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-30 flex flex-col shrink-0 ${
-            isPanelCollapsed ? 'w-full md:w-12 h-12 md:h-full' : 'w-full md:w-96 h-auto md:h-full'
+          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-[450] flex flex-col shrink-0 h-full ${
+            isPanelCollapsed ? 'w-full md:w-12' : 'w-full md:w-80 lg:w-96'
           }`}
         >
           {isPanelCollapsed ? (
@@ -400,7 +290,7 @@ export function PropertyMap({
               <span className="hidden md:inline vertical-lr text-[11px]">Inspect Property</span>
             </button>
           ) : (
-            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4">
+            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4 max-h-[570px]">
               <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
                   <span className="text-[10px] font-mono font-bold text-[#1E6FA8]">
