@@ -1222,17 +1222,40 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
   },
   "craft-select-28603a": {
     "slug": "craft-select-28603a",
-    "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a",
-    "startingPrice": 120900,
-    "priceLabel": "Starting Price",
+    "sourcePage": "https://www.cavcohomes.com/our-retailers/us/fl/east-palatka/hercules-homes/display-homes/cav340fl25-24304a-craft-select",
+    "startingPrice": null,
+    "priceLabel": "Call/Text for starting price",
     "media": {
       "slug": "craft-select-28603a",
-      "gallery": [],
-      "floorPlanImage": null,
+      "gallery": [
+            {
+                  "src": "https://cdn2.cavco.com/public/phhweb/gallery/file/2783646A855A42C1BF25FB43B13BAE22/340cs28603a_craft_select_web_ready_041525_1762809382071_768_10.jpg",
+                  "alt": "Craft Select 28603A exterior 0",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://www.cavcohomes.com/our-retailers/us/fl/east-palatka/hercules-homes/display-homes/cav340fl25-24304a-craft-select"
+            },
+            {
+                  "src": "https://cdn2.cavco.com/public/phhweb/gallery/file/2783646A855A42C1BF25FB43B13BAE22/340cs28603a_bf0_629_10.gif",
+                  "alt": "Craft Select 28603A brochure 1",
+                  "category": "brochure",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.cavcohomes.com/our-retailers/us/fl/east-palatka/hercules-homes/display-homes/cav340fl25-24304a-craft-select"
+            },
+            {
+                  "src": "https://cdn2.cavco.com/public/phhweb/gallery/file/2783646A855A42C1BF25FB43B13BAE22/340cs28603a_rf0_621_10.jpg",
+                  "alt": "Craft Select 28603A floorplan 2",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.cavcohomes.com/our-retailers/us/fl/east-palatka/hercules-homes/display-homes/cav340fl25-24304a-craft-select"
+            }
+      ],
+      "floorPlanImage": "https://cdn2.cavco.com/public/phhweb/gallery/file/2783646A855A42C1BF25FB43B13BAE22/340cs28603a_rf0_621_10.jpg",
       "brochureUrl": null,
       "videoUrl": null,
       "virtualTourUrl": null,
-      "sourcePage": "https://easyhomesource.com/homes/palm-harbor-plant-city-craft-select-28603a"
-    }
+      "sourcePage": "https://www.cavcohomes.com/our-retailers/us/fl/east-palatka/hercules-homes/display-homes/cav340fl25-24304a-craft-select"
+}
+  }
   }
 };
