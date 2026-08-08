@@ -1228,4 +1228,224 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
 }
   }
   }
+,
+  "delilah": {
+    "slug": "delilah",
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/",
+    "startingPrice": null,
+    "priceLabel": "Call/Text for starting price",
+    "media": {
+      "slug": "delilah",
+      "gallery": [
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/floor-plans-SMALL.jpg",
+                  "alt": "Delilah floorplan 0",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://my.matterport.com/api/v2/player/models/nBr5bwTEycr/thumb/",
+                  "alt": "Delilah interior 1",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-1.jpg",
+                  "alt": "Delilah interior 2",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-2.jpg",
+                  "alt": "Delilah interior 3",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-3.jpg",
+                  "alt": "Delilah interior 4",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-4.jpg",
+                  "alt": "Delilah interior 5",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-int-5.jpg",
+                  "alt": "Delilah interior 6",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-1.jpg",
+                  "alt": "Delilah kitchen 7",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-2.jpg",
+                  "alt": "Delilah kitchen 8",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-3.jpg",
+                  "alt": "Delilah kitchen 9",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-4.jpg",
+                  "alt": "Delilah kitchen 10",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-5.jpg",
+                  "alt": "Delilah kitchen 11",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-kit-6.jpg",
+                  "alt": "Delilah kitchen 12",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-1.jpg",
+                  "alt": "Delilah bedroom 13",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-2.jpg",
+                  "alt": "Delilah bedroom 14",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-3.jpg",
+                  "alt": "Delilah bedroom 15",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-4.jpg",
+                  "alt": "Delilah bedroom 16",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-5.jpg",
+                  "alt": "Delilah bedroom 17",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bed-6.jpg",
+                  "alt": "Delilah bedroom 18",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-1.jpg",
+                  "alt": "Delilah bathroom 19",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-2.jpg",
+                  "alt": "Delilah bathroom 20",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-3.jpg",
+                  "alt": "Delilah bathroom 21",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-4.jpg",
+                  "alt": "Delilah bathroom 22",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-bath-5.jpg",
+                  "alt": "Delilah bathroom 23",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-uti-1.jpg",
+                  "alt": "Delilah interior 24",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-uti-2.jpg",
+                  "alt": "Delilah interior 25",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-uti-3.jpg",
+                  "alt": "Delilah interior 26",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-ext-1.jpg",
+                  "alt": "Delilah exterior 27",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            },
+            {
+                  "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/The%20Delilah%20CSFL-3301-ext-2.jpg",
+                  "alt": "Delilah exterior 28",
+                  "category": "exterior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+            }
+      ],
+      "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232817/floor-plans-SMALL.jpg",
+      "brochureUrl": null,
+      "videoUrl": "https://my.matterport.com/show/?m=nBr5bwTEycr",
+      "virtualTourUrl": "https://my.matterport.com/show/?m=nBr5bwTEycr",
+      "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
+}
+  }
 };
