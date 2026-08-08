@@ -40,194 +40,125 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
   },
     "oak": {
     "slug": "oak",
-    "sourcePage": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak",
+    "sourcePage": "https://owntru.com/models/trt28564ah/",
     "startingPrice": null,
     "priceLabel": "Call/Text for starting price",
     "media": {
       "slug": "oak",
       "gallery": [
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/RkcKwwW69avCiyUBVSXM.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak floorplan 0",
+                  "src": "https://api.claytonhomes.com/images/mfg/flp/b39166d9-b876-4d71-8cab-9edd5737b085.jpg",
+                  "alt": "TRU Oak floorplan 0",
                   "category": "floorplan",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/WSDxRuRAP6xFMt4Xo1Ez.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak exterior 1",
+                  "src": "https://api.claytonhomes.com/images/mfg/flp/567a9f12-84da-4806-a690-2bb89c84b847.jpg",
+                  "alt": "TRU Oak floorplan 1",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
+            },
+            {
+                  "src": "https://api.claytonhomes.com/images/mfg/ext/3dc342ec-d51d-48af-b046-2a3d005befff.jpg",
+                  "alt": "TRU Oak exterior 2",
                   "category": "exterior",
                   "isPrimary": true,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/Z9pg6kG8CDCpKGttXg9G.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 2",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/872a2045-3aae-4307-a1c2-dafe8c7dc647.jpg",
+                  "alt": "TRU Oak interior 3",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/13JLUPbun7ah8Hcwe9Yp.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 3",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/5fd281b1-6238-4cf6-85c5-8d18018b4882.jpg",
+                  "alt": "TRU Oak interior 4",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/paexYx8SNj4mKdQdnjZm.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 4",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/7e552794-7b6f-4207-b8d5-8cc48d4b7f32.jpg",
+                  "alt": "TRU Oak interior 5",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/CjYFcsiiqvVi5FLLGWtj.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 5",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/df1ba59e-3196-4aeb-95fa-24d54f9772ae.jpg",
+                  "alt": "TRU Oak interior 6",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/KkXWSqYFrPjP1f5ZbB6j.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 6",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/40233ba5-e41c-4ee1-a3fc-f2a1e1e3e481.jpg",
+                  "alt": "TRU Oak interior 7",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/BNgu7JTZAJFi8ZeS9eXm.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 7",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/a1268c5c-ee8d-4353-9624-0e2ebc2a4620.jpg",
+                  "alt": "TRU Oak interior 8",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/1RMxBwYt1zf86eyGGCBr.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 8",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/81f23c49-2436-4507-83c7-97de468b9035.jpg",
+                  "alt": "TRU Oak interior 9",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/2MHTPuKri8srxpyebfWc.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 9",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/4584528f-6b1c-4e2d-920d-41fac2edea13.jpg",
+                  "alt": "TRU Oak interior 10",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/EfAd12YBeTz64Jgd9hSA.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 10",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/55de80c7-e22b-4575-85b4-22bd5e0f6de3.jpg",
+                  "alt": "TRU Oak interior 11",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/YLWPCtRy2xEF4KrqzVb6.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 11",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/19ed1fa6-2efa-46d3-9fb8-011d6c853e4c.jpg",
+                  "alt": "TRU Oak interior 12",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/SVG5KKx7aGHgWrkruiHN.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 12",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/cd907f0b-fcbf-4d8c-aa71-912cc3e94271.jpg",
+                  "alt": "TRU Oak interior 13",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             },
             {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/w1YkBSbrwc97es7nkbYt.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 13",
+                  "src": "https://api.claytonhomes.com/images/mfg/int/eb9a36b9-f0d4-4b55-afa2-507ce6b15470.jpg",
+                  "alt": "TRU Oak interior 14",
                   "category": "interior",
                   "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/efru5KRjJ6tWpMFSZPXF.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 14",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/Z9ib32eZVzMVrabviZJT.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 15",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/vK8B1WQJwN4iWXzTs2bk.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 16",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/A4HMKanyKZxsYhbLpr3H.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 17",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/5pTWof9cYdQdbR3Xeqbs.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 18",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/ZWxa3xwDRqEEAR8Gj3Tp.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 19",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/EMQzmhFWgG98YWkW74Vg.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 20",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/K5nu1aePFUbgZLnDCvyU.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 21",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/fiboyuS236ASboFGW8BV.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 22",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/7rpdXtov2NRbeAWS3Ksi.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 23",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
-            },
-            {
-                  "src": "https://media.ffycdn.net/us/clayton-homes/V3DDxJFpsVnRumdkQQHB.jpg?cid=client-tvbsssmtbhwqgn8r",
-                  "alt": "Oak interior 24",
-                  "category": "interior",
-                  "isPrimary": false,
-                  "sourceUrl": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+                  "sourceUrl": "https://owntru.com/models/trt28564ah/"
             }
       ],
-      "floorPlanImage": "https://media.ffycdn.net/us/clayton-homes/RkcKwwW69avCiyUBVSXM.jpg?cid=client-tvbsssmtbhwqgn8r",
+      "floorPlanImage": "https://api.claytonhomes.com/images/mfg/flp/b39166d9-b876-4d71-8cab-9edd5737b085.jpg",
       "brochureUrl": null,
       "videoUrl": null,
       "virtualTourUrl": null,
-      "sourcePage": "https://www.claytonhomes.com/homes-for-sale/manufactured-homes/oak"
+      "sourcePage": "https://owntru.com/models/trt28564ah/"
 }
+  }
   },
         {
           "src": "https://easyhomesource.com/_next/image?q=75&url=https%3A%2F%2Ftrove.b-cdn.net%2Fimages%2Fed21y2hdjl.jpeg&w=3840",
