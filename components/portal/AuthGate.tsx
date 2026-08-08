@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/AuthContext';
-import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
+import { VERIFIED_TEAM_USERS } from '@/data/teamMembers';
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, loading, login } = useAuth();
-  const [email, setEmail] = useState('scott@easyhomesource.com');
-  const [password, setPassword] = useState('••••••••••••');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,21 +29,30 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
+
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPass = password.trim();
+
+    if (!cleanEmail || !cleanPass) {
+      setError('Please enter both your email address and password.');
+      setSubmitting(false);
+      return;
+    }
+
+    const matched = VERIFIED_TEAM_USERS.find(
+      (u) => u.email.toLowerCase() === cleanEmail || u.name.toLowerCase() === cleanEmail
+    );
+
+    if (!matched) {
+      setError('Account not found. Please enter a valid authorized dealership email (e.g. scott@easyhomesource.com, alex@easyhomesource.com, mike@easyhomesource.com).');
+      setSubmitting(false);
+      return;
+    }
+
     try {
-      await login(email, password);
+      await login(cleanEmail, cleanPass);
     } catch (err) {
       setError('Invalid employee credentials. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleQuickLogin = async (selectedUser: TeamUser) => {
-    setSubmitting(true);
-    try {
-      await login(selectedUser.email, 'demo-password');
-    } catch (err) {
-      setError('Login failed.');
     } finally {
       setSubmitting(false);
     }
@@ -76,12 +85,12 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
               Employee sign in
             </h2>
             <p className="text-xs text-slate-500 font-medium mt-1">
-              Use your authorized Easy HomeSource credentials to access the quote portal.
+              Enter your authorized email and password to access the quote portal.
             </p>
           </div>
 
           {error && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-medium">
+            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-semibold leading-relaxed">
               {error}
             </div>
           )}
@@ -89,36 +98,54 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Email Address
+                Email Address *
               </label>
               <input
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@easyhomesource.com"
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold focus:outline-none focus:border-[#1E6FA8] focus:ring-2 focus:ring-[#1E6FA8]/20"
+                placeholder="name@easyhomesource.com"
+                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:border-[#1E6FA8] focus:ring-2 focus:ring-[#1E6FA8]/20"
               />
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Password
+                Password *
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold pr-12 focus:outline-none focus:border-[#1E6FA8] focus:ring-2 focus:ring-[#1E6FA8]/20"
+                  placeholder="••••••••••••"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 pr-12 focus:outline-none focus:border-[#1E6FA8] focus:ring-2 focus:ring-[#1E6FA8]/20"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-700 cursor-pointer"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPassword((prev) => !prev);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 cursor-pointer transition-colors focus:outline-none"
                 >
-                  {showPassword ? 'Hide' : 'Show'}
+                  {showPassword ? (
+                    /* Eyeball open / hide icon */
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                    </svg>
+                  ) : (
+                    /* Eyeball visible icon */
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
@@ -126,31 +153,16 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black py-3 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black py-3 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
             >
-              <span>{submitting ? 'Signing in...' : 'Sign in →'}</span>
+              <span>{submitting ? 'Signing in...' : 'Sign in with Email and Password →'}</span>
             </button>
           </form>
 
-          {/* Quick Login Roster for Authorized Dealership Staff */}
-          <div className="pt-4 border-t border-slate-100 space-y-3">
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block text-center">
-              Authorized Team Sign In (One-Click Access)
-            </span>
-
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              {VERIFIED_TEAM_USERS.slice(0, 6).map((u) => (
-                <button
-                  key={u.id}
-                  type="button"
-                  onClick={() => handleQuickLogin(u)}
-                  className="p-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-left transition-colors cursor-pointer"
-                >
-                  <div className="font-bold text-slate-900 truncate">{u.name}</div>
-                  <div className="text-[10px] text-slate-400 font-mono truncate">{u.role}</div>
-                </button>
-              ))}
-            </div>
+          <div className="pt-2 text-center">
+            <p className="text-[11px] text-slate-400 font-medium">
+              Authorized dealership personnel only. Public access is restricted.
+            </p>
           </div>
         </div>
 
