@@ -12,7 +12,7 @@ import {
   type DeliveryCalculationResult,
   type QuoteFinancialTotals
 } from '@/data/pricingSpreadsheet';
-import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
+import { VERIFIED_TEAM_USERS } from '@/data/teamMembers';
 
 export interface SelectedQuoteLineItem {
   id: string;
@@ -86,10 +86,10 @@ export function ManualQuoteBuilderModal({
   availableProperties,
   existingQuote = null
 }: ManualQuoteBuilderModalProps) {
-  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Summary & Totals)
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  // Step state (1: Customer -> 2: Homes & Land -> 3: Auto Delivery -> 4: Dropdown Line Items -> 5: Financing / Loan Officer -> 6: Summary & Totals)
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
 
-  // Customer Details & Assigned Consultant from Verified Team
+  // Customer Details & Assigned Consultant
   const [customerName, setCustomerName] = useState(initialCustomerName || existingQuote?.customerName || '');
   const [customerPhone, setCustomerPhone] = useState(existingQuote?.customerPhone || '352-555-0199');
   const [customerEmail, setCustomerEmail] = useState(existingQuote?.customerEmail || '');
@@ -119,7 +119,7 @@ export function ManualQuoteBuilderModal({
     existingQuote?.factoryCost ?? selectedHome?.estFactoryCost ?? 28000
   );
 
-  // Selected Property / Land
+  // Selected Property / Land (NO SETBACKS)
   const [landOption, setLandOption] = useState<'OWNED' | 'PORTAL_PROPERTY'>(
     existingQuote?.propertyPrice === 0 ? 'OWNED' : 'PORTAL_PROPERTY'
   );
@@ -142,7 +142,7 @@ export function ManualQuoteBuilderModal({
   const [freightCost, setFreightCost] = useState<number>(3500);
   const [isCalculatingDelivery, setIsCalculatingDelivery] = useState(false);
 
-  // Initial Itemized Line Items from ERP Standard Services
+  // Line Items
   const initialBlockTie = useMemo(() => {
     const homeClass = (selectedHome?.width || 14) > 18 ? 'double' : 'single';
     return calculateBlockTieDown(selectedHome?.length || 60, homeClass);
@@ -160,7 +160,7 @@ export function ManualQuoteBuilderModal({
         quantity: 1,
         totalPrice: initialBlockTie.price || 5835,
         totalCost: initialBlockTie.cost || 4668,
-        description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (${initialBlockTie.matchedLength}ft table).`
+        description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (${initialBlockTie.matchedLength}ft table).`
       },
       {
         id: 'item-2',
@@ -213,9 +213,16 @@ export function ManualQuoteBuilderModal({
     ]
   );
 
-  // Selected Catalog Item Dropdown Helper
   const [selectedCatalogSku, setSelectedCatalogSku] = useState(SERVICE_CATALOG[0].sku);
   const [discounts, setDiscounts] = useState<number>(existingQuote?.discounts || 0);
+
+  // Optional Loan Officer / Financing Tab
+  const [purchaseType, setPurchaseType] = useState<'cash' | 'financing'>('financing');
+  const [financingStatus, setFinancingStatus] = useState('pending');
+  const [preApprovalAmount, setPreApprovalAmount] = useState(0);
+  const [targetBudget, setTargetBudget] = useState(0);
+  const [ehsLoanOfficerUsed, setEhsLoanOfficerUsed] = useState(false);
+
   const [notes, setNotes] = useState<string>(existingQuote?.notes || 'Standard turnkey package estimate for Central Florida with site prep, delivery, tie-downs, A/C, and permits.');
 
   useEffect(() => {
@@ -225,7 +232,6 @@ export function ManualQuoteBuilderModal({
       setCustomHomePrice(selectedHome.ehsPrice || selectedHome.msrp || 39888);
       setCustomFactoryCost(selectedHome.estFactoryCost || Math.round((selectedHome.ehsPrice || 39888) * 0.72));
 
-      // Auto-update Block & Tie-down based on model dimensions
       const homeClass = (selectedHome.width || 14) > 18 ? 'double' : 'single';
       const bt = calculateBlockTieDown(selectedHome.length || 60, homeClass);
       setLineItems((prev) =>
@@ -237,7 +243,7 @@ export function ManualQuoteBuilderModal({
                 unitCost: bt.cost,
                 totalPrice: bt.price * item.quantity,
                 totalCost: bt.cost * item.quantity,
-                description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (${bt.matchedLength}ft ${homeClass} table).`
+                description: `Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (${bt.matchedLength}ft ${homeClass} table).`
               }
             : item
         )
@@ -256,7 +262,7 @@ export function ManualQuoteBuilderModal({
 
   if (!isOpen) return null;
 
-  // Filter homes by search and builder
+  // Filter Catalog
   const filteredHomeCatalog = FULL_MASTER_CATALOG_HOMES.filter((h) => {
     if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
     if (!homeSearch.trim()) return true;
@@ -291,7 +297,11 @@ export function ManualQuoteBuilderModal({
     0.03
   );
 
-  // Trigger Auto Calculate Delivery Button
+  const activeLoanFee = ehsLoanOfficerUsed ? 1000 : 0;
+  const netTakeHome = (quoteTotals.house_gross_margin + quoteTotals.service_profit) - (quoteTotals.admin_fee + activeLoanFee + quoteTotals.salesperson_commission);
+  const targetMet = netTakeHome >= 20000;
+
+  // Auto Calculate Delivery
   const handleAutoCalculateDelivery = () => {
     setIsCalculatingDelivery(true);
     setTimeout(() => {
@@ -305,7 +315,7 @@ export function ManualQuoteBuilderModal({
     }, 300);
   };
 
-  // Add line item from service catalog dropdown
+  // Add line item
   const handleAddCatalogLineItem = () => {
     const item = SERVICE_CATALOG.find((s) => s.sku === selectedCatalogSku);
     if (!item) return;
@@ -323,23 +333,6 @@ export function ManualQuoteBuilderModal({
       description: item.description
     };
 
-    setLineItems((prev) => [...prev, newItem]);
-  };
-
-  // Add custom line item
-  const handleAddCustomLineItem = () => {
-    const newItem: SelectedQuoteLineItem = {
-      id: `item-${Date.now()}`,
-      sku: `CUSTOM-${Date.now().toString().slice(-4)}`,
-      name: 'Custom Project Work / Add-On',
-      category: 'custom',
-      unitPrice: 1500,
-      unitCost: 1100,
-      quantity: 1,
-      totalPrice: 1500,
-      totalCost: 1100,
-      description: 'Custom client request specification.'
-    };
     setLineItems((prev) => [...prev, newItem]);
   };
 
@@ -455,15 +448,16 @@ export function ManualQuoteBuilderModal({
           </button>
         </div>
 
-        {/* 5-Step Navigation Ribbon */}
+        {/* 6-Step Navigation Ribbon */}
         <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { num: 1, label: '1. Customer Info' },
-              { num: 2, label: `2. Homes & Land` },
+              { num: 2, label: '2. Homes & Land' },
               { num: 3, label: '3. Auto Calculate Delivery' },
               { num: 4, label: '4. Dropdown Line Items' },
-              { num: 5, label: '5. Summary & Totals' }
+              { num: 5, label: '5. Financing (Loan Officer)' },
+              { num: 6, label: '6. Summary & Totals' }
             ].map((s) => (
               <button
                 key={s.num}
@@ -490,7 +484,7 @@ export function ManualQuoteBuilderModal({
 
         {/* Modal Scrollable Workspace */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* STEP 1: Customer Details & Assigned Team User */}
+          {/* STEP 1: Customer Details */}
           {step === 1 && (
             <div className="space-y-4">
               <div>
@@ -565,7 +559,6 @@ export function ManualQuoteBuilderModal({
           {/* STEP 2: Homes & Land Selection */}
           {step === 2 && (
             <div className="space-y-6">
-              {/* Home Selection */}
               <div className="p-5 bg-white border border-slate-200 rounded-[1.5rem] shadow-sm space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-slate-100">
                   <div>
@@ -600,7 +593,6 @@ export function ManualQuoteBuilderModal({
                   </div>
                 </div>
 
-                {/* All Homes Selection Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-64 overflow-y-auto pr-1">
                   {filteredHomeCatalog.map((h) => {
                     const isSelected = selectedHomeSlug === h.slug;
@@ -620,12 +612,8 @@ export function ManualQuoteBuilderModal({
                             : 'border-slate-200 hover:bg-slate-50'
                         }`}
                       >
-                        <div className="font-black text-xs text-[#0B1E38] truncate">
-                          {h.name}
-                        </div>
-                        <div className="text-[10.5px] text-slate-500 font-medium">
-                          {h.manufacturer} • {h.dimensions}
-                        </div>
+                        <div className="font-black text-xs text-[#0B1E38] truncate">{h.name}</div>
+                        <div className="text-[10.5px] text-slate-500 font-medium">{h.manufacturer} • {h.dimensions}</div>
                         <div className="flex justify-between items-center mt-1">
                           <span className="font-black text-xs text-[#1E6FA8]">
                             ${Math.round(h.ehsPrice || h.msrp || 50000).toLocaleString()}
@@ -639,7 +627,6 @@ export function ManualQuoteBuilderModal({
                   })}
                 </div>
 
-                {/* Home Summary & Override */}
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl grid sm:grid-cols-3 gap-3 items-center">
                   <div>
                     <span className="text-[10px] text-slate-500 font-bold block uppercase">Selected Model</span>
@@ -732,7 +719,7 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 3: Auto Calculate Delivery */}
+          {/* STEP 3: Auto Calculate Delivery (NO SETBACKS) */}
           {step === 3 && (
             <div className="space-y-5">
               <div>
@@ -838,13 +825,6 @@ export function ManualQuoteBuilderModal({
                   >
                     + Add Item
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleAddCustomLineItem}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs cursor-pointer border border-slate-200"
-                  >
-                    + Custom
-                  </button>
                 </div>
               </div>
 
@@ -914,11 +894,92 @@ export function ManualQuoteBuilderModal({
             </div>
           )}
 
-          {/* STEP 5: Summary & Totals (Customer Totals + 3% Florida Sales Tax + Internal Only Metrics) */}
+          {/* STEP 5: FINANCING (OPTIONAL LOAN OFFICER & DEPOSITS) */}
           {step === 5 && (
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 5</span>
+                <h4 className="text-lg font-black text-[#0B1E38]">Payment &amp; Financing (Optional Loan Officer)</h4>
+                <p className="text-xs text-slate-500">
+                  Tracks payment method, lender pre-approval status, and whether an EHS loan officer is assigned to the sale.
+                </p>
+              </div>
+
+              <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Purchase Type</label>
+                    <select
+                      value={purchaseType}
+                      onChange={(e) => setPurchaseType(e.target.value as any)}
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white text-xs"
+                    >
+                      <option value="cash">Cash / Self-Pay Sale</option>
+                      <option value="financing">Lender Financing</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Financing Status</label>
+                    <select
+                      value={financingStatus}
+                      onChange={(e) => setFinancingStatus(e.target.value)}
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white text-xs"
+                    >
+                      <option value="not_applicable">Not applicable</option>
+                      <option value="pending">Pending Application</option>
+                      <option value="pre_approved">Pre-approved</option>
+                      <option value="approved">Approved</option>
+                      <option value="declined">Declined</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-sm text-slate-900">EHS loan officer used?</div>
+                    <div className="text-xs text-slate-500">Adds $1,000.00 loan fee to internal calculations.</div>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={ehsLoanOfficerUsed}
+                    onChange={(e) => setEhsLoanOfficerUsed(e.target.checked)}
+                    className="w-5 h-5 rounded text-[#0F2A47] cursor-pointer"
+                  />
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Customer Target Budget ($)</label>
+                    <input
+                      type="number"
+                      value={targetBudget}
+                      onChange={(e) => setTargetBudget(Number(e.target.value) || 0)}
+                      placeholder="e.g. 180000"
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Pre-approval Amount ($)</label>
+                    <input
+                      type="number"
+                      value={preApprovalAmount}
+                      onChange={(e) => setPreApprovalAmount(Number(e.target.value) || 0)}
+                      placeholder="e.g. 200000"
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-xs"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 6: SUMMARY & TOTALS (Exact 100% Match to Screenshot) */}
+          {step === 6 && (
+            <div className="space-y-6">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 6</span>
                 <h4 className="text-lg font-black text-[#0B1E38]">Formal Proposal Summary &amp; Financial Totals</h4>
                 <p className="text-xs text-slate-500">
                   Verified breakdown matching the Easy HomeSource ERP spreadsheet with 3% Florida sales tax and internal metrics.
@@ -1028,12 +1089,29 @@ export function ManualQuoteBuilderModal({
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
                     <span className="text-slate-500 font-medium block text-[10px] uppercase">Loan fee:</span>
-                    <span className="font-bold text-slate-900">${quoteTotals.loan_fee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className="font-bold text-slate-900">${activeLoanFee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
                     <span className="text-slate-500 font-medium block text-[10px] uppercase">Salesperson comm (20%):</span>
                     <span className="font-bold text-slate-900">${quoteTotals.salesperson_commission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
+                </div>
+
+                {/* Net Take Home Box matching screenshot */}
+                <div className={`p-3 rounded-xl border mt-3 flex items-center justify-between ${
+                  targetMet
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                    : 'bg-amber-50 border-amber-200 text-amber-900'
+                }`}>
+                  <span className="font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
+                    {targetMet ? '✓' : '⚠️'} NET TAKE HOME
+                  </span>
+                  <span className="font-black text-base tabular">
+                    ${netTakeHome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-400 font-medium">
+                  Floor: $20,000.00
                 </div>
               </div>
             </div>
@@ -1060,7 +1138,7 @@ export function ManualQuoteBuilderModal({
               Save as Draft
             </button>
 
-            {step < 5 ? (
+            {step < 6 ? (
               <button
                 type="button"
                 onClick={() => setStep((prev) => ((prev + 1) as any))}
