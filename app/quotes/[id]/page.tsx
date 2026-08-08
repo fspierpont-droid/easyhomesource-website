@@ -1,41 +1,39 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { calculateComprehensiveQuoteTotals, type QuoteFinancialTotals } from '@/data/pricingSpreadsheet';
 
 export default function QuoteDetailPage() {
   const params = useParams();
-  const router = useRouter();
-  const quoteId = params?.id as string;
+  const quoteId = (params?.id as string) || 'quote-1';
   const [copied, setCopied] = useState(false);
 
-  // Quote state
-  const [quote, setQuote] = useState<any>({
-    id: quoteId || 'quote-1',
+  // Proposal state
+  const quote = {
+    id: quoteId,
     quoteNumber: 'Q-2026-0801',
     customerName: 'Sarah Jenkins',
     customerPhone: '352-555-0192',
     customerEmail: 'sarah.j@example.com',
-    homeModel: 'Move on Up (18x60 3b/2ba)',
-    manufacturer: 'Clayton Addison',
-    series: 'Tempo Series',
+    homeModel: 'Boujee 2 (18x60 3b/2ba)',
+    manufacturer: 'CLAYTON Addison',
+    series: 'Boujee Series',
     beds: 3,
     baths: 2,
-    sqft: 1080,
-    dimensions: "18' x 60'",
-    homePrice: 94900,
-    factoryCost: 68328,
+    sqft: 1580,
+    dimensions: "28' x 60'",
+    homePrice: 129475.03,
     propertyAddress: '6645 W Erlen Ln, Homosassa, FL 34446',
-    propertyPrice: 49900,
+    propertyPrice: 189900.00,
     deliveryRoute: 'Dealership to Customer Site',
     deliveryMiles: 32,
-    freightDelivery: 3850,
-    siteWorkTotal: 34500,
+    freightDelivery: 2860.00,
+    siteWorkTotal: 25650.00,
     discounts: 0,
     salesperson: 'Scott Pierpont',
-    salespersonTitle: 'Senior Housing Consultant',
+    salespersonTitle: 'Principal & Operations Admin',
     salespersonPhone: '(352) 558-8888',
     salespersonEmail: 'scott@easyhomesource.com',
     status: 'APPROVED',
@@ -44,72 +42,47 @@ export default function QuoteDetailPage() {
       {
         id: 'li-1',
         name: 'Block & Hurricane Tie-Down Installation',
-        description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone hurricane ground anchors (60ft single wide matrix).',
-        category: 'mandatory_services',
-        price: 5835
+        description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (60ft double table).',
+        price: 12195.00
       },
       {
         id: 'li-2',
         name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
         description: 'High-efficiency heat pump with digital programmable thermostat, outdoor equipment pad, whip, and ductwork plenum tie-in.',
-        category: 'mandatory_services',
-        price: 5555
+        price: 5555.00
       },
       {
         id: 'li-3',
         name: 'Dirt Pad & Laser Site Grading (2 Loads)',
         description: 'Land clearing, clean fill dirt import, compacting, and laser leveling for solid home foundation.',
-        category: 'mandatory_services',
-        price: 2700
+        price: 2700.00
       },
       {
         id: 'li-4',
-        name: '4-Inch Potable Water Well System',
-        description: 'Drilling up to 120ft, submersible pump, pressure tank, control box, and plumbing tie-in to home inlet.',
-        category: 'mandatory_services',
-        price: 7500
+        name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
+        description: 'Full perimeter vinyl skirting with top rail, ground track, access door, and 2 sets of code stairs.',
+        price: 3200.00
       },
       {
         id: 'li-5',
-        name: '1,050-Gallon Septic Tank & Drainfield',
-        description: 'Standard concrete septic tank, header line, distribution box, and gravity drainfield system with county health approval.',
-        category: 'mandatory_services',
-        price: 6800
-      },
-      {
-        id: 'li-6',
-        name: '200-Amp Electric Pole & Meter Panel',
-        description: '200A service disconnect, utility pole/riser, ground rod, and electrical conduit hookup to power provider.',
-        category: 'mandatory_services',
-        price: 2450
-      },
-      {
-        id: 'li-7',
         name: 'County Building, Zoning & Health Dept Permits',
-        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees.',
-        category: 'mandatory_services',
-        price: 2650
-      },
-      {
-        id: 'li-8',
-        name: 'Vented Vinyl Perimeter Skirting & 2 Sets Code Steps',
-        description: 'Full perimeter vinyl skirting with ground channel, top rail, access door, and 2 sets of code-compliant entrance stairs.',
-        category: 'mandatory_services',
-        price: 3200
+        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees ($2,000 standard).',
+        price: 2000.00
       }
     ],
     createdAt: 'August 7, 2026'
-  });
+  };
 
   const totals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
-    (quote.homePrice || 0) + (quote.propertyPrice || 0),
+    quote.homePrice || 0,
+    quote.propertyPrice || 0,
     quote.freightDelivery || 0,
     quote.siteWorkTotal || 0,
     0,
     quote.discounts || 0,
-    quote.factoryCost || 0,
-    Math.round((quote.freightDelivery || 0) / 1.1),
-    Math.round((quote.siteWorkTotal || 0) * 0.75),
+    0,
+    0,
+    0,
     0,
     0.03
   );
@@ -119,7 +92,7 @@ export default function QuoteDetailPage() {
   };
 
   const handleCopyLink = () => {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
+    const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/quote/${quote.id}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
       setCopied(true);
@@ -129,14 +102,14 @@ export default function QuoteDetailPage() {
 
   return (
     <div className="min-h-screen bg-slate-100/70 font-sans text-slate-800 antialiased print:bg-white print:p-0">
-      {/* Top App Bar (Hidden in Print) */}
-      <header className="bg-[#0B1E38] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 print:hidden shadow-md">
+      {/* Top App Bar (Strictly Hidden in Print) */}
+      <header className="no-print bg-[#0B1E38] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 shadow-md">
         <div className="flex items-center gap-3">
           <Link
-            href="/portal"
+            href="/portal?view=library"
             className="text-xs font-bold text-[#A8C8E6] hover:text-white flex items-center gap-1 transition-colors"
           >
-            ← Back to Quote Portal
+            ← Back to Quote Library
           </Link>
           <span className="text-white/30">|</span>
           <span className="font-mono text-xs text-emerald-400 font-black tracking-wider">
@@ -157,6 +130,14 @@ export default function QuoteDetailPage() {
             <span>{copied ? 'Link Copied!' : 'Copy Share Link'}</span>
           </button>
 
+          <Link
+            href={`/quotes/${quote.id}/edit`}
+            className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors"
+          >
+            <span>✏️</span>
+            <span>Edit Quote</span>
+          </Link>
+
           <button
             type="button"
             onClick={handlePrint}
@@ -168,28 +149,29 @@ export default function QuoteDetailPage() {
         </div>
       </header>
 
-      {/* Main Quote Sheet Document */}
+      {/* Main Quote Sheet Document (Official Easy HomeSource Layout) */}
       <main className="max-w-4xl mx-auto my-6 sm:my-10 p-6 sm:p-10 bg-white rounded-[2rem] shadow-xl border border-slate-200 space-y-8 print:my-0 print:p-0 print:border-none print:shadow-none print:max-w-full">
-        {/* Document Header with Official Branding */}
+        {/* Document Header with Official Logo */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 pb-6 border-b-2 border-[#0F2A47]/15">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-[#0F2A47] text-white font-black flex items-center justify-center text-lg shadow-sm">
-                EHS
-              </div>
-              <div>
-                <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
-                  Easy HomeSource
-                </h1>
-                <p className="text-[11px] text-slate-500 font-bold">
-                  Central Florida Turnkey Manufactured Housing Operations
-                </p>
-              </div>
-            </div>
-            <div className="mt-3 text-xs text-slate-600 space-y-0.5 font-medium">
-              <p>📍 9011 McIntyre Rd, Brooksville, FL 34601</p>
-              <p>📞 Phone / Text: (352) 558-8888 • ✉️ info@easyhomesource.com</p>
-              <p>🌐 easyhomesource-website.vercel.app</p>
+          <div className="flex items-center gap-3.5">
+            <img
+              src="/images/ehs-master-logo.png"
+              alt="Easy HomeSource"
+              className="h-14 w-auto object-contain"
+              onError={(e) => {
+                (e.target as HTMLElement).style.display = 'none';
+              }}
+            />
+            <div>
+              <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
+                Easy HomeSource
+              </h1>
+              <p className="text-[11px] text-slate-500 font-bold">
+                Central Florida Turnkey Manufactured Housing Operations
+              </p>
+              <p className="text-[10px] text-slate-400 mt-0.5">
+                9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888 • info@easyhomesource.com
+              </p>
             </div>
           </div>
 
@@ -294,7 +276,7 @@ export default function QuoteDetailPage() {
                       Transport delivery to {quote.propertyAddress} ({quote.deliveryMiles} miles, Florida DOT permits &amp; escorts included).
                     </div>
                   </td>
-                  <td className="py-2.5 px-4 text-right font-black text-slate-900">
+                  <td className="py-2.5 px-4 text-right font-black text-slate-900 tabular">
                     ${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                 </tr>
@@ -305,7 +287,7 @@ export default function QuoteDetailPage() {
                       <div className="font-bold text-slate-900">{item.name}</div>
                       <div className="text-[10.5px] text-slate-500">{item.description}</div>
                     </td>
-                    <td className="py-2.5 px-4 text-right font-black text-slate-900">
+                    <td className="py-2.5 px-4 text-right font-black text-slate-900 tabular">
                       ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -315,7 +297,7 @@ export default function QuoteDetailPage() {
           </div>
         </section>
 
-        {/* Customer Financial Breakdown & 3% Sales Tax */}
+        {/* Customer Financial Breakdown & 3% Sales Tax (100% Mathematically Exact) */}
         <section className="space-y-4">
           <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">
             3. Turnkey Investment &amp; Florida Sales Tax
@@ -325,53 +307,49 @@ export default function QuoteDetailPage() {
             <div className="space-y-2 text-xs text-slate-700">
               <div className="flex justify-between font-semibold">
                 <span>1. Base Manufactured Home:</span>
-                <span>${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular font-bold text-slate-900">${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               {quote.propertyPrice > 0 && (
                 <div className="flex justify-between font-semibold">
                   <span>2. Land / Homesite Parcel:</span>
-                  <span>${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="tabular font-bold text-slate-900">${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               )}
 
               <div className="flex justify-between font-semibold">
-                <span>3. Freight Delivery:</span>
-                <span>${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span>3. Freight Transport &amp; Delivery:</span>
+                <span className="tabular font-bold text-slate-900">${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               <div className="flex justify-between font-semibold">
                 <span>4. Site Work, Utilities &amp; Permits:</span>
-                <span>${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular font-bold text-slate-900">${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
               <div className="my-2 border-t border-slate-200" />
 
-              <div className="flex justify-between font-bold text-slate-900">
-                <span>Subtotal:</span>
-                <span>${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <div className="flex justify-between font-bold text-slate-900 text-sm">
+                <span>Subtotal (Exact Sum):</span>
+                <span className="tabular">${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-600 text-[11px]">
                 <span>Financed subtotal:</span>
-                <span>${totals.financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              </div>
-              <div className="flex justify-between text-slate-600 text-[11px]">
-                <span>Non-financed subtotal:</span>
-                <span>${totals.non_financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.financed_subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-600 text-[11px]">
                 <span>Tax basis:</span>
-                <span>${totals.tax_basis.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.tax_basis.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between font-bold text-[#1E6FA8]">
                 <span>3% Florida Sales Tax (3.00%):</span>
-                <span>${totals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="tabular">${totals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
-              {/* Prominent Dark Navy ESTIMATED TOTAL banner matching user screenshot */}
+              {/* Prominent Dark Navy ESTIMATED TOTAL banner */}
               <div className="flex items-center justify-between rounded-2xl bg-[#0F2A47] text-white px-5 py-4 mt-3 shadow-lg">
                 <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
-                <span className="font-black text-3xl tracking-tight">
+                <span className="font-black text-3xl tracking-tight tabular">
                   ${totals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
@@ -379,15 +357,17 @@ export default function QuoteDetailPage() {
           </div>
         </section>
 
-        {/* Consultant Notes & Next Steps */}
-        <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl text-xs space-y-2">
-          <span className="font-bold text-slate-900 block">Project &amp; Proposal Notes:</span>
+        {/* Next Steps */}
+        <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl text-xs space-y-1.5">
+          <span className="font-bold text-slate-900 block">Next Steps:</span>
           <p className="text-slate-600 leading-relaxed">
-            {quote.notes}
+            1. Review this proposal and contact your associate with any questions.<br />
+            2. Sign the deposit agreement to reserve your home and lock factory production timing.<br />
+            3. Schedule your site visit and begin the financing and permitting process.
           </p>
         </div>
 
-        {/* Housing Consultant Signature Card */}
+        {/* Consultant Signature Card */}
         <div className="grid sm:grid-cols-2 gap-6 pt-4 border-t border-slate-200 text-xs">
           <div className="space-y-1">
             <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">
@@ -405,14 +385,14 @@ export default function QuoteDetailPage() {
             <div className="font-bold text-slate-800">Licensed &amp; Insured Manufactured Retailer</div>
             <div className="text-slate-500">9011 McIntyre Rd, Brooksville, FL 34601</div>
             <div className="text-[10px] text-slate-400 mt-2">
-              Florida HUD &amp; DBPR Manufactured Housing Retailer
+              Florida DBPR / HUD Licensed Dealership
             </div>
           </div>
         </div>
 
         {/* Disclaimer */}
         <div className="text-[9.5px] text-slate-400 leading-relaxed border-t border-slate-100 pt-4">
-          * Price quotation valid for 30 days from proposal date. Final site costs subject to county building permit conditions, soil percolation, and utility connection points. Florida sales tax calculated at statutory 3.00% manufactured housing basis.
+          * Site development pricing is an estimate based on visible conditions. Final pricing is subject to change based on actual site-specific requirements during installation. Prices are valid for 30 days from the quote date. Florida sales tax calculated at statutory 3.00% manufactured housing basis.
         </div>
       </main>
     </div>
