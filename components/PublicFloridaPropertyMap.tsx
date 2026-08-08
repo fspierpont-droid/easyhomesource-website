@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import type { Property } from '@/types/property';
 import { PROPERTY_STATUS_CONFIG } from '@/types/property';
@@ -109,16 +109,16 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
   const handleTouchEnd = () => setIsDragging(false);
 
   return (
-    <div className="bg-white border border-borderGray rounded-3xl shadow-sm overflow-hidden flex flex-col h-[650px] relative">
+    <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col h-[650px] relative">
       {/* Top Header & Filter Ribbon */}
-      <div className="p-3.5 sm:p-4 border-b border-borderGray bg-ehsSoftBlue/40 flex flex-wrap items-center justify-between gap-3 z-10">
+      <div className="p-3.5 sm:p-4 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-black uppercase tracking-wider text-ehsBlue">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
             Interactive Florida Map
           </span>
           <span className="text-slate-300 hidden sm:inline">•</span>
-          <span className="text-xs font-bold text-ehsNavy">
-            Moveable &amp; Zoomable ({filteredProperties.length} Properties)
+          <span className="text-xs font-bold text-[#0B1E38]">
+            Moveable &amp; Zoomable ({filteredProperties.length} Properties in Citrus, Hernando, Pasco, Sumter)
           </span>
         </div>
 
@@ -129,8 +129,8 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
             onClick={() => setStatusFilter('ALL')}
             className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'ALL'
-                ? 'bg-ehsDeepBlue text-white border-ehsDeepBlue'
-                : 'bg-white text-slate-700 border-borderGray hover:bg-slate-50'
+                ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
+                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
             }`}
           >
             All ({properties.length})
@@ -141,7 +141,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
             className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'AVAILABLE'
                 ? 'bg-emerald-600 text-white border-emerald-600'
-                : 'bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50'
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100/60'
             }`}
           >
             🟢 Available
@@ -152,7 +152,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
             className={`px-3 py-1 rounded-full border transition-colors cursor-pointer ${
               statusFilter === 'COMING_SOON'
                 ? 'bg-amber-600 text-white border-amber-600'
-                : 'bg-white text-amber-700 border-amber-200 hover:bg-amber-50'
+                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100/60'
             }`}
           >
             🟡 Coming Soon
@@ -160,9 +160,9 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
         </div>
       </div>
 
-      {/* Main Map Workspace (Split View on Desktop with Side Inspector so Map is Never Blocked) */}
-      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-slate-950">
-        {/* Moveable & Zoomable Canvas */}
+      {/* Main Map Workspace (Split View on Desktop: High-Contrast White Map Canvas with Right Side Inspector) */}
+      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF]">
+        {/* Moveable & Zoomable White Canvas */}
         <div
           ref={mapContainerRef}
           onMouseDown={handleMouseDown}
@@ -173,7 +173,7 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          className={`flex-1 relative overflow-hidden select-none transition-cursor ${
+          className={`flex-1 relative overflow-hidden select-none transition-cursor bg-[#F4F8FC] ${
             isDragging ? 'cursor-grabbing' : 'cursor-grab'
           }`}
         >
@@ -184,58 +184,78 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
               transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`
             }}
           >
-            {/* Subtle Blueprint & Grid Background */}
-            <div className="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:28px_28px] opacity-40 pointer-events-none" />
+            {/* Clean Light Subtle Grid Background */}
+            <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
 
-            {/* Stylized SVG Florida Highway Network & Regional Boundaries */}
+            {/* Stylized Clean SVG Florida Geographic Contours & Highways */}
             <svg
-              className="absolute inset-0 w-full h-full pointer-events-none opacity-30"
+              className="absolute inset-0 w-full h-full pointer-events-none"
               viewBox="0 0 1000 650"
               fill="none"
               preserveAspectRatio="none"
             >
-              {/* US-19 Coastal Highway */}
+              {/* Gulf of Mexico Coastline Shading */}
               <path
-                d="M 180 50 Q 220 280 260 600"
-                stroke="#38bdf8"
-                strokeWidth="2"
-                strokeDasharray="4 4"
+                d="M 0 0 L 140 0 Q 180 260 210 650 L 0 650 Z"
+                fill="#E0F2FE"
+                opacity="0.85"
               />
-              {/* I-75 Highway */}
               <path
-                d="M 680 50 Q 620 300 590 600"
-                stroke="#60a5fa"
-                strokeWidth="2"
-                strokeDasharray="4 4"
+                d="M 140 0 Q 180 260 210 650"
+                stroke="#38BDF8"
+                strokeWidth="2.5"
               />
+
+              {/* County Boundaries */}
+              <line x1="140" y1="210" x2="850" y2="210" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.6" />
+              <line x1="180" y1="430" x2="900" y2="430" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.6" />
+              <line x1="580" y1="0" x2="580" y2="650" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.5" />
+
+              {/* US-19 Highway Corridor */}
+              <path
+                d="M 210 50 Q 240 280 280 600"
+                stroke="#0284C7"
+                strokeWidth="2.5"
+                strokeDasharray="5 5"
+              />
+
+              {/* I-75 Highway Corridor */}
+              <path
+                d="M 720 50 Q 660 300 630 600"
+                stroke="#2563EB"
+                strokeWidth="2.5"
+                strokeDasharray="5 5"
+              />
+
               {/* SR-50 East-West Corridor */}
               <path
-                d="M 100 340 L 900 350"
-                stroke="#94a3b8"
-                strokeWidth="1.5"
-                strokeDasharray="3 3"
-              />
-              {/* Gulf Coast Contour */}
-              <path
-                d="M 120 0 Q 150 250 190 650"
-                stroke="#0284c7"
-                strokeWidth="3"
-                opacity="0.5"
+                d="M 150 340 L 920 350"
+                stroke="#64748B"
+                strokeWidth="2"
+                strokeDasharray="4 4"
               />
             </svg>
 
-            {/* Regional County Labels */}
-            <div className="absolute top-8 left-10 text-slate-400/50 font-black text-xs sm:text-sm uppercase tracking-widest pointer-events-none">
-              Citrus County (Homosassa / Crystal River)
-            </div>
-            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 text-slate-400/50 font-black text-xs sm:text-sm uppercase tracking-widest pointer-events-none">
-              Hernando County (Brooksville / Spring Hill)
-            </div>
-            <div className="absolute bottom-8 right-16 text-slate-400/50 font-black text-xs sm:text-sm uppercase tracking-widest pointer-events-none">
-              Pasco County (New Port Richey / Zephyrhills)
+            {/* Gulf of Mexico Label */}
+            <div className="absolute top-12 left-6 text-[#0369A1]/60 font-black text-xs uppercase tracking-widest pointer-events-none">
+              🌊 Gulf of Mexico
             </div>
 
-            {/* Central Dealership Marker (Brooksville HQ) */}
+            {/* Regional County Labels in Crisp Bold High-Contrast Text */}
+            <div className="absolute top-8 left-48 text-slate-700 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
+              Citrus County (Homosassa / Crystal River)
+            </div>
+            <div className="absolute top-[48%] left-32 text-slate-800 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
+              Hernando County (Brooksville / Spring Hill)
+            </div>
+            <div className="absolute bottom-8 left-48 text-slate-700 font-extrabold text-xs uppercase tracking-wider pointer-events-none bg-white/90 px-2.5 py-1 rounded-md border border-slate-200/80 shadow-2xs">
+              Pasco County (New Port Richey / Zephyrhills)
+            </div>
+            <div className="absolute top-[40%] right-16 text-slate-600 font-extrabold text-[11px] uppercase tracking-wider pointer-events-none bg-white/90 px-2 py-0.5 rounded-md border border-slate-200/80 shadow-2xs">
+              Sumter County (Bushnell)
+            </div>
+
+            {/* Central Dealership Marker (Brooksville Dealership HQ) */}
             <div
               className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none"
               style={{
@@ -243,15 +263,15 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
                 top: `${projectToMap(28.5553, -82.3879).y}%`
               }}
             >
-              <div className="w-5 h-5 rounded-full bg-ehsBlue border-2 border-white flex items-center justify-center text-[10px] shadow-xl animate-pulse">
+              <div className="w-6 h-6 rounded-full bg-[#0F2A47] text-white border-2 border-amber-400 flex items-center justify-center text-xs shadow-lg ring-4 ring-[#0F2A47]/10 animate-bounce">
                 ⭐
               </div>
-              <span className="mt-1 text-[9px] font-black text-ehsLightBlue bg-slate-900/90 px-2 py-0.5 rounded border border-ehsBlue/40 whitespace-nowrap shadow-md">
+              <span className="mt-1 text-[10px] font-black text-[#0B1E38] bg-white px-2.5 py-0.5 rounded-full border border-slate-300 whitespace-nowrap shadow-md">
                 EHS Dealership HQ (Brooksville)
               </span>
             </div>
 
-            {/* Interactive Property Pins */}
+            {/* Interactive Property Pins in High-Contrast White Cards */}
             {filteredProperties.map((p) => {
               const { x, y } = projectToMap(p.latitude, p.longitude);
               const isSelected = activeProperty?.id === p.id;
@@ -269,190 +289,197 @@ export function PublicFloridaPropertyMap({ properties }: PublicFloridaPropertyMa
                   className="property-pin absolute z-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform duration-150 hover:scale-125"
                   style={{ left: `${x}%`, top: `${y}%` }}
                 >
-                  {/* Pin Circle */}
-                  <div
-                    className={`relative flex items-center justify-center p-1 rounded-full shadow-lg transition-all ${
-                      isSelected
-                        ? 'ring-4 ring-white scale-125 z-30 shadow-2xl'
-                        : 'hover:shadow-xl'
-                    }`}
-                    style={{ backgroundColor: statusConfig.mapPinColor }}
-                  >
-                    <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[9px] font-black text-slate-900">
-                      {p.propertyType === 'LAND' ? '🌲' : '🏡'}
+                  <div className="relative group flex flex-col items-center">
+                    {/* Pin Marker */}
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-black shadow-lg transition-all border-2 ${
+                        isSelected
+                          ? 'bg-[#0F2A47] border-white ring-4 ring-[#1E6FA8]/40 scale-125 shadow-xl'
+                          : p.status === 'AVAILABLE'
+                          ? 'bg-emerald-600 border-white hover:bg-emerald-700'
+                          : p.status === 'COMING_SOON'
+                          ? 'bg-amber-500 border-white hover:bg-amber-600'
+                          : 'bg-indigo-600 border-white'
+                      }`}
+                    >
+                      <span>{p.propertyType === 'HOME' ? '🏠' : '📍'}</span>
                     </div>
-                  </div>
 
-                  {/* Pin Price Tag */}
-                  <div
-                    className={`mt-1 -translate-x-1/4 px-1.5 py-0.5 rounded text-[10px] font-black tracking-tight whitespace-nowrap shadow-md border ${
-                      isSelected
-                        ? 'bg-white text-slate-900 border-white font-black scale-105'
-                        : 'bg-slate-900/90 text-white border-slate-700'
-                    }`}
-                  >
-                    {p.price ? `$${Math.round(p.price / 1000)}k` : 'Lot'}
+                    {/* High-Contrast White Price Badge on the Pin */}
+                    <div
+                      className={`mt-1 px-2 py-0.5 rounded-full text-[10px] font-black tracking-tight border shadow-sm whitespace-nowrap transition-all ${
+                        isSelected
+                          ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
+                          : 'bg-white text-slate-800 border-slate-300 hover:border-slate-400 group-hover:scale-105'
+                      }`}
+                    >
+                      ${(p.price || 0).toLocaleString()}
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Map HUD Zoom & Navigation Controls (Top-Right of Map) */}
-          <div className="map-hud-control absolute top-4 right-4 z-30 flex flex-col gap-1.5 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-700/80 shadow-2xl backdrop-blur-xs">
+          {/* Floating Map HUD Controls (Zoom In, Zoom Out, Reset, Center Brooksville) */}
+          <div className="map-hud-control absolute top-4 left-4 z-30 flex flex-col gap-1.5 bg-white/95 backdrop-blur-xs p-1.5 rounded-2xl border border-slate-200 shadow-md">
             <button
               type="button"
               onClick={handleZoomIn}
-              className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-base flex items-center justify-center transition-colors cursor-pointer"
               title="Zoom In"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer"
             >
               +
             </button>
             <button
               type="button"
               onClick={handleZoomOut}
-              className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-base flex items-center justify-center transition-colors cursor-pointer"
               title="Zoom Out"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer"
             >
               −
             </button>
-            <div className="h-px bg-slate-700 my-0.5" />
+            <div className="h-px bg-slate-200 my-0.5" />
             <button
               type="button"
               onClick={handleResetView}
-              className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
-              title="Reset Florida View"
+              title="Reset View"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
             >
               ⟲
             </button>
             <button
               type="button"
               onClick={handleCenterBrooksville}
-              className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
-              title="Center Brooksville HQ"
+              title="Center Brooksville Dealership"
+              className="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#1E6FA8] font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
             >
-              📍
+              ⭐
             </button>
           </div>
 
-          {/* Move / Pan Guide Nudge */}
-          <div className="absolute bottom-3 left-4 z-20 pointer-events-none bg-slate-900/80 text-slate-300 px-3 py-1 rounded-full text-[10px] font-semibold border border-slate-700/60 backdrop-blur-xs flex items-center gap-1.5">
-            <span>✋ Click &amp; drag to move</span>
-            <span className="text-slate-500">•</span>
-            <span>🔍 Scroll to zoom ({Math.round(zoom * 100)}%)</span>
+          {/* Map Legend Overlay */}
+          <div className="absolute bottom-4 left-4 z-30 bg-white/95 backdrop-blur-xs px-3 py-2 rounded-2xl border border-slate-200 text-[11px] font-bold text-slate-700 shadow-sm flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span>Available</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+              <span>Coming Soon</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#0F2A47]" />
+              <span>Dealership</span>
+            </div>
           </div>
         </div>
 
-        {/* Smart Docked Property Inspector Panel (Does not cover the map!) */}
-        {activeProperty && !isPanelCollapsed ? (
-          <aside className="w-full md:w-80 lg:w-96 bg-white border-t md:border-t-0 md:border-l border-borderGray flex flex-col justify-between p-4 sm:p-5 shadow-2xl z-30 animate-in fade-in slide-in-from-right duration-200 overflow-y-auto">
-            <div className="space-y-3.5">
-              {/* Header with Close / Minimize */}
-              <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-slate-100">
+        {/* Right Docked Property Inspector Panel (Always clear and visible, never obstructing pins) */}
+        <div
+          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-30 flex flex-col shrink-0 ${
+            isPanelCollapsed ? 'w-full md:w-12 h-12 md:h-full' : 'w-full md:w-96 h-auto md:h-full'
+          }`}
+        >
+          {isPanelCollapsed ? (
+            <button
+              type="button"
+              onClick={() => setIsPanelCollapsed(false)}
+              className="w-full h-full p-3 flex md:flex-col items-center justify-center gap-2 text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 cursor-pointer font-bold text-xs"
+            >
+              <span>◀</span>
+              <span className="hidden md:inline vertical-lr text-[11px]">Inspect Property</span>
+            </button>
+          ) : (
+            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4">
+              <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-ehsDeepBlue bg-ehsSoftBlue px-2 py-0.5 rounded">
-                    {activeProperty.propertyType === 'HOME'
-                      ? 'Move-In Ready Home'
-                      : activeProperty.propertyType === 'LAND_HOME_PACKAGE'
-                      ? 'Land & Home Package'
-                      : 'Build-Ready Lot'}
+                  <span className="text-[10px] font-mono font-bold text-[#1E6FA8]">
+                    {activeProperty?.id || 'PROPERTY'}
                   </span>
-                  <h4 className="font-black text-base text-ehsNavy mt-1">
-                    {activeProperty.address}
-                  </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    {activeProperty.city}, {activeProperty.county} County, {activeProperty.zip}
+                  <h3 className="text-base font-black text-[#0B1E38] leading-tight mt-0.5">
+                    {activeProperty?.address || 'Select a property pin'}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {activeProperty?.city}, FL {activeProperty?.zip} • {activeProperty?.county} County
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-black ring-1 ${
-                      PROPERTY_STATUS_CONFIG[activeProperty.status].bg
-                    } ${PROPERTY_STATUS_CONFIG[activeProperty.status].text} ${
-                      PROPERTY_STATUS_CONFIG[activeProperty.status].border
-                    }`}
-                  >
-                    {PROPERTY_STATUS_CONFIG[activeProperty.status].label}
-                  </span>
-                  <button
-                    onClick={() => setIsPanelCollapsed(true)}
-                    className="text-slate-400 hover:text-slate-700 p-1 font-bold text-xs"
-                    title="Collapse Details Panel"
-                  >
-                    ✕
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsPanelCollapsed(true)}
+                  className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs cursor-pointer"
+                  title="Collapse Inspector"
+                >
+                  ✕
+                </button>
               </div>
 
-              {/* Price & Specs Box */}
-              <div className="p-3 bg-ehsSoftBlue/50 border border-ehsBlue/10 rounded-2xl flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">
-                    Turnkey Offering
-                  </span>
-                  <span className="font-black text-lg sm:text-xl text-ehsNavy">
-                    {activeProperty.price
-                      ? `$${activeProperty.price.toLocaleString()}`
-                      : 'Custom Package Pricing'}
-                  </span>
-                </div>
-                <div className="text-right font-black text-xs text-slate-700">
-                  {activeProperty.bedrooms
-                    ? `${activeProperty.bedrooms} Bed • ${activeProperty.bathrooms} Bath`
-                    : activeProperty.lotSize || 'Homesite'}
-                </div>
-              </div>
+              {activeProperty ? (
+                <div className="space-y-4 text-xs">
+                  {/* Price Card */}
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase block">Land / Package Price</span>
+                      <span className="text-2xl font-black text-[#0F2A47]">
+                        ${(activeProperty.price || 0).toLocaleString()}
+                      </span>
+                    </div>
+                    <span
+                      className={`font-black px-2.5 py-1 rounded-full text-[10px] border ${
+                        activeProperty.status === 'AVAILABLE'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-amber-50 text-amber-700 border-amber-200'
+                      }`}
+                    >
+                      {activeProperty.status}
+                    </span>
+                  </div>
 
-              {/* Verified Specs / Blueprint Badge (No generic fake house pictures) */}
-              <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-                  <span>📐</span>
-                  <span>{activeProperty.community || 'Central Florida Homesite'}</span>
+                  {/* Parcel Specs */}
+                  <div className="grid grid-cols-2 gap-2.5 text-[11.5px]">
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Parcel Number</span>
+                      <span className="font-bold text-slate-800 truncate block">{activeProperty.parcelNumber || 'Verified'}</span>
+                    </div>
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Acreage / Lot</span>
+                      <span className="font-bold text-slate-800 truncate block">{activeProperty.lotSize || '0.50 Acres'}</span>
+                    </div>
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Zoning Code</span>
+                      <span className="font-bold text-slate-800 truncate block">{activeProperty.zoning || 'MDR / Residential'}</span>
+                    </div>
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Allowed Width</span>
+                      <span className="font-bold text-slate-800 truncate block">{activeProperty.allowedWidth || 'Single / Double Wide'}</span>
+                    </div>
+                  </div>
+
+                  {/* Property Notes */}
+                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-slate-600 leading-relaxed text-[11px]">
+                    <span className="font-bold text-slate-800 block mb-0.5">Site Details:</span>
+                    {activeProperty.notes || 'High and dry homesite in Central Florida ready for manufactured home placement, well, and septic hookup.'}
+                  </div>
+
+                  {/* CTA Actions */}
+                  <div className="pt-2 flex flex-col gap-2">
+                    <Link
+                      href={`/get-quote?property=${encodeURIComponent(activeProperty.address)}`}
+                      className="w-full bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black py-2.5 rounded-xl text-center shadow-xs transition-all cursor-pointer"
+                    >
+                      Get Turnkey Quote for this Site →
+                    </Link>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {activeProperty.notes || activeProperty.description}
-                </p>
-                {activeProperty.parcelNumber && (
-                  <p className="text-[10px] font-mono text-slate-400 pt-1">
-                    Parcel PIN: #{activeProperty.parcelNumber}
-                  </p>
-                )}
-              </div>
+              ) : (
+                <div className="py-12 text-center text-slate-400 font-medium text-xs">
+                  Click any pin on the map to inspect parcel details.
+                </div>
+              )}
             </div>
-
-            {/* Action Buttons */}
-            <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2">
-              <Link
-                href={`/get-quote?property=${encodeURIComponent(activeProperty.id)}&source=map`}
-                className="w-full py-2.5 bg-ehsBlue hover:bg-ehsDeepBlue text-white rounded-xl text-xs font-bold text-center transition-colors shadow-xs"
-              >
-                Request Quote
-              </Link>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${activeProperty.address}, ${activeProperty.city}, FL`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 border border-borderGray hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-bold text-center transition-colors"
-              >
-                Directions ↗
-              </a>
-            </div>
-          </aside>
-        ) : (
-          /* Minimized Floating Re-Open Button */
-          <button
-            type="button"
-            onClick={() => setIsPanelCollapsed(false)}
-            className="absolute bottom-4 right-4 z-30 bg-white hover:bg-slate-50 text-slate-900 border border-borderGray px-3.5 py-2 rounded-2xl shadow-xl font-bold text-xs flex items-center gap-2 cursor-pointer transition-all hover:scale-105"
-          >
-            <span>📍</span>
-            <span>View {activeProperty ? activeProperty.address : 'Selected Property'}</span>
-            <span>→</span>
-          </button>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
