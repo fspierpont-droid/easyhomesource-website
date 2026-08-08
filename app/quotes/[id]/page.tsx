@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { SiteLogo } from '@/components/SiteLogo';
 import { calculateComprehensiveQuoteTotals, type QuoteFinancialTotals } from '@/data/pricingSpreadsheet';
 
 export default function QuoteDetailPage() {
@@ -60,13 +61,13 @@ export default function QuoteDetailPage() {
       {
         id: 'li-4',
         name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
-        description: 'Full perimeter vinyl skirting with top rail, ground track, access door, and 2 sets of code stairs.',
+        description: 'Full perimeter vinyl skirting (156 linear ft) with top rail, ground track, access door, and 2 sets of code stairs.',
         price: 3200.00
       },
       {
         id: 'li-5',
         name: 'County Building, Zoning & Health Dept Permits',
-        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees ($2,000 standard).',
+        description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).',
         price: 2000.00
       }
     ],
@@ -149,19 +150,12 @@ export default function QuoteDetailPage() {
         </div>
       </header>
 
-      {/* Main Quote Sheet Document (Official Easy HomeSource Layout) */}
+      {/* Main Quote Sheet Document */}
       <main className="max-w-4xl mx-auto my-6 sm:my-10 p-6 sm:p-10 bg-white rounded-[2rem] shadow-xl border border-slate-200 space-y-8 print:my-0 print:p-0 print:border-none print:shadow-none print:max-w-full">
         {/* Document Header with Official Logo */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 pb-6 border-b-2 border-[#0F2A47]/15">
-          <div className="flex items-center gap-3.5">
-            <img
-              src="/images/ehs-master-logo.png"
-              alt="Easy HomeSource"
-              className="h-14 w-auto object-contain"
-              onError={(e) => {
-                (e.target as HTMLElement).style.display = 'none';
-              }}
-            />
+          <div className="flex items-center gap-4">
+            <SiteLogo size="lg" />
             <div>
               <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
                 Easy HomeSource
@@ -169,7 +163,7 @@ export default function QuoteDetailPage() {
               <p className="text-[11px] text-slate-500 font-bold">
                 Central Florida Turnkey Manufactured Housing Operations
               </p>
-              <p className="text-[10px] text-slate-400 mt-0.5">
+              <p className="text-[10px] text-slate-400 mt-0.5 font-medium">
                 9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888 • info@easyhomesource.com
               </p>
             </div>
@@ -297,7 +291,7 @@ export default function QuoteDetailPage() {
           </div>
         </section>
 
-        {/* Customer Financial Breakdown & 3% Sales Tax (100% Mathematically Exact) */}
+        {/* Customer Financial Breakdown & 3% Sales Tax */}
         <section className="space-y-4">
           <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">
             3. Turnkey Investment &amp; Florida Sales Tax

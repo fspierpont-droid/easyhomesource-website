@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { SiteLogo } from '@/components/SiteLogo';
 import { calculateComprehensiveQuoteTotals, type QuoteFinancialTotals } from '@/data/pricingSpreadsheet';
 
 export default function CustomerShareQuotePage() {
@@ -11,13 +12,13 @@ export default function CustomerShareQuotePage() {
   const [copied, setCopied] = useState(false);
 
   // Proposal state
-  const [quote, setQuote] = useState({
+  const quote = {
     quoteNumber: 'Q-2026-0801',
     customerName: 'Sarah Jenkins',
     customerPhone: '352-555-0192',
     customerEmail: 'sarah.j@example.com',
     homeModel: 'Move on Up (18x60 3b/2ba)',
-    manufacturer: 'Clayton Addison',
+    manufacturer: 'CLAYTON Addison',
     series: 'Tempo Series',
     beds: 3,
     baths: 2,
@@ -59,18 +60,18 @@ export default function CustomerShareQuotePage() {
       {
         id: 'li-4',
         name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
-        description: 'Full perimeter vinyl skirting with top rail, ground track, access door, and 2 sets of code stairs.',
+        description: 'Full perimeter vinyl skirting (156 linear ft) with top rail, ground track, access door, and 2 sets of code stairs.',
         price: 3200.00
       },
       {
         id: 'li-5',
         name: 'County Building, Zoning & Health Dept Permits',
-        description: 'Hernando/Citrus county building permit processing, plan review, and mandatory inspection fees ($2,000 standard).',
+        description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).',
         price: 2000.00
       }
     ],
     createdAt: 'August 7, 2026'
-  });
+  };
 
   const totals: QuoteFinancialTotals = calculateComprehensiveQuoteTotals(
     quote.homePrice || 0,
@@ -100,11 +101,11 @@ export default function CustomerShareQuotePage() {
 
   return (
     <div className="min-h-screen bg-slate-100/70 font-sans text-slate-800 antialiased print:bg-white print:p-0">
-      {/* Top Customer Banner */}
-      <header className="bg-[#0B1E38] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 print:hidden shadow-md">
+      {/* Top Bar (Hidden in Print) */}
+      <header className="no-print bg-[#0B1E38] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 shadow-md">
         <div className="flex items-center gap-3">
-          <Link href="/" className="font-extrabold text-sm text-white tracking-tight flex items-center gap-1.5">
-            <span className="w-6 h-6 rounded bg-[#1E6FA8] flex items-center justify-center text-xs font-black">E</span>
+          <Link href="/" className="font-extrabold text-sm text-white tracking-tight flex items-center gap-2">
+            <span className="w-7 h-7 rounded-lg bg-[#1E6FA8] flex items-center justify-center text-xs font-black text-white">E</span>
             <span>Easy HomeSource Customer Proposal</span>
           </Link>
           <span className="text-white/30">|</span>
@@ -113,14 +114,14 @@ export default function CustomerShareQuotePage() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
             type="button"
             onClick={handleCopyLink}
             className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <span>🔗</span>
-            <span>{copied ? 'Copied!' : 'Share Quote'}</span>
+            <span>{copied ? 'Link Copied!' : 'Share Quote'}</span>
           </button>
 
           <button
@@ -129,32 +130,27 @@ export default function CustomerShareQuotePage() {
             className="px-4 py-1.5 bg-[#1E6FA8] hover:bg-[#165a8a] text-white font-black rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
           >
             <span>📄</span>
-            <span>Download PDF</span>
+            <span>Download / Print PDF</span>
           </button>
         </div>
       </header>
 
-      {/* Quote Document */}
+      {/* Main Quote Sheet Document */}
       <main className="max-w-4xl mx-auto my-6 sm:my-10 p-6 sm:p-10 bg-white rounded-[2rem] shadow-xl border border-slate-200 space-y-8 print:my-0 print:p-0 print:border-none print:shadow-none print:max-w-full">
-        {/* Document Header */}
+        {/* Document Header with Official Logo */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 pb-6 border-b-2 border-[#0F2A47]/15">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-[#0F2A47] text-white font-black flex items-center justify-center text-lg shadow-sm">
-                EHS
-              </div>
-              <div>
-                <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
-                  Easy HomeSource
-                </h1>
-                <p className="text-[11px] text-slate-500 font-bold">
-                  Central Florida Turnkey Manufactured Housing Operations
-                </p>
-              </div>
-            </div>
-            <div className="mt-3 text-xs text-slate-600 space-y-0.5 font-medium">
-              <p>📍 9011 McIntyre Rd, Brooksville, FL 34601</p>
-              <p>📞 Phone / Text: (352) 558-8888 • ✉️ info@easyhomesource.com</p>
+          <div className="flex items-center gap-4">
+            <SiteLogo size="lg" />
+            <div>
+              <h1 className="text-2xl font-black text-[#0B1E38] tracking-tight">
+                Easy HomeSource
+              </h1>
+              <p className="text-[11px] text-slate-500 font-bold">
+                Central Florida Turnkey Manufactured Housing Operations
+              </p>
+              <p className="text-[10px] text-slate-400 mt-0.5 font-medium">
+                9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888 • info@easyhomesource.com
+              </p>
             </div>
           </div>
 
@@ -259,7 +255,7 @@ export default function CustomerShareQuotePage() {
                       Transport delivery to {quote.propertyAddress} ({quote.deliveryMiles} miles, Florida DOT permits &amp; escorts included).
                     </div>
                   </td>
-                  <td className="py-2.5 px-4 text-right font-black text-slate-900">
+                  <td className="py-2.5 px-4 text-right font-black text-slate-900 tabular">
                     ${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                 </tr>
@@ -270,7 +266,7 @@ export default function CustomerShareQuotePage() {
                       <div className="font-bold text-slate-900">{item.name}</div>
                       <div className="text-[10.5px] text-slate-500">{item.description}</div>
                     </td>
-                    <td className="py-2.5 px-4 text-right font-black text-slate-900">
+                    <td className="py-2.5 px-4 text-right font-black text-slate-900 tabular">
                       ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -301,7 +297,7 @@ export default function CustomerShareQuotePage() {
               )}
 
               <div className="flex justify-between font-semibold">
-                <span>3. Freight Delivery:</span>
+                <span>3. Freight Transport &amp; Delivery:</span>
                 <span className="tabular font-bold text-slate-900">${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
@@ -313,7 +309,7 @@ export default function CustomerShareQuotePage() {
               <div className="my-2 border-t border-slate-200" />
 
               <div className="flex justify-between font-bold text-slate-900 text-sm">
-                <span>Subtotal:</span>
+                <span>Subtotal (Exact Sum):</span>
                 <span className="tabular">${totals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-600 text-[11px]">
@@ -340,6 +336,16 @@ export default function CustomerShareQuotePage() {
           </div>
         </section>
 
+        {/* Next Steps */}
+        <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl text-xs space-y-1.5">
+          <span className="font-bold text-slate-900 block">Next Steps:</span>
+          <p className="text-slate-600 leading-relaxed">
+            1. Review this proposal and contact your associate with any questions.<br />
+            2. Sign the deposit agreement to reserve your home and lock factory production timing.<br />
+            3. Schedule your site visit and begin the financing and permitting process.
+          </p>
+        </div>
+
         {/* Consultant Signature Card */}
         <div className="grid sm:grid-cols-2 gap-6 pt-4 border-t border-slate-200 text-xs">
           <div className="space-y-1">
@@ -358,14 +364,14 @@ export default function CustomerShareQuotePage() {
             <div className="font-bold text-slate-800">Licensed &amp; Insured Manufactured Retailer</div>
             <div className="text-slate-500">9011 McIntyre Rd, Brooksville, FL 34601</div>
             <div className="text-[10px] text-slate-400 mt-2">
-              Florida HUD &amp; DBPR Manufactured Housing Retailer
+              Florida DBPR / HUD Licensed Dealership
             </div>
           </div>
         </div>
 
         {/* Disclaimer */}
         <div className="text-[9.5px] text-slate-400 leading-relaxed border-t border-slate-100 pt-4">
-          * Price quotation valid for 30 days from proposal date. Final site costs subject to county building permit conditions, soil percolation, and utility connection points. Florida sales tax calculated at statutory 3.00% manufactured housing basis.
+          * Site development pricing is an estimate based on visible conditions. Final pricing is subject to change based on actual site-specific requirements during installation. Prices are valid for 30 days from the quote date. Florida sales tax calculated at statutory 3.00% manufactured housing basis.
         </div>
       </main>
     </div>
