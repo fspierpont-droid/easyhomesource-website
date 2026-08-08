@@ -3,8 +3,8 @@ export const siteInfo = {
   phoneDisplay: "352-558-8888",
   phoneHref: "+13525588888",
   email: "info@easyhomesource.com",
-  privacyUrl: "https://easyhomesource.com/privacy",
-  termsUrl: "https://easyhomesource.com/terms",
+  privacyUrl: "/privacy",
+  termsUrl: "/terms",
   pricingDisclaimer: "Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote."
 };
 
@@ -25,5 +25,6 @@ export const navLinks = [
   ["Delivery & Setup", "/delivery-setup"],
   ["How It Works", "/how-it-works"],
   ["Videos", "/videos"],
-  ["Contact", "/contact"]
+  ["Contact", "/contact"],
+  ["EHS Portal", "/portal"]
 ] as const;

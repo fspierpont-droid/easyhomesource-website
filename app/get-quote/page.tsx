@@ -1,8 +1,7 @@
 import { GhlLeadForm } from "@/components/GhlLeadForm";
 import { getHomeBySlug, homes } from "@/data/homes";
-import { formatPropertyAddress } from "@/data/properties";
 import { siteInfo } from "@/data/site";
-import { getPublicPropertyFeed } from "@/lib/property-feed";
+import { getPropertyById, formatPropertyAddress } from "@/lib/db/propertyStore";
 
 export const metadata = {
   title: "Get a Quote | Easy HomeSource",
@@ -23,8 +22,7 @@ export default async function GetQuotePage({ searchParams }: { searchParams?: Ge
   const requestedHome = searchParams?.home ? getHomeBySlug(searchParams.home) : undefined;
   const requestedModel = searchParams?.model ? homes.find((home) => home.name === searchParams.model || home.displayName === searchParams.model || home.modelNumber === searchParams.model) : undefined;
   const interestedHome = requestedHome ?? requestedModel;
-  const propertyFeed = searchParams?.property ? await getPublicPropertyFeed() : [];
-  const interestedProperty = searchParams?.property ? propertyFeed.find((property) => property.id === searchParams.property) : undefined;
+  const interestedProperty = searchParams?.property ? getPropertyById(searchParams.property) : undefined;
   const interestedPropertyAddress = interestedProperty ? formatPropertyAddress(interestedProperty) : undefined;
   const isFinancingInquiry = searchParams?.source === "financing";
 
