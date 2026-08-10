@@ -64,7 +64,7 @@ const seeds: Seed[] = [...displaySeeds, ...catalogSeeds, ...knownLineupSeeds];
 const protectedSeedPriceSlugs = new Set(["tulip", "dogwood", "born-to-run", "paxton", "craft-select-28603a", ...catalogHomeSeeds.map((home) => home.slug)]);
 
 export const homes: Home[] = seeds.map((home, index) => {
-  const importedMedia = getImportedHomeMedia(home.slug, home.manufacturer);
+  const importedMedia = getImportedHomeMedia(home.slug);
   const scraped = scrapedHomeDetails[home.slug];
   const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
   // Never manufacture media paths: an empty gallery renders the customer-facing
