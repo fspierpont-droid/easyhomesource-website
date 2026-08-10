@@ -1,6 +1,6 @@
 import type { HomeMediaManifest } from "@/data/homeMedia";
 
-const troveImage = (path: string) => `https://easyhomesource.com/_next/image?q=75&url=${encodeURIComponent(`https://trove.b-cdn.net/images/${path}`)}&w=3840`;
+const troveImage = (path: string) => `https://trove.b-cdn.net/images/${path}`;
 
 const entry = (slug: string, sourcePage: string, exteriorPath: string | null, floorPlanPath: string): HomeMediaManifest[string] => {
   const floorPlan = troveImage(floorPlanPath);
