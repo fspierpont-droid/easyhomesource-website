@@ -25,17 +25,17 @@ export const INITIAL_PROPERTIES: Property[] = [
     price: 189900,
     bedrooms: 3,
     bathrooms: 2,
-    squareFeet: 1140,
+    squareFeet: 1291,
     lotSize: "0.46 acres",
-    parcelNumber: "18E-19S-24-0010-0040",
+    parcelNumber: "1504635",
     photos: [],
-    description: "Move-in ready finished manufactured home on private homesite in Homosassa. Turnkey package with well, septic, and A/C installed.",
+    description: "Move-in ready turnkey manufactured home package on private homesite in Homosassa (Citrus County PIN 1504635). Features 1,291 sq ft total base/living area, 2 utility workshop buildings (99 & 136 sq ft), 200ft chain link fence, 2 covered carports (378 & 224 sq ft), 2 screened porches, and 580 sq ft concrete patio slab.",
     salesperson: "Scott Pierpont",
     publicVisible: true,
     featured: true,
-    notes: "Finished home, ready on market. Keys in lockbox at Brooksville office.",
-    internalNotes: "Zoning is R-1M Citrus County. Certificate of Occupancy approved July 2026.",
-    zoning: "R-1M Residential",
+    notes: "Citrus County PIN # 1504635 • 1,291 sq ft total base/living area • Well, septic & Withlacoochee electric",
+    internalNotes: "CCPA Appraiser Record PIN: 1504635. Base living area 672 + 504 + 115 = 1,291 sq ft. Includes 2 finished utility buildings, concrete slab carports, screened porches, and 580 sq ft patio. Move-in ready.",
+    zoning: "R-1M Citrus County",
     floodZone: "Zone X (Minimal Risk)",
     utilities: { water: "WELL", sewer: "SEPTIC", electric: "WITHLACOOCHEE" },
     history: [
@@ -45,10 +45,17 @@ export const INITIAL_PROPERTIES: Property[] = [
         user: "System Admin",
         action: "Property Created",
         newValue: "Initial setup from operational inventory"
+      },
+      {
+        id: "log-2",
+        timestamp: "2026-08-10T17:20:00Z",
+        user: "Scott Pierpont",
+        action: "Appraiser Data Synced",
+        newValue: "Updated with Citrus County CCPA PIN 1504635 additions and site improvements."
       }
     ],
     createdAt: "2026-08-01T14:30:00Z",
-    updatedAt: "2026-08-07T03:15:00Z"
+    updatedAt: "2026-08-10T17:20:00Z"
   },
   {
     id: "EHS-002",
