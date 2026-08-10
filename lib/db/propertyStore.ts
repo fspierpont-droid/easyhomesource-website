@@ -433,20 +433,28 @@ export const INITIAL_PROPERTIES: Property[] = [
     bathrooms: 2,
     squareFeet: 1264,
     lotSize: "0.50 acres",
-    parcelNumber: "PAS-14-26-21-0020-0000-0440",
+    parcelNumber: "02-26-19-0030-00000-7850",
     photos: [],
-    description: "Fully renovated and modern spec home in Zephyrhills with new deck, skirting, and modern roof.",
+    description: "Fully renovated spec home package in Zephyrhills (Pasco County Parcel 02-26-19-0030-00000-7850). Features custom masonry fireplace (1983), updated deck, new skirting, and modern roofline. Recent Warranty Deed Book 11424 PG 1342.",
     salesperson: "Alex Vorasane",
     publicVisible: true,
     featured: false,
-    notes: "Flip/stick home; finish trades active on drywall and vinyl plank flooring.",
-    internalNotes: "Interior paint 80% complete. Appliances arriving next week.",
-    zoning: "R-1MH",
+    notes: "Pasco County Parcel ID # 02-26-19-0030-00000-7850 • Fireplace feature • Warranty Deed 11424/1342",
+    internalNotes: "Official Pasco County Appraiser (Mike Wells PA) Parcel 02-26-19-0030-00000-7850. Features 1983 fireplace ($533 assessed), May 2026 recorded Warranty Deed $165k. Drywall and vinyl plank flooring finish underway.",
+    zoning: "R-1MH Pasco County",
     floodZone: "Zone X",
     utilities: { water: "MUNICIPAL", sewer: "SEPTIC", electric: "DUKE" },
-    history: [],
+    history: [
+      {
+        id: "log-p1",
+        timestamp: "2026-08-10T17:25:00Z",
+        user: "Alex Vorasane",
+        action: "Appraiser Data Synced",
+        newValue: "Updated with Pasco County Property Appraiser parcel 02-26-19-0030-00000-7850."
+      }
+    ],
     createdAt: "2026-08-04T08:30:00Z",
-    updatedAt: "2026-08-06T16:00:00Z"
+    updatedAt: "2026-08-10T17:25:00Z"
   },
   {
     id: "EHS-013",
