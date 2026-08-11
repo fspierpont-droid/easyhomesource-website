@@ -151,8 +151,27 @@ const SLUG_ALIASES: Record<string, string> = {
   "clayton-addison-tempo-series-imagine": "imagine",
   "elm": "elm",
   "tru-homes-tru-origin-elm": "elm",
+  "clayton-tru-elm": "elm",
+  "trt14562eh": "elm",
   "waverly-15471a": "waverly-15471a",
-  "palm-harbor-plant-city-lifestyle-waverly-15471a": "waverly-15471a"
+  "palm-harbor-plant-city-lifestyle-waverly-15471a": "waverly-15471a",
+  "select-s-1236-11fla": "select-s-1236-11fla",
+  "legacy-select-s-1236-11fla": "select-s-1236-11fla",
+  "legacy-housing-select-collection-s-1236-11fla": "select-s-1236-11fla",
+  "s-1236-11fla": "select-s-1236-11fla",
+  "select-s-1444-11ofp": "select-s-1444-11ofp",
+  "legacy-select-s-1444-11ofp": "select-s-1444-11ofp",
+  "legacy-housing-select-collection-s-1444-11ofp": "select-s-1444-11ofp",
+  "s-1444-11ofp": "select-s-1444-11ofp",
+  "select-s-1234-31a": "select-s-1234-31a",
+  "legacy-select-s-1234-31a": "select-s-1234-31a",
+  "legacy-housing-select-collection-s-1234-31a": "select-s-1234-31a",
+  "s-1234-31a": "select-s-1234-31a",
+  "select-s-1234-32a": "select-s-1234-32a",
+  "legacy-select-s-1234-32a": "select-s-1234-32a",
+  "legacy-housing-select-collection-s-1234-32a": "select-s-1234-32a",
+  "legacy-housing-select-collection-s1234-32a": "select-s-1234-32a",
+  "s-1234-32a": "select-s-1234-32a"
 };
 
 /**

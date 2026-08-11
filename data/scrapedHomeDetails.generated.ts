@@ -2073,4 +2073,337 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
     }
   },
+  "elm": {
+      "slug": "elm",
+      "sourcePage": "https://owntru.com/models/trt14562eh/",
+      "startingPrice": 55999.85,
+      "priceLabel": "Starting Price",
+      "media": {
+          "slug": "elm",
+          "gallery": [
+              {
+                  "src": "/homes/elm/exterior/elm-exterior-01.jpg",
+                  "alt": "TRT14562EH Elm exterior front elevation",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/exterior/elm-exterior-02.jpg",
+                  "alt": "TRT14562EH Elm exterior architectural profile",
+                  "category": "exterior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/interior/elm-interior-01.jpg",
+                  "alt": "TRT14562EH Elm open concept living room",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/kitchen/elm-kitchen-01.jpg",
+                  "alt": "TRT14562EH Elm kitchen and dining space",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/kitchen/elm-kitchen-02.jpg",
+                  "alt": "TRT14562EH Elm kitchen cabinetry and countertops",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/bedroom/elm-bedroom-01.jpg",
+                  "alt": "TRT14562EH Elm primary bedroom retreat",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/bedroom/elm-bedroom-02.jpg",
+                  "alt": "TRT14562EH Elm guest bedroom",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/bathroom/elm-bathroom-01.jpg",
+                  "alt": "TRT14562EH Elm bathroom vanity and shower",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              },
+              {
+                  "src": "/homes/elm/floorplan/elm-floorplan-01.jpg",
+                  "alt": "TRT14562EH Elm floor plan schematic layout",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14562eh/"
+              }
+          ],
+          "floorPlanImage": "/homes/elm/floorplan/elm-floorplan-01.jpg",
+          "brochureUrl": null,
+          "videoUrl": null,
+          "virtualTourUrl": null,
+          "sourcePage": "https://owntru.com/models/trt14562eh/"
+      }
+  },
+  "select-s-1236-11fla": {
+      "slug": "select-s-1236-11fla",
+      "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla",
+      "startingPrice": 56404.37,
+      "priceLabel": "Starting Price",
+      "media": {
+          "slug": "select-s-1236-11fla",
+          "gallery": [
+              {
+                  "src": "/homes/select-s-1236-11fla/exterior/select-s-1236-11fla-exterior-01.jpg",
+                  "alt": "Select S-1236-11FLA exterior front elevation",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-01.jpg",
+                  "alt": "Select S-1236-11FLA open concept living room",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-02.jpg",
+                  "alt": "Select S-1236-11FLA front living area and windows",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-03.jpg",
+                  "alt": "Select S-1236-11FLA living area natural lighting",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-04.jpg",
+                  "alt": "Select S-1236-11FLA open living and dining space",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-05.jpg",
+                  "alt": "Select S-1236-11FLA main living space perspective",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-06.jpg",
+                  "alt": "Select S-1236-11FLA interior entryway and foyer",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-01.jpg",
+                  "alt": "Select S-1236-11FLA kitchen cabinetry and countertops",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-02.jpg",
+                  "alt": "Select S-1236-11FLA kitchen breakfast bar counter",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-03.jpg",
+                  "alt": "Select S-1236-11FLA kitchen sink and faucet",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-04.jpg",
+                  "alt": "Select S-1236-11FLA kitchen range and exhaust hood",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-05.jpg",
+                  "alt": "Select S-1236-11FLA refrigerator space and pantry",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-06.jpg",
+                  "alt": "Select S-1236-11FLA kitchen upper cabinet storage",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/kitchen/select-s-1236-11fla-kitchen-07.jpg",
+                  "alt": "Select S-1236-11FLA kitchen dining area",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-01.jpg",
+                  "alt": "Select S-1236-11FLA primary bedroom",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-02.jpg",
+                  "alt": "Select S-1236-11FLA bedroom window and natural light",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-03.jpg",
+                  "alt": "Select S-1236-11FLA bedroom closet storage",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-04.jpg",
+                  "alt": "Select S-1236-11FLA bedroom closet interior",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-05.jpg",
+                  "alt": "Select S-1236-11FLA bedroom perspective view",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bedroom/select-s-1236-11fla-bedroom-06.jpg",
+                  "alt": "Select S-1236-11FLA bedroom entry view",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-01.jpg",
+                  "alt": "Select S-1236-11FLA bathroom vanity and mirror",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-02.jpg",
+                  "alt": "Select S-1236-11FLA bathroom sink and countertop",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-03.jpg",
+                  "alt": "Select S-1236-11FLA bathroom tub and shower combination",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-04.jpg",
+                  "alt": "Select S-1236-11FLA shower surround and fixture",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-05.jpg",
+                  "alt": "Select S-1236-11FLA bathroom toilet and space",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/bathroom/select-s-1236-11fla-bathroom-06.jpg",
+                  "alt": "Select S-1236-11FLA bathroom linen storage",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-07.jpg",
+                  "alt": "Select S-1236-11FLA hallway and corridor",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-08.jpg",
+                  "alt": "Select S-1236-11FLA utility storage area",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-09.jpg",
+                  "alt": "Select S-1236-11FLA laundry hookup area",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-10.jpg",
+                  "alt": "Select S-1236-11FLA water heater closet",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-11.jpg",
+                  "alt": "Select S-1236-11FLA interior door and finish details",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-12.jpg",
+                  "alt": "Select S-1236-11FLA flooring and wall trim details",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/interior/select-s-1236-11fla-interior-13.jpg",
+                  "alt": "Select S-1236-11FLA interior ceiling and lighting",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              },
+              {
+                  "src": "/homes/select-s-1236-11fla/floorplan/select-s-1236-11fla-floorplan-01.png",
+                  "alt": "Select S-1236-11FLA floor plan layout schematic",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+              }
+          ],
+          "floorPlanImage": "/homes/select-s-1236-11fla/floorplan/select-s-1236-11fla-floorplan-01.png",
+          "brochureUrl": null,
+          "videoUrl": null,
+          "virtualTourUrl": null,
+          "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1236-11fla"
+      }
+  },
 };
