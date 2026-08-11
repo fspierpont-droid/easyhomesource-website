@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { PortalSidebar } from '@/components/portal/PortalSidebar';
 import { VERIFIED_TEAM_USERS, TeamUser } from '@/data/teamMembers';
-import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
+import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome, getEffectiveMasterCatalog } from '@/data/fullMasterCatalog.generated';
 import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
 import {
   SERVICE_CATALOG,
@@ -89,9 +89,23 @@ export default function EditQuotePage() {
   const [shareToken, setShareToken] = useState('2026_06_29_PIERPONT_NEW');
 
   // 2. Manufactured Home
+  const [masterCatalog, setMasterCatalog] = useState<MasterCatalogHome[]>([]);
   const [homeSearch, setHomeSearch] = useState('');
   const [builderFilter, setBuilderFilter] = useState('ALL');
   const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0] || null);
+
+  useEffect(() => {
+    const syncCatalog = () => {
+      setMasterCatalog(getEffectiveMasterCatalog());
+    };
+    syncCatalog();
+    window.addEventListener('storage', syncCatalog);
+    window.addEventListener('ehs_catalog_updated', syncCatalog);
+    return () => {
+      window.removeEventListener('storage', syncCatalog);
+      window.removeEventListener('ehs_catalog_updated', syncCatalog);
+    };
+  }, []);
   const [homeModel, setHomeModel] = useState('Sebastian 32644D');
   const [manufacturer, setManufacturer] = useState('Cavco Douglas');
   const [series, setSeries] = useState('Douglas Collection');
@@ -566,14 +580,15 @@ export default function EditQuotePage() {
 
   // Filter Catalog Homes for Home Selection Step
   const filteredCatalog = useMemo(() => {
-    return FULL_MASTER_CATALOG_HOMES.filter((h) => {
+    const list = masterCatalog.length > 0 ? masterCatalog : FULL_MASTER_CATALOG_HOMES;
+    return list.filter((h) => {
       if (!h) return false;
       if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
       if (!homeSearch.trim()) return true;
       const text = `${h.name || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.bedrooms || ''} bed ${h.bathrooms || ''} bath ${h.squareFeet || ''}`.toLowerCase();
       return text.includes(homeSearch.toLowerCase().trim());
     });
-  }, [builderFilter, homeSearch]);
+  }, [masterCatalog, builderFilter, homeSearch]);
 
   // Save Full Quote Function
   const handleSaveQuote = (newStatus?: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT') => {

@@ -1,11 +1,15 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PortalSidebar } from '@/components/portal/PortalSidebar';
 import { VERIFIED_TEAM_USERS } from '@/data/teamMembers';
-import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
+import {
+  FULL_MASTER_CATALOG_HOMES,
+  type MasterCatalogHome,
+  getEffectiveMasterCatalog
+} from '@/data/fullMasterCatalog.generated';
 import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
 import {
   SERVICE_CATALOG,
@@ -43,9 +47,23 @@ export default function NewQuoteBuilderPage() {
   const [status, setStatus] = useState<'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT'>('DRAFT');
 
   // 2. Selected Home (from verified Master Catalog)
+  const [masterCatalog, setMasterCatalog] = useState<MasterCatalogHome[]>([]);
   const [homeSearch, setHomeSearch] = useState('');
   const [builderFilter, setBuilderFilter] = useState('ALL');
   const [selectedHome, setSelectedHome] = useState<MasterCatalogHome | null>(FULL_MASTER_CATALOG_HOMES[0] || null);
+
+  useEffect(() => {
+    const syncCatalog = () => {
+      setMasterCatalog(getEffectiveMasterCatalog());
+    };
+    syncCatalog();
+    window.addEventListener('storage', syncCatalog);
+    window.addEventListener('ehs_catalog_updated', syncCatalog);
+    return () => {
+      window.removeEventListener('storage', syncCatalog);
+      window.removeEventListener('ehs_catalog_updated', syncCatalog);
+    };
+  }, []);
   const [homeModel, setHomeModel] = useState(FULL_MASTER_CATALOG_HOMES[0]?.name || 'Move on Up (18x60 3b/2ba)');
   const [manufacturer, setManufacturer] = useState(FULL_MASTER_CATALOG_HOMES[0]?.manufacturer || 'CLAYTON Addison');
   const [series, setSeries] = useState(FULL_MASTER_CATALOG_HOMES[0]?.series || 'Tempo Series');
@@ -311,14 +329,15 @@ export default function NewQuoteBuilderPage() {
   const targetMet = netTakeHome >= 20000;
 
   const filteredCatalog = useMemo(() => {
-    return FULL_MASTER_CATALOG_HOMES.filter((h) => {
+    const list = masterCatalog.length > 0 ? masterCatalog : FULL_MASTER_CATALOG_HOMES;
+    return list.filter((h) => {
       if (!h) return false;
       if (builderFilter !== 'ALL' && h.manufacturer !== builderFilter) return false;
       if (!homeSearch.trim()) return true;
       const text = `${h.name || ''} ${h.manufacturer || ''} ${h.series || ''} ${h.bedrooms || ''} bed ${h.bathrooms || ''} bath ${h.squareFeet || ''}`.toLowerCase();
       return text.includes(homeSearch.toLowerCase().trim());
     });
-  }, [builderFilter, homeSearch]);
+  }, [masterCatalog, builderFilter, homeSearch]);
 
   const handleSaveAndCreate = (initialStatus?: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT') => {
     const finalQuote: SavedQuote = {

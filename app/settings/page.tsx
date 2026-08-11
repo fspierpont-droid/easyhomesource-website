@@ -1,14 +1,42 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import * as XLSX from 'xlsx';
 import { PortalSidebar } from '@/components/portal/PortalSidebar';
 import { VERIFIED_TEAM_USERS, canAccessSettings, type TeamUser } from '@/data/teamMembers';
-import { FULL_MASTER_CATALOG_HOMES, type MasterCatalogHome } from '@/data/fullMasterCatalog.generated';
+import {
+  FULL_MASTER_CATALOG_HOMES,
+  type MasterCatalogHome,
+  getStoredCatalogOverrides,
+  saveStoredCatalogOverrides,
+  clearStoredCatalogOverrides,
+  getEffectiveMasterCatalog
+} from '@/data/fullMasterCatalog.generated';
 import { SERVICE_CATALOG, type ServiceCatalogItem } from '@/data/pricingSpreadsheet';
 import { AuthGate } from '@/components/portal/AuthGate';
 import { useAuth } from '@/lib/auth/AuthContext';
+
+interface StagedModelUpdate {
+  slug: string;
+  name: string;
+  manufacturer: string;
+  series: string;
+  beds?: number | null;
+  baths?: number | null;
+  sqft?: number | null;
+  dimensions?: string;
+  width?: number;
+  length?: number;
+  hudBasePrice?: number | null;
+  currentEhsPrice?: number | null;
+  newEhsPrice: number;
+  currentFactoryCost?: number | null;
+  newFactoryCost: number;
+  isExisting: boolean;
+  status: 'updated' | 'unchanged' | 'new';
+}
 
 function SettingsContent() {
   const { user, login } = useAuth();
@@ -45,12 +73,16 @@ function SettingsContent() {
   );
   const [disclaimerSaved, setDisclaimerSaved] = useState(false);
 
-  // 3. Home Catalog State
-  const [homeCatalog, setHomeCatalog] = useState<MasterCatalogHome[]>(FULL_MASTER_CATALOG_HOMES);
+  // 3. Home Catalog State (Loaded from effective overrides if present)
+  const [homeCatalog, setHomeCatalog] = useState<MasterCatalogHome[]>([]);
   const [catalogSearch, setCatalogSearch] = useState('');
   const [catalogBuilderFilter, setCatalogBuilderFilter] = useState('ALL');
   const [editingHome, setEditingHome] = useState<MasterCatalogHome | null>(null);
   const [isAddHomeOpen, setIsAddHomeOpen] = useState(false);
+
+  useEffect(() => {
+    setHomeCatalog(getEffectiveMasterCatalog());
+  }, []);
 
   // New Home Form
   const [newHomeName, setNewHomeName] = useState('');
@@ -94,14 +126,328 @@ function SettingsContent() {
   const [isSyncingGhl, setIsSyncingGhl] = useState(false);
   const [ghlSyncResult, setGhlSyncResult] = useState<string | null>(null);
 
+  // 8. Spreadsheet Import State (.xlsx, .xls, .csv, .tsv)
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [importWorkbook, setImportWorkbook] = useState<any>(null);
+  const [sheetNames, setSheetNames] = useState<string[]>([]);
+  const [selectedSheet, setSelectedSheet] = useState<string>('');
+  const [stagedUpdates, setStagedUpdates] = useState<StagedModelUpdate[]>([]);
+  const [isParsing, setIsParsing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [importSuccessMsg, setImportSuccessMsg] = useState<string | null>(null);
+  const [importErrorMsg, setImportErrorMsg] = useState<string | null>(null);
+  const [stagedFilter, setStagedFilter] = useState<'ALL' | 'CHANGED' | 'NEW'>('ALL');
+  const [stagedSearch, setStagedSearch] = useState('');
+
+  const cleanKey = (s?: string | null) => (s ? s.toLowerCase().replace(/[^a-z0-9]/g, '') : '');
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileSelected(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFileSelected(e.target.files[0]);
+    }
+  };
+
+  const handleFileSelected = async (file: File) => {
+    const validExtensions = ['.xlsx', '.xls', '.csv', '.tsv'];
+    const fileName = file.name.toLowerCase();
+    if (!validExtensions.some((ext) => fileName.endsWith(ext))) {
+      setImportErrorMsg('Unsupported file format. Please upload an Excel (.xlsx, .xls) or CSV (.csv) file.');
+      return;
+    }
+
+    setImportFile(file);
+    setIsParsing(true);
+    setImportErrorMsg(null);
+    setImportSuccessMsg(null);
+
+    try {
+      const buffer = await file.arrayBuffer();
+      const wb = XLSX.read(buffer, { type: 'array' });
+      setImportWorkbook(wb);
+      setSheetNames(wb.SheetNames || []);
+      const initialSheet = wb.SheetNames[0] || '';
+      setSelectedSheet(initialSheet);
+      processSheetData(wb, initialSheet);
+    } catch (err: any) {
+      setImportErrorMsg(`Failed to parse spreadsheet: ${err?.message || 'Invalid or corrupted file.'}`);
+      setStagedUpdates([]);
+    } finally {
+      setIsParsing(false);
+    }
+  };
+
+  const handleSheetChange = (sheetName: string) => {
+    setSelectedSheet(sheetName);
+    if (importWorkbook) {
+      processSheetData(importWorkbook, sheetName);
+    }
+  };
+
+  const processSheetData = (wb: any, sheetName: string) => {
+    try {
+      const ws = wb.Sheets[sheetName];
+      if (!ws) {
+        setImportErrorMsg(`Sheet "${sheetName}" not found in workbook.`);
+        return;
+      }
+      const rawRows: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      if (!rawRows || rawRows.length === 0) {
+        setImportErrorMsg(`Sheet "${sheetName}" is empty.`);
+        setStagedUpdates([]);
+        return;
+      }
+
+      const staged: StagedModelUpdate[] = [];
+
+      for (const row of rawRows) {
+        const keys = Object.keys(row);
+        const findVal = (...aliases: string[]) => {
+          for (const alias of aliases) {
+            const match = keys.find(
+              (k) => k.trim().toLowerCase().replace(/[^a-z0-9]/g, '') === alias.toLowerCase().replace(/[^a-z0-9]/g, '')
+            );
+            if (match && row[match] !== undefined && row[match] !== null && String(row[match]).trim() !== '') {
+              return row[match];
+            }
+          }
+          return undefined;
+        };
+
+        const name = String(findVal('modelname', 'model', 'name', 'homename', 'home', 'plan', 'planname', 'slug') || '').trim();
+        if (!name) continue; // skip blank rows
+
+        const manufacturer = String(findVal('manufacturer', 'builder', 'mfg', 'plant', 'make') || 'CAVCO Plant City').trim();
+        const series = String(findVal('series', 'collection', 'line') || '').trim();
+        const rawEhsPrice = findVal('ehsprice', 'sellingprice', 'startingprice', 'price', 'msrp', 'retailprice');
+        const rawHudBase = findVal('hudbaseprice', 'hudbase', 'hudprice', 'baseprice', 'wholesale');
+        const rawFactoryCost = findVal('estfactorycost', 'factorycost', 'dealercost', 'cost', 'factorywholesale');
+        const rawBeds = findVal('bedrooms', 'beds', 'bed', 'br');
+        const rawBaths = findVal('bathrooms', 'baths', 'bath', 'ba');
+        const rawSqft = findVal('squarefeet', 'sqft', 'squarefoot', 'sqfeet', 'size', 'area');
+        const rawDimensions = findVal('dimensions', 'size', 'dim', 'dimension');
+        const rawWidth = findVal('width', 'w');
+        const rawLength = findVal('length', 'len', 'l');
+
+        const cleanNum = (val: any) => {
+          if (val === undefined || val === null || val === '') return null;
+          const n = Number(String(val).replace(/[^0-9.-]/g, ''));
+          return isNaN(n) ? null : n;
+        };
+
+        const hudBasePrice = cleanNum(rawHudBase);
+        const estFactoryCost = cleanNum(rawFactoryCost) ?? (hudBasePrice ? Math.round(hudBasePrice * 1.03) : null);
+        const ehsPrice = cleanNum(rawEhsPrice) ?? (estFactoryCost ? Math.round(estFactoryCost * 1.42) : (hudBasePrice ? Math.round(hudBasePrice * 1.45) : 0));
+        const bedrooms = cleanNum(rawBeds);
+        const bathrooms = cleanNum(rawBaths);
+        const squareFeet = cleanNum(rawSqft);
+        const width = cleanNum(rawWidth) || 0;
+        const length = cleanNum(rawLength) || 0;
+        const dimensions = rawDimensions ? String(rawDimensions).trim() : (width && length ? `${width}' x ${length}'` : '');
+
+        // Match against existing catalog
+        const kName = cleanKey(name);
+        const existing = homeCatalog.find(
+          (h) => cleanKey(h.name) === kName || cleanKey(h.slug) === kName || (cleanKey(h.manufacturer) === cleanKey(manufacturer) && cleanKey(h.name).includes(kName))
+        );
+
+        let status: 'updated' | 'unchanged' | 'new' = 'new';
+        if (existing) {
+          const priceDiff = Math.abs(existing.ehsPrice - ehsPrice) > 0.01;
+          const costDiff = Math.abs((existing.estFactoryCost || 0) - (estFactoryCost || 0)) > 0.01;
+          status = priceDiff || costDiff ? 'updated' : 'unchanged';
+        }
+
+        const generatedSlug = existing?.slug || (name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : `home-${Date.now()}`);
+
+        staged.push({
+          slug: generatedSlug,
+          name: existing?.name || name,
+          manufacturer: existing?.manufacturer || manufacturer,
+          series: existing?.series || series,
+          beds: bedrooms ?? existing?.bedrooms ?? null,
+          baths: bathrooms ?? existing?.bathrooms ?? null,
+          sqft: squareFeet ?? existing?.squareFeet ?? null,
+          dimensions: dimensions || existing?.dimensions || '',
+          width: width || existing?.width || 0,
+          length: length || existing?.length || 0,
+          hudBasePrice: hudBasePrice ?? existing?.hudBasePrice ?? null,
+          currentEhsPrice: existing?.ehsPrice ?? null,
+          newEhsPrice: ehsPrice,
+          currentFactoryCost: existing?.estFactoryCost ?? null,
+          newFactoryCost: estFactoryCost || 0,
+          isExisting: !!existing,
+          status
+        });
+      }
+
+      setStagedUpdates(staged);
+      if (staged.length === 0) {
+        setImportErrorMsg('No valid model rows detected. Ensure the spreadsheet contains a "Model" or "Name" column.');
+      } else {
+        setImportErrorMsg(null);
+      }
+    } catch (err: any) {
+      setImportErrorMsg(`Error processing sheet "${sheetName}": ${err?.message || 'Parsing error'}`);
+    }
+  };
+
+  const handleApplyStagedUpdates = () => {
+    if (stagedUpdates.length === 0) return;
+
+    let updatedCount = 0;
+    let addedCount = 0;
+
+    const newCatalog = [...homeCatalog];
+
+    for (const update of stagedUpdates) {
+      const idx = newCatalog.findIndex((h) => h.slug === update.slug || cleanKey(h.name) === cleanKey(update.name));
+      if (idx >= 0) {
+        newCatalog[idx] = {
+          ...newCatalog[idx],
+          ehsPrice: update.newEhsPrice,
+          startingPrice: update.newEhsPrice,
+          estFactoryCost: update.newFactoryCost,
+          hudBasePrice: update.hudBasePrice ?? newCatalog[idx].hudBasePrice,
+          msrp: Math.round(update.newEhsPrice * 1.15),
+          bedrooms: update.beds ?? newCatalog[idx].bedrooms,
+          bathrooms: update.baths ?? newCatalog[idx].bathrooms,
+          squareFeet: update.sqft ?? newCatalog[idx].squareFeet,
+          dimensions: update.dimensions || newCatalog[idx].dimensions
+        };
+        updatedCount++;
+      } else {
+        newCatalog.push({
+          slug: update.slug,
+          name: update.name,
+          manufacturer: update.manufacturer,
+          series: update.series,
+          hudBasePrice: update.hudBasePrice ?? null,
+          estFactoryCost: update.newFactoryCost,
+          msrp: Math.round(update.newEhsPrice * 1.15),
+          ehsPrice: update.newEhsPrice,
+          startingPrice: update.newEhsPrice,
+          squareFeet: update.sqft ?? null,
+          bedrooms: update.beds ?? null,
+          bathrooms: update.baths ?? null,
+          width: update.width || 0,
+          length: update.length || 0,
+          dimensions: update.dimensions || '',
+          modularOnFrameCapable: true,
+          modularOffFrameCapable: false
+        });
+        addedCount++;
+      }
+    }
+
+    setHomeCatalog(newCatalog);
+    saveStoredCatalogOverrides(newCatalog);
+    setImportSuccessMsg(
+      `✓ Successfully applied ${updatedCount} price updates and ${addedCount} new models to the active Master Catalog.`
+    );
+    setStagedUpdates([]);
+    setImportFile(null);
+  };
+
+  const handleDownloadSampleTemplate = () => {
+    const sampleData = [
+      {
+        'Manufacturer': 'CAVCO Plant City',
+        'Series': 'Alpha',
+        'Model Name': 'Atmos 28603N',
+        'Beds': 3,
+        'Baths': 2,
+        'SQFT': 1600,
+        'Dimensions': "26' 8\" x 60'",
+        'HUD Base Price': 108565,
+        'Est Factory Cost': 110600,
+        'EHS Price': 158829.11
+      },
+      {
+        'Manufacturer': 'Clayton TRU',
+        'Series': 'TRU Origin',
+        'Model Name': 'Elm',
+        'Beds': 2,
+        'Baths': 1,
+        'SQFT': 737,
+        'Dimensions': "14' x 56'",
+        'HUD Base Price': 29610,
+        'Est Factory Cost': 31645,
+        'EHS Price': 55999.85
+      },
+      {
+        'Manufacturer': 'Timber Creek',
+        'Series': 'Creekside Series',
+        'Model Name': 'The Delilah CSFL-3301',
+        'Beds': 4,
+        'Baths': 2,
+        'SQFT': 2280,
+        'Dimensions': "30' x 76'",
+        'HUD Base Price': 115000,
+        'Est Factory Cost': 118000,
+        'EHS Price': 168900.00
+      },
+      {
+        'Manufacturer': 'Legacy Housing',
+        'Series': 'Select Collection',
+        'Model Name': 'Select S-1236-11FLA',
+        'Beds': 1,
+        'Baths': 1,
+        'SQFT': 432,
+        'Dimensions': "12' x 36'",
+        'HUD Base Price': 29695,
+        'Est Factory Cost': 31730,
+        'EHS Price': 56404.37
+      }
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(sampleData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Master Price List');
+    XLSX.writeFile(wb, 'EHS_Master_Price_List_Template.xlsx');
+  };
+
+  const handleResetCatalog = () => {
+    if (confirm('Are you sure you want to reset all model prices back to factory defaults?')) {
+      clearStoredCatalogOverrides();
+      setHomeCatalog(FULL_MASTER_CATALOG_HOMES);
+      setImportSuccessMsg('✓ Master catalog pricing has been reset to factory defaults.');
+    }
+  };
+
+  const filteredStagedUpdates = useMemo(() => {
+    return stagedUpdates.filter((item) => {
+      if (stagedFilter === 'CHANGED' && item.status !== 'updated') return false;
+      if (stagedFilter === 'NEW' && item.status !== 'new') return false;
+      if (!stagedSearch.trim()) return true;
+      const text = `${item.name} ${item.manufacturer} ${item.series}`.toLowerCase();
+      return text.includes(stagedSearch.toLowerCase().trim());
+    });
+  }, [stagedUpdates, stagedFilter, stagedSearch]);
+
+  const stagedStats = useMemo(() => {
+    const updated = stagedUpdates.filter((s) => s.status === 'updated').length;
+    const newModels = stagedUpdates.filter((s) => s.status === 'new').length;
+    const unchanged = stagedUpdates.filter((s) => s.status === 'unchanged').length;
+    return { total: stagedUpdates.length, updated, newModels, unchanged };
+  }, [stagedUpdates]);
+
   const tabs = [
     { id: 'company', label: 'Company' },
     { id: 'catalog', label: 'Home catalog' },
     { id: 'pricing', label: 'Pricing engine' },
     { id: 'disclaimer', label: 'Disclaimer & next steps' },
     { id: 'templates', label: 'Line item templates' },
-    { id: 'users', label: 'Users' },
-    { id: 'imports', label: 'Imports' }
+    { id: 'users', label: 'Users & roles' },
+    { id: 'imports', label: 'GHL / Imports' }
   ];
 
   // User Handlers
@@ -952,16 +1298,280 @@ function SettingsContent() {
                   </div>
 
                   {/* Spreadsheet Base Price Import Card */}
-                  <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-4">
-                    <h2 className="text-lg font-black text-[#0B1E38]">Spreadsheet &amp; Base Price List Imports</h2>
-                    <p className="text-xs text-slate-500">
-                      Sync live factory wholesale base prices directly from ERP spreadsheet uploads (`Copy of ALEX TEST - Base Price List.csv`).
-                    </p>
-                    <div className="p-8 border-2 border-dashed border-slate-300 rounded-2xl text-center space-y-2 bg-slate-50">
-                      <span className="text-2xl">📂</span>
-                      <div className="text-xs font-bold text-slate-700">Drag and drop Master Price List CSV</div>
-                      <p className="text-[11px] text-slate-400">Supports CAVCO, Clayton TRU, Clayton Addison, Legacy, and Timber Creek updates</p>
+                  <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-2xs space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-100 pb-4">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
+                            MASTER ERP PRICING SYNC
+                          </span>
+                          <span className="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold px-2 py-0.2 rounded-full">
+                            Excel (.xlsx) &amp; CSV
+                          </span>
+                        </div>
+                        <h2 className="text-lg font-black text-[#0B1E38] mt-0.5">
+                          Spreadsheet &amp; Base Price List Imports
+                        </h2>
+                        <p className="text-xs text-slate-500 font-medium">
+                          Sync live factory wholesale base prices directly from ERP spreadsheet uploads (supports <code>.xlsx</code>, <code>.xls</code>, <code>.csv</code>).
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={handleDownloadSampleTemplate}
+                          className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-200 shadow-2xs text-xs cursor-pointer flex items-center gap-1.5"
+                          title="Download a formatted sample Excel template pre-filled with column headers"
+                        >
+                          <span>📥</span>
+                          <span>Download Template (.xlsx)</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleResetCatalog}
+                          className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded-xl border border-rose-200 text-xs cursor-pointer"
+                          title="Reset catalog back to factory defaults"
+                        >
+                          Reset to Defaults
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Drag & Drop Zone */}
+                    <div
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setIsDragging(true);
+                      }}
+                      onDragLeave={() => setIsDragging(false)}
+                      onDrop={handleDrop}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`p-8 border-2 border-dashed rounded-2xl text-center space-y-2 cursor-pointer transition-all ${
+                        isDragging
+                          ? 'border-[#1E6FA8] bg-blue-50/60 scale-[1.005]'
+                          : 'border-slate-300 bg-slate-50 hover:bg-slate-100/70'
+                      }`}
+                    >
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".xlsx, .xls, .csv, .tsv"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                      <span className="text-3xl block">📊</span>
+                      <div className="text-xs font-bold text-slate-800">
+                        {importFile ? `Selected: ${importFile.name}` : 'Click or Drag & Drop Master Price List (.xlsx, .xls, .csv)'}
+                      </div>
+                      <p className="text-[11px] text-slate-400">
+                        Auto-detects model names, manufacturer, wholesale factory cost, and EHS retail price across CAVCO, Clayton TRU, Clayton Addison, Legacy, and Timber Creek
+                      </p>
+                      {isParsing && (
+                        <div className="text-xs font-bold text-[#1E6FA8] animate-pulse pt-2">
+                          Parsing spreadsheet rows...
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Notifications */}
+                    {importErrorMsg && (
+                      <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold text-rose-800 flex items-center justify-between">
+                        <span>⚠️ {importErrorMsg}</span>
+                        <button onClick={() => setImportErrorMsg(null)} className="text-rose-600 font-bold cursor-pointer">✕</button>
+                      </div>
+                    )}
+                    {importSuccessMsg && (
+                      <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-800 flex items-center justify-between">
+                        <span>{importSuccessMsg}</span>
+                        <button onClick={() => setImportSuccessMsg(null)} className="text-emerald-600 font-bold cursor-pointer">✕</button>
+                      </div>
+                    )}
+
+                    {/* Sheet Selector (If multi-sheet Excel file) */}
+                    {sheetNames.length > 1 && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="font-black text-slate-600 uppercase text-[10px]">Select Sheet Tab:</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {sheetNames.map((sheet) => (
+                            <button
+                              key={sheet}
+                              type="button"
+                              onClick={() => handleSheetChange(sheet)}
+                              className={`px-3 py-1 rounded-lg font-bold text-xs cursor-pointer transition-colors ${
+                                selectedSheet === sheet
+                                  ? 'bg-[#0B1E38] text-white'
+                                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                              }`}
+                            >
+                              {sheet}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Staging Preview Table */}
+                    {stagedUpdates.length > 0 && (
+                      <div className="space-y-4 pt-2 border-t border-slate-100">
+                        {/* Summary Badges & Filter Bar */}
+                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-xs font-black text-slate-700">Staging Summary:</span>
+                            <span className="bg-slate-200 text-slate-800 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                              {stagedStats.total} Total Models
+                            </span>
+                            <span className="bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                              {stagedStats.updated} Price Changes
+                            </span>
+                            <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                              {stagedStats.newModels} New Models
+                            </span>
+                            <span className="bg-slate-100 text-slate-600 text-xs font-semibold px-2 py-0.5 rounded-full">
+                              {stagedStats.unchanged} Unchanged
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setStagedUpdates([]);
+                                setImportFile(null);
+                              }}
+                              className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs cursor-pointer"
+                            >
+                              Discard
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleApplyStagedUpdates}
+                              className="px-5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-xs cursor-pointer flex items-center gap-1.5"
+                            >
+                              <span>✓</span>
+                              <span>Apply &amp; Sync to Master Catalog</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Search & Filter Pills */}
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs">
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => setStagedFilter('ALL')}
+                              className={`px-3 py-1 rounded-lg font-bold cursor-pointer ${
+                                stagedFilter === 'ALL'
+                                  ? 'bg-[#0B1E38] text-white'
+                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                              }`}
+                            >
+                              All ({stagedUpdates.length})
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setStagedFilter('CHANGED')}
+                              className={`px-3 py-1 rounded-lg font-bold cursor-pointer ${
+                                stagedFilter === 'CHANGED'
+                                  ? 'bg-[#0B1E38] text-white'
+                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                              }`}
+                            >
+                              Price Updates Only ({stagedStats.updated})
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setStagedFilter('NEW')}
+                              className={`px-3 py-1 rounded-lg font-bold cursor-pointer ${
+                                stagedFilter === 'NEW'
+                                  ? 'bg-[#0B1E38] text-white'
+                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                              }`}
+                            >
+                              New Models Only ({stagedStats.newModels})
+                            </button>
+                          </div>
+
+                          <div className="w-full sm:w-64">
+                            <input
+                              type="text"
+                              value={stagedSearch}
+                              onChange={(e) => setStagedSearch(e.target.value)}
+                              placeholder="Filter staged models..."
+                              className="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Staged Data Table */}
+                        <div className="overflow-x-auto border border-slate-200 rounded-xl max-h-96">
+                          <table className="w-full text-left text-xs border-collapse">
+                            <thead className="sticky top-0 z-10 bg-slate-100 border-b border-slate-200 text-[11px] font-black uppercase tracking-wider text-slate-700">
+                              <tr>
+                                <th className="py-2.5 px-3">Status</th>
+                                <th className="py-2.5 px-3">Model Name</th>
+                                <th className="py-2.5 px-3">Manufacturer / Series</th>
+                                <th className="py-2.5 px-3">Specs</th>
+                                <th className="py-2.5 px-3">Factory Cost</th>
+                                <th className="py-2.5 px-3">EHS Base Price</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 bg-white">
+                              {filteredStagedUpdates.map((item, idx) => (
+                                <tr key={idx} className="hover:bg-slate-50/80">
+                                  <td className="py-2 px-3">
+                                    {item.status === 'updated' && (
+                                      <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">
+                                        Price Changed
+                                      </span>
+                                    )}
+                                    {item.status === 'new' && (
+                                      <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">
+                                        New Model
+                                      </span>
+                                    )}
+                                    {item.status === 'unchanged' && (
+                                      <span className="bg-slate-100 text-slate-600 text-[10px] font-medium px-2 py-0.5 rounded">
+                                        Unchanged
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3 font-bold text-[#0B1E38]">
+                                    {item.name}
+                                  </td>
+                                  <td className="py-2 px-3 text-slate-600">
+                                    {item.manufacturer} {item.series ? `• ${item.series}` : ''}
+                                  </td>
+                                  <td className="py-2 px-3 text-slate-500">
+                                    {item.beds ? `${item.beds}b/${item.baths || 1}ba` : ''} {item.sqft ? `• ${item.sqft} sq ft` : ''} {item.dimensions ? `• ${item.dimensions}` : ''}
+                                  </td>
+                                  <td className="py-2 px-3 font-mono">
+                                    {item.currentFactoryCost !== null && item.currentFactoryCost !== item.newFactoryCost ? (
+                                      <span className="space-x-1">
+                                        <span className="line-through text-slate-400">${item.currentFactoryCost.toLocaleString()}</span>
+                                        <span className="font-bold text-slate-800">➔ ${item.newFactoryCost.toLocaleString()}</span>
+                                      </span>
+                                    ) : (
+                                      <span className="text-slate-700">${item.newFactoryCost.toLocaleString()}</span>
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3 font-mono font-bold">
+                                    {item.currentEhsPrice !== null && item.currentEhsPrice !== item.newEhsPrice ? (
+                                      <span className="space-x-1">
+                                        <span className="line-through text-slate-400">${item.currentEhsPrice.toLocaleString()}</span>
+                                        <span className="text-emerald-700">➔ ${item.newEhsPrice.toLocaleString()}</span>
+                                      </span>
+                                    ) : (
+                                      <span className="text-[#1E6FA8]">${item.newEhsPrice.toLocaleString()}</span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

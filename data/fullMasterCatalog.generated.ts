@@ -4296,3 +4296,42 @@ export const FULL_MASTER_CATALOG_HOMES: MasterCatalogHome[] = [
     "modularOffFrameCapable": false
   }
 ];
+
+export function getStoredCatalogOverrides(): MasterCatalogHome[] | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('ehs_catalog_overrides');
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveStoredCatalogOverrides(homes: MasterCatalogHome[]) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('ehs_catalog_overrides', JSON.stringify(homes));
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('ehs_catalog_updated'));
+  } catch (err) {
+    console.error('Failed to save catalog overrides:', err);
+  }
+}
+
+export function clearStoredCatalogOverrides() {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem('ehs_catalog_overrides');
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('ehs_catalog_updated'));
+  } catch (err) {
+    console.error('Failed to clear catalog overrides:', err);
+  }
+}
+
+export function getEffectiveMasterCatalog(): MasterCatalogHome[] {
+  const overrides = getStoredCatalogOverrides();
+  return overrides && overrides.length > 0 ? overrides : FULL_MASTER_CATALOG_HOMES;
+}
