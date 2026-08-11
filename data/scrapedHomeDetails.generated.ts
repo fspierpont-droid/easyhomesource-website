@@ -1432,5 +1432,105 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "virtualTourUrl": "https://my.matterport.com/show/?m=nBr5bwTEycr",
       "sourcePage": "https://www.timbercreekhousing.com/floorplan/232817-1673/thomas-outlet-homes/greenville/creekside-series/the-delilah-csfl-3301/"
     }
-  }
+  },
+  "maple": {
+    "slug": "maple",
+    "sourcePage": "https://owntru.com/models/trt28483mh/",
+    "startingPrice": 98000,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "maple",
+      "gallery": [
+        {
+          "src": "/homes/maple/exterior/maple-exterior-01.jpg",
+          "alt": "TRT28483MH Maple exterior front elevation",
+          "category": "exterior",
+          "isPrimary": true,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/interior/maple-interior-01.jpg",
+          "alt": "TRT28483MH Maple living room open concept",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/interior/maple-interior-02.jpg",
+          "alt": "TRT28483MH Maple living area and dining view",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/kitchen/maple-kitchen-01.jpg",
+          "alt": "TRT28483MH Maple kitchen cabinetry and breakfast bar",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/kitchen/maple-kitchen-02.jpg",
+          "alt": "TRT28483MH Maple kitchen appliances and pantry",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/interior/maple-interior-03.jpg",
+          "alt": "TRT28483MH Maple hallway and entry foyer",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/bedroom/maple-bedroom-01.jpg",
+          "alt": "TRT28483MH Maple primary bedroom suite",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/bedroom/maple-bedroom-02.jpg",
+          "alt": "TRT28483MH Maple guest bedroom",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/bathroom/maple-bathroom-01.jpg",
+          "alt": "TRT28483MH Maple primary bath vanity and shower",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/bathroom/maple-bathroom-02.jpg",
+          "alt": "TRT28483MH Maple guest bathroom",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/floorplan/maple-floorplan-01.jpg",
+          "alt": "TRT28483MH Maple floor plan layout 1",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        },
+        {
+          "src": "/homes/maple/floorplan/maple-floorplan-02.jpg",
+          "alt": "TRT28483MH Maple floor plan layout 2",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://owntru.com/models/trt28483mh/"
+        }
+      ],
+      "floorPlanImage": "/homes/maple/floorplan/maple-floorplan-01.jpg",
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://owntru.com/models/trt28483mh/"
+    }
+  },
 };

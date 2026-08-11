@@ -267,79 +267,64 @@
     "sourcePage": "https://www.southcarolinamanufacturedhomes.com/floor-plan-detail/236739-1257/lexington-discount-homes/lexington/origin-series/maple-trt28483m/",
     "media": [
       {
-        "url": "https://cdn.manufacturedhomes.com/floor_plans/116958/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Layout 116958"
+        "url": "/homes/maple/exterior/maple-exterior-01.jpg",
+        "category": "exterior",
+        "alt": "TRT28483MH Maple exterior front elevation"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121868/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Kitchen 121868"
+        "url": "/homes/maple/interior/maple-interior-01.jpg",
+        "category": "interior",
+        "alt": "TRT28483MH Maple living room open concept"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121869/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Kitchen 121869"
+        "url": "/homes/maple/interior/maple-interior-02.jpg",
+        "category": "interior",
+        "alt": "TRT28483MH Maple living area and dining view"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121870/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Kitchen 121870"
+        "url": "/homes/maple/kitchen/maple-kitchen-01.jpg",
+        "category": "kitchen",
+        "alt": "TRT28483MH Maple kitchen cabinetry and breakfast bar"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121871/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Interior 121871"
+        "url": "/homes/maple/kitchen/maple-kitchen-02.jpg",
+        "category": "kitchen",
+        "alt": "TRT28483MH Maple kitchen appliances and pantry"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121872/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Interior 121872"
+        "url": "/homes/maple/interior/maple-interior-03.jpg",
+        "category": "interior",
+        "alt": "TRT28483MH Maple hallway and entry foyer"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121873/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Interior 121873"
+        "url": "/homes/maple/bedroom/maple-bedroom-01.jpg",
+        "category": "bedroom",
+        "alt": "TRT28483MH Maple primary bedroom suite"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121874/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Interior 121874"
+        "url": "/homes/maple/bedroom/maple-bedroom-02.jpg",
+        "category": "bedroom",
+        "alt": "TRT28483MH Maple guest bedroom"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121875/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Interior 121875"
+        "url": "/homes/maple/bathroom/maple-bathroom-01.jpg",
+        "category": "bathroom",
+        "alt": "TRT28483MH Maple primary bath vanity and shower"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121876/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Bedroom 121876"
+        "url": "/homes/maple/bathroom/maple-bathroom-02.jpg",
+        "category": "bathroom",
+        "alt": "TRT28483MH Maple guest bathroom"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121877/large.jpg",
+        "url": "/homes/maple/floorplan/maple-floorplan-01.jpg",
         "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Bedroom 121877"
+        "alt": "TRT28483MH Maple floor plan layout 1"
       },
       {
-        "url": "https://cdn.manufacturedhomes.com/photos/121878/large.jpg",
+        "url": "/homes/maple/floorplan/maple-floorplan-02.jpg",
         "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Bedroom 121878"
-      },
-      {
-        "url": "https://cdn.manufacturedhomes.com/photos/121883/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Bathroom 121883"
-      },
-      {
-        "url": "https://cdn.manufacturedhomes.com/photos/121884/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Bathroom 121884"
-      },
-      {
-        "url": "https://cdn.manufacturedhomes.com/photos/121886/large.jpg",
-        "category": "floorplan",
-        "alt": "Origin Series / Maple TRT28483M Exterior 121886"
+        "alt": "TRT28483MH Maple floor plan layout 2"
       }
     ]
   },
