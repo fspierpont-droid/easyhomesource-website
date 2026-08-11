@@ -1731,4 +1731,295 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
     }
   },
+  "select-s-1234-32a": {
+    "slug": "select-s-1234-32a",
+    "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a",
+    "startingPrice": 54412,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "select-s-1234-32a",
+      "gallery": [
+        {
+          "src": "/homes/select-s-1234-32a/exterior/select-s-1234-32a-exterior-01.jpg",
+          "alt": "Select S-1234-32A exterior front elevation",
+          "category": "exterior",
+          "isPrimary": true,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-01.jpg",
+          "alt": "Select S-1234-32A living room open concept",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-02.jpg",
+          "alt": "Select S-1234-32A living area view 2",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-03.jpg",
+          "alt": "Select S-1234-32A living room windows and natural light",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-04.jpg",
+          "alt": "Select S-1234-32A hallway and foyer",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/kitchen/select-s-1234-32a-kitchen-01.jpg",
+          "alt": "Select S-1234-32A kitchen cabinetry and countertop",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/kitchen/select-s-1234-32a-kitchen-02.jpg",
+          "alt": "Select S-1234-32A kitchen appliances and sink",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/kitchen/select-s-1234-32a-kitchen-03.jpg",
+          "alt": "Select S-1234-32A kitchen dining space",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bedroom/select-s-1234-32a-bedroom-01.jpg",
+          "alt": "Select S-1234-32A primary bedroom",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bedroom/select-s-1234-32a-bedroom-02.jpg",
+          "alt": "Select S-1234-32A bedroom closet storage",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bedroom/select-s-1234-32a-bedroom-03.jpg",
+          "alt": "Select S-1234-32A guest bedroom 1",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bedroom/select-s-1234-32a-bedroom-04.jpg",
+          "alt": "Select S-1234-32A guest bedroom 2",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bathroom/select-s-1234-32a-bathroom-01.jpg",
+          "alt": "Select S-1234-32A primary bathroom vanity",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bathroom/select-s-1234-32a-bathroom-02.jpg",
+          "alt": "Select S-1234-32A shower tub combo",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/bathroom/select-s-1234-32a-bathroom-03.jpg",
+          "alt": "Select S-1234-32A guest bathroom",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-05.jpg",
+          "alt": "Select S-1234-32A utility area",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/interior/select-s-1234-32a-interior-06.jpg",
+          "alt": "Select S-1234-32A interior detail view",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        },
+        {
+          "src": "/homes/select-s-1234-32a/floorplan/select-s-1234-32a-floorplan-01.png",
+          "alt": "Select S-1234-32A floor plan schematic",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+        }
+      ],
+      "floorPlanImage": "/homes/select-s-1234-32a/floorplan/select-s-1234-32a-floorplan-01.png",
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s1234-32a"
+    }
+  },
+  "select-s-1234-31a": {
+    "slug": "select-s-1234-31a",
+    "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a",
+    "startingPrice": 52380,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "select-s-1234-31a",
+      "gallery": [
+        {
+          "src": "/homes/select-s-1234-31a/exterior/select-s-1234-31a-exterior-01.jpg",
+          "alt": "Select S-1234-31A exterior front elevation",
+          "category": "exterior",
+          "isPrimary": true,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-01.jpg",
+          "alt": "Select S-1234-31A living area",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-02.jpg",
+          "alt": "Select S-1234-31A living room seating",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-03.jpg",
+          "alt": "Select S-1234-31A dining and living overview",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/kitchen/select-s-1234-31a-kitchen-01.jpg",
+          "alt": "Select S-1234-31A kitchen cabinetry and countertops",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/kitchen/select-s-1234-31a-kitchen-02.jpg",
+          "alt": "Select S-1234-31A kitchen breakfast counter",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/kitchen/select-s-1234-31a-kitchen-03.jpg",
+          "alt": "Select S-1234-31A kitchen range and appliances",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/kitchen/select-s-1234-31a-kitchen-04.jpg",
+          "alt": "Select S-1234-31A sink and faucet",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-04.jpg",
+          "alt": "Select S-1234-31A entry and hallway",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bedroom/select-s-1234-31a-bedroom-01.jpg",
+          "alt": "Select S-1234-31A primary bedroom",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bedroom/select-s-1234-31a-bedroom-02.jpg",
+          "alt": "Select S-1234-31A bedroom closet",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bedroom/select-s-1234-31a-bedroom-03.jpg",
+          "alt": "Select S-1234-31A guest bedroom 1",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bedroom/select-s-1234-31a-bedroom-04.jpg",
+          "alt": "Select S-1234-31A guest bedroom 2",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bathroom/select-s-1234-31a-bathroom-01.jpg",
+          "alt": "Select S-1234-31A bathroom vanity",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bathroom/select-s-1234-31a-bathroom-02.jpg",
+          "alt": "Select S-1234-31A bathroom shower tub",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/bathroom/select-s-1234-31a-bathroom-03.jpg",
+          "alt": "Select S-1234-31A bathroom linen storage",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-05.jpg",
+          "alt": "Select S-1234-31A laundry utility space",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/interior/select-s-1234-31a-interior-06.jpg",
+          "alt": "Select S-1234-31A interior layout view",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        },
+        {
+          "src": "/homes/select-s-1234-31a/floorplan/select-s-1234-31a-floorplan-01.png",
+          "alt": "Select S-1234-31A floor plan schematic",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+        }
+      ],
+      "floorPlanImage": "/homes/select-s-1234-31a/floorplan/select-s-1234-31a-floorplan-01.png",
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
+    }
+  },
 };
