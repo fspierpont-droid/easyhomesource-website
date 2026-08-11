@@ -67,6 +67,13 @@ export function PortalSidebar({
       icon: '📍',
       href: '/portal?view=property-packages',
       badge: totalPropertiesCount > 0 ? String(totalPropertiesCount) : undefined
+    },
+    {
+      id: 'projects',
+      label: 'Project Board',
+      icon: '🏗️',
+      href: '/portal?view=projects',
+      badge: '8'
     }
   ];
 

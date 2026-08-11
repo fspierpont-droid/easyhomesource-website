@@ -19,6 +19,7 @@ import { QuoteDashboardView } from '@/components/portal/QuoteDashboardView';
 import { ReadyToQuoteView, type ReadyBuyer } from '@/components/portal/ReadyToQuoteView';
 import { QuoteLibraryView } from '@/components/portal/QuoteLibraryView';
 import { HomeInventoryView } from '@/components/portal/HomeInventoryView';
+import { ProjectBoardView } from '@/components/portal/ProjectBoardView';
 import {
   getSavedQuotes,
   saveQuoteToStore,
@@ -666,7 +667,18 @@ export function PropertyPackageManager({ initialNav = 'dashboard' }: PropertyPac
         {/* 4. MODULE: Home Inventory (Display Units & Floorplan Tracker - Not for sale) */}
         {activeModule === 'inventory' && <HomeInventoryView />}
 
-        {/* 5. MODULE: Property Packages (The Core Property Center) */}
+        {/* 5. MODULE: Project Board & Job Site Map (GHL Projects & Opportunities) */}
+        {activeModule === 'projects' && (
+          <ProjectBoardView
+            onOpenQuote={(quoteId) => {
+              if (quoteId) {
+                window.location.href = `/quotes/${quoteId}/edit`;
+              }
+            }}
+          />
+        )}
+
+        {/* 6. MODULE: Property Packages (The Core Property Center) */}
         {(activeModule === 'property-packages' || activeModule === 'properties') && (
           <>
             {/* Top Header Section */}
