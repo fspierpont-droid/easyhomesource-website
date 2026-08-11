@@ -333,64 +333,134 @@
     "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618/creekside-series/the-white-oak-cs-3221/",
     "media": [
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Layout.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Layout 81376"
+        "url": "/homes/white-oak/exterior/white-oak-exterior-01.jpg",
+        "category": "exterior",
+        "alt": "The White Oak CS-3221 exterior front elevation"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-2.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Interior 86353"
+        "url": "/homes/white-oak/exterior/white-oak-exterior-02.jpg",
+        "category": "exterior",
+        "alt": "The White Oak CS-3221 exterior angled view"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-3.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Interior 86354"
+        "url": "/homes/white-oak/exterior/white-oak-exterior-03.jpg",
+        "category": "exterior",
+        "alt": "The White Oak CS-3221 exterior side view"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-4.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Interior 86355"
+        "url": "/homes/white-oak/exterior/white-oak-exterior-04.jpg",
+        "category": "exterior",
+        "alt": "The White Oak CS-3221 exterior architectural details"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Interior-5.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Interior 86356"
+        "url": "/homes/white-oak/interior/white-oak-interior-01.jpg",
+        "category": "interior",
+        "alt": "The White Oak CS-3221 living room open concept"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-1.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86357"
+        "url": "/homes/white-oak/interior/white-oak-interior-02.jpg",
+        "category": "interior",
+        "alt": "The White Oak CS-3221 living room with fireplace and beam ceiling"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Kitchen-2.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Kitchen 86358"
+        "url": "/homes/white-oak/interior/white-oak-interior-03.jpg",
+        "category": "interior",
+        "alt": "The White Oak CS-3221 dining area"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-1.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86367"
+        "url": "/homes/white-oak/interior/white-oak-interior-04.jpg",
+        "category": "interior",
+        "alt": "The White Oak CS-3221 foyer and hallway"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-2.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86368"
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-01.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 gourmet kitchen island with seating"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Bathroom-3.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Bathroom 86369"
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-02.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 custom kitchen cabinetry and range hood"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-1.jpg",
-        "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Exterior 86374"
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-03.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 farmhouse sink and window view"
       },
       {
-        "url": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618/The-White-Oak-CS-3221-Exterior-2.jpg",
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-04.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 stainless steel appliances"
+      },
+      {
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-05.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 walk-in kitchen pantry"
+      },
+      {
+        "url": "/homes/white-oak/kitchen/white-oak-kitchen-06.jpg",
+        "category": "kitchen",
+        "alt": "The White Oak CS-3221 kitchen breakfast bar overview"
+      },
+      {
+        "url": "/homes/white-oak/bedroom/white-oak-bedroom-01.jpg",
+        "category": "bedroom",
+        "alt": "The White Oak CS-3221 primary bedroom suite"
+      },
+      {
+        "url": "/homes/white-oak/bedroom/white-oak-bedroom-02.jpg",
+        "category": "bedroom",
+        "alt": "The White Oak CS-3221 primary bedroom alternate angle"
+      },
+      {
+        "url": "/homes/white-oak/bedroom/white-oak-bedroom-03.jpg",
+        "category": "bedroom",
+        "alt": "The White Oak CS-3221 guest bedroom 1"
+      },
+      {
+        "url": "/homes/white-oak/bedroom/white-oak-bedroom-04.jpg",
+        "category": "bedroom",
+        "alt": "The White Oak CS-3221 guest bedroom 2"
+      },
+      {
+        "url": "/homes/white-oak/bathroom/white-oak-bathroom-01.jpg",
+        "category": "bathroom",
+        "alt": "The White Oak CS-3221 luxury primary bathroom with dual vanities"
+      },
+      {
+        "url": "/homes/white-oak/bathroom/white-oak-bathroom-02.jpg",
+        "category": "bathroom",
+        "alt": "The White Oak CS-3221 freestanding soaking tub and tiled shower"
+      },
+      {
+        "url": "/homes/white-oak/bathroom/white-oak-bathroom-03.jpg",
+        "category": "bathroom",
+        "alt": "The White Oak CS-3221 guest bathroom vanity"
+      },
+      {
+        "url": "/homes/white-oak/bathroom/white-oak-bathroom-04.jpg",
+        "category": "bathroom",
+        "alt": "The White Oak CS-3221 bathroom shower and fixtures"
+      },
+      {
+        "url": "/homes/white-oak/other/white-oak-utility-01.jpg",
+        "category": "other",
+        "alt": "The White Oak CS-3221 utility laundry room"
+      },
+      {
+        "url": "/homes/white-oak/other/white-oak-utility-02.jpg",
+        "category": "other",
+        "alt": "The White Oak CS-3221 mudroom utility sink and bench"
+      },
+      {
+        "url": "/homes/white-oak/other/white-oak-utility-03.jpg",
+        "category": "other",
+        "alt": "The White Oak CS-3221 mechanical and water heater access"
+      },
+      {
+        "url": "/homes/white-oak/floorplan/white-oak-floorplan-01.jpg",
         "category": "floorplan",
-        "alt": "Creekside Series / The White Oak CS-3221 Exterior 86375"
+        "alt": "The White Oak CS-3221 floor plan layout diagram"
       }
     ]
   }

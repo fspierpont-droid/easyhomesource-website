@@ -1533,4 +1533,202 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "sourcePage": "https://owntru.com/models/trt28483mh/"
     }
   },
+  "white-oak": {
+    "slug": "white-oak",
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/",
+    "startingPrice": 189900,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "white-oak",
+      "gallery": [
+        {
+          "src": "/homes/white-oak/exterior/white-oak-exterior-01.jpg",
+          "alt": "The White Oak CS-3221 exterior front elevation",
+          "category": "exterior",
+          "isPrimary": true,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/exterior/white-oak-exterior-02.jpg",
+          "alt": "The White Oak CS-3221 exterior angled view",
+          "category": "exterior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/exterior/white-oak-exterior-03.jpg",
+          "alt": "The White Oak CS-3221 exterior side view",
+          "category": "exterior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/exterior/white-oak-exterior-04.jpg",
+          "alt": "The White Oak CS-3221 exterior architectural details",
+          "category": "exterior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/interior/white-oak-interior-01.jpg",
+          "alt": "The White Oak CS-3221 living room open concept",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/interior/white-oak-interior-02.jpg",
+          "alt": "The White Oak CS-3221 living room with fireplace and beam ceiling",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/interior/white-oak-interior-03.jpg",
+          "alt": "The White Oak CS-3221 dining area",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/interior/white-oak-interior-04.jpg",
+          "alt": "The White Oak CS-3221 foyer and hallway",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-01.jpg",
+          "alt": "The White Oak CS-3221 gourmet kitchen island with seating",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-02.jpg",
+          "alt": "The White Oak CS-3221 custom kitchen cabinetry and range hood",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-03.jpg",
+          "alt": "The White Oak CS-3221 farmhouse sink and window view",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-04.jpg",
+          "alt": "The White Oak CS-3221 stainless steel appliances",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-05.jpg",
+          "alt": "The White Oak CS-3221 walk-in kitchen pantry",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/kitchen/white-oak-kitchen-06.jpg",
+          "alt": "The White Oak CS-3221 kitchen breakfast bar overview",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bedroom/white-oak-bedroom-01.jpg",
+          "alt": "The White Oak CS-3221 primary bedroom suite",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bedroom/white-oak-bedroom-02.jpg",
+          "alt": "The White Oak CS-3221 primary bedroom alternate angle",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bedroom/white-oak-bedroom-03.jpg",
+          "alt": "The White Oak CS-3221 guest bedroom 1",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bedroom/white-oak-bedroom-04.jpg",
+          "alt": "The White Oak CS-3221 guest bedroom 2",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bathroom/white-oak-bathroom-01.jpg",
+          "alt": "The White Oak CS-3221 luxury primary bathroom with dual vanities",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bathroom/white-oak-bathroom-02.jpg",
+          "alt": "The White Oak CS-3221 freestanding soaking tub and tiled shower",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bathroom/white-oak-bathroom-03.jpg",
+          "alt": "The White Oak CS-3221 guest bathroom vanity",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/bathroom/white-oak-bathroom-04.jpg",
+          "alt": "The White Oak CS-3221 bathroom shower and fixtures",
+          "category": "bathroom",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/other/white-oak-utility-01.jpg",
+          "alt": "The White Oak CS-3221 utility laundry room",
+          "category": "other",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/other/white-oak-utility-02.jpg",
+          "alt": "The White Oak CS-3221 mudroom utility sink and bench",
+          "category": "other",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/other/white-oak-utility-03.jpg",
+          "alt": "The White Oak CS-3221 mechanical and water heater access",
+          "category": "other",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        },
+        {
+          "src": "/homes/white-oak/floorplan/white-oak-floorplan-01.jpg",
+          "alt": "The White Oak CS-3221 floor plan layout diagram",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+        }
+      ],
+      "floorPlanImage": "/homes/white-oak/floorplan/white-oak-floorplan-01.jpg",
+      "brochureUrl": null,
+      "videoUrl": "https://my.matterport.com/show/?m=1QRMAvj9Ac9",
+      "virtualTourUrl": "https://my.matterport.com/show/?m=1QRMAvj9Ac9",
+      "sourcePage": "https://www.timbercreekhousing.com/floorplan/231618-1673/thomas-outlet-homes/greenville/creekside-series/the-white-oak-cs-3221/"
+    }
+  },
 };
