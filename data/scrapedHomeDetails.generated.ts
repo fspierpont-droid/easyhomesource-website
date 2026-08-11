@@ -2022,4 +2022,55 @@ export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
       "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1234-31a"
     }
   },
+  "select-s-1444-11ofp": {
+    "slug": "select-s-1444-11ofp",
+    "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp",
+    "startingPrice": 54698,
+    "priceLabel": "Starting Price",
+    "media": {
+      "slug": "select-s-1444-11ofp",
+      "gallery": [
+        {
+          "src": "/homes/select-s-1444-11ofp/exterior/select-s-1444-11ofp-exterior-01.jpg",
+          "alt": "Select S-1444-11OFP exterior front elevation",
+          "category": "exterior",
+          "isPrimary": true,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+        },
+        {
+          "src": "/homes/select-s-1444-11ofp/interior/select-s-1444-11ofp-interior-01.jpg",
+          "alt": "Select S-1444-11OFP open living room",
+          "category": "interior",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+        },
+        {
+          "src": "/homes/select-s-1444-11ofp/kitchen/select-s-1444-11ofp-kitchen-01.jpg",
+          "alt": "Select S-1444-11OFP kitchen cabinetry and dining space",
+          "category": "kitchen",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+        },
+        {
+          "src": "/homes/select-s-1444-11ofp/bedroom/select-s-1444-11ofp-bedroom-01.jpg",
+          "alt": "Select S-1444-11OFP primary bedroom retreat",
+          "category": "bedroom",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+        },
+        {
+          "src": "/homes/select-s-1444-11ofp/floorplan/select-s-1444-11ofp-floorplan-01.png",
+          "alt": "Select S-1444-11OFP floor plan layout schematic",
+          "category": "floorplan",
+          "isPrimary": false,
+          "sourceUrl": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+        }
+      ],
+      "floorPlanImage": "/homes/select-s-1444-11ofp/floorplan/select-s-1444-11ofp-floorplan-01.png",
+      "brochureUrl": null,
+      "videoUrl": null,
+      "virtualTourUrl": null,
+      "sourcePage": "https://trove.legacyhousing.com/homes/legacy-housing-select-collection-s-1444-11ofp"
+    }
+  },
 };
