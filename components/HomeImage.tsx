@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
 
 export function HomeImage({
@@ -15,36 +15,29 @@ export function HomeImage({
   placeholderTitle?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  if (!src || failed) return <MediaPlaceholder title={placeholderTitle} className={className} />;
 
-  // Detect floor plans and blueprints so they render without cropping
-  const isFloorPlan =
-    /floor[-_]?plans?|flp|blueprint|layout|floor_plans/i.test(src) ||
-    /floor[-_]?plans?|blueprint|layout/i.test(alt);
-
-  if (isFloorPlan) {
-    return (
-      <div
-        className={`bg-contain bg-center bg-no-repeat bg-white p-2 flex items-center justify-center ${className}`}
-        role="img"
-        aria-label={alt}
-        style={{ backgroundImage: `url("${src}")` }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="" className="hidden" onError={() => setFailed(true)} />
-      </div>
-    );
+  if (!src || failed) {
+    return <MediaPlaceholder title={placeholderTitle} className={className} />;
   }
 
+  // Detect floor plan blueprints to prevent cropping
+  const isFloorPlan =
+    /floor[-_]?plans?[-_.]|blueprint|\/flp\/|layout[-_.]/i.test(src) ||
+    /floor\s*plan|blueprint|schematic/i.test(alt);
+  const isRealPhoto = /[-_](ext|int|kit|bed|bath|uti)[-_]/i.test(src);
+
+  const shouldContain = isFloorPlan && !isRealPhoto;
+
   return (
-    <div
-      className={`bg-cover bg-center ${className}`}
-      role="img"
-      aria-label={alt}
-      style={{ backgroundImage: `url("${src}")` }}
-    >
+    <div className={`relative overflow-hidden flex items-center justify-center ${shouldContain ? 'bg-white p-2' : 'bg-slate-100'} ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt="" className="hidden" onError={() => setFailed(true)} />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        className={`w-full h-full ${shouldContain ? 'object-contain' : 'object-cover'} transition-opacity duration-300`}
+      />
     </div>
   );
 }
