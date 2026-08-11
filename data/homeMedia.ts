@@ -97,11 +97,11 @@ if (Array.isArray(manualMap)) {
   }
 }
 
-// 3. Combined master media manifest (ONLY VERIFIED HOMES)
+// 3. Combined master media manifest (scrapedMedia and verified local media take precedence)
 const rawMasterMedia: HomeMediaManifest = {
   ...catalogHomeMedia,
-  ...scrapedMedia,
   ...manualMedia,
+  ...scrapedMedia,
   ...tulipManufacturerMedia,
   ...craftSelectManufacturerMedia
 };
