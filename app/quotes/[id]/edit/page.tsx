@@ -419,7 +419,7 @@ export default function EditQuotePage() {
       const p = INITIAL_PROPERTIES[0];
       if (p) {
         setSelectedParcelId(p.id);
-        setPropertyPrice(p.listPrice || 49900);
+        setPropertyPrice(p.price || 49900);
         setPropertyAddress(`${p.address}, ${p.city}, FL ${p.zip}`);
       }
     }
@@ -429,7 +429,7 @@ export default function EditQuotePage() {
     setSelectedParcelId(parcelId);
     const p = INITIAL_PROPERTIES.find((prop) => prop.id === parcelId);
     if (p) {
-      setPropertyPrice(p.listPrice);
+      setPropertyPrice(p.price || 0);
       setPropertyAddress(`${p.address}, ${p.city}, FL ${p.zip}`);
     }
   };
@@ -1230,7 +1230,7 @@ export default function EditQuotePage() {
                         >
                           {INITIAL_PROPERTIES.map((p) => (
                             <option key={p.id} value={p.id}>
-                              {p.address} ({p.county} County) — ${p.listPrice.toLocaleString()} ({p.acres} acres)
+                              {p.address} ({p.county} County) — ${(p.price || 0).toLocaleString()} ({p.lotSize || 'N/A'})
                             </option>
                           ))}
                         </select>
