@@ -4,22 +4,74 @@ import type { GhlProject } from '@/types/project';
 
 let inMemoryProjects: GhlProject[] = [...INITIAL_GHL_PROJECTS];
 
-export async function GET() {
-  return NextResponse.json({
-    success: true,
-    count: inMemoryProjects.length,
-    projects: inMemoryProjects
-  });
+const CITY_COORDINATES: Record<string, { lat: number; lng: number }> = {
+  homosassa: { lat: 28.7885, lng: -82.5932 },
+  brooksville: { lat: 28.5553, lng: -82.3879 },
+  'spring hill': { lat: 28.4764, lng: -82.6067 },
+  zephyrhills: { lat: 28.2336, lng: -82.1812 },
+  'dade city': { lat: 28.3647, lng: -82.1959 },
+  inverness: { lat: 28.8472, lng: -82.3129 },
+  bushnell: { lat: 28.6653, lng: -82.1126 },
+  leesburg: { lat: 28.8108, lng: -81.8779 },
+  ocala: { lat: 29.1872, lng: -82.1401 },
+  lakeland: { lat: 28.0395, lng: -81.9498 },
+  crystalriver: { lat: 28.9033, lng: -82.5926 },
+  'crystal river': { lat: 28.9033, lng: -82.5926 }
+};
+
+export async function GET(request: Request) {
+  try {
+    const backendBase = (process.env.EHS_BACKEND_URL || 'https://ehs-api-staging.onrender.com').replace(/\/$/, '');
+    
+    // Try fetching from backend API if available
+    try {
+      const res = await fetch(`${backendBase}/api/projects`, {
+        headers: { 'Content-Type': 'application/json' },
+        next: { revalidate: 0 }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          return NextResponse.json({
+            success: true,
+            count: data.length,
+            projects: data,
+            source: 'ghl-backend'
+          });
+        }
+      }
+    } catch {
+      // fallback to inMemory
+    }
+
+    return NextResponse.json({
+      success: true,
+      count: inMemoryProjects.length,
+      projects: inMemoryProjects,
+      source: 'local-store'
+    });
+  } catch (err: any) {
+    return NextResponse.json(
+      { success: false, error: err?.message || 'Failed to fetch projects' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     
+    const cityKey = (body.city || '').toLowerCase().trim();
+    const defaultCoords = CITY_COORDINATES[cityKey] || {
+      lat: 28.5553 + (Math.random() - 0.5) * 0.3,
+      lng: -82.3879 + (Math.random() - 0.5) * 0.3
+    };
+
     // GHL Webhook opportunity ingestion
     const newProject: GhlProject = {
       id: body.id || `proj-${Date.now()}`,
-      ghlOpportunityId: body.ghlOpportunityId || body.opportunity_id || `ghl-opp-${Date.now()}`,
+      ghlOpportunityId: body.ghlOpportunityId || body.opportunity_id || body.id || `ghl-opp-${Date.now()}`,
       jobId: body.jobId || `JOB-2026-${Math.floor(100 + Math.random() * 900)}`,
       customerName: body.customerName || body.contact_name || body.name || 'New Customer',
       customerPhone: body.customerPhone || body.phone || '352-555-0100',
@@ -29,8 +81,8 @@ export async function POST(request: Request) {
       county: body.county || 'Hernando',
       state: body.state || 'FL',
       zip: body.zip || '34601',
-      latitude: Number(body.latitude) || (28.5 + (Math.random() - 0.5) * 0.4),
-      longitude: Number(body.longitude) || (-82.4 + (Math.random() - 0.5) * 0.4),
+      latitude: Number(body.latitude) || defaultCoords.lat,
+      longitude: Number(body.longitude) || defaultCoords.lng,
       stage: body.stage || 'LEAD_QUALIFIED',
       stageLabel: body.stageLabel || 'Lead Qualified',
       progressPct: Number(body.progressPct) || 15,
