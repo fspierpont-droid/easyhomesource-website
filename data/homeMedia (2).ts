@@ -19,6 +19,8 @@ const rawMasterMedia: HomeMediaManifest = {
   ...boujeeXl2MediaOverride
 };
 
+/** @deprecated Use getHomeMedia instead. Kept for backward compatibility with homes.ts. */
+export const getImportedHomeMedia = getHomeMedia;
 export function getHomeMedia(slug: string) {
   return rawMasterMedia[slug] || null;
 }
