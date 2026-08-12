@@ -10,13 +10,22 @@ interface ProjectMapProps {
   onSelectProject?: (project: GhlProject) => void;
   selectedProject?: GhlProject | null;
   onOpenQuote?: (quoteId?: string) => void;
+<<<<<<< HEAD
+=======
+  onUpdateStage?: (projectId: string, newStage: ProjectStage) => void;
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
 }
 
 export function ProjectMap({
   projects,
   onSelectProject,
   selectedProject: externalSelected,
+<<<<<<< HEAD
   onOpenQuote
+=======
+  onOpenQuote,
+  onUpdateStage
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
 }: ProjectMapProps) {
   const [activeProject, setActiveProject] = useState<GhlProject | null>(
     externalSelected || projects[0] || null
@@ -364,6 +373,7 @@ export function ProjectMap({
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] text-slate-500 font-bold uppercase">GHL Pipeline Stage</span>
+<<<<<<< HEAD
                       <span
                         className="font-black px-2.5 py-0.5 rounded-full text-[10px] border"
                         style={{
@@ -375,6 +385,37 @@ export function ProjectMap({
                         {PROJECT_STAGE_CONFIG[activeProject.stage]?.icon}{' '}
                         {PROJECT_STAGE_CONFIG[activeProject.stage]?.label || activeProject.stageLabel}
                       </span>
+=======
+                      {onUpdateStage ? (
+                        <select
+                          value={activeProject.stage}
+                          onChange={(e) => onUpdateStage(activeProject.id, e.target.value as ProjectStage)}
+                          className="font-bold text-[10px] px-2 py-1 rounded-lg border bg-white cursor-pointer"
+                          style={{
+                            borderColor: PROJECT_STAGE_CONFIG[activeProject.stage]?.border || '#BAE6FD',
+                            color: PROJECT_STAGE_CONFIG[activeProject.stage]?.color || '#0284C7'
+                          }}
+                        >
+                          {Object.entries(PROJECT_STAGE_CONFIG).map(([stgKey, cfg]) => (
+                            <option key={stgKey} value={stgKey}>
+                              {cfg.icon} {cfg.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <span
+                          className="font-black px-2.5 py-0.5 rounded-full text-[10px] border"
+                          style={{
+                            backgroundColor: PROJECT_STAGE_CONFIG[activeProject.stage]?.bg || '#F0F9FF',
+                            color: PROJECT_STAGE_CONFIG[activeProject.stage]?.color || '#0284C7',
+                            borderColor: PROJECT_STAGE_CONFIG[activeProject.stage]?.border || '#BAE6FD'
+                          }}
+                        >
+                          {PROJECT_STAGE_CONFIG[activeProject.stage]?.icon}{' '}
+                          {PROJECT_STAGE_CONFIG[activeProject.stage]?.label || activeProject.stageLabel}
+                        </span>
+                      )}
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
                     </div>
 
                     <div>

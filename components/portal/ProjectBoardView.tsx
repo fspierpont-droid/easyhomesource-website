@@ -70,9 +70,33 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
     await fetchLiveGhlProjects(false);
   };
 
+<<<<<<< HEAD
   const handleStageChange = (projectId: string, newStage: ProjectStage) => {
     updateProjectStage(projectId, newStage);
     setProjects(getStoredProjects());
+=======
+  const handleStageChange = async (projectId: string, newStage: ProjectStage) => {
+    const proj = projects.find((p) => p.id === projectId);
+    updateProjectStage(projectId, newStage);
+    setProjects(getStoredProjects());
+
+    if (proj?.ghlOpportunityId) {
+      try {
+        await fetch('/api/portal/projects/update-stage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            projectId,
+            ghlOpportunityId: proj.ghlOpportunityId,
+            newStage
+          })
+        });
+        setSyncSuccessMsg(`✓ Stage updated in GoHighLevel to "${PROJECT_STAGE_CONFIG[newStage]?.label || newStage}" for ${proj.customerName}.`);
+      } catch (err) {
+        console.error('Failed to sync stage update to GHL:', err);
+      }
+    }
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
   };
 
   const filteredProjects = useMemo(() => {
@@ -278,6 +302,10 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           projects={filteredProjects}
           onSelectProject={(p) => setSelectedProject(p)}
           selectedProject={selectedProject}
+<<<<<<< HEAD
+=======
+          onUpdateStage={handleStageChange}
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
         />
       )}
 
@@ -388,16 +416,32 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
                       {p.homeModel}
                     </td>
                     <td className="py-3 px-4">
+<<<<<<< HEAD
                       <span
                         className="px-2.5 py-1 rounded-full text-[10px] font-black border inline-flex items-center gap-1"
+=======
+                      <select
+                        value={p.stage}
+                        onChange={(e) => handleStageChange(p.id, e.target.value as ProjectStage)}
+                        className="px-2.5 py-1 rounded-lg text-[10px] font-bold border inline-flex items-center gap-1 cursor-pointer bg-white"
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
                         style={{
                           backgroundColor: PROJECT_STAGE_CONFIG[p.stage]?.bg || '#F0F9FF',
                           color: PROJECT_STAGE_CONFIG[p.stage]?.color || '#0284C7',
                           borderColor: PROJECT_STAGE_CONFIG[p.stage]?.border || '#BAE6FD'
                         }}
                       >
+<<<<<<< HEAD
                         {PROJECT_STAGE_CONFIG[p.stage]?.icon} {PROJECT_STAGE_CONFIG[p.stage]?.label}
                       </span>
+=======
+                        {Object.entries(PROJECT_STAGE_CONFIG).map(([stgKey, cfg]) => (
+                          <option key={stgKey} value={stgKey}>
+                            {cfg.icon} {cfg.label}
+                          </option>
+                        ))}
+                      </select>
+>>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
                     </td>
                     <td className="py-3 px-4 font-mono font-bold text-slate-900">
                       ${(p.dealValue || 0).toLocaleString()}

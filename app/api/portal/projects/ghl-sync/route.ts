@@ -3,6 +3,41 @@ import type { GhlProject, ProjectStage } from '@/types/project';
 
 const GHL_API_TOKEN = process.env.GHL_API_KEY || 'pit-3339427e-f798-4d08-9ecb-bb5f852747dd';
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'flt9sQU68wrpAtvEMEQZ';
+const PROJECT_PIPELINE_ID = 'W8RI4f1c9G72Fzn1LVlS'; // GoHighLevel "Project-Phase" Pipeline
+
+// Stage ID Mapping between GHL and Portal
+export const GHL_STAGE_TO_PORTAL: Record<string, { stage: ProjectStage; label: string; progressPct: number }> = {
+  '472ee180-a203-4c58-80fd-5a4c0e9db793': { stage: 'PERMITTING', label: 'Permitting & Engineering', progressPct: 20 },
+  '04066448-fc52-4179-8461-a8a29119912a': { stage: 'SITE_PREP', label: 'Site Prep & Infrastructure', progressPct: 40 },
+  'cf7f467f-dd5f-4d65-afea-bd32491d00e2': { stage: 'TRANSPORT_SET', label: 'Home Installation', progressPct: 65 },
+  '4b7b4df4-5026-44e0-890a-1b475f21093b': { stage: 'FINAL_INSPECTION', label: 'Inspections', progressPct: 85 },
+  '6b4b1901-fb78-48aa-a7ea-517bd7b87c81': { stage: 'COMPLETED', label: 'CO Issued / Handover', progressPct: 100 },
+  'ebed22f5-8c69-4835-bb5e-e528ec2a4618': { stage: 'COMPLETED', label: 'Support Stage (Warranty)', progressPct: 100 },
+  '3a7764dc-8da5-4f72-bad3-f082ead62bb8': { stage: 'COMPLETED', label: 'Support/Warranty Expired', progressPct: 100 }
+};
+
+export const PORTAL_STAGE_TO_GHL: Record<ProjectStage, string> = {
+  LEAD_QUALIFIED: '472ee180-a203-4c58-80fd-5a4c0e9db793',
+  PERMITTING: '472ee180-a203-4c58-80fd-5a4c0e9db793',
+  SITE_PREP: '04066448-fc52-4179-8461-a8a29119912a',
+  FACTORY_BUILD: '04066448-fc52-4179-8461-a8a29119912a',
+  TRANSPORT_SET: 'cf7f467f-dd5f-4d65-afea-bd32491d00e2',
+  UTILITIES_HOOKUP: 'cf7f467f-dd5f-4d65-afea-bd32491d00e2',
+  FINAL_INSPECTION: '4b7b4df4-5026-44e0-890a-1b475f21093b',
+  COMPLETED: '6b4b1901-fb78-48aa-a7ea-517bd7b87c81'
+};
+
+const KNOWN_COORDINATES: Record<string, { lat: number; lng: number }> = {
+  '11123 snow lark ave': { lat: 28.6189, lng: -82.4921 }, // Brooksville
+  '4128 feldspar ln': { lat: 28.4612, lng: -82.5304 }, // Spring Hill
+  '6645 w erlen ln': { lat: 28.7885, lng: -82.5932 }, // Homosassa
+  '9248 denmarsh dr': { lat: 28.5381, lng: -82.3614 }, // Brooksville
+  '7112 fitzpatrick ave': { lat: 28.5123, lng: -82.4102 }, // Brooksville
+  '26314 glenwood dr': { lat: 28.2336, lng: -82.1812 }, // Zephyrhills
+  '14108 us hwy 301': { lat: 28.3647, lng: -82.1959 }, // Dade City
+  '8312 e gospel island rd': { lat: 28.8472, lng: -82.3129 }, // Inverness
+  '4220 cr 476': { lat: 28.6653, lng: -82.1126 } // Bushnell
+};
 
 const CITY_COORDINATES: Record<string, { lat: number; lng: number }> = {
   homosassa: { lat: 28.7885, lng: -82.5932 },
@@ -14,23 +49,18 @@ const CITY_COORDINATES: Record<string, { lat: number; lng: number }> = {
   bushnell: { lat: 28.6653, lng: -82.1126 },
   leesburg: { lat: 28.8108, lng: -81.8779 },
   ocala: { lat: 29.1872, lng: -82.1401 },
-  lakeland: { lat: 28.0395, lng: -81.9498 },
-  tampa: { lat: 27.9506, lng: -82.4572 },
-  clearwater: { lat: 27.9659, lng: -82.8001 },
-  'crystal river': { lat: 28.9033, lng: -82.5926 },
-  wildwood: { lat: 28.8639, lng: -82.0381 },
-  clermont: { lat: 28.5494, lng: -81.7729 }
+  tampa: { lat: 27.9506, lng: -82.4572 }
 };
 
-export async function GET(request: Request) {
-  return handleGhlSync();
+export async function GET() {
+  return handleFetchProjectPhaseOpps();
 }
 
-export async function POST(request: Request) {
-  return handleGhlSync();
+export async function POST() {
+  return handleFetchProjectPhaseOpps();
 }
 
-async function handleGhlSync() {
+async function handleFetchProjectPhaseOpps() {
   try {
     const headers = {
       Authorization: `Bearer ${GHL_API_TOKEN}`,
@@ -39,32 +69,24 @@ async function handleGhlSync() {
       'User-Agent': 'Mozilla/5.0'
     };
 
-    // 1. Fetch Pipelines & Users in parallel
-    const [pipelinesRes, usersRes, oppsRes] = await Promise.all([
-      fetch(`https://services.leadconnectorhq.com/opportunities/pipelines?locationId=${GHL_LOCATION_ID}`, {
-        headers,
-        next: { revalidate: 0 }
-      }),
-      fetch(`https://services.leadconnectorhq.com/users/?locationId=${GHL_LOCATION_ID}`, {
-        headers,
-        next: { revalidate: 0 }
-      }),
-      fetch(`https://services.leadconnectorhq.com/opportunities/search?location_id=${GHL_LOCATION_ID}&limit=100`, {
-        headers,
-        next: { revalidate: 0 }
-      })
+    // 1. Fetch opportunities strictly from Project-Phase pipeline
+    const url = `https://services.leadconnectorhq.com/opportunities/search?location_id=${GHL_LOCATION_ID}&pipeline_id=${PROJECT_PIPELINE_ID}&limit=100`;
+    const usersUrl = `https://services.leadconnectorhq.com/users/?locationId=${GHL_LOCATION_ID}`;
+
+    const [oppsRes, usersRes] = await Promise.all([
+      fetch(url, { headers, cache: 'no-store' }),
+      fetch(usersUrl, { headers, cache: 'no-store' })
     ]);
 
     if (!oppsRes.ok) {
-      const errText = await oppsRes.text();
-      throw new Error(`GHL Opportunities API error (${oppsRes.status}): ${errText}`);
+      const err = await oppsRes.text();
+      throw new Error(`Failed to fetch GHL Project-Phase opportunities: ${err}`);
     }
 
-    const pipelinesData = pipelinesRes.ok ? await pipelinesRes.json() : { pipelines: [] };
-    const usersData = usersRes.ok ? await usersRes.json() : { users: [] };
     const oppsData = await oppsRes.json();
+    const usersData = usersRes.ok ? await usersRes.json() : { users: [] };
 
-    // Map of User IDs to User Names
+    // Build user map
     const userMap: Record<string, { name: string; email: string }> = {};
     if (Array.isArray(usersData?.users)) {
       for (const u of usersData.users) {
@@ -72,162 +94,114 @@ async function handleGhlSync() {
       }
     }
 
-    // Map of Stage IDs to Stage Names & Pipeline Names
-    const stageMap: Record<string, { stageName: string; pipelineName: string; stageOrder: number }> = {};
-    if (Array.isArray(pipelinesData?.pipelines)) {
-      for (const pipe of pipelinesData.pipelines) {
-        if (Array.isArray(pipe.stages)) {
-          pipe.stages.forEach((stg: any, idx: number) => {
-            stageMap[stg.id] = {
-              stageName: stg.name,
-              pipelineName: pipe.name,
-              stageOrder: idx + 1
-            };
-          });
+    const opportunities: any[] = oppsData.opportunities || [];
+
+    // Transform strictly to GhlProject models
+    const projects: GhlProject[] = opportunities.map((opp, idx) => {
+      const contact = opp.contact || {};
+      const customFields: any[] = opp.customFields || [];
+
+      // Extract custom field values
+      const getFieldStr = (id: string, defVal = '') => {
+        const f = customFields.find((cf) => cf.id === id);
+        return f?.fieldValueString || f?.field_value || defVal;
+      };
+      const getFieldNum = (id: string, defVal = 0) => {
+        const f = customFields.find((cf) => cf.id === id);
+        return Number(f?.fieldValueNumber ?? f?.field_value ?? defVal) || defVal;
+      };
+
+      const siteAddressRaw = getFieldStr('dHjTQIz3TiLyA1nTjBKY') || contact.address1 || 'Central Florida Homesite';
+      const floorPlanName = getFieldStr('u65XL9zAaZiOIqBqygov') || 'Satisfaction';
+      const financeAmount = getFieldNum('1SifLGK97kceKz4AgIVA') || Number(opp.monetaryValue) || 185000;
+      const downPayment = getFieldNum('xuAyycLxj8YoaOAoFIoR') || Math.round(financeAmount * 0.05);
+      const landStatus = getFieldStr('BiSItm1i8p4MrsCbySc6') || 'Owned';
+      const depositStatusStr = getFieldStr('hXYhZkFA1uizZeag77zR') || 'Collected';
+      const zoning = getFieldStr('maaf51kmzQDMhONJqGfb') || 'Residential';
+
+      // Geocode Address
+      const addrLower = siteAddressRaw.toLowerCase();
+      let coords = { lat: 28.5553, lng: -82.3879 };
+
+      for (const [knownAddr, c] of Object.entries(KNOWN_COORDINATES)) {
+        if (addrLower.includes(knownAddr)) {
+          coords = c;
+          break;
         }
       }
-    }
 
-    const rawOpps: any[] = oppsData?.opportunities || [];
-
-    // Transform GHL Opportunities into GhlProject records
-    const projects: GhlProject[] = rawOpps.map((opp: any, index: number) => {
-      const contact = opp.contact || {};
-      const contactName = (contact.name || opp.name || 'Valued Customer').trim();
-      const phone = contact.phone || opp.phone || '352-558-8888';
-      const email = contact.email || opp.email || 'lead@easyhomesource.com';
-      const address = contact.address1 || contact.companyName || 'Central Florida Site';
-      const city = contact.city || 'Brooksville';
-      const state = contact.state || 'FL';
-      const zip = contact.postalCode || '34601';
-
-      // Geocode City / Address
-      const cityClean = (city || '').toLowerCase().trim();
-      const baseCoord = CITY_COORDINATES[cityClean] || { lat: 28.5553, lng: -82.3879 };
-
-      // Add deterministic small jitter so pins at same city don't completely overlap
-      const jitterLat = ((((index * 13) % 20) - 10) / 400);
-      const jitterLng = ((((index * 17) % 20) - 10) / 400);
-      const latitude = baseCoord.lat + jitterLat;
-      const longitude = baseCoord.lng + jitterLng;
-
-      const stageInfo = stageMap[opp.pipelineStageId] || {
-        stageName: 'New Lead',
-        pipelineName: 'Lead-Phase',
-        stageOrder: 1
-      };
-
-      // Map to ProjectStage
-      let stage: ProjectStage = 'LEAD_QUALIFIED';
-      const sName = stageInfo.stageName.toLowerCase();
-      const pName = stageInfo.pipelineName.toLowerCase();
-
-      if (sName.includes('permit') || sName.includes('engineer')) {
-        stage = 'PERMITTING';
-      } else if (sName.includes('site prep') || sName.includes('infrastruct') || sName.includes('pad')) {
-        stage = 'SITE_PREP';
-      } else if (sName.includes('factory') || sName.includes('production') || sName.includes('closing')) {
-        stage = 'FACTORY_BUILD';
-      } else if (sName.includes('installation') || sName.includes('set') || sName.includes('transport')) {
-        stage = 'TRANSPORT_SET';
-      } else if (sName.includes('utilit') || sName.includes('tie-down') || sName.includes('inspection')) {
-        stage = sName.includes('inspection') ? 'FINAL_INSPECTION' : 'UTILITIES_HOOKUP';
-      } else if (sName.includes('co issued') || sName.includes('handover') || sName.includes('complete') || sName.includes('deal finalized') || opp.status === 'won') {
-        stage = 'COMPLETED';
-      } else if (pName.includes('project')) {
-        stage = 'SITE_PREP';
-      } else if (pName.includes('client') || sName.includes('deposit') || sName.includes('contract')) {
-        stage = 'PERMITTING';
-      } else {
-        stage = 'LEAD_QUALIFIED';
+      if (coords.lat === 28.5553 && coords.lng === -82.3879) {
+        for (const [city, c] of Object.entries(CITY_COORDINATES)) {
+          if (addrLower.includes(city) || (contact.city && contact.city.toLowerCase().includes(city))) {
+            const jitterLat = ((((idx * 13) % 20) - 10) / 450);
+            const jitterLng = ((((idx * 17) % 20) - 10) / 450);
+            coords = { lat: c.lat + jitterLat, lng: c.lng + jitterLng };
+            break;
+          }
+        }
       }
 
-      const assignedUserInfo = userMap[opp.assignedTo] || {
-        name: 'Scott Pierpont',
-        email: 'scott@easyhomesource.com'
+      const stageMapping = GHL_STAGE_TO_PORTAL[opp.pipelineStageId] || {
+        stage: 'PERMITTING',
+        label: 'Permitting & Engineering',
+        progressPct: 20
       };
 
-      const monetaryVal = Number(opp.monetaryValue) || 0;
-      const dealValue = monetaryVal > 0 ? monetaryVal : 145000 + ((index * 7200) % 95000);
-
-      const progressMap: Record<ProjectStage, number> = {
-        LEAD_QUALIFIED: 15,
-        PERMITTING: 30,
-        SITE_PREP: 45,
-        FACTORY_BUILD: 60,
-        TRANSPORT_SET: 75,
-        UTILITIES_HOOKUP: 85,
-        FINAL_INSPECTION: 95,
-        COMPLETED: 100
-      };
-
-      const defaultHomeModels = [
-        { model: 'Sebastian 32644D', mfg: 'Cavco Douglas', beds: 4, baths: 2, sqft: 1920, dim: "32' x 64'" },
-        { model: 'The Delilah CSFL-3301', mfg: 'Timber Creek Housing', beds: 4, baths: 2, sqft: 2280, dim: "30' x 76'" },
-        { model: 'The White Oak CS-3221', mfg: 'Timber Creek Housing', beds: 3, baths: 2, sqft: 2280, dim: "30' x 76'" },
-        { model: 'Elm (TRT14562EH)', mfg: 'Clayton TRU', beds: 2, baths: 1, sqft: 737, dim: "14' x 56'" },
-        { model: 'Dogwood (TRT14602DH)', mfg: 'Clayton TRU', beds: 2, baths: 2, sqft: 790, dim: "14' x 60'" },
-        { model: 'Maple (TRT28483MH)', mfg: 'Clayton TRU', beds: 3, baths: 2, sqft: 1264, dim: "28' x 48'" },
-        { model: 'Craft Select 28603A', mfg: 'Cavco Plant City', beds: 3, baths: 2, sqft: 1680, dim: "26' 8\" x 60'" },
-        { model: 'Move on Up', mfg: 'Clayton Addison', beds: 3, baths: 2, sqft: 1080, dim: "18' x 60'" },
-        { model: 'Boujee XL 2', mfg: 'Clayton Addison', beds: 3, baths: 2, sqft: 1832, dim: "28' x 72'" },
-        { model: 'Select S-1236-11FLA', mfg: 'Legacy Housing', beds: 1, baths: 1, sqft: 432, dim: "12' x 36'" }
-      ];
-
-      const homePick = defaultHomeModels[index % defaultHomeModels.length];
+      const assignedRep = userMap[opp.assignedTo]?.name || 'Scott Pierpont';
+      const assignedRepEmail = userMap[opp.assignedTo]?.email || 'scott@easyhomesource.com';
 
       return {
         id: `ghl-${opp.id}`,
         ghlOpportunityId: opp.id,
         jobId: `GHL-${opp.id.slice(0, 7).toUpperCase()}`,
-        customerName: contactName,
-        customerPhone: phone,
-        customerEmail: email,
-        jobAddress: address,
-        city: city || 'Brooksville',
-        county: 'Hernando',
+        customerName: contact.name || opp.name || 'Valued Customer',
+        customerPhone: contact.phone || '352-558-8888',
+        customerEmail: contact.email || 'customer@easyhomesource.com',
+        jobAddress: siteAddressRaw,
+        city: contact.city || (siteAddressRaw.includes('Spring Hill') ? 'Spring Hill' : 'Brooksville'),
+        county: siteAddressRaw.includes('Citrus') ? 'Citrus' : (siteAddressRaw.includes('Pasco') ? 'Pasco' : 'Hernando'),
         state: 'FL',
-        zip: zip || '34601',
-        latitude,
-        longitude,
-        stage,
-        stageLabel: stageInfo.stageName,
-        progressPct: progressMap[stage] || 25,
-        dealValue,
-        depositAmount: Math.round(dealValue * 0.05),
-        depositStatus: stage === 'LEAD_QUALIFIED' ? 'PENDING' : 'PAID',
-        assignedRep: assignedUserInfo.name,
-        assignedRepEmail: assignedUserInfo.email,
-        lender: '21st Mortgage / Triad',
-        loanStatus: stage === 'LEAD_QUALIFIED' ? 'IN_UNDERWRITING' : 'APPROVED',
-        homeModel: homePick.model,
-        manufacturer: homePick.mfg,
-        bedrooms: homePick.beds,
-        bathrooms: homePick.baths,
-        squareFeet: homePick.sqft,
-        dimensions: homePick.dim,
+        zip: contact.postalCode || '34601',
+        latitude: coords.lat,
+        longitude: coords.lng,
+        stage: stageMapping.stage,
+        stageLabel: stageMapping.label,
+        progressPct: stageMapping.progressPct,
+        dealValue: financeAmount,
+        depositAmount: downPayment,
+        depositStatus: depositStatusStr.toLowerCase().includes('collect') ? 'PAID' : 'PENDING',
+        assignedRep,
+        assignedRepEmail,
+        lender: '21st Mortgage',
+        loanStatus: 'APPROVED',
+        homeModel: floorPlanName,
+        manufacturer: 'Clayton Addison',
+        bedrooms: 3,
+        bathrooms: 2,
+        squareFeet: 1200,
+        dimensions: "28' x 52'",
         parcelNumber: `PIN-${opp.id.slice(0, 6).toUpperCase()}`,
         lotSize: '0.50 acres',
-        zoning: 'Residential',
+        zoning,
         powerProvider: 'Withlacoochee River Electric',
         waterType: 'WELL',
         sewerType: 'SEPTIC',
         milestones: [
           {
-            name: `GHL Opportunity Created (${stageInfo.pipelineName})`,
+            name: 'Project Opportunity Created',
             targetDate: (opp.createdAt || new Date().toISOString()).slice(0, 10),
             completedDate: (opp.createdAt || new Date().toISOString()).slice(0, 10),
             status: 'COMPLETED'
           },
           {
-            name: `Current Stage: ${stageInfo.stageName}`,
+            name: `Active Stage: ${stageMapping.label}`,
             targetDate: (opp.lastStageChangeAt || new Date().toISOString()).slice(0, 10),
             status: 'IN_PROGRESS',
-            notes: `Pipeline: ${stageInfo.pipelineName} • Source: ${opp.source || 'GHL'}`
+            notes: `Pipeline: Project-Phase • Status: ${opp.status}`
           }
         ],
-        ghlTags: Array.isArray(contact.tags) ? contact.tags : [stageInfo.pipelineName],
-        notes: `GoHighLevel Opportunity (${stageInfo.pipelineName} ➔ ${stageInfo.stageName}). Status: ${opp.status}. Source: ${opp.source || 'CRM'}.`,
+        ghlTags: Array.isArray(contact.tags) ? contact.tags : ['Project-Phase', 'GHL Opportunity'],
+        notes: `GoHighLevel Project-Phase Opportunity. Home: ${floorPlanName}. Land Status: ${landStatus}.`,
         createdAt: opp.createdAt || new Date().toISOString(),
         updatedAt: opp.updatedAt || new Date().toISOString()
       };
@@ -235,14 +209,15 @@ async function handleGhlSync() {
 
     return NextResponse.json({
       success: true,
+      pipelineId: PROJECT_PIPELINE_ID,
+      pipelineName: 'Project-Phase',
       count: projects.length,
-      locationId: GHL_LOCATION_ID,
       projects
     });
   } catch (err: any) {
-    console.error('GHL live sync error:', err);
+    console.error('GHL Project-Phase sync error:', err);
     return NextResponse.json(
-      { success: false, error: err?.message || 'Failed to sync with GoHighLevel API' },
+      { success: false, error: err?.message || 'Failed to sync Project-Phase opportunities' },
       { status: 500 }
     );
   }
