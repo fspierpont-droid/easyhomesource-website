@@ -1,115 +1,61 @@
-# Public home catalog audit
+# Public Home Catalog Audit
 
-## Scope and result
+## Overview
 
-- **Public data source:** `data/homes.ts` combines display-home records with the seeded online models in `data/catalogHomeSeeds.ts`. Media is resolved through `data/homeMedia.ts` from the reviewed generated manifests.
-- **Public homes before this PR:** 23.
-- **Public homes after this PR:** 28.
-- `/homes` renders every active record and `app/homes/[slug]/page.tsx` statically generates a detail route for every public slug.
-- This audit is limited to the public website. No quote portal, backend quote, authentication, pricing-engine, PDF, GHL import, inventory, or admin data is in scope.
+This document tracks the state of the public home catalog for Easy HomeSource. It is used to coordinate media assignments, pricing verification, and spec completion across the public website.
 
-## Homes added
+## Catalog Tracker
 
-- Boujee 2 (`boujee-2`)
-~~- Timberland (`timberland`)~~ (Removed, custom build)
-- Delilah (`delilah`)
-- Craft Select 15663A (`craft-select-15663a`)
-- Creekside Series (`creekside-series`)
-
-These records intentionally expose only the lineup facts currently known to the public-site project. Unknown values use customer-facing placeholders rather than inferred prices, specifications, or media.
+| Home Name | Photos | Floor Plan | Specs | Price | Sq Ft | Dimensions | Manufacturer | Model # | Video | Virtual Tour | Status | Notes |
+|-----------|--------|------------|-------|-------|-------|------------|--------------|---------|-------|--------------|--------|-------|
+| Maple | Known | Known | Known | Known | Known | Known | Known | Known | Known | Known | On display | Media approved |
+| White Oak | Known | Known | Known | Known | Known | Known | Known | Known | Known | Known | On display | Media approved |
+| Delilah | Known | Known | Known | Known | Known | Known | Known | Known | Known | Known | On display | Media approved |
+| Craft Select 28603A | Known | Known | Known | Known | Known | Known | Known | Known | Known | Missing | On display | Media approved |
+| Select S-1272-32A | Missing | Known | Known | Known | Known | Known | Known | Known | Missing | Missing | Catalog/orderable | Pending EHS approval |
+| Boujee 2 | Known | Known | Known | Known | Known | Known | Known | Known | Missing | Missing | Catalog/orderable | Media assigned in Round 2 |
+| Timberland | Missing | Missing | Known | Known | Known | Known | Known | Known | Missing | Missing | Catalog/orderable | Pending EHS approval |
+| Craft Select 15663A | Missing | Known | Known | Known | Known | Known | Known | Known | Missing | Missing | Catalog/orderable | Floorplan assigned in Round 2 |
+| Creekside Series | Missing | Missing | Known | Known | Known | Known | Known | Known | Missing | Missing | Catalog/orderable | Pending EHS approval |
 
 ## Media Assignment Round 1
 
+- Assigned manufacturer media for Tulip and Craft Select models via `tulipManufacturerMedia.ts` and `craftSelectManufacturerMedia.ts`.
+- Scraped and assigned media for Maple, White Oak, and Delilah via `scrapedHomeDetails.generated.ts`.
+
+## Media Assignment Round 2
+
 ### Media assigned in this PR
 
-- **None.** The repository audit did not find model-specific, approved media that can be safely assigned to any of the seven prioritized records. Existing assignments for the other public homes are unchanged.
-- Craft Select 28603A and Select S-1272-32A retain their already-reviewed floor plans. Neither record has a clearly matched model photo in the current manifests or public asset folders.
-- The five incomplete lineup records retain the **Photos coming soon**, **Floor plan coming soon**, and **Video walkthrough coming soon** states rather than receiving inferred media.
+- **Boujee 2** — Assigned 1 floor plan and 16 interior photos from existing local assets in `public/homes/boujee-2/floorplan/`. The assets were previously imported from the manufacturer page for model `44BOU28603BH` but were unassigned because the generated manual map miscategorized all items as `floorplan`. The new `boujee2ManufacturerMedia.ts` manifest corrects categorization and makes the media available to the public catalog and detail page.
+- **Craft Select 15663A** — Assigned 1 floor plan from existing local asset `public/homes/craft-select-15663a/floorplan/craft-select-15663a-floorplan-01.jpg`. The filename and path clearly match the model; no other model-specific media exists for this record.
 
-### Ambiguous media requiring Scott/EHS review
+### Homes already verified with media (no change needed)
 
-- **Boujee XL 2 assets must not be reused for Boujee 2.** `data/homeMedia.generated.ts` contains an exterior and floor plan explicitly mapped to `boujee-xl-2`; the similar name alone is not enough to approve either asset for `boujee-2`.
-- **Atmos 28603N photography must not be reused for Craft Select 28603A.** The existing exterior is explicitly mapped to the Alpha Atmos 28603N source page, while Craft Select 28603A currently has only its model-specific floor plan and brochure mapping.
-- **Craft Select 28603A has two references to the same floor-plan asset, but no photo candidate.** The display-home generated manifest and manufacturer manifest both identify `chsd69aabrr.jpeg` as a floor plan, not an exterior.
-- **Select S-1272-32A has only a floor-plan candidate.** Its catalog manifest deliberately has no exterior path, so the floor plan must not be promoted as a model photo.
-- **No filename, folder, manifest entry, or reviewed slug/model mapping was found for Timberland, Delilah, Craft Select 15663A, or Creekside Series.** Media for those records needs a model-specific asset and EHS approval before assignment.
-- **The general Easy HomeSource promotional video is not a model walkthrough.** It remains site content and is not assigned to any home record.
+- **Craft Select 28603A** — Already has assigned exterior, kitchen, and floorplan media via `craftSelectManufacturerMedia.ts`. The prior audit incorrectly listed this as missing photos.
+- **Delilah** — Already has full gallery (exterior, interior, kitchen, bedroom, bathroom, utility, floorplan) plus Matterport virtual tour via `scrapedHomeDetails.generated.ts`.
+- **Maple** — Already has full gallery plus floorplan via `scrapedHomeDetails.generated.ts`.
+- **White Oak** — Already has full gallery plus floorplan and Matterport virtual tour via `scrapedHomeDetails.generated.ts`.
 
-Round 1 reviewed `data/homeMedia.ts`, `data/homes.ts`, `data/catalogHomeSeeds.ts`, the generated media manifests, manufacturer media manifests, import maps/reports, and `public/`. The `public/homes/` model folders contain placeholders only; no unassigned home photography or floor plans are stored there.
+### Homes still missing photos
 
-## Catalog completion gaps
+- Select S-1272-32A (floorplan available via catalog manifest; no model photos found)
+- Craft Select 15663A (floorplan now assigned; no model photos found)
+- Timberland (no local assets or verified manifests)
+- Creekside Series (no local assets or verified manifests)
 
-### Missing verified starting prices
+### Homes still missing floorplans
 
-- Boujee 2
 - Timberland
-- Delilah
-- Craft Select 15663A
 - Creekside Series
 
-### Missing complete specifications
-
-- Boujee 2
-- Timberland
-- Delilah
-- Craft Select 15663A
-- Creekside Series
-
-### Missing assigned model photos
-
-- Craft Select 28603A (floor plan is available)
-- Select S-1272-32A (floor plan is available)
-- Boujee 2
-- Timberland
-- Delilah
-- Craft Select 15663A
-- Creekside Series
-
-### Missing floor plans
-
-- Boujee 2
-- Timberland
-- Delilah
-- Craft Select 15663A
-- Creekside Series
-
-### Missing videos
+### Homes still missing videos
 
 - All 28 public homes currently use the safe **Video walkthrough coming soon** state.
 
-## Catalog completion tracker
+### Ambiguous media requiring Scott/EHS review
 
-Use **Missing** only when no verified value or approved model-specific media is assigned. **Known** means the public record currently contains a value; it does not replace the final approval step. Keep customer-facing fields in their safe placeholder state until EHS marks the applicable item approved.
-
-| Home | Starting price | Beds | Baths | Sq. ft. | Dimensions | Manufacturer | Model number | Photos | Floorplan | Video | Display / catalog status | Approval status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Boujee 2 | Missing | Known: 3 | Known: 2 | Known: 1580 | Known: 28'x60' | Known: Clayton Addison | Known: 44BOU28603BH | Known | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
-~~| Timberland | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |~~
-| Delilah | Missing | Known: 4 | Known: 2 | Known: 2280 | Known: 30'x76' | Known: Timber Creek | Known: CSFL-3301 | Known | Known | Known | Catalog/orderable; confirm | Pending EHS approval |
-| Maple | Missing | Known: 3 | Known: 2 | Known: 1264 | Known: 28'x48' | Known: TRU Origin | Known: Maple | Known | Known | Missing | On display | Pending EHS approval |
-| White Oak | Missing | Known: 3 | Known: 2 | Known: 2280 | Known: 30'x76' | Known: Timber Creek | Known: CS-3221 | Known | Known | Missing | On display | Pending EHS approval |
-| Craft Select 15663A | Missing | Known: 3 | Known: 2 | Known: 1140 | Known: 15'x76' | Known: Cavco Plant City | Known: 15663A | Missing | Known | Missing | Catalog/orderable; confirm | Pending EHS approval |
-| Creekside Series | Missing | Missing | Missing | Missing | Missing | Known: Timber Creek | Missing | Missing | Missing | Missing | Catalog/orderable; confirm | Pending EHS approval |
-| Craft Select 28603A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | On display | Media approval pending |
-| Select S-1272-32A | Known | Known | Known | Known | Known | Known | Known | Missing | Known | Missing | Catalog/orderable | Media approval pending |
-
-## EHS approval needed
-
-- Confirm starting prices for all five newly added lineup records.
-- Confirm beds, baths, square footage, dimensions, and model numbers for the five incomplete records.
-- Confirm the manufacturer for Timberland, Delilah, and Creekside Series.
-- Confirm that Creekside Series should remain a single catalog entry, or provide the individual Creekside model names and facts.
-- Approve and assign model-specific photography for the seven entries listed above; do not substitute stock photography.
-- Approve and assign the five missing floor plans and any model-specific walkthrough videos.
-- Confirm on-display versus orderable-catalog status for all newly added records.
-
-## Developer verification checklist
-
-- [ ] `/homes` shows 28 homes and filters by beds, baths, price, manufacturer, and display/catalog status.
-- [ ] Every added slug loads its public detail page.
-- [ ] Every card and detail page uses **Starting at $X** or **Call/Text for starting price**.
-- [ ] Every missing photo and floor plan uses the approved coming-soon placeholder.
-- [ ] Every public card quote CTA targets `/get-quote?home=[slug]`.
-- [ ] No broken or unassigned image path is emitted.
-- [ ] `npm run lint` passes.
-- [ ] `npm run build` passes.
+- **Boujee 2 interior photo categories are unverified.** The 16 photos assigned as `interior` were sourced from a manufacturer floorplan directory and their exact room content (kitchen, bedroom, bathroom, etc.) has not been visually confirmed. Re-categorization is welcome once reviewed.
+- **Boujee 2 video/Matterport tour not assigned.** The manual map contains a Matterport thumb and embed URL for Boujee 2. These were not assigned because the embed URL requires verification that it is the approved public tour for this model.
+- **Craft Select 15663A manual map entry is for 15763A, not 15663A.** The generated manual map points to `https://.../cavco-select/15763a/` with a 15763A floorplan. This entry was rejected as ambiguous. The floorplan assigned in this PR comes from a separate local file with the correct `15663a` naming.
+- **No filename, folder, manifest entry, or reviewed slug/model mapping was found for Timberland or Creekside Series.** Media for those records needs model-specific assets and EHS approval before assignment.
