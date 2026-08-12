@@ -114,6 +114,8 @@ const SLUG_ALIASES: Record<string, string> = {
   "the-tulip": "tulip",
   "dogwood": "dogwood",
   "tru-homes-tru-origin-dogwood": "dogwood",
+  "clayton-tru-dogwood": "dogwood",
+  "trt14602dh": "dogwood",
   "born-to-run": "born-to-run",
   "clayton-addison-tempo-series-born-to-run": "born-to-run",
   "classic-c-1672-32c": "classic-c-1672-32c",

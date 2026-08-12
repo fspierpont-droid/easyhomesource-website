@@ -10,33 +10,104 @@ export type ScrapedHomeDetail = {
 
 export const scrapedHomeDetails: Record<string, ScrapedHomeDetail> = {
   "dogwood": {
-    "slug": "dogwood",
-    "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
-    "startingPrice": 61900,
-    "priceLabel": "Starting Price",
-    "media": {
       "slug": "dogwood",
-      "gallery": [
-        {
-          "src": "https://trove.b-cdn.net/images/pz3trw21p3f.jpeg",
-          "alt": "Dogwood exterior home features",
-          "category": "exterior",
-          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood",
-          "isPrimary": true
-        },
-        {
-          "src": "https://trove.b-cdn.net/images/hlhud009m4m.jpeg",
-          "alt": "Dogwood floor plan",
-          "category": "floorplan",
-          "sourceUrl": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood"
-        }
-      ],
-      "floorPlanImage": "https://trove.b-cdn.net/images/hlhud009m4m.jpeg",
-      "brochureUrl": null,
-      "videoUrl": null,
-      "virtualTourUrl": null,
-      "sourcePage": "https://easyhomesource.com/homes/tru-homes-tru-origin-dogwood"
-    }
+      "sourcePage": "https://owntru.com/models/trt14602dh/",
+      "startingPrice": 61900,
+      "priceLabel": "Starting Price",
+      "media": {
+          "slug": "dogwood",
+          "gallery": [
+              {
+                  "src": "/homes/dogwood/exterior/dogwood-exterior-01.jpg",
+                  "alt": "TRT14602DH Dogwood exterior front elevation",
+                  "category": "exterior",
+                  "isPrimary": true,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/exterior/dogwood-exterior-02.jpg",
+                  "alt": "TRT14602DH Dogwood exterior architectural profile",
+                  "category": "exterior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/interior/dogwood-interior-01.jpg",
+                  "alt": "TRT14602DH Dogwood open concept living room",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/kitchen/dogwood-kitchen-01.jpg",
+                  "alt": "TRT14602DH Dogwood kitchen and dining area",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/kitchen/dogwood-kitchen-02.jpg",
+                  "alt": "TRT14602DH Dogwood kitchen cabinetry and countertops",
+                  "category": "kitchen",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/bedroom/dogwood-bedroom-01.jpg",
+                  "alt": "TRT14602DH Dogwood primary bedroom retreat",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/bedroom/dogwood-bedroom-02.jpg",
+                  "alt": "TRT14602DH Dogwood secondary bedroom",
+                  "category": "bedroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/bathroom/dogwood-bathroom-01.jpg",
+                  "alt": "TRT14602DH Dogwood primary bath vanity and shower",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/bathroom/dogwood-bathroom-02.jpg",
+                  "alt": "TRT14602DH Dogwood guest bathroom",
+                  "category": "bathroom",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/interior/dogwood-interior-02.jpg",
+                  "alt": "TRT14602DH Dogwood interior natural light and corridor",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/interior/dogwood-interior-03.jpg",
+                  "alt": "TRT14602DH Dogwood laundry and utility nook",
+                  "category": "interior",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              },
+              {
+                  "src": "/homes/dogwood/floorplan/dogwood-floorplan-01.jpg",
+                  "alt": "TRT14602DH Dogwood floor plan schematic layout",
+                  "category": "floorplan",
+                  "isPrimary": false,
+                  "sourceUrl": "https://owntru.com/models/trt14602dh/"
+              }
+          ],
+          "floorPlanImage": "/homes/dogwood/floorplan/dogwood-floorplan-01.jpg",
+          "brochureUrl": null,
+          "videoUrl": null,
+          "virtualTourUrl": null,
+          "sourcePage": "https://owntru.com/models/trt14602dh/"
+      }
   },
     "oak": {
     "slug": "oak",
