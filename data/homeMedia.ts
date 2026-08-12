@@ -132,6 +132,8 @@ const SLUG_ALIASES: Record<string, string> = {
   "palm-harbor-plant-city-alpha-atmos-28603n": "atmos-28603n",
   "craft-select-28603a": "craft-select-28603a",
   "palm-harbor-plant-city-craft-select-28603a": "craft-select-28603a",
+  "cav340fl25-24304a-craft-select": "craft-select-28603a",
+  "28603a": "craft-select-28603a",
   "hey-jude": "hey-jude",
   "clayton-addison-tempo-series-hey-jude": "hey-jude",
   "boujee-xl-2": "boujee-xl-2",
