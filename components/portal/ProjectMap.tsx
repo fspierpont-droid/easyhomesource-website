@@ -11,9 +11,13 @@ interface ProjectMapProps {
   selectedProject?: GhlProject | null;
   onOpenQuote?: (quoteId?: string) => void;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   onUpdateStage?: (projectId: string, newStage: ProjectStage) => void;
 >>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
+=======
+  onUpdateStage?: (projectId: string, newStage: ProjectStage) => void;
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
 }
 
 export function ProjectMap({
@@ -21,11 +25,16 @@ export function ProjectMap({
   onSelectProject,
   selectedProject: externalSelected,
 <<<<<<< HEAD
+<<<<<<< HEAD
   onOpenQuote
 =======
   onOpenQuote,
   onUpdateStage
 >>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
+=======
+  onOpenQuote,
+  onUpdateStage
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
 }: ProjectMapProps) {
   const [activeProject, setActiveProject] = useState<GhlProject | null>(
     externalSelected || projects[0] || null
@@ -38,6 +47,18 @@ export function ProjectMap({
   const leafletMapRef = useRef<any>(null);
   const markersLayerRef = useRef<any>(null);
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (externalSelected) {
+      setActiveProject(externalSelected);
+      setIsPanelCollapsed(false);
+    } else if (projects.length > 0 && !activeProject) {
+      setActiveProject(projects[0]);
+    }
+  }, [externalSelected, projects]);
+
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
   const filteredProjects = projects.filter((p) => {
     if (stageFilter !== 'ALL' && p.stage !== stageFilter) return false;
     if (!searchQuery.trim()) return true;
@@ -120,7 +141,11 @@ export function ProjectMap({
     // Job / Project Pins
     filteredProjects.forEach((p) => {
       const isSelected = activeProject?.id === p.id;
+<<<<<<< HEAD
       const stageConfig = PROJECT_STAGE_CONFIG[p.stage] || PROJECT_STAGE_CONFIG.LEAD_QUALIFIED;
+=======
+      const stageConfig = PROJECT_STAGE_CONFIG[p.stage] || PROJECT_STAGE_CONFIG.PERMITTING;
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
       const pinColor = stageConfig.color;
       const scale = isSelected ? 'scale(1.22)' : 'scale(1)';
 
@@ -179,7 +204,11 @@ export function ProjectMap({
         <div className="flex items-center gap-3">
           <span className="text-xs font-black text-slate-900 flex items-center gap-1.5">
             <span>📍</span>
+<<<<<<< HEAD
             <span>Central Florida Project Map ({filteredProjects.length} Active Jobs)</span>
+=======
+            <span>Central Florida Project Map ({filteredProjects.length} Project-Phase Jobs)</span>
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
           </span>
           <span className="text-[11px] text-slate-400 hidden sm:inline">
             Real GIS Tile Map • Drag to Pan
@@ -234,6 +263,7 @@ export function ProjectMap({
                 : 'bg-white text-orange-700 border-orange-200 hover:bg-orange-50'
             }`}
           >
+<<<<<<< HEAD
             🚚 Transport &amp; Set
           </button>
           <button
@@ -245,6 +275,19 @@ export function ProjectMap({
             }`}
           >
             🛠️ Utilities
+=======
+            🚚 Installation
+          </button>
+          <button
+            onClick={() => setStageFilter('COMPLETED')}
+            className={`px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
+              stageFilter === 'COMPLETED'
+                ? 'bg-emerald-600 text-white border-emerald-600'
+                : 'bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50'
+            }`}
+          >
+            🏆 Completed / CO
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
           </button>
         </div>
       </div>
@@ -304,6 +347,7 @@ export function ProjectMap({
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
+<<<<<<< HEAD
               <span>Transport/Set</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -313,6 +357,13 @@ export function ProjectMap({
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
               <span>Final CO / Complete</span>
+=======
+              <span>Installation</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span>CO Issued</span>
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-[#0F2A47]" />
@@ -353,7 +404,11 @@ export function ProjectMap({
                     {activeProject?.customerName || 'Select a project pin'}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
+<<<<<<< HEAD
                     {activeProject?.jobAddress}, {activeProject?.city}, FL {activeProject?.zip}
+=======
+                    {activeProject?.jobAddress}
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                   </p>
                 </div>
 
@@ -374,6 +429,7 @@ export function ProjectMap({
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] text-slate-500 font-bold uppercase">GHL Pipeline Stage</span>
 <<<<<<< HEAD
+<<<<<<< HEAD
                       <span
                         className="font-black px-2.5 py-0.5 rounded-full text-[10px] border"
                         style={{
@@ -386,6 +442,8 @@ export function ProjectMap({
                         {PROJECT_STAGE_CONFIG[activeProject.stage]?.label || activeProject.stageLabel}
                       </span>
 =======
+=======
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                       {onUpdateStage ? (
                         <select
                           value={activeProject.stage}
@@ -415,7 +473,10 @@ export function ProjectMap({
                           {PROJECT_STAGE_CONFIG[activeProject.stage]?.label || activeProject.stageLabel}
                         </span>
                       )}
+<<<<<<< HEAD
 >>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
+=======
+>>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                     </div>
 
                     <div>

@@ -73,7 +73,7 @@ export function PortalSidebar({
       label: 'Project Board',
       icon: '🏗️',
       href: '/portal?view=projects',
-      badge: '8'
+      badge: '11'
     }
   ];
 
