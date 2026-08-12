@@ -21,8 +21,36 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   const [repFilter, setRepFilter] = useState('ALL');
   const [stageFilter, setStageFilter] = useState('ALL');
 
+  const fetchLiveGhlProjects = async (silent = false) => {
+    if (!silent) setIsSyncingGhl(true);
+    try {
+      const res = await fetch('/api/portal/projects/ghl-sync', { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.projects) && data.projects.length > 0) {
+        setProjects(data.projects);
+        saveProjectsToStore(data.projects);
+        if (!silent) {
+          setSyncSuccessMsg(`✓ Successfully synced ${data.projects.length} live opportunities from GoHighLevel.`);
+        }
+      } else {
+        const local = getStoredProjects();
+        setProjects(local);
+      }
+    } catch (err: any) {
+      console.warn('GHL live fetch fallback:', err);
+      const local = getStoredProjects();
+      setProjects(local);
+    } finally {
+      if (!silent) setIsSyncingGhl(false);
+    }
+  };
+
   useEffect(() => {
+    // 1. Initial load from store
     setProjects(getStoredProjects());
+
+    // 2. Fetch fresh live GHL opportunities
+    fetchLiveGhlProjects(true);
 
     const handleProjectsUpdated = () => {
       setProjects(getStoredProjects());
@@ -38,20 +66,8 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   }, []);
 
   const handleSyncGhl = async () => {
-    setIsSyncingGhl(true);
     setSyncSuccessMsg(null);
-
-    try {
-      // Simulate live GoHighLevel opportunity sync
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const fresh = getStoredProjects();
-      setProjects(fresh);
-      setSyncSuccessMsg(`✓ Synced ${fresh.length} active project pipeline opportunities from GoHighLevel.`);
-    } catch (err: any) {
-      console.error('GHL sync error:', err);
-    } finally {
-      setIsSyncingGhl(false);
-    }
+    await fetchLiveGhlProjects(false);
   };
 
   const handleStageChange = (projectId: string, newStage: ProjectStage) => {
@@ -248,8 +264,10 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           >
             <option value="ALL">All Consultants</option>
             <option value="Scott Pierpont">Scott Pierpont</option>
-            <option value="Alex Vorasane">Alex Vorasane</option>
+            <option value="Alexander Vorasane">Alex Vorasane</option>
             <option value="Mike Ung">Mike Ung</option>
+            <option value="CJ Cornett">CJ Cornett</option>
+            <option value="Kevin Malone">Kevin Malone</option>
           </select>
         </div>
       </div>
