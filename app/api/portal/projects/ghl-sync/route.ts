@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { GhlProject, ProjectStage } from '@/types/project';
 
-<<<<<<< HEAD
-=======
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
 const GHL_API_TOKEN = process.env.GHL_API_KEY || 'pit-3339427e-f798-4d08-9ecb-bb5f852747dd';
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'flt9sQU68wrpAtvEMEQZ';
 const PROJECT_PIPELINE_ID = 'W8RI4f1c9G72Fzn1LVlS'; // GoHighLevel "Project-Phase" Pipeline
@@ -100,13 +97,9 @@ async function handleFetchProjectPhaseOpps() {
       }
     }
 
-<<<<<<< HEAD
-    const opportunities: any[] = oppsData.opportunities || [];
-=======
-    // Strict filter: only items belonging to the Project-Phase pipeline ID
+    // Strict filter: ONLY opportunities belonging to the Project-Phase pipeline ID
     const rawOpps: any[] = oppsData.opportunities || [];
     const opportunities = rawOpps.filter((opp) => opp.pipelineId === PROJECT_PIPELINE_ID);
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
 
     // Transform strictly to GhlProject models
     const projects: GhlProject[] = opportunities.map((opp, idx) => {

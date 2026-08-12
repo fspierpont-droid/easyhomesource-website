@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { ProjectMap } from './ProjectMap';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { PROJECT_STAGE_CONFIG } from '@/types/project';
-<<<<<<< HEAD
-import { getStoredProjects, saveProjectsToStore, updateProjectStage, INITIAL_GHL_PROJECTS } from '@/data/projectStore';
-=======
 import { getStoredProjects, saveProjectsToStore, updateProjectStage } from '@/data/projectStore';
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
 
 interface ProjectBoardViewProps {
   onOpenQuote?: (quoteId?: string) => void;
@@ -30,19 +26,11 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
     try {
       const res = await fetch('/api/portal/projects/ghl-sync', { cache: 'no-store' });
       const data = await res.json();
-<<<<<<< HEAD
-      if (data.success && Array.isArray(data.projects) && data.projects.length > 0) {
-        setProjects(data.projects);
-        saveProjectsToStore(data.projects);
-        if (!silent) {
-          setSyncSuccessMsg(`✓ Successfully synced ${data.projects.length} live opportunities from GoHighLevel.`);
-=======
       if (data.success && Array.isArray(data.projects)) {
         setProjects(data.projects);
         saveProjectsToStore(data.projects);
         if (!silent) {
           setSyncSuccessMsg(`✓ Successfully synced ${data.projects.length} live Project-Phase jobs from GoHighLevel.`);
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
         }
       } else {
         const local = getStoredProjects();
@@ -58,22 +46,24 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    // 1. Initial load from store
-    setProjects(getStoredProjects());
-
-    // 2. Fetch fresh live GHL opportunities
-=======
     // 1. Initial load from store (purge any old unfiltered 100-item test caches)
-    const stored = getStoredProjects();
-    if (stored && stored.length > 20) {
-      localStorage.removeItem('ehs_ghl_projects');
-    } else if (stored && stored.length > 0) {
-      setProjects(stored);
+    if (typeof window !== 'undefined') {
+      const raw = localStorage.getItem('ehs_ghl_projects');
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 20) {
+            localStorage.removeItem('ehs_ghl_projects');
+          } else if (Array.isArray(parsed) && parsed.length > 0) {
+            setProjects(parsed);
+          }
+        } catch {
+          localStorage.removeItem('ehs_ghl_projects');
+        }
+      }
     }
 
     // 2. Fetch fresh live GHL Project-Phase opportunities automatically on page load
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
     fetchLiveGhlProjects(true);
 
     const handleProjectsUpdated = () => {
@@ -94,14 +84,6 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
     await fetchLiveGhlProjects(false);
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const handleStageChange = (projectId: string, newStage: ProjectStage) => {
-    updateProjectStage(projectId, newStage);
-    setProjects(getStoredProjects());
-=======
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
   const handleStageChange = async (projectId: string, newStage: ProjectStage) => {
     const proj = projects.find((p) => p.id === projectId);
     updateProjectStage(projectId, newStage);
@@ -123,10 +105,6 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
         console.error('Failed to sync stage update to GHL:', err);
       }
     }
-<<<<<<< HEAD
->>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
   };
 
   const filteredProjects = useMemo(() => {
@@ -141,27 +119,14 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
 
   // Key KPI Stats
   const totalValue = useMemo(() => projects.reduce((acc, p) => acc + (p.dealValue || 0), 0), [projects]);
-<<<<<<< HEAD
-  const activeWipCount = useMemo(() => projects.filter((p) => p.stage !== 'COMPLETED').length, [projects]);
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
   const permittingCount = useMemo(() => projects.filter((p) => p.stage === 'PERMITTING').length, [projects]);
   const sitePrepCount = useMemo(() => projects.filter((p) => p.stage === 'SITE_PREP' || p.stage === 'TRANSPORT_SET' || p.stage === 'UTILITIES_HOOKUP').length, [projects]);
   const completedCount = useMemo(() => projects.filter((p) => p.stage === 'COMPLETED').length, [projects]);
 
   const STAGES: ProjectStage[] = [
-<<<<<<< HEAD
-    'LEAD_QUALIFIED',
-    'PERMITTING',
-    'SITE_PREP',
-    'FACTORY_BUILD',
-    'TRANSPORT_SET',
-    'UTILITIES_HOOKUP',
-=======
     'PERMITTING',
     'SITE_PREP',
     'TRANSPORT_SET',
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
     'FINAL_INSPECTION',
     'COMPLETED'
   ];
@@ -176,22 +141,14 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
               GHL PROJECT OPERATIONS &amp; JOB PIPELINE
             </span>
             <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
-<<<<<<< HEAD
-              GHL Pipeline Live
-=======
               Project-Phase Pipeline Live
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             </span>
           </div>
           <h1 className="mt-1 text-3xl font-extrabold text-slate-900 tracking-tight">
             Project Board &amp; Job Site Map
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-3xl leading-relaxed">
-<<<<<<< HEAD
-            Live Central Florida project map and milestone tracking for active jobs pulled directly from GoHighLevel opportunity pipelines.
-=======
             Live Central Florida project map and milestone tracking for active jobs pulled directly from GoHighLevel <strong className="text-slate-800">Project-Phase</strong> pipeline.
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
           </p>
         </div>
 
@@ -217,17 +174,10 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
       )}
 
       {/* KPI Stat Cards */}
-<<<<<<< HEAD
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold text-slate-600">Total Active Jobs</span>
-=======
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
           <div className="flex items-start justify-between">
             <span className="text-xs font-semibold text-slate-600">Active Project-Phase Jobs</span>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
               📍
             </div>
@@ -235,20 +185,12 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           <div className="mt-2 text-2xl font-extrabold text-slate-900">
             {projects.length}
           </div>
-<<<<<<< HEAD
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">GHL opportunities</p>
-=======
           <p className="mt-1 text-[11px] text-slate-400 font-medium">GHL Project-Phase jobs</p>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
           <div className="flex items-start justify-between">
-<<<<<<< HEAD
-            <span className="text-xs font-semibold text-slate-600">Total Pipeline Value</span>
-=======
             <span className="text-xs font-semibold text-slate-600">Total Project Value</span>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             <div className="w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs font-bold">
               $
             </div>
@@ -256,56 +198,25 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           <div className="mt-2 text-2xl font-extrabold text-emerald-700">
             ${(totalValue / 1000000).toFixed(2)}M
           </div>
-<<<<<<< HEAD
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">Turnkey contract WIP</p>
-=======
           <p className="mt-1 text-[11px] text-slate-400 font-medium">Active construction WIP</p>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
           <div className="flex items-start justify-between">
-<<<<<<< HEAD
-            <span className="text-xs font-semibold text-slate-600">In Permitting</span>
-=======
             <span className="text-xs font-semibold text-slate-600">In Permitting &amp; Site Work</span>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             <div className="w-7 h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
               📋
             </div>
           </div>
           <div className="mt-2 text-2xl font-extrabold text-amber-600">
-<<<<<<< HEAD
-            {permittingCount}
-          </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">County plan &amp; health reviews</p>
-=======
             {permittingCount + sitePrepCount}
           </div>
           <p className="mt-1 text-[11px] text-slate-400 font-medium">Engineering &amp; pad prep</p>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
           <div className="flex items-start justify-between">
-<<<<<<< HEAD
-            <span className="text-xs font-semibold text-slate-600">Site Work &amp; Utilities</span>
-            <div className="w-7 h-7 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center text-xs">
-              🚜
-            </div>
-          </div>
-          <div className="mt-2 text-2xl font-extrabold text-cyan-600">
-            {sitePrepCount}
-          </div>
-          <p className="mt-1 text-[11px] text-slate-400 font-medium">Pad, set, and hookups</p>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold text-slate-600">Completed &amp; CO</span>
-=======
             <span className="text-xs font-semibold text-slate-600">CO Issued / Completed</span>
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
             <div className="w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
               🏆
             </div>
@@ -382,14 +293,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           projects={filteredProjects}
           onSelectProject={(p) => setSelectedProject(p)}
           selectedProject={selectedProject}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
           onUpdateStage={handleStageChange}
->>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
-=======
-          onUpdateStage={handleStageChange}
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
         />
       )}
 
@@ -437,11 +341,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
                         </div>
 
                         <div className="text-[11px] text-slate-600">
-<<<<<<< HEAD
-                          📍 {p.jobAddress}, {p.city} ({p.county})
-=======
                           📍 {p.jobAddress}
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                         </div>
 
                         <div className="text-[11px] font-semibold text-[#0B1E38]">
@@ -504,44 +404,22 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
                       {p.homeModel}
                     </td>
                     <td className="py-3 px-4">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      <span
-                        className="px-2.5 py-1 rounded-full text-[10px] font-black border inline-flex items-center gap-1"
-=======
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                       <select
                         value={p.stage}
                         onChange={(e) => handleStageChange(p.id, e.target.value as ProjectStage)}
                         className="px-2.5 py-1 rounded-lg text-[10px] font-bold border inline-flex items-center gap-1 cursor-pointer bg-white"
-<<<<<<< HEAD
->>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                         style={{
                           backgroundColor: PROJECT_STAGE_CONFIG[p.stage]?.bg || '#F0F9FF',
                           color: PROJECT_STAGE_CONFIG[p.stage]?.color || '#0284C7',
                           borderColor: PROJECT_STAGE_CONFIG[p.stage]?.border || '#BAE6FD'
                         }}
                       >
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        {PROJECT_STAGE_CONFIG[p.stage]?.icon} {PROJECT_STAGE_CONFIG[p.stage]?.label}
-                      </span>
-=======
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                         {Object.entries(PROJECT_STAGE_CONFIG).map(([stgKey, cfg]) => (
                           <option key={stgKey} value={stgKey}>
                             {cfg.icon} {cfg.label}
                           </option>
                         ))}
                       </select>
-<<<<<<< HEAD
->>>>>>> 8f46c96 (Implement exact GHL Project-Phase pipeline filtering, Send Lead To Quote System checkbox routing, and two-way stage synchronization)
-=======
->>>>>>> 159852c (Filter Project Board strictly to GHL Project-Phase pipeline and enable automatic live sync on load)
                     </td>
                     <td className="py-3 px-4 font-mono font-bold text-slate-900">
                       ${(p.dealValue || 0).toLocaleString()}
