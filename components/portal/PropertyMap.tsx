@@ -20,6 +20,7 @@ export function PropertyMap({
   );
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [isPanelCollapsed, setIsPanelCollapsed] = useState<boolean>(false);
+  const [isMapReady, setIsMapReady] = useState<boolean>(false);
 
   const mapElementRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<any>(null);
@@ -60,6 +61,7 @@ export function PropertyMap({
         const markersGroup = L.layerGroup().addTo(map);
         markersLayerRef.current = { L, map, markersGroup };
         leafletMapRef.current = map;
+        setIsMapReady(true);
       } catch (err) {
         console.warn('Portal map init:', err);
       }
@@ -73,12 +75,13 @@ export function PropertyMap({
         leafletMapRef.current.remove();
         leafletMapRef.current = null;
       }
+      markersLayerRef.current = null;
     };
   }, []);
 
   // Sync Markers
   useEffect(() => {
-    if (!markersLayerRef.current || !leafletMapRef.current) return;
+    if (!isMapReady || !markersLayerRef.current || !leafletMapRef.current) return;
     const { L, map, markersGroup } = markersLayerRef.current;
 
     markersGroup.clearLayers();
@@ -133,7 +136,7 @@ export function PropertyMap({
         onSelectProperty(p);
       });
     });
-  }, [filteredProperties, activeProperty, onSelectProperty]);
+  }, [isMapReady, filteredProperties, activeProperty, onSelectProperty]);
 
   // Controls
   const handleZoomIn = () => {
