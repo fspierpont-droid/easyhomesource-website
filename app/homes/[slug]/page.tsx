@@ -70,12 +70,6 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
               {isIncomplete && <p className="mt-5 rounded-2xl bg-ehsSoftBlue p-4 text-sm font-bold leading-6 text-ehsBlack/70">This home is part of the Easy HomeSource lineup. Final specs, availability, and starting price may vary. Contact us for the latest details.</p>}
             </section>
 
-            <section className="mt-8" aria-labelledby="gallery-heading">
-              <h2 id="gallery-heading" className="text-3xl font-black text-ehsBlack">Photo gallery</h2>
-              <p className="mt-2 font-semibold text-ehsBlack/60">Explore the spaces and details of the {homeTitle}.</p>
-              {photos.length > 1 ? <HomeMediaGallery homeName={homeTitle} gallery={photos.slice(1)} /> : <MediaPlaceholder title="Photos coming soon" className="mt-5 min-h-64" />}
-            </section>
-
             <section className="mt-10" aria-labelledby="floorplan-heading">
               <h2 id="floorplan-heading" className="text-3xl font-black text-ehsBlack">Floor plan</h2>
               <div className="mt-5 overflow-hidden rounded-[2rem] border border-ehsBlue/10 bg-white p-3 shadow-sm">
