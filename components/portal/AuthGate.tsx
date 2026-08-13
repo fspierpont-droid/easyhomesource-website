@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/AuthContext';
-import { VERIFIED_TEAM_USERS } from '@/data/teamMembers';
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, loading, login } = useAuth();
@@ -39,15 +38,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const matched = VERIFIED_TEAM_USERS.find(
-      (u) => u.email.toLowerCase() === cleanEmail || u.name.toLowerCase() === cleanEmail
-    );
 
-    if (!matched) {
-      setError('Account not found. Please enter a valid authorized dealership email (e.g. scott@easyhomesource.com, alex@easyhomesource.com, mike@easyhomesource.com).');
-      setSubmitting(false);
-      return;
-    }
 
     try {
       await login(cleanEmail, cleanPass);

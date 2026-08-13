@@ -18,7 +18,11 @@ export interface ProjectMilestone {
 
 export interface GhlProject {
   id: string;
-  ghlOpportunityId?: string;
+  ghlOpportunityId: string;
+  ghlContactId: string;
+  ghlPipelineId: string;
+  ghlPipelineStageId: string;
+  opportunityStatus: string;
   jobId: string;
   customerName: string;
   customerPhone: string;
@@ -28,14 +32,14 @@ export interface GhlProject {
   county: string;
   state: string;
   zip: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   stage: ProjectStage;
   stageLabel: string;
   progressPct: number;
-  dealValue: number;
-  depositAmount: number;
-  depositStatus: 'PAID' | 'PARTIAL' | 'PENDING' | 'ESCROW';
+  dealValue: number | null;
+  depositAmount: number | null;
+  depositStatus: 'PAID' | 'PARTIAL' | 'PENDING' | 'ESCROW' | null;
   assignedRep: string;
   assignedRepEmail: string;
   lender?: string;
@@ -43,9 +47,9 @@ export interface GhlProject {
   homeModel: string;
   manufacturer: string;
   series?: string;
-  bedrooms: number;
-  bathrooms: number;
-  squareFeet: number;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  squareFeet: number | null;
   dimensions: string;
   parcelNumber?: string;
   lotSize?: string;
@@ -60,6 +64,9 @@ export interface GhlProject {
   notes: string;
   createdAt: string;
   updatedAt: string;
+  lastGhlSyncAt: string;
+  lastGhlHash: string;
+  lastSyncSource: 'ghl-fetch' | 'ghl-webhook' | 'portal';
 }
 
 export const PROJECT_STAGE_CONFIG: Record<

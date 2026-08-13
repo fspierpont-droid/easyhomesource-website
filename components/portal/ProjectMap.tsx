@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { PROJECT_STAGE_CONFIG } from '@/types/project';
+import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
+import { resolveSelectedProject } from '@/lib/ghl/projectSelection';
 
 interface ProjectMapProps {
   projects: GhlProject[];
@@ -13,6 +15,14 @@ interface ProjectMapProps {
   onUpdateStage?: (projectId: string, newStage: ProjectStage) => void;
 }
 
+const escapeMarkerText = (value: string) => value.replace(/[&<>'"]/g, (character) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  "'": '&#39;',
+  '"': '&quot;'
+}[character] || character));
+
 export function ProjectMap({
   projects,
   onSelectProject,
@@ -20,8 +30,8 @@ export function ProjectMap({
   onOpenQuote,
   onUpdateStage
 }: ProjectMapProps) {
-  const [activeProject, setActiveProject] = useState<GhlProject | null>(
-    externalSelected || projects[0] || null
+  const [activeOpportunityId, setActiveOpportunityId] = useState<string | null>(
+    externalSelected?.ghlOpportunityId || projects[0]?.ghlOpportunityId || null
   );
   const [stageFilter, setStageFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -33,19 +43,25 @@ export function ProjectMap({
 
   useEffect(() => {
     if (externalSelected) {
-      setActiveProject(externalSelected);
+      setActiveOpportunityId(externalSelected.ghlOpportunityId);
       setIsPanelCollapsed(false);
-    } else if (projects.length > 0 && !activeProject) {
-      setActiveProject(projects[0]);
+    } else if (projects.length > 0 && !activeOpportunityId) {
+      setActiveOpportunityId(projects[0].ghlOpportunityId);
     }
-  }, [externalSelected, projects, activeProject]);
+  }, [externalSelected, projects, activeOpportunityId]);
+  const activeProject = resolveSelectedProject(projects, activeOpportunityId);
 
-  const filteredProjects = projects.filter((p) => {
+  const filteredProjects = useMemo(() => projects.filter((p) => {
     if (stageFilter !== 'ALL' && p.stage !== stageFilter) return false;
     if (!searchQuery.trim()) return true;
     const text = `${p.customerName} ${p.jobAddress} ${p.city} ${p.county} ${p.homeModel} ${p.assignedRep} ${p.jobId}`.toLowerCase();
     return text.includes(searchQuery.toLowerCase().trim());
-  });
+  }), [projects, stageFilter, searchQuery]);
+  const mappedProjects = useMemo(
+    () => filteredProjects.filter(hasValidCoordinates),
+    [filteredProjects]
+  );
+  const unmappedProjectCount = filteredProjects.length - mappedProjects.length;
 
   // Initialize Real Leaflet Map with CartoDB Positron / Clean GIS Real-Estate Tiles
   useEffect(() => {
@@ -120,22 +136,22 @@ export function ProjectMap({
     L.marker([28.5553, -82.3879], { icon: hqIcon }).addTo(markersGroup);
 
     // Job / Project Pins
-    filteredProjects.forEach((p) => {
+    mappedProjects.forEach((p) => {
       const isSelected = activeProject?.id === p.id;
       const stageConfig = PROJECT_STAGE_CONFIG[p.stage] || PROJECT_STAGE_CONFIG.PERMITTING;
       const pinColor = stageConfig.color;
       const scale = isSelected ? 'scale(1.22)' : 'scale(1)';
 
       const pinIcon = L.divIcon({
-        className: `ehs-proj-pin-${p.id}`,
+        className: 'ehs-project-pin',
         html: `
           <div style="display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -100%) ${scale}; transition: transform 0.15s ease; cursor: pointer;">
             <div style="background: ${pinColor}; color: white; border: 2.5px solid ${isSelected ? '#0F2A47' : '#FFFFFF'}; border-radius: 9999px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.28);">
               ${stageConfig.icon}
             </div>
             <div style="margin-top: 3px; background: white; color: #0F2A47; font-weight: 900; font-size: 10px; padding: 2px 7px; border-radius: 9999px; border: 1.5px solid ${isSelected ? '#0F2A47' : '#CBD5E1'}; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 4px;">
-              <span>${p.customerName.split(' ')[0]}</span>
-              <span style="color: #059669;">• $${(p.dealValue || 0).toLocaleString()}</span>
+              <span>${escapeMarkerText(p.customerName.split(' ')[0])}</span>
+              <span style="color: #059669;">• ${p.dealValue == null ? '—' : `$${p.dealValue.toLocaleString()}`}</span>
             </div>
           </div>
         `,
@@ -143,15 +159,15 @@ export function ProjectMap({
         iconAnchor: [14, 40]
       });
 
-      const marker = L.marker([p.latitude || 28.5553, p.longitude || -82.3879], { icon: pinIcon }).addTo(markersGroup);
+      const marker = L.marker([p.latitude, p.longitude], { icon: pinIcon }).addTo(markersGroup);
 
       marker.on('click', () => {
-        setActiveProject(p);
+        setActiveOpportunityId(p.ghlOpportunityId);
         setIsPanelCollapsed(false);
         onSelectProject?.(p);
       });
     });
-  }, [filteredProjects, activeProject, onSelectProject]);
+  }, [mappedProjects, activeProject, onSelectProject]);
 
   // Controls
   const handleZoomIn = () => {
@@ -181,8 +197,12 @@ export function ProjectMap({
         <div className="flex items-center gap-3">
           <span className="text-xs font-black text-slate-900 flex items-center gap-1.5">
             <span>📍</span>
-            <span>Central Florida Project Map ({filteredProjects.length} Project-Phase Jobs)</span>
+            <span>Central Florida Project Map ({filteredProjects.length} Project Jobs)</span>
           </span>
+          <span className="text-[11px] font-bold text-emerald-700">{mappedProjects.length} Mapped</span>
+          {unmappedProjectCount > 0 && (
+            <span className="text-[11px] font-bold text-amber-700">{unmappedProjectCount} Need Location</span>
+          )}
           <span className="text-[11px] text-slate-400 hidden sm:inline">
             Real GIS Tile Map • Drag to Pan
           </span>
@@ -426,11 +446,11 @@ export function ProjectMap({
                         Turnkey Project Value
                       </span>
                       <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        Deposit: {activeProject.depositStatus} (${(activeProject.depositAmount || 0).toLocaleString()})
+                        Deposit: {activeProject.depositStatus || 'Not provided'} ({activeProject.depositAmount == null ? '—' : `$${activeProject.depositAmount.toLocaleString()}`})
                       </span>
                     </div>
                     <div className="text-2xl font-black tabular">
-                      ${(activeProject.dealValue || 0).toLocaleString()}
+                      {activeProject.dealValue == null ? '—' : `$${activeProject.dealValue.toLocaleString()}`}
                     </div>
                     <div className="flex justify-between items-center text-[11px] text-slate-300 pt-1 border-t border-white/10">
                       <span>Lender: {activeProject.lender || 'Cash / In-House'}</span>
@@ -478,9 +498,9 @@ export function ProjectMap({
                       {activeProject.manufacturer} {activeProject.series ? `• ${activeProject.series}` : ''}
                     </div>
                     <div className="flex flex-wrap gap-2 text-[10px] font-bold text-slate-500 pt-1">
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bedrooms} Beds</span>
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bathrooms} Baths</span>
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.squareFeet} sq ft</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bedrooms == null ? '—' : activeProject.bedrooms} Beds</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bathrooms == null ? '—' : activeProject.bathrooms} Baths</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.squareFeet == null ? '—' : activeProject.squareFeet} sq ft</span>
                       <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.dimensions}</span>
                     </div>
                   </div>

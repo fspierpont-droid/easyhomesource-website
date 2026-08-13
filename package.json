@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:project-coordinates": "node --experimental-strip-types --test lib/ghl/projectCoordinates.test.ts",
+    "test:project-cache": "node --experimental-strip-types --test data/projectStore.test.ts",
     "import:trove-media": "node --experimental-strip-types scripts/import-trove-media.ts",
     "import:public-trove-media": "node --experimental-strip-types scripts/import-public-trove-html-media.ts",
     "import:trove-details": "node --experimental-strip-types scripts/import-trove-detail-pages.ts",
     "validate:catalog-media": "node --experimental-strip-types scripts/validate-catalog-media.ts",
     "validate:catalog": "node scripts/validate-catalog.mjs",
     "capture:browser-media": "node --experimental-strip-types scripts/import-browser-captures.ts",
-    "import:manual-media": "node --experimental-strip-types scripts/import-manual-media.ts"
+    "import:manual-media": "node --experimental-strip-types scripts/import-manual-media.ts",
+    "test:ghl": "node --experimental-strip-types --test lib/ghl/client.test.ts lib/auth/portalSession.test.ts lib/ghl/projectSelection.test.ts"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.22",

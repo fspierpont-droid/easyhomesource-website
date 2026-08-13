@@ -1,87 +1,47 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requirePortalAccess } from '@/lib/auth/portalSession';
+import { READY_FOR_QUOTE_FIELD_ID, searchOpportunities } from '@/lib/ghl/client';
 import type { ReadyBuyer } from '@/components/portal/ReadyToQuoteView';
 
-const GHL_API_TOKEN = process.env.GHL_API_KEY || 'pit-3339427e-f798-4d08-9ecb-bb5f852747dd';
-const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID || 'flt9sQU68wrpAtvEMEQZ';
-const READY_FOR_QUOTE_FIELD_ID = 'gHIjeANqYjpMcAKF6eIB'; // "Lead ready for quote? / Send Lead To Quote System"
+const provided = (value: unknown) => typeof value === 'string' && value.trim() ? value.trim() : 'Not provided';
+const customValue = (fields: any[], id: string) => {
+  const field = fields.find((item) => item.id === id);
+  return field?.fieldValueString ?? field?.fieldValueNumber ?? field?.field_value;
+};
 
-export async function GET() {
-  return handleFetchReadyLeads();
-}
-
-export async function POST() {
-  return handleFetchReadyLeads();
-}
-
-async function handleFetchReadyLeads() {
+async function handleFetchReadyLeads(request: NextRequest) {
+  const access = requirePortalAccess(request);
+  if (access.response) return access.response;
   try {
-    const headers = {
-      Authorization: `Bearer ${GHL_API_TOKEN}`,
-      Version: '2021-07-28',
-      Accept: 'application/json',
-      'User-Agent': 'Mozilla/5.0'
-    };
-
-    const url = `https://services.leadconnectorhq.com/opportunities/search?location_id=${GHL_LOCATION_ID}&limit=100`;
-    const res = await fetch(url, { headers, cache: 'no-store' });
-
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`Failed to fetch GHL leads: ${err}`);
-    }
-
-    const data = await res.json();
-    const opportunities: any[] = data.opportunities || [];
-
-    // Filter strictly for leads where "Lead ready for quote?" checkbox is checked OR tag contains quote_ready
+    const opportunities = await searchOpportunities() as any[];
     const readyOpps = opportunities.filter((opp) => {
-      const customFields: any[] = opp.customFields || [];
-      const checkboxField = customFields.find((f) => f.id === READY_FOR_QUOTE_FIELD_ID);
-      const isChecked = checkboxField?.fieldValueBoolean === true || checkboxField?.field_value === true || checkboxField?.fieldValueString === 'true' || (Array.isArray(checkboxField?.fieldValueArray) && checkboxField?.fieldValueArray.length > 0);
-      
-      const tags: string[] = (opp.contact?.tags || []).map((t: string) => t.toLowerCase());
-      const hasQuoteTag = tags.includes('quote_ready') || tags.includes('send_to_quote_system') || tags.includes('ready_to_quote');
-
-      return isChecked || hasQuoteTag;
+      const fields = Array.isArray(opp.customFields) ? opp.customFields : [];
+      const checkbox = fields.find((field: any) => field.id === READY_FOR_QUOTE_FIELD_ID);
+      const checked = checkbox?.fieldValueBoolean === true || checkbox?.field_value === true || checkbox?.fieldValueString === 'true' || checkbox?.fieldValueArray?.length > 0;
+      const tags = (opp.contact?.tags || []).map((tag: string) => tag.toLowerCase());
+      const contactId = opp.contactId || opp.contact?.id;
+      return opp.id && contactId && (checked || ['quote_ready', 'send_to_quote_system', 'ready_to_quote'].some((tag) => tags.includes(tag)));
     });
-
     const readyBuyers: ReadyBuyer[] = readyOpps.map((opp) => {
       const contact = opp.contact || {};
-      const customFields: any[] = opp.customFields || [];
-
-      const getFieldStr = (id: string, defVal = '') => {
-        const f = customFields.find((cf) => cf.id === id);
-        return f?.fieldValueString || f?.field_value || defVal;
-      };
-
-      const landStatus = getFieldStr('BiSItm1i8p4MrsCbySc6') || 'Owns homesite in Central Florida';
-      const floorPlan = getFieldStr('u65XL9zAaZiOIqBqygov') || 'Move on Up (3b/2ba)';
-      const budgetNum = Number(opp.monetaryValue) || 180000;
-
+      const fields = Array.isArray(opp.customFields) ? opp.customFields : [];
+      const monetaryValue = typeof opp.monetaryValue === 'number' && Number.isFinite(opp.monetaryValue)
+        ? opp.monetaryValue
+        : null;
       return {
-        id: `ghl-ready-${opp.id}`,
-        name: contact.name || opp.name || 'Qualified Lead',
-        phone: contact.phone || '352-558-8888',
-        email: contact.email || 'lead@easyhomesource.com',
-        landStatus,
-        interestedModel: floorPlan,
-        budget: `$${budgetNum.toLocaleString()} turnkey`,
-        urgency: 'HIGH',
-        source: opp.source || 'GoHighLevel Pipeline (Send Lead To Quote System checked)',
-        createdAt: (opp.createdAt || new Date().toISOString()).slice(0, 16).replace('T', ' ')
+        id: `ghl-ready-${opp.id}`, ghlContactId: opp.contactId || contact.id || '', ghlOpportunityId: opp.id,
+        ghlPipelineId: opp.pipelineId || '', ghlPipelineStageId: opp.pipelineStageId || '',
+        name: provided(contact.name || opp.name), phone: provided(contact.phone), email: provided(contact.email),
+        landStatus: provided(customValue(fields, 'BiSItm1i8p4MrsCbySc6')), interestedModel: provided(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
+        budget: monetaryValue === null ? '—' : `$${monetaryValue.toLocaleString()}`, urgency: null,
+        source: provided(opp.source), createdAt: opp.createdAt ? String(opp.createdAt).slice(0, 16).replace('T', ' ') : '—'
       };
     });
-
-    return NextResponse.json({
-      success: true,
-      count: readyBuyers.length,
-      readyBuyers
-    });
-  } catch (err: any) {
-    console.error('Ready to Quote GHL sync error:', err);
-    return NextResponse.json(
-      { success: false, error: err?.message || 'Failed to sync Ready to Quote leads' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: true, count: readyBuyers.length, readyBuyers });
+  } catch (error) {
+    console.error('Ready to Quote GHL sync error:', error);
+    return NextResponse.json({ success: false, error: 'Unable to load GHL data. Check the connection and try again.' }, { status: 503 });
   }
 }
+export async function GET(request: NextRequest) { return handleFetchReadyLeads(request); }
+export async function POST(request: NextRequest) { return handleFetchReadyLeads(request); }
