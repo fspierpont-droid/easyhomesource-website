@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { PROJECT_STAGE_CONFIG } from '@/types/project';
+import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
 
 interface ProjectMapProps {
   projects: GhlProject[];
@@ -40,12 +41,17 @@ export function ProjectMap({
     }
   }, [externalSelected, projects, activeProject]);
 
-  const filteredProjects = projects.filter((p) => {
+  const filteredProjects = useMemo(() => projects.filter((p) => {
     if (stageFilter !== 'ALL' && p.stage !== stageFilter) return false;
     if (!searchQuery.trim()) return true;
     const text = `${p.customerName} ${p.jobAddress} ${p.city} ${p.county} ${p.homeModel} ${p.assignedRep} ${p.jobId}`.toLowerCase();
     return text.includes(searchQuery.toLowerCase().trim());
-  });
+  }), [projects, stageFilter, searchQuery]);
+  const mappedProjects = useMemo(
+    () => filteredProjects.filter(hasValidCoordinates),
+    [filteredProjects]
+  );
+  const unmappedProjectCount = filteredProjects.length - mappedProjects.length;
 
   // Initialize Real Leaflet Map with CartoDB Positron / Clean GIS Real-Estate Tiles
   useEffect(() => {
@@ -120,7 +126,7 @@ export function ProjectMap({
     L.marker([28.5553, -82.3879], { icon: hqIcon }).addTo(markersGroup);
 
     // Job / Project Pins
-    filteredProjects.forEach((p) => {
+    mappedProjects.forEach((p) => {
       const isSelected = activeProject?.id === p.id;
       const stageConfig = PROJECT_STAGE_CONFIG[p.stage] || PROJECT_STAGE_CONFIG.PERMITTING;
       const pinColor = stageConfig.color;
@@ -143,7 +149,7 @@ export function ProjectMap({
         iconAnchor: [14, 40]
       });
 
-      const marker = L.marker([p.latitude!, p.longitude!], { icon: pinIcon }).addTo(markersGroup);
+      const marker = L.marker([p.latitude, p.longitude], { icon: pinIcon }).addTo(markersGroup);
 
       marker.on('click', () => {
         setActiveProject(p);
@@ -151,7 +157,7 @@ export function ProjectMap({
         onSelectProject?.(p);
       });
     });
-  }, [filteredProjects, activeProject, onSelectProject]);
+  }, [mappedProjects, activeProject, onSelectProject]);
 
   // Controls
   const handleZoomIn = () => {
@@ -181,8 +187,12 @@ export function ProjectMap({
         <div className="flex items-center gap-3">
           <span className="text-xs font-black text-slate-900 flex items-center gap-1.5">
             <span>📍</span>
-            <span>Central Florida Project Map ({filteredProjects.length} Project-Phase Jobs)</span>
+            <span>Central Florida Project Map ({filteredProjects.length} Project Jobs)</span>
           </span>
+          <span className="text-[11px] font-bold text-emerald-700">{mappedProjects.length} Mapped</span>
+          {unmappedProjectCount > 0 && (
+            <span className="text-[11px] font-bold text-amber-700">{unmappedProjectCount} Need Location</span>
+          )}
           <span className="text-[11px] text-slate-400 hidden sm:inline">
             Real GIS Tile Map • Drag to Pan
           </span>

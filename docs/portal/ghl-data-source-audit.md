@@ -130,6 +130,12 @@ PR #48 is **not ready to be represented as a fully bidirectional or real-time GH
 
 Real-account tests could not be executed from the repository alone because no runtime GHL credentials or Vercel access are available. Required pre-merge checks are: a genuine ready record, a genuine mapped project with hydrated contact/user/value, a successful and rejected stage write, zero qualifying results, and an invalid/absent credential response. The build-level tests verify code paths and absence of demo fallback, not production account contents.
 
+### Project map coordinate safety
+
+The P1 root cause was a Leaflet marker call that used TypeScript non-null assertions on nullable GHL coordinates. The assertion affected types only; at runtime Leaflet could receive `[null, null]` and coerce a missing location toward Null Island. Project coordinates now pass a shared validator before marker construction. Both values must be actual finite numbers within latitude `[-90, 90]` and longitude `[-180, 180]`; null, undefined, strings, NaN, infinities, and out-of-range values are rejected without a fallback.
+
+Any number of GHL project records—including all records in the view—can legitimately exist without coordinates. They remain in Project Board counters, Pipeline/Kanban, and Table views; only the map marker collection excludes them. The map header separately reports total filtered Project Jobs, Mapped jobs, and jobs that Need Location. Marker construction receives only validated numbers, so a missing coordinate can never generate a project pin at `0,0`, Brooksville, dealership headquarters, a county center, or any other fabricated location.
+
 ## Files modified in the safe implementation
 
 - `lib/ghl/client.ts`
