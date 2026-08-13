@@ -136,6 +136,10 @@ The P1 root cause was a Leaflet marker call that used TypeScript non-null assert
 
 Any number of GHL project records—including all records in the view—can legitimately exist without coordinates. They remain in Project Board counters, Pipeline/Kanban, and Table views; only the map marker collection excludes them. The map header separately reports total filtered Project Jobs, Mapped jobs, and jobs that Need Location. Marker construction receives only validated numbers, so a missing coordinate can never generate a project pin at `0,0`, Brooksville, dealership headquarters, a county center, or any other fabricated location.
 
+### Optional cache failure isolation
+
+The browser `ehs_ghl_projects` entry is an optional last-successful-response cache, never CRM authority and never an outage fallback. Cache reads, writes, and removals independently catch storage access, privacy/security, quota, and malformed-JSON failures. A successful GHL response is placed into current React state before the best-effort cache write; because that write cannot throw, cache failure cannot enter the GHL error branch, clear genuine fresh data, or show a false connection outage. A genuine API failure still clears displayed/cache data rather than presenting stale records as confirmed live GHL data. Ready to Quote has no browser cache and therefore has no equivalent failure coupling.
+
 ## Files modified in the safe implementation
 
 - `lib/ghl/client.ts`
