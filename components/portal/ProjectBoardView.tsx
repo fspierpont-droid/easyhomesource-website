@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ProjectMap } from './ProjectMap';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { PROJECT_STAGE_CONFIG } from '@/types/project';
-import { getStoredProjects, saveProjectsToStore, updateProjectStage } from '@/data/projectStore';
+import { clearStoredProjects, saveProjectsToStore } from '@/data/projectStore';
 
 interface ProjectBoardViewProps {
   onOpenQuote?: (quoteId?: string) => void;
@@ -16,6 +16,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   const [activeTab, setActiveTab] = useState<'map' | 'kanban' | 'table' | 'analytics'>('map');
   const [isSyncingGhl, setIsSyncingGhl] = useState(false);
   const [syncSuccessMsg, setSyncSuccessMsg] = useState<string | null>(null);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<GhlProject | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [repFilter, setRepFilter] = useState('ALL');
@@ -24,59 +25,25 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   const fetchLiveGhlProjects = async (silent = false) => {
     if (!silent) setIsSyncingGhl(true);
     try {
+      setConnectionError(null);
       const res = await fetch('/api/portal/projects/ghl-sync', { cache: 'no-store' });
       const data = await res.json();
-      if (data.success && Array.isArray(data.projects)) {
-        setProjects(data.projects);
-        saveProjectsToStore(data.projects);
-        if (!silent) {
-          setSyncSuccessMsg(`✓ Successfully synced ${data.projects.length} live Project-Phase jobs from GoHighLevel.`);
-        }
-      } else {
-        const local = getStoredProjects();
-        setProjects(local);
-      }
-    } catch (err: any) {
-      console.warn('GHL live fetch fallback:', err);
-      const local = getStoredProjects();
-      setProjects(local);
+      if (!res.ok || !data.success || !Array.isArray(data.projects)) throw new Error(data.error || 'GHL request failed');
+      setProjects(data.projects);
+      saveProjectsToStore(data.projects);
+      if (!silent) setSyncSuccessMsg(`✓ Successfully synced ${data.projects.length} live Project-Phase jobs from GoHighLevel.`);
+    } catch (err) {
+      console.error('GHL live fetch failed:', err);
+      setProjects([]);
+      clearStoredProjects();
+      setConnectionError('Unable to load GHL data. Check the connection and try again.');
     } finally {
       if (!silent) setIsSyncingGhl(false);
     }
   };
 
   useEffect(() => {
-    // 1. Initial load from store (purge any old unfiltered 100-item test caches)
-    if (typeof window !== 'undefined') {
-      const raw = localStorage.getItem('ehs_ghl_projects');
-      if (raw) {
-        try {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 20) {
-            localStorage.removeItem('ehs_ghl_projects');
-          } else if (Array.isArray(parsed) && parsed.length > 0) {
-            setProjects(parsed);
-          }
-        } catch {
-          localStorage.removeItem('ehs_ghl_projects');
-        }
-      }
-    }
-
-    // 2. Fetch fresh live GHL Project-Phase opportunities automatically on page load
     fetchLiveGhlProjects(true);
-
-    const handleProjectsUpdated = () => {
-      setProjects(getStoredProjects());
-    };
-
-    window.addEventListener('storage', handleProjectsUpdated);
-    window.addEventListener('ehs_projects_updated', handleProjectsUpdated);
-
-    return () => {
-      window.removeEventListener('storage', handleProjectsUpdated);
-      window.removeEventListener('ehs_projects_updated', handleProjectsUpdated);
-    };
   }, []);
 
   const handleSyncGhl = async () => {
@@ -86,12 +53,9 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
 
   const handleStageChange = async (projectId: string, newStage: ProjectStage) => {
     const proj = projects.find((p) => p.id === projectId);
-    updateProjectStage(projectId, newStage);
-    setProjects(getStoredProjects());
-
     if (proj?.ghlOpportunityId) {
       try {
-        await fetch('/api/portal/projects/update-stage', {
+        const response = await fetch('/api/portal/projects/update-stage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -100,9 +64,13 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
             newStage
           })
         });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.error || 'GHL update failed');
+        await fetchLiveGhlProjects(true);
         setSyncSuccessMsg(`✓ Stage updated in GoHighLevel to "${PROJECT_STAGE_CONFIG[newStage]?.label || newStage}" for ${proj.customerName}.`);
       } catch (err) {
         console.error('Failed to sync stage update to GHL:', err);
+        setSyncSuccessMsg('GHL did not save the stage. The prior value was preserved; check the connection and retry.');
       }
     }
   };
@@ -172,6 +140,9 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           <button onClick={() => setSyncSuccessMsg(null)} className="text-emerald-600 font-bold cursor-pointer">✕</button>
         </div>
       )}
+
+      {connectionError && <div role="alert" className="p-4 rounded-xl border border-rose-200 bg-rose-50 text-sm font-bold text-rose-800">{connectionError}</div>}
+      {!connectionError && projects.length === 0 && <div className="p-8 rounded-2xl border border-dashed border-slate-300 bg-white text-center text-sm text-slate-600">No GHL project opportunities match this view.</div>}
 
       {/* KPI Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">

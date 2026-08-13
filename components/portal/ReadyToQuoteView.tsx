@@ -4,6 +4,10 @@ import React, { useState, useEffect } from 'react';
 
 export interface ReadyBuyer {
   id: string;
+  ghlContactId: string;
+  ghlOpportunityId: string;
+  ghlPipelineId: string;
+  ghlPipelineStageId: string;
   name: string;
   phone: string;
   email: string;
@@ -19,81 +23,25 @@ interface ReadyToQuoteViewProps {
   onStartQuoteForBuyer: (buyer: ReadyBuyer) => void;
 }
 
-const DEFAULT_READY_BUYERS: ReadyBuyer[] = [
-  {
-    id: 'buyer-1',
-    name: 'Sarah Jenkins',
-    phone: '352-555-0192',
-    email: 'sarah.j@example.com',
-    landStatus: 'Owns 1.5 acres in Hernando County',
-    interestedModel: 'Move on Up (3b/2ba)',
-    budget: '$180,000 - $210,000 turnkey',
-    urgency: 'HIGH',
-    source: 'GHL Lead (Send Lead To Quote System checked)',
-    createdAt: '2026-08-07 09:30 AM'
-  },
-  {
-    id: 'buyer-2',
-    name: 'Carlos Mendez',
-    phone: '813-555-0481',
-    email: 'cmendez88@example.com',
-    landStatus: 'Looking for Land & Home Package (Citrus)',
-    interestedModel: 'Tulip ($39,888) or Dogwood',
-    budget: '$120,000 max turnkey',
-    urgency: 'HIGH',
-    source: 'GHL Lead (Send Lead To Quote System checked)',
-    createdAt: '2026-08-07 08:45 AM'
-  },
-  {
-    id: 'buyer-3',
-    name: 'David & Michelle Miller',
-    phone: '352-555-0331',
-    email: 'millerfamilyfl@example.com',
-    landStatus: 'Owns lot in Denmarsh Woods, Brooksville',
-    interestedModel: 'Oak (4b/2ba double wide)',
-    budget: '$200,000 - $230,000',
-    urgency: 'MEDIUM',
-    source: 'GHL Lead (Send Lead To Quote System checked)',
-    createdAt: '2026-08-06 04:15 PM'
-  },
-  {
-    id: 'buyer-4',
-    name: 'Robert Vance',
-    phone: '727-555-0819',
-    email: 'rvance.contracting@example.com',
-    landStatus: 'Builder looking for New Port Richey lots',
-    interestedModel: 'Boujee XL 2 or Paxton',
-    budget: '$250,000+',
-    urgency: 'MEDIUM',
-    source: 'GHL Lead (Send Lead To Quote System checked)',
-    createdAt: '2026-08-06 02:00 PM'
-  }
-];
-
 export function ReadyToQuoteView({ onStartQuoteForBuyer }: ReadyToQuoteViewProps) {
-  const [buyers, setBuyers] = useState<ReadyBuyer[]>(DEFAULT_READY_BUYERS);
+  const [buyers, setBuyers] = useState<ReadyBuyer[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
 
   const fetchLiveReadyLeads = async (silent = false) => {
     if (!silent) setIsSyncing(true);
     try {
+      setConnectionError(null);
       const res = await fetch('/api/portal/ready-to-quote/ghl-sync', { cache: 'no-store' });
       const data = await res.json();
-      if (data.success && Array.isArray(data.readyBuyers) && data.readyBuyers.length > 0) {
-        setBuyers(data.readyBuyers);
-        if (!silent) {
-          setSyncMsg(`✓ Synced ${data.readyBuyers.length} qualified leads with "Send Lead To Quote System" checked in GHL.`);
-        }
-      } else {
-        setBuyers(DEFAULT_READY_BUYERS);
-        if (!silent) {
-          setSyncMsg('Checked GHL: No new leads currently have "Send Lead To Quote System" box checked. Displaying active queue.');
-        }
-      }
-    } catch (err: any) {
-      console.warn('Ready leads sync fallback:', err);
-      setBuyers(DEFAULT_READY_BUYERS);
+      if (!res.ok || !data.success || !Array.isArray(data.readyBuyers)) throw new Error(data.error || 'GHL request failed');
+      setBuyers(data.readyBuyers);
+      if (!silent) setSyncMsg(`✓ Synced ${data.readyBuyers.length} qualified leads from GHL.`);
+    } catch (err) {
+      console.error('Ready leads GHL sync failed:', err);
+      setBuyers([]);
+      setConnectionError('Unable to load GHL data. Check the connection and try again.');
     } finally {
       if (!silent) setIsSyncing(false);
     }
@@ -141,6 +89,9 @@ export function ReadyToQuoteView({ onStartQuoteForBuyer }: ReadyToQuoteViewProps
           <button onClick={() => setSyncMsg(null)} className="text-blue-600 font-bold cursor-pointer">✕</button>
         </div>
       )}
+
+      {connectionError && <div role="alert" className="p-4 rounded-xl border border-rose-200 bg-rose-50 text-sm font-bold text-rose-800">{connectionError}</div>}
+      {!connectionError && buyers.length === 0 && <div className="p-8 rounded-2xl border border-dashed border-slate-300 bg-white text-center text-sm text-slate-600">No leads are currently ready to quote.</div>}
 
       {/* Buyer Cards List */}
       <div className="grid gap-4">

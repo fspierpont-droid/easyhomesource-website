@@ -143,7 +143,7 @@ export function ProjectMap({
         iconAnchor: [14, 40]
       });
 
-      const marker = L.marker([p.latitude || 28.5553, p.longitude || -82.3879], { icon: pinIcon }).addTo(markersGroup);
+      const marker = L.marker([p.latitude!, p.longitude!], { icon: pinIcon }).addTo(markersGroup);
 
       marker.on('click', () => {
         setActiveProject(p);

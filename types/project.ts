@@ -18,7 +18,11 @@ export interface ProjectMilestone {
 
 export interface GhlProject {
   id: string;
-  ghlOpportunityId?: string;
+  ghlOpportunityId: string;
+  ghlContactId: string;
+  ghlPipelineId: string;
+  ghlPipelineStageId: string;
+  opportunityStatus: string;
   jobId: string;
   customerName: string;
   customerPhone: string;
@@ -28,8 +32,8 @@ export interface GhlProject {
   county: string;
   state: string;
   zip: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   stage: ProjectStage;
   stageLabel: string;
   progressPct: number;
@@ -60,6 +64,9 @@ export interface GhlProject {
   notes: string;
   createdAt: string;
   updatedAt: string;
+  lastGhlSyncAt: string;
+  lastGhlHash: string;
+  lastSyncSource: 'ghl-fetch' | 'ghl-webhook' | 'portal';
 }
 
 export const PROJECT_STAGE_CONFIG: Record<
