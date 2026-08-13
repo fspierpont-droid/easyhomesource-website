@@ -100,6 +100,22 @@ const knownLineupSeeds: Seed[] = [
   { name: "Creekside Series", slug: "creekside-series", manufacturer: "Timber Creek Housing", series: "Creekside Series", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }
 ];
 
+/**
+ * Generated-catalog URLs that refer to an already curated public home.
+ * Keep these aliases here both to exclude duplicate cards and to preserve old links.
+ */
+export const legacyHomeSlugAliases: Record<string, string> = {
+  "clayton-tru-mini-tulip": "tulip",
+  "tru-homes-tru-origin-dogwood": "dogwood",
+  "legacy-housing-classic-collection-c-1672-32c": "classic-c-1672-32c",
+  "tru-homes-tru-origin-maple": "maple",
+  "palm-harbor-plant-city-elite-paxton-28523a": "paxton",
+  "palm-harbor-plant-city-craft-select-28603a": "craft-select-28603a",
+  "timber-creek-creekside-series-the-white-oak": "white-oak",
+  "timber-creek-creekside-series-the-delilah": "delilah",
+  "palm-harbor-plant-city-craft-select-15663a": "craft-select-15663a"
+};
+
 // Clean normalization key helper to detect and prevent duplicates
 const cleanKey = (s?: string | null) => (s ? s.toLowerCase().replace(/[^a-z0-9]/g, '') : '');
 
@@ -117,6 +133,8 @@ const seenModelKeys = new Set<string>(existingDisplayKeys);
 
 const catalogSeeds: Seed[] = [];
 for (const home of catalogHomeSeeds) {
+  if (legacyHomeSlugAliases[home.slug]) continue;
+
   const k1 = cleanKey(home.name);
   const k2 = home.displayName ? cleanKey(home.displayName) : '';
   const k3 = home.modelNumber ? cleanKey(home.modelNumber) : '';
@@ -244,7 +262,8 @@ export function getFeaturedHomes() {
 }
 
 export function getHomeBySlug(slug: string) {
-  return homes.find((home) => home.slug === slug && home.isActive);
+  const canonicalSlug = legacyHomeSlugAliases[slug] ?? slug;
+  return homes.find((home) => home.slug === canonicalSlug && home.isActive);
 }
 
 export const getHomeById = getHomeBySlug;
