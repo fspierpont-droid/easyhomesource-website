@@ -37,8 +37,8 @@ export interface GhlProject {
   stage: ProjectStage;
   stageLabel: string;
   progressPct: number;
-  dealValue: number;
-  depositAmount: number;
+  dealValue: number | null;
+  depositAmount: number | null;
   depositStatus: 'PAID' | 'PARTIAL' | 'PENDING' | 'ESCROW';
   assignedRep: string;
   assignedRepEmail: string;
@@ -47,9 +47,9 @@ export interface GhlProject {
   homeModel: string;
   manufacturer: string;
   series?: string;
-  bedrooms: number;
-  bathrooms: number;
-  squareFeet: number;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  squareFeet: number | null;
   dimensions: string;
   parcelNumber?: string;
   lotSize?: string;

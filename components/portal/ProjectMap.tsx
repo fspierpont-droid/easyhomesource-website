@@ -135,7 +135,7 @@ export function ProjectMap({
             </div>
             <div style="margin-top: 3px; background: white; color: #0F2A47; font-weight: 900; font-size: 10px; padding: 2px 7px; border-radius: 9999px; border: 1.5px solid ${isSelected ? '#0F2A47' : '#CBD5E1'}; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 4px;">
               <span>${p.customerName.split(' ')[0]}</span>
-              <span style="color: #059669;">• $${(p.dealValue || 0).toLocaleString()}</span>
+              <span style="color: #059669;">• ${p.dealValue == null ? '—' : `$${p.dealValue.toLocaleString()}`}</span>
             </div>
           </div>
         `,
@@ -426,11 +426,11 @@ export function ProjectMap({
                         Turnkey Project Value
                       </span>
                       <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        Deposit: {activeProject.depositStatus} (${(activeProject.depositAmount || 0).toLocaleString()})
+                        Deposit: {activeProject.depositStatus} ({activeProject.depositAmount == null ? '—' : `$${activeProject.depositAmount.toLocaleString()}`})
                       </span>
                     </div>
                     <div className="text-2xl font-black tabular">
-                      ${(activeProject.dealValue || 0).toLocaleString()}
+                      {activeProject.dealValue == null ? '—' : `$${activeProject.dealValue.toLocaleString()}`}
                     </div>
                     <div className="flex justify-between items-center text-[11px] text-slate-300 pt-1 border-t border-white/10">
                       <span>Lender: {activeProject.lender || 'Cash / In-House'}</span>
@@ -478,9 +478,9 @@ export function ProjectMap({
                       {activeProject.manufacturer} {activeProject.series ? `• ${activeProject.series}` : ''}
                     </div>
                     <div className="flex flex-wrap gap-2 text-[10px] font-bold text-slate-500 pt-1">
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bedrooms} Beds</span>
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bathrooms} Baths</span>
-                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.squareFeet} sq ft</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bedrooms == null ? '—' : activeProject.bedrooms} Beds</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.bathrooms == null ? '—' : activeProject.bathrooms} Baths</span>
+                      <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.squareFeet == null ? '—' : activeProject.squareFeet} sq ft</span>
                       <span className="bg-white border border-slate-200 px-2 py-0.5 rounded">{activeProject.dimensions}</span>
                     </div>
                   </div>

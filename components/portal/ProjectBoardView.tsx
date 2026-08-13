@@ -16,6 +16,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
   const [activeTab, setActiveTab] = useState<'map' | 'kanban' | 'table' | 'analytics'>('map');
   const [isSyncingGhl, setIsSyncingGhl] = useState(false);
   const [syncSuccessMsg, setSyncSuccessMsg] = useState<string | null>(null);
+  const [writeError, setWriteError] = useState<string | null>(null);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<GhlProject | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,6 +54,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
 
   const handleStageChange = async (projectId: string, newStage: ProjectStage) => {
     const proj = projects.find((p) => p.id === projectId);
+    setWriteError(null);
     if (proj?.ghlOpportunityId) {
       try {
         const response = await fetch('/api/portal/projects/update-stage', {
@@ -70,7 +72,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
         setSyncSuccessMsg(`✓ Stage updated in GoHighLevel to "${PROJECT_STAGE_CONFIG[newStage]?.label || newStage}" for ${proj.customerName}.`);
       } catch (err) {
         console.error('Failed to sync stage update to GHL:', err);
-        setSyncSuccessMsg('GHL did not save the stage. The prior value was preserved; check the connection and retry.');
+        setWriteError('GHL did not save the stage. The prior value was preserved; check the connection and retry.');
       }
     }
   };
@@ -109,14 +111,14 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
               GHL PROJECT OPERATIONS &amp; JOB PIPELINE
             </span>
             <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
-              Project-Phase Pipeline Live
+              GHL reconciliation enabled
             </span>
           </div>
           <h1 className="mt-1 text-3xl font-extrabold text-slate-900 tracking-tight">
             Project Board &amp; Job Site Map
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-3xl leading-relaxed">
-            Live Central Florida project map and milestone tracking for active jobs pulled directly from GoHighLevel <strong className="text-slate-800">Project-Phase</strong> pipeline.
+            Central Florida project map and milestone tracking reconciled from the GoHighLevel <strong className="text-slate-800">Project-Phase</strong> pipeline on page load and manual refresh.
           </p>
         </div>
 
@@ -140,6 +142,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
           <button onClick={() => setSyncSuccessMsg(null)} className="text-emerald-600 font-bold cursor-pointer">✕</button>
         </div>
       )}
+      {writeError && <div role="alert" className="p-4 rounded-xl border border-rose-200 bg-rose-50 text-sm font-bold text-rose-800">{writeError}</div>}
 
       {connectionError && <div role="alert" className="p-4 rounded-xl border border-rose-200 bg-rose-50 text-sm font-bold text-rose-800">{connectionError}</div>}
       {!connectionError && projects.length === 0 && <div className="p-8 rounded-2xl border border-dashed border-slate-300 bg-white text-center text-sm text-slate-600">No GHL project opportunities match this view.</div>}
@@ -307,7 +310,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
                             <div className="font-black text-slate-900 text-sm leading-tight">{p.customerName}</div>
                           </div>
                           <span className="font-mono font-bold text-emerald-700 text-xs">
-                            ${(p.dealValue || 0).toLocaleString()}
+                            {p.dealValue == null ? '—' : `$${p.dealValue.toLocaleString()}`}
                           </span>
                         </div>
 
@@ -393,7 +396,7 @@ export function ProjectBoardView({ onOpenQuote }: ProjectBoardViewProps) {
                       </select>
                     </td>
                     <td className="py-3 px-4 font-mono font-bold text-slate-900">
-                      ${(p.dealValue || 0).toLocaleString()}
+                      {p.dealValue == null ? '—' : `$${p.dealValue.toLocaleString()}`}
                     </td>
                     <td className="py-3 px-4 text-slate-700">
                       {p.assignedRep}

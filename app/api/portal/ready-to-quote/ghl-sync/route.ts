@@ -16,7 +16,8 @@ async function handleFetchReadyLeads() {
       const checkbox = fields.find((field: any) => field.id === READY_FOR_QUOTE_FIELD_ID);
       const checked = checkbox?.fieldValueBoolean === true || checkbox?.field_value === true || checkbox?.fieldValueString === 'true' || checkbox?.fieldValueArray?.length > 0;
       const tags = (opp.contact?.tags || []).map((tag: string) => tag.toLowerCase());
-      return opp.id && (checked || ['quote_ready', 'send_to_quote_system', 'ready_to_quote'].some((tag) => tags.includes(tag)));
+      const contactId = opp.contactId || opp.contact?.id;
+      return opp.id && contactId && (checked || ['quote_ready', 'send_to_quote_system', 'ready_to_quote'].some((tag) => tags.includes(tag)));
     });
     const readyBuyers: ReadyBuyer[] = readyOpps.map((opp) => {
       const contact = opp.contact || {};

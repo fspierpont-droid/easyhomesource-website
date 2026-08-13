@@ -24,7 +24,7 @@ export const PORTAL_STAGE_TO_GHL: Record<ProjectStage, string> = {
 };
 
 const text = (value: unknown) => typeof value === 'string' && value.trim() ? value.trim() : 'Not provided';
-const number = (value: unknown) => Number.isFinite(Number(value)) ? Number(value) : 0;
+const number = (value: unknown) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value)) ? Number(value) : null;
 const customValue = (fields: any[], id: string) => {
   const field = fields.find((item) => item.id === id);
   return field?.fieldValueString ?? field?.fieldValueNumber ?? field?.field_value;
@@ -37,16 +37,29 @@ async function handleFetchProjectPhaseOpps() {
       ghlRequest<{ users?: any[] }>(`/users/?locationId=${GHL_LOCATION_ID}`).catch(() => ({ users: [] }))
     ]);
     const users = new Map((usersData.users || []).map((user) => [user.id, user]));
-    const opportunities = (rawOpps as any[]).filter((opp) => opp.id && opp.pipelineId === PROJECT_PIPELINE_ID);
+    // Only stages with an established production mapping qualify. An unknown
+    // GHL stage must not be relabeled as a portal stage.
+    const opportunities = (rawOpps as any[]).filter((opp) =>
+      opp.id && opp.pipelineId === PROJECT_PIPELINE_ID && GHL_STAGE_TO_PORTAL[opp.pipelineStageId]
+    );
     const syncedAt = new Date().toISOString();
-    const projects: GhlProject[] = opportunities.map((opp) => {
-      const contact = opp.contact || {};
+    const projects: GhlProject[] = await Promise.all(opportunities.map(async (opp) => {
+      const embeddedContact = opp.contact || {};
+      const contactId = opp.contactId || embeddedContact.id || '';
+      // Opportunity search can return a partial embedded contact. Hydrate only
+      // partial records, and retain genuine embedded values if contact lookup
+      // is unavailable.
+      const needsHydration = contactId && (!embeddedContact.name || !embeddedContact.phone || !embeddedContact.email || !embeddedContact.address1);
+      const hydrated = needsHydration
+        ? await ghlRequest<{ contact?: Record<string, unknown> }>(`/contacts/${encodeURIComponent(contactId)}`).then((data) => data.contact || {}).catch(() => ({}))
+        : {};
+      const contact = { ...embeddedContact, ...hydrated };
       const fields = Array.isArray(opp.customFields) ? opp.customFields : [];
-      const stage = GHL_STAGE_TO_PORTAL[opp.pipelineStageId] || { stage: 'LEAD_QUALIFIED' as const, label: text(opp.pipelineStageId), progressPct: 0 };
+      const stage = GHL_STAGE_TO_PORTAL[opp.pipelineStageId];
       const rep = users.get(opp.assignedTo) as any;
       const address = customValue(fields, 'dHjTQIz3TiLyA1nTjBKY') ?? contact.address1;
       const canonical = {
-        contactId: opp.contactId || contact.id || '', opportunityId: opp.id, pipelineId: opp.pipelineId,
+        contactId, opportunityId: opp.id, pipelineId: opp.pipelineId,
         pipelineStageId: opp.pipelineStageId || '', status: opp.status || '', monetaryValue: opp.monetaryValue ?? null,
         assignedTo: opp.assignedTo || '', contact, customFields: fields
       };
@@ -61,13 +74,13 @@ async function handleFetchProjectPhaseOpps() {
         stage: stage.stage, stageLabel: stage.label, progressPct: stage.progressPct, dealValue: number(opp.monetaryValue),
         depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: 'PENDING',
         assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
-        manufacturer: 'Not provided', bedrooms: 0, bathrooms: 0, squareFeet: 0, dimensions: 'Not provided',
+        manufacturer: 'Not provided', bedrooms: null, bathrooms: null, squareFeet: null, dimensions: 'Not provided',
         zoning: text(customValue(fields, 'maaf51kmzQDMhONJqGfb')), milestones: [],
         ghlTags: Array.isArray(contact.tags) ? contact.tags : [], notes: '—',
         createdAt: opp.createdAt || syncedAt, updatedAt: opp.updatedAt || syncedAt, lastGhlSyncAt: syncedAt,
         lastGhlHash: createHash('sha256').update(JSON.stringify(canonical)).digest('hex'), lastSyncSource: 'ghl-fetch'
       };
-    });
+    }));
     return NextResponse.json({ success: true, pipelineId: PROJECT_PIPELINE_ID, pipelineName: 'Project-Phase', count: projects.length, projects });
   } catch (error) {
     console.error('GHL Project-Phase sync error:', error);
