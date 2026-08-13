@@ -1,9 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requirePortalAccess } from '@/lib/auth/portalSession';
 import { PORTAL_STAGE_TO_GHL } from '@/app/api/portal/projects/ghl-sync/route';
 import { ghlRequest } from '@/lib/ghl/client';
 import type { ProjectStage } from '@/types/project';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const access = requirePortalAccess(request, true);
+  if (access.response) return access.response;
   try {
     const { ghlOpportunityId, newStage } = await request.json() as { ghlOpportunityId?: string; newStage?: ProjectStage };
     const ghlStageId = newStage ? PORTAL_STAGE_TO_GHL[newStage] : undefined;

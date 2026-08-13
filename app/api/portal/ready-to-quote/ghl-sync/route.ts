@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requirePortalAccess } from '@/lib/auth/portalSession';
 import { READY_FOR_QUOTE_FIELD_ID, searchOpportunities } from '@/lib/ghl/client';
 import type { ReadyBuyer } from '@/components/portal/ReadyToQuoteView';
 
@@ -8,7 +9,9 @@ const customValue = (fields: any[], id: string) => {
   return field?.fieldValueString ?? field?.fieldValueNumber ?? field?.field_value;
 };
 
-async function handleFetchReadyLeads() {
+async function handleFetchReadyLeads(request: NextRequest) {
+  const access = requirePortalAccess(request);
+  if (access.response) return access.response;
   try {
     const opportunities = await searchOpportunities() as any[];
     const readyOpps = opportunities.filter((opp) => {
@@ -30,7 +33,7 @@ async function handleFetchReadyLeads() {
         ghlPipelineId: opp.pipelineId || '', ghlPipelineStageId: opp.pipelineStageId || '',
         name: provided(contact.name || opp.name), phone: provided(contact.phone), email: provided(contact.email),
         landStatus: provided(customValue(fields, 'BiSItm1i8p4MrsCbySc6')), interestedModel: provided(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
-        budget: monetaryValue === null ? '—' : `$${monetaryValue.toLocaleString()}`, urgency: 'MEDIUM',
+        budget: monetaryValue === null ? '—' : `$${monetaryValue.toLocaleString()}`, urgency: null,
         source: provided(opp.source), createdAt: opp.createdAt ? String(opp.createdAt).slice(0, 16).replace('T', ' ') : '—'
       };
     });
@@ -40,5 +43,5 @@ async function handleFetchReadyLeads() {
     return NextResponse.json({ success: false, error: 'Unable to load GHL data. Check the connection and try again.' }, { status: 503 });
   }
 }
-export async function GET() { return handleFetchReadyLeads(); }
-export async function POST() { return handleFetchReadyLeads(); }
+export async function GET(request: NextRequest) { return handleFetchReadyLeads(request); }
+export async function POST(request: NextRequest) { return handleFetchReadyLeads(request); }

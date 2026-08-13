@@ -47,6 +47,9 @@ The exhaustive source search found these GHL environment variables:
 | `GHL_PROJECT_PIPELINE_ID` | Not present | Optional override; defaults to the established Project-Phase ID | No, unless the production pipeline changes |
 | `GHL_READY_FOR_QUOTE_FIELD_ID` | Not present | Optional override; defaults to the established checkbox field ID | No, unless the production field changes |
 | `GHL_COUNTY_FIELD_ID` | Not present | Optional county custom-field mapping; absent values display `Not provided` | No |
+| `GHL_DEPOSIT_STATUS_FIELD_ID` | Not present | Optional override for established deposit-status field `hXYhZkFA1uizZeag77zR` | No |
+| `PORTAL_PASSWORD` | Not present | Server-side shared portal credential used by the existing employee login form | **Yes** |
+| `PORTAL_SESSION_SECRET` | Not present | Signs the HTTP-only portal session cookie; minimum 32 characters | **Yes** |
 
 No occurrences of `GHL_ACCESS_TOKEN`, `GHL_PRIVATE_INTEGRATION_TOKEN`, or `GHL_TOKEN` exist. The secret **names** required by the portal did not change. The behavior did: `GHL_API_KEY` and `GHL_LOCATION_ID` must now exist instead of silently using committed fallback credentials. Before merge, Vercel must be checked to confirm both established variables are configured in Production and Preview. The removed source token should be considered exposed and rotated in GHL.
 
@@ -78,7 +81,7 @@ Outbound capability existed only for project stage changes. The UI optimisticall
 
 1. There is no authenticated GHL webhook endpoint, signature verification, event subscription, or durable projection database.
 2. There is no persistent idempotency/event ledger; reconciliation is idempotent by GHL opportunity ID and a canonical hash is supplied in projections, but hashes are not durably stored server-side.
-3. Pagination beyond the current 100-opportunity GHL search response is not implemented.
+3. Opportunity pagination is implemented from GHL next-page metadata with repeated/malformed-page and 1,000-request guards; any later-page failure rejects the entire reconciliation rather than publishing partial canonical state.
 4. Portal editing for contact name/phone/email/address, opportunity value, and assignee is not exposed, so only stage has an outbound path.
 5. Contact details may require a canonical contact-by-ID request when opportunity search returns only a partial embedded contact.
 6. Custom-field IDs other than the established fields remain only partially mapped.
@@ -99,7 +102,7 @@ These gaps require authenticated webhook secrets and a durable datastore/schema 
 | Assigned consultant | Implemented | Missing | Read-only; `assignedTo` resolved against GHL users |
 | Opportunity name | Implemented | Missing | Read-only; used only as a name fallback when contact name is missing |
 | Pipeline | Implemented | Missing | Read-only; Project Board filters the Project-Phase ID |
-| Pipeline stage | Implemented | Implemented | Only truly bidirectional field; successful PUT is followed by reconciliation |
+| Pipeline stage | Implemented | Implemented | Only truly bidirectional field; successful authorized PUT is followed by reconciliation |
 | Opportunity status | Implemented | Missing | Project projection retains status; no editor |
 | Monetary value | Implemented | Missing | Read-only; maps exactly from `monetaryValue` |
 | Relevant custom fields | Implemented (selected known fields) | Missing | Read-only; no custom-field editor |
@@ -130,7 +133,7 @@ PR #48 is **not ready to be represented as a fully bidirectional or real-time GH
 
 Real-account tests could not be executed from the repository alone because no runtime GHL credentials or Vercel access are available. Required pre-merge checks are: a genuine ready record, a genuine mapped project with hydrated contact/user/value, a successful and rejected stage write, zero qualifying results, and an invalid/absent credential response. The build-level tests verify code paths and absence of demo fallback, not production account contents.
 
-Production-safety review also found that portal API routes do not perform server-side authentication; portal login state is browser-local only. Consequently the GHL read reconciliation routes and stage-write route can be called directly without the UI gate. This is a **P1 merge blocker** for exposing CRM data or writes in production. It is an existing authentication architecture issue and is not silently changed in this data-integrity PR because authentication was explicitly out of scope. PR #48 must not merge until the maintainers provide/identify the intended server-verifiable portal session contract and apply it to these routes. The Project Map marker HTML now escapes GHL-derived customer label text and does not include a GHL-derived ID in its CSS class.
+Production-safety review found the original portal login was browser-local. The same employee login flow now establishes a signed, HTTP-only, SameSite-strict server session. GHL reads require an active verified EHS employee; writes additionally require the existing Admin or Manager role. Missing sessions return `401`, and authenticated Associates receive `403` on writes. Vercel must configure `PORTAL_PASSWORD` and a unique random `PORTAL_SESSION_SECRET` of at least 32 characters before deployment. The Project Map marker HTML also escapes GHL-derived customer label text and does not include a GHL-derived ID in its CSS class.
 
 ### Project map coordinate safety
 

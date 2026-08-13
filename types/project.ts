@@ -39,7 +39,7 @@ export interface GhlProject {
   progressPct: number;
   dealValue: number | null;
   depositAmount: number | null;
-  depositStatus: 'PAID' | 'PARTIAL' | 'PENDING' | 'ESCROW';
+  depositStatus: 'PAID' | 'PARTIAL' | 'PENDING' | 'ESCROW' | null;
   assignedRep: string;
   assignedRepEmail: string;
   lender?: string;

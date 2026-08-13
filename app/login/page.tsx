@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,22 +28,9 @@ export default function LoginPage() {
       return;
     }
 
-    // Verify authorized user from team list
-    const matched = VERIFIED_TEAM_USERS.find(
-      (u) => u.email.toLowerCase() === cleanEmail || u.name.toLowerCase() === cleanEmail
-    );
-
-    if (!matched) {
-      setError('Account not found. Please enter a valid authorized dealership email (e.g. scott@easyhomesource.com, alex@easyhomesource.com, mike@easyhomesource.com).');
-      setLoading(false);
-      return;
-    }
 
     try {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('ehs_token', `ehs-token-${Date.now()}`);
-        localStorage.setItem('ehs_user', JSON.stringify(matched));
-      }
+      await login(cleanEmail, cleanPass);
       router.push('/portal');
     } catch (err) {
       setError('Sign in failed. Please check your credentials and try again.');

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { PROJECT_STAGE_CONFIG } from '@/types/project';
 import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
+import { resolveSelectedProject } from '@/lib/ghl/projectSelection';
 
 interface ProjectMapProps {
   projects: GhlProject[];
@@ -29,8 +30,8 @@ export function ProjectMap({
   onOpenQuote,
   onUpdateStage
 }: ProjectMapProps) {
-  const [activeProject, setActiveProject] = useState<GhlProject | null>(
-    externalSelected || projects[0] || null
+  const [activeOpportunityId, setActiveOpportunityId] = useState<string | null>(
+    externalSelected?.ghlOpportunityId || projects[0]?.ghlOpportunityId || null
   );
   const [stageFilter, setStageFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -42,12 +43,13 @@ export function ProjectMap({
 
   useEffect(() => {
     if (externalSelected) {
-      setActiveProject(externalSelected);
+      setActiveOpportunityId(externalSelected.ghlOpportunityId);
       setIsPanelCollapsed(false);
-    } else if (projects.length > 0 && !activeProject) {
-      setActiveProject(projects[0]);
+    } else if (projects.length > 0 && !activeOpportunityId) {
+      setActiveOpportunityId(projects[0].ghlOpportunityId);
     }
-  }, [externalSelected, projects, activeProject]);
+  }, [externalSelected, projects, activeOpportunityId]);
+  const activeProject = resolveSelectedProject(projects, activeOpportunityId);
 
   const filteredProjects = useMemo(() => projects.filter((p) => {
     if (stageFilter !== 'ALL' && p.stage !== stageFilter) return false;
@@ -160,7 +162,7 @@ export function ProjectMap({
       const marker = L.marker([p.latitude, p.longitude], { icon: pinIcon }).addTo(markersGroup);
 
       marker.on('click', () => {
-        setActiveProject(p);
+        setActiveOpportunityId(p.ghlOpportunityId);
         setIsPanelCollapsed(false);
         onSelectProject?.(p);
       });
@@ -444,7 +446,7 @@ export function ProjectMap({
                         Turnkey Project Value
                       </span>
                       <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        Deposit: {activeProject.depositStatus} ({activeProject.depositAmount == null ? '—' : `$${activeProject.depositAmount.toLocaleString()}`})
+                        Deposit: {activeProject.depositStatus || 'Not provided'} ({activeProject.depositAmount == null ? '—' : `$${activeProject.depositAmount.toLocaleString()}`})
                       </span>
                     </div>
                     <div className="text-2xl font-black tabular">

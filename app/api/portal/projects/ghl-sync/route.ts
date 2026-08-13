@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
-import { NextResponse } from 'next/server';
-import { GHL_LOCATION_ID, PROJECT_PIPELINE_ID, ghlRequest, searchOpportunities } from '@/lib/ghl/client';
+import { NextRequest, NextResponse } from 'next/server';
+import { requirePortalAccess } from '@/lib/auth/portalSession';
+import { DEPOSIT_STATUS_FIELD_ID, GHL_LOCATION_ID, PROJECT_PIPELINE_ID, ghlRequest, searchOpportunities } from '@/lib/ghl/client';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
 
@@ -30,8 +31,19 @@ const customValue = (fields: any[], id: string) => {
   const field = fields.find((item) => item.id === id);
   return field?.fieldValueString ?? field?.fieldValueNumber ?? field?.field_value;
 };
+const depositStatus = (value: unknown): GhlProject['depositStatus'] => {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim().toLowerCase();
+  if (['collected', 'paid'].includes(normalized)) return 'PAID';
+  if (normalized === 'partial') return 'PARTIAL';
+  if (normalized === 'pending') return 'PENDING';
+  if (normalized === 'escrow') return 'ESCROW';
+  return null;
+};
 
-async function handleFetchProjectPhaseOpps() {
+async function handleFetchProjectPhaseOpps(request: NextRequest) {
+  const access = requirePortalAccess(request);
+  if (access.response) return access.response;
   try {
     const [rawOpps, usersData] = await Promise.all([
       searchOpportunities(PROJECT_PIPELINE_ID),
@@ -50,7 +62,8 @@ async function handleFetchProjectPhaseOpps() {
       // Opportunity search can return a partial embedded contact. Hydrate only
       // partial records, and retain genuine embedded values if contact lookup
       // is unavailable.
-      const needsHydration = contactId && (!embeddedContact.name || !embeddedContact.phone || !embeddedContact.email || !embeddedContact.address1);
+      const embeddedCoordinates = { latitude: embeddedContact.latitude, longitude: embeddedContact.longitude };
+      const needsHydration = contactId && (!embeddedContact.name || !embeddedContact.phone || !embeddedContact.email || !embeddedContact.address1 || !hasValidCoordinates(embeddedCoordinates));
       const hydrated = needsHydration
         ? await ghlRequest<{ contact?: Record<string, unknown> }>(`/contacts/${encodeURIComponent(contactId)}`).then((data) => data.contact || {}).catch(() => ({}))
         : {};
@@ -75,7 +88,7 @@ async function handleFetchProjectPhaseOpps() {
         state: text(contact.state), zip: text(contact.postalCode), latitude: hasCoordinates ? coordinates.latitude : null,
         longitude: hasCoordinates ? coordinates.longitude : null,
         stage: stage.stage, stageLabel: stage.label, progressPct: stage.progressPct, dealValue: number(opp.monetaryValue),
-        depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: 'PENDING',
+        depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: depositStatus(customValue(fields, DEPOSIT_STATUS_FIELD_ID)),
         assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
         manufacturer: 'Not provided', bedrooms: null, bathrooms: null, squareFeet: null, dimensions: 'Not provided',
         zoning: text(customValue(fields, 'maaf51kmzQDMhONJqGfb')), milestones: [],
@@ -90,5 +103,5 @@ async function handleFetchProjectPhaseOpps() {
     return NextResponse.json({ success: false, error: 'Unable to load GHL data. Check the connection and try again.' }, { status: 503 });
   }
 }
-export async function GET() { return handleFetchProjectPhaseOpps(); }
-export async function POST() { return handleFetchProjectPhaseOpps(); }
+export async function GET(request: NextRequest) { return handleFetchProjectPhaseOpps(request); }
+export async function POST(request: NextRequest) { return handleFetchProjectPhaseOpps(request); }

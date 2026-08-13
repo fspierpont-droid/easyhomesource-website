@@ -14,7 +14,7 @@ export interface ReadyBuyer {
   landStatus: string;
   interestedModel: string;
   budget: string;
-  urgency: 'HIGH' | 'MEDIUM' | 'LOW';
+  urgency: 'HIGH' | 'MEDIUM' | 'LOW' | null;
   source: string;
   createdAt: string;
 }
@@ -103,7 +103,7 @@ export function ReadyToQuoteView({ onStartQuoteForBuyer }: ReadyToQuoteViewProps
             <div className="space-y-1.5 min-w-0">
               <div className="flex items-center gap-2">
                 <h4 className="font-extrabold text-sm text-slate-900">{buyer.name}</h4>
-                <span
+                {buyer.urgency && <span
                   className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
                     buyer.urgency === 'HIGH'
                       ? 'bg-rose-50 text-rose-700 border border-rose-200'
@@ -111,7 +111,7 @@ export function ReadyToQuoteView({ onStartQuoteForBuyer }: ReadyToQuoteViewProps
                   }`}
                 >
                   {buyer.urgency} PRIORITY
-                </span>
+                </span>}
                 <span className="text-[10px] text-slate-400 font-mono">{buyer.createdAt}</span>
               </div>
 
