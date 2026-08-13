@@ -48,7 +48,7 @@ The exhaustive source search found these GHL environment variables:
 | `GHL_READY_FOR_QUOTE_FIELD_ID` | Not present | Optional override; defaults to the established checkbox field ID | No, unless the production field changes |
 | `GHL_COUNTY_FIELD_ID` | Not present | Optional county custom-field mapping; absent values display `Not provided` | No |
 | `GHL_DEPOSIT_STATUS_FIELD_ID` | Not present | Optional override for established deposit-status field `hXYhZkFA1uizZeag77zR` | No |
-| `PORTAL_PASSWORD` | Not present | Server-side shared portal credential used by the existing employee login form | **Yes** |
+| `PORTAL_PASSWORD` | Not present | Optional override for the established employee portal credential | No |
 | `PORTAL_SESSION_SECRET` | Not present | Signs the HTTP-only portal session cookie; minimum 32 characters | **Yes** |
 
 No occurrences of `GHL_ACCESS_TOKEN`, `GHL_PRIVATE_INTEGRATION_TOKEN`, or `GHL_TOKEN` exist. The secret **names** required by the portal did not change. The behavior did: `GHL_API_KEY` and `GHL_LOCATION_ID` must now exist instead of silently using committed fallback credentials. Before merge, Vercel must be checked to confirm both established variables are configured in Production and Preview. The removed source token should be considered exposed and rotated in GHL.
@@ -133,7 +133,7 @@ PR #48 is **not ready to be represented as a fully bidirectional or real-time GH
 
 Real-account tests could not be executed from the repository alone because no runtime GHL credentials or Vercel access are available. Required pre-merge checks are: a genuine ready record, a genuine mapped project with hydrated contact/user/value, a successful and rejected stage write, zero qualifying results, and an invalid/absent credential response. The build-level tests verify code paths and absence of demo fallback, not production account contents.
 
-Production-safety review found the original portal login was browser-local. The same employee login flow now establishes a signed, HTTP-only, SameSite-strict server session. GHL reads require an active verified EHS employee; writes additionally require the existing Admin or Manager role. Missing sessions return `401`, and authenticated Associates receive `403` on writes. Vercel must configure `PORTAL_PASSWORD` and a unique random `PORTAL_SESSION_SECRET` of at least 32 characters before deployment. The Project Map marker HTML also escapes GHL-derived customer label text and does not include a GHL-derived ID in its CSS class.
+Production-safety review found the original portal login was browser-local. The same employee login flow now establishes a signed, HTTP-only, SameSite-strict server session while retaining the established employee credential; `PORTAL_PASSWORD` can override that credential. GHL reads require an active verified EHS employee; writes additionally require the existing Admin or Manager role. Missing sessions return `401`, and authenticated Associates receive `403` on writes. Vercel must configure a unique random `PORTAL_SESSION_SECRET` of at least 32 characters before deployment. The Project Map marker HTML also escapes GHL-derived customer label text and does not include a GHL-derived ID in its CSS class.
 
 ### Project map coordinate safety
 

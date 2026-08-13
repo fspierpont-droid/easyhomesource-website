@@ -38,13 +38,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.user) throw new Error(data.error || 'Sign in failed.');
+    localStorage.setItem('ehs_user', JSON.stringify(data.user));
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
+    localStorage.removeItem('ehs_token');
+    localStorage.removeItem('ehs_user');
     void fetch('/api/portal/auth/logout', { method: 'POST' }).finally(() => {
       setUser(null);
       router.push('/login');

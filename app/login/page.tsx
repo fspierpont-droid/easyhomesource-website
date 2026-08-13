@@ -33,7 +33,7 @@ export default function LoginPage() {
       await login(cleanEmail, cleanPass);
       router.push('/portal');
     } catch (err) {
-      setError('Sign in failed. Please check your credentials and try again.');
+      setError(err instanceof Error ? err.message : 'Sign in failed. Please try again.');
     } finally {
       setLoading(false);
     }
