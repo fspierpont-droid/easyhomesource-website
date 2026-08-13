@@ -14,6 +14,14 @@ interface ProjectMapProps {
   onUpdateStage?: (projectId: string, newStage: ProjectStage) => void;
 }
 
+const escapeMarkerText = (value: string) => value.replace(/[&<>'"]/g, (character) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  "'": '&#39;',
+  '"': '&quot;'
+}[character] || character));
+
 export function ProjectMap({
   projects,
   onSelectProject,
@@ -133,14 +141,14 @@ export function ProjectMap({
       const scale = isSelected ? 'scale(1.22)' : 'scale(1)';
 
       const pinIcon = L.divIcon({
-        className: `ehs-proj-pin-${p.id}`,
+        className: 'ehs-project-pin',
         html: `
           <div style="display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -100%) ${scale}; transition: transform 0.15s ease; cursor: pointer;">
             <div style="background: ${pinColor}; color: white; border: 2.5px solid ${isSelected ? '#0F2A47' : '#FFFFFF'}; border-radius: 9999px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.28);">
               ${stageConfig.icon}
             </div>
             <div style="margin-top: 3px; background: white; color: #0F2A47; font-weight: 900; font-size: 10px; padding: 2px 7px; border-radius: 9999px; border: 1.5px solid ${isSelected ? '#0F2A47' : '#CBD5E1'}; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 4px;">
-              <span>${p.customerName.split(' ')[0]}</span>
+              <span>${escapeMarkerText(p.customerName.split(' ')[0])}</span>
               <span style="color: #059669;">• ${p.dealValue == null ? '—' : `$${p.dealValue.toLocaleString()}`}</span>
             </div>
           </div>

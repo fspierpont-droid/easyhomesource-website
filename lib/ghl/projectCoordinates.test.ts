@@ -36,3 +36,11 @@ test('filtering retains only mappable projects without changing the source list'
   assert.deepEqual(mappedProjects.map(({ id }) => id), ['mapped']);
   assert.equal(projects.length, 2);
 });
+
+test('GHL null values cannot be coerced into a valid Null Island coordinate', () => {
+  const rawContact = { latitude: null, longitude: null };
+  const coordinates = { latitude: rawContact.latitude, longitude: rawContact.longitude };
+
+  assert.equal(hasValidCoordinates(coordinates), false);
+  assert.notDeepEqual(coordinates, { latitude: 0, longitude: 0 });
+});

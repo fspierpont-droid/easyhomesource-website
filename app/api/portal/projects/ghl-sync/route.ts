@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import { NextResponse } from 'next/server';
 import { GHL_LOCATION_ID, PROJECT_PIPELINE_ID, ghlRequest, searchOpportunities } from '@/lib/ghl/client';
 import type { GhlProject, ProjectStage } from '@/types/project';
+import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -58,6 +59,8 @@ async function handleFetchProjectPhaseOpps() {
       const stage = GHL_STAGE_TO_PORTAL[opp.pipelineStageId];
       const rep = users.get(opp.assignedTo) as any;
       const address = customValue(fields, 'dHjTQIz3TiLyA1nTjBKY') ?? contact.address1;
+      const coordinates = { latitude: contact.latitude, longitude: contact.longitude };
+      const hasCoordinates = hasValidCoordinates(coordinates);
       const canonical = {
         contactId, opportunityId: opp.id, pipelineId: opp.pipelineId,
         pipelineStageId: opp.pipelineStageId || '', status: opp.status || '', monetaryValue: opp.monetaryValue ?? null,
@@ -69,8 +72,8 @@ async function handleFetchProjectPhaseOpps() {
         jobId: `GHL-${opp.id.slice(0, 7).toUpperCase()}`, customerName: text(contact.name || opp.name),
         customerPhone: text(contact.phone), customerEmail: text(contact.email), jobAddress: text(address),
         city: text(contact.city), county: text(customValue(fields, process.env.GHL_COUNTY_FIELD_ID || '')),
-        state: text(contact.state), zip: text(contact.postalCode), latitude: Number.isFinite(Number(contact.latitude)) ? Number(contact.latitude) : null,
-        longitude: Number.isFinite(Number(contact.longitude)) ? Number(contact.longitude) : null,
+        state: text(contact.state), zip: text(contact.postalCode), latitude: hasCoordinates ? coordinates.latitude : null,
+        longitude: hasCoordinates ? coordinates.longitude : null,
         stage: stage.stage, stageLabel: stage.label, progressPct: stage.progressPct, dealValue: number(opp.monetaryValue),
         depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: 'PENDING',
         assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue(fields, 'u65XL9zAaZiOIqBqygov')),

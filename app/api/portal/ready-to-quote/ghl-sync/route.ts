@@ -22,13 +22,15 @@ async function handleFetchReadyLeads() {
     const readyBuyers: ReadyBuyer[] = readyOpps.map((opp) => {
       const contact = opp.contact || {};
       const fields = Array.isArray(opp.customFields) ? opp.customFields : [];
-      const monetaryValue = Number(opp.monetaryValue);
+      const monetaryValue = typeof opp.monetaryValue === 'number' && Number.isFinite(opp.monetaryValue)
+        ? opp.monetaryValue
+        : null;
       return {
         id: `ghl-ready-${opp.id}`, ghlContactId: opp.contactId || contact.id || '', ghlOpportunityId: opp.id,
         ghlPipelineId: opp.pipelineId || '', ghlPipelineStageId: opp.pipelineStageId || '',
         name: provided(contact.name || opp.name), phone: provided(contact.phone), email: provided(contact.email),
         landStatus: provided(customValue(fields, 'BiSItm1i8p4MrsCbySc6')), interestedModel: provided(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
-        budget: Number.isFinite(monetaryValue) ? `$${monetaryValue.toLocaleString()}` : '—', urgency: 'MEDIUM',
+        budget: monetaryValue === null ? '—' : `$${monetaryValue.toLocaleString()}`, urgency: 'MEDIUM',
         source: provided(opp.source), createdAt: opp.createdAt ? String(opp.createdAt).slice(0, 16).replace('T', ' ') : '—'
       };
     });
