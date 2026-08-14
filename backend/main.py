@@ -35,6 +35,8 @@ from models import (
     UserUpdate,
 )
 from properties import router as properties_router
+from quotes import public_router as public_quotes_router
+from quotes import router as quotes_router
 
 logger = logging.getLogger("easyhomesource.api")
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
@@ -48,6 +50,8 @@ app = FastAPI(
 app.include_router(catalog_router)
 app.include_router(customers_router)
 app.include_router(properties_router)
+app.include_router(quotes_router)
+app.include_router(public_quotes_router)
 
 
 def _cors_origins() -> list[str]:
