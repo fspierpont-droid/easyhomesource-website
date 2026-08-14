@@ -91,12 +91,9 @@ export interface SavedQuote {
   updatedAt: string;
 }
 
-/**
- * The former seed array mixed test data with real-looking customer data. It is
- * intentionally empty. Mongo through /api/portal/quotes is the only authority.
- */
 export const INITIAL_SAVED_QUOTES: SavedQuote[] = [];
 const STORAGE_KEY = 'ehs_permanent_quote_cache_v1';
+let hydrationStarted = false;
 
 function readCache(): SavedQuote[] {
   if (typeof window === 'undefined') return [];
@@ -122,6 +119,14 @@ function syncError(message: string) {
 }
 
 export function getSavedQuotes(): SavedQuote[] {
+  if (typeof window !== 'undefined' && !hydrationStarted) {
+    hydrationStarted = true;
+    void refreshQuotesFromServer().catch((error) => {
+      hydrationStarted = false;
+      console.error('Permanent quote hydration failed:', error);
+      syncError(error instanceof Error ? error.message : 'Permanent quote hydration failed.');
+    });
+  }
   return readCache();
 }
 
