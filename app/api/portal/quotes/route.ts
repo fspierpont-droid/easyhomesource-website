@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 import { fromBackendQuote, toBackendQuote } from '@/lib/quotes/permanentQuote';
+import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
 import type { SavedQuote } from '@/data/quotesStore';
 
 export async function GET(request: Request) {
@@ -29,8 +30,13 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const quote: SavedQuote = await request.json();
-    if (!quote.id || !quote.quoteNumber || !quote.customerName) {
-      return NextResponse.json({ success: false, error: 'Quote ID, quote number, and customer name are required.' }, { status: 400 });
+    if (!quote.id || !quote.quoteNumber) {
+      return NextResponse.json({ success: false, error: 'Quote ID and quote number are required.' }, { status: 400 });
+    }
+
+    const validationError = validateQuoteForPersistence(quote);
+    if (validationError) {
+      return NextResponse.json({ success: false, error: validationError }, { status: 400 });
     }
 
     const backendPayload = toBackendQuote(quote);
