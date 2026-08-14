@@ -40,14 +40,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.user) throw new Error(data.error || 'Sign in failed.');
-    localStorage.setItem('ehs_user', JSON.stringify(data.user));
+
+    try {
+      localStorage.setItem('ehs_user', JSON.stringify(data.user));
+    } catch (error) {
+      console.warn('Auth presentation storage unavailable:', error);
+    }
+
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
-    localStorage.removeItem('ehs_token');
-    localStorage.removeItem('ehs_user');
+    try {
+      localStorage.removeItem('ehs_token');
+      localStorage.removeItem('ehs_user');
+    } catch (error) {
+      console.warn('Auth presentation storage unavailable:', error);
+    }
+
     void fetch('/api/portal/auth/logout', { method: 'POST' }).finally(() => {
       setUser(null);
       router.push('/login');
