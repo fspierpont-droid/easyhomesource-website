@@ -84,7 +84,7 @@ export async function validatePortalCredentials(email: unknown, password: unknow
     return { status: 'service-unavailable' };
   }
 
-  if (response.status === 401 || response.status === 403) return { status: 'invalid-credentials' };
+  if ([400, 401, 403, 422].includes(response.status)) return { status: 'invalid-credentials' };
   if (!response.ok) return { status: 'service-unavailable' };
 
   let payload: EhsLoginResponse;
