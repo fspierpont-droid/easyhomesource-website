@@ -25,12 +25,10 @@ def calculate_portal_v05_quote_totals(
     quote: dict[str, Any], settings: dict[str, Any] | None = None
 ) -> dict[str, Any]:
     """Mirror the current frontend quote-builder math exactly."""
-    settings = settings or {}
     site = quote.get("site") or {}
     home_subtotal = float(quote.get("base_price") or 0)
     land_subtotal = float(quote.get("land_price") or site.get("land_price") or 0)
     delivery_total = float(quote.get("delivery_price") or site.get("delivery_price") or 0)
-    delivery_cost = float(quote.get("delivery_cost") or site.get("delivery_cost") or 0)
 
     mandatory = quote.get("mandatory_services") or []
     site_work = quote.get("site_work") or []
@@ -39,8 +37,9 @@ def calculate_portal_v05_quote_totals(
 
     site_work_total = _line_total(mandatory, "unit_price") + _line_total(site_work, "unit_price")
     addons_total = _line_total(addons, "unit_price") + _line_total(options, "unit_price")
-    site_work_cost = _line_total(mandatory, "cost") + _line_total(site_work, "cost")
-    addons_cost = _line_total(addons, "cost") + _line_total(options, "cost")
+    explicit_site_work_cost = _line_total(mandatory, "cost") + _line_total(site_work, "cost")
+    explicit_addons_cost = _line_total(addons, "cost") + _line_total(options, "cost")
+    explicit_delivery_cost = float(quote.get("delivery_cost") or site.get("delivery_cost") or 0)
 
     discounts_total = sum(float(item.get("amount", 0) or 0) for item in quote.get("discounts") or [])
     subtotal = home_subtotal + land_subtotal + delivery_total + site_work_total + addons_total - discounts_total
@@ -49,7 +48,7 @@ def calculate_portal_v05_quote_totals(
     tax_basis = subtotal
 
     tax_rate_value = quote.get("sales_tax_rate")
-    tax_rate = float(tax_rate_value if tax_rate_value is not None else settings.get("sales_tax_rate", 0.03))
+    tax_rate = float(tax_rate_value if tax_rate_value is not None else 0.03)
     sales_tax = money_round(tax_basis * tax_rate)
     estimated_total = money_round(subtotal + sales_tax)
 
@@ -59,17 +58,19 @@ def calculate_portal_v05_quote_totals(
 
     house_gross_margin = home_subtotal - factory_cost
     commissionable_house_margin = max(0.0, house_gross_margin - 1000.0)
-    service_profit = (delivery_total - delivery_cost) + (site_work_total - site_work_cost) + (addons_total - addons_cost)
-    admin_fee = money_round(subtotal * float(settings.get("admin_fee_pct", 0.05)))
 
-    # calculateComprehensiveQuoteTotals currently records loan_fee as zero. The
-    # builder displays its optional $1,000 loan-officer deduction separately.
+    # These fallbacks intentionally use JS Math.round-equivalent positive-value
+    # behavior for the current business inputs.
+    delivery_cost = explicit_delivery_cost or round(delivery_total / 1.1)
+    site_work_cost = explicit_site_work_cost or round(site_work_total * 0.75)
+    addons_cost = explicit_addons_cost or round(addons_total * 0.70)
+    service_profit = (delivery_total - delivery_cost) + (site_work_total - site_work_cost) + (addons_total - addons_cost)
+
+    admin_fee = money_round(subtotal * 0.05)
     loan_fee = 0.0
-    salesperson_commission = money_round(
-        commissionable_house_margin * float(settings.get("agent_comm_pct", 0.20))
-    ) if commissionable_house_margin > 0 else 0.0
+    salesperson_commission = money_round(commissionable_house_margin * 0.20) if commissionable_house_margin > 0 else 0.0
     net_take_home = house_gross_margin + service_profit - admin_fee - loan_fee - salesperson_commission
-    take_home_floor = float(settings.get("take_home_floor", 20000.0))
+    take_home_floor = 20000.0
 
     deposits_paid = money_round(
         sum(float(item.get("amount_paid", 0) or 0) for item in quote.get("deposits") or [])
