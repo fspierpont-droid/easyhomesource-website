@@ -20,14 +20,13 @@ export default function LoginPage() {
     setError(null);
 
     const cleanEmail = email.trim().toLowerCase();
-    const cleanPass = password.trim();
+    const cleanPass = password;
 
-    if (!cleanEmail || !cleanPass) {
+    if (!cleanEmail || cleanPass.length === 0) {
       setError('Please enter both your email address and password.');
       setLoading(false);
       return;
     }
-
 
     try {
       await login(cleanEmail, cleanPass);

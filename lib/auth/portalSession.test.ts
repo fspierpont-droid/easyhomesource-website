@@ -1,7 +1,18 @@
 import assert from 'node:assert/strict';
-import test, { afterEach, beforeEach } from 'node:test';
+import test, { afterEach } from 'node:test';
 import type { TeamUser } from '../../data/teamMembers.ts';
-import { canWriteGhl, createPortalSession, PORTAL_SESSION_COOKIE, requirePortalAccess, verifyPortalSession } from './portalSession.ts';
+import {
+  authenticatedPortalUser,
+  canWriteGhl,
+  PORTAL_SESSION_COOKIE,
+  requirePortalAccess,
+} from './portalSession.ts';
+
+const originalFetch = globalThis.fetch;
+
+afterEach(() => {
+  globalThis.fetch = originalFetch;
+});
 
 const admin: TeamUser = {
   id: 'database-admin-uuid',
@@ -30,16 +41,22 @@ const associate: TeamUser = {
   ghlLinked: true,
 };
 
-beforeEach(() => { process.env.PORTAL_SESSION_SECRET = 'a-test-secret-with-at-least-32-characters'; });
-afterEach(() => delete process.env.PORTAL_SESSION_SECRET);
+function backendUser(user: TeamUser) {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role.toLowerCase(),
+    active: user.active,
+    ghl_linked: user.ghlLinked,
+  };
+}
 
-test('server verifies signed sessions for EHS database user ids', () => {
-  const session = createPortalSession(admin);
-  assert.equal(verifyPortalSession(session.value)?.id, 'database-admin-uuid');
-  assert.equal(verifyPortalSession(session.value)?.email, admin.email);
-  assert.equal(verifyPortalSession(`${session.value}tampered`), null);
-  assert.equal(verifyPortalSession(), null);
-});
+function requestWithToken(token: string) {
+  return new Request('https://portal.test', {
+    headers: { cookie: `${PORTAL_SESSION_COOKIE}=${token}` },
+  });
+}
 
 test('only managers and admins may write GHL', () => {
   assert.equal(canWriteGhl(admin), true);
@@ -47,15 +64,52 @@ test('only managers and admins may write GHL', () => {
   assert.equal(canWriteGhl(associate), false);
 });
 
-test('GHL route authorization returns 401 and 403 and permits authorized writes', () => {
-  assert.equal(requirePortalAccess(new Request('https://portal.test'), false).response?.status, 401);
-  assert.equal(requirePortalAccess(new Request('https://portal.test'), true).response?.status, 401);
+test('missing backend session returns 401 without calling auth/me', async () => {
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls += 1;
+    throw new Error('should not be called');
+  };
 
-  const associateSession = createPortalSession(associate);
-  const associateRequest = new Request('https://portal.test', { headers: { cookie: `${PORTAL_SESSION_COOKIE}=${associateSession.value}` } });
-  assert.equal(requirePortalAccess(associateRequest, true).response?.status, 403);
+  const access = await requirePortalAccess(new Request('https://portal.test'));
+  assert.equal(access.response?.status, 401);
+  assert.equal(calls, 0);
+});
 
-  const adminSession = createPortalSession(admin);
-  const adminRequest = new Request('https://portal.test', { headers: { cookie: `${PORTAL_SESSION_COOKIE}=${adminSession.value}` } });
-  assert.equal(requirePortalAccess(adminRequest, true).response, null);
+test('session identity is revalidated against the permanent backend on each protected request', async () => {
+  globalThis.fetch = async () => new Response(JSON.stringify(backendUser(admin)), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const request = requestWithToken('backend-jwt');
+  const user = await authenticatedPortalUser(request);
+  assert.equal(user?.id, admin.id);
+  assert.equal(user?.role, 'Admin');
+
+  const access = await requirePortalAccess(request, true);
+  assert.equal(access.response, null);
+  assert.equal(access.user?.id, admin.id);
+});
+
+test('associate backend identity receives 403 for GHL writes', async () => {
+  globalThis.fetch = async () => new Response(JSON.stringify(backendUser(associate)), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const access = await requirePortalAccess(requestWithToken('associate-jwt'), true);
+  assert.equal(access.response?.status, 403);
+});
+
+test('expired backend token receives 401', async () => {
+  globalThis.fetch = async () => new Response(JSON.stringify({ detail: 'Not authenticated' }), { status: 401 });
+  const access = await requirePortalAccess(requestWithToken('expired-jwt'));
+  assert.equal(access.response?.status, 401);
+});
+
+test('backend auth outage receives 503 instead of misreporting bad credentials', async () => {
+  globalThis.fetch = async () => { throw new Error('backend offline'); };
+  const access = await requirePortalAccess(requestWithToken('backend-jwt'));
+  assert.equal(access.response?.status, 503);
 });

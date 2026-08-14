@@ -10,7 +10,7 @@ const customValue = (fields: any[], id: string) => {
 };
 
 async function handleFetchReadyLeads(request: NextRequest) {
-  const access = requirePortalAccess(request);
+  const access = await requirePortalAccess(request);
   if (access.response) return access.response;
   try {
     const opportunities = await searchOpportunities() as any[];
