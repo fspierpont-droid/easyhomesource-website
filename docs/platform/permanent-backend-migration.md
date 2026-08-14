@@ -16,6 +16,25 @@ This is a **copy-and-verify migration**, not a move-in-place migration.
 6. Do not retire the old portal or Trove until the new platform has passed the cutover gates in this document.
 7. Never claim that a UI action persisted or synchronized data unless the corresponding server operation completed successfully.
 
+## UX preservation contract
+
+The **current `easyhomesource-website` portal experience is the permanent frontend standard**.
+
+The migration must preserve its current visual language, navigation model, responsive behavior, workflow structure, interaction patterns, spacing, page composition, and overall operating feel unless a specific UI change is separately approved.
+
+The old `EHS` frontend is a functional reference only. It must **not** replace or visually overwrite the new portal.
+
+When old EHS functionality is migrated:
+
+- reuse the proven business logic, data model, security controls, and backend behavior;
+- adapt that capability to the existing new-portal component and interaction system;
+- do not copy legacy pages merely because they already exist;
+- do not reintroduce old dashboards, navigation, forms, styling, or workflow friction;
+- do not change a working new-portal screen just to make backend migration easier;
+- treat visual or workflow regressions as migration defects.
+
+The default implementation principle is therefore **new frontend + proven backend**, not old frontend + new hosting.
+
 ## Target architecture
 
 ```text
@@ -61,7 +80,8 @@ The old EHS system remains separate and operational until final retirement.
 ### Next.js website owns
 
 - public Easy HomeSource experience;
-- employee portal UI;
+- the permanent employee portal UI/UX and design language;
+- portal navigation, responsive behavior, and interaction model;
 - server-side orchestration between browser, EHS backend, and GHL;
 - secure website session after EHS credential verification.
 
@@ -94,6 +114,8 @@ Port from the working EHS backend only after dependency review:
 
 Do not port legacy CRM ownership that is now assigned to GHL unless it is required as an integration adapter.
 
+Do not port the old EHS frontend. All migrated functions must be presented through the current `easyhomesource-website` portal UX.
+
 ### Phase C — New database creation and copy
 
 Create a new database named `easyhomesource_production` (or an explicitly approved equivalent).
@@ -119,7 +141,7 @@ The verifier is read-only and checks critical collection counts plus employee ID
 
 ### Phase D — Website integration
 
-Replace temporary website implementations with permanent backend calls:
+Keep the existing portal screens and replace only temporary website implementations with permanent backend calls:
 
 | Website area | Temporary behavior to remove | Permanent source |
 | --- | --- | --- |
@@ -130,6 +152,8 @@ Replace temporary website implementations with permanent backend calls:
 | Catalog/settings | browser/local-only edits | permanent backend collections |
 | GHL sync button | simulated success message | actual GHL operation/result |
 | Dashboard counts | hardcoded/fallback totals | source-system queries |
+
+Backend replacement must be behaviorally transparent wherever the current portal UX is already correct. A successful migration should make the existing portal more reliable and persistent without making it feel like a different application.
 
 ### Phase E — Data synchronization window
 
@@ -175,6 +199,17 @@ Do not retire Trove or the old EHS portal until all applicable gates pass.
 - [ ] Employee user management persists through the backend.
 - [ ] Website lead form creates/updates the intended GHL records and preserves consent metadata.
 - [ ] GHL project/CRM displays are sourced from GHL rather than placeholder records.
+- [ ] Existing new-portal workflows remain at least as fast and clear as they are before migration.
+
+### Portal UX regression gate
+
+- [ ] Existing portal navigation remains intact.
+- [ ] Existing page hierarchy and interaction patterns remain intact unless explicitly approved.
+- [ ] Desktop layouts remain visually consistent with the current portal.
+- [ ] Mobile layouts remain visually consistent and usable.
+- [ ] Existing loading, empty, success, and error states are preserved or improved.
+- [ ] No migrated feature falls back to an old EHS frontend screen or visual pattern.
+- [ ] Backend failures produce controlled portal errors rather than broken pages or fake success states.
 
 ### Public website
 
