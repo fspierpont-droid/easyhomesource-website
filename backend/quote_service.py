@@ -18,7 +18,12 @@ from pricing import (
     pricing_multiplier,
     public_quote,
 )
-from pricing_rules import PRICING_ENGINE_VERSION, apply_pricing_rules
+from pricing_rules import PRICING_ENGINE_VERSION, apply_pricing_rules, validate_quote
+from pricing_v05 import (
+    PORTAL_V05_PRICING_MODE,
+    PORTAL_V05_PRICING_VERSION,
+    calculate_portal_v05_quote_totals,
+)
 
 MANAGER_ROLES = {"admin", "manager"}
 QUOTE_PRICING_ROLES = {
@@ -34,6 +39,9 @@ QUOTE_PRICING_ROLES = {
 QUOTE_PRICE_AUDIT_FIELDS = {
     "base_price",
     "factory_cost",
+    "land_price",
+    "delivery_price",
+    "delivery_cost",
     "mandatory_services",
     "suppressed_required_service_ids",
     "addons",
@@ -48,6 +56,9 @@ QUOTE_PRICE_AUDIT_FIELDS = {
 HISTORICAL_PRICING_FIELDS = {
     "base_price",
     "factory_cost",
+    "land_price",
+    "delivery_price",
+    "delivery_cost",
     "options",
     "mandatory_services",
     "addons",
@@ -225,26 +236,52 @@ def enforce_line_override_audit(quote: dict, user: dict) -> None:
             )
 
 
+def _price_portal_v05_quote(quote: dict, settings: dict[str, Any]) -> None:
+    """Price exactly what the current portal visibly contains; add nothing hidden."""
+    quote["pricing_mode"] = PORTAL_V05_PRICING_MODE
+    quote["pricing_version"] = PORTAL_V05_PRICING_VERSION
+    quote["validation"] = validate_quote(quote)
+    snapshot = dict(quote.get("calculation_snapshot") or {})
+    snapshot.update(
+        {
+            "pricing_mode": PORTAL_V05_PRICING_MODE,
+            "pricing_version": PORTAL_V05_PRICING_VERSION,
+            "composition_policy": "persist-visible-portal-lines-without-auto-insert",
+            "calculated_at": now_iso(),
+        }
+    )
+    quote["calculation_snapshot"] = snapshot
+    quote["calculated_at"] = now_iso()
+    quote["totals"] = calculate_portal_v05_quote_totals(quote, settings)
+
+
 async def price_quote(quote: dict, user: dict | None = None) -> dict:
-    """Apply authoritative pricing rules and totals to a mutable quote document."""
+    """Apply the correct authoritative pricing mode to a mutable quote document."""
     apply_factory_cost_pricing(quote, user)
-    priced = apply_pricing_rules(deepcopy(quote))
-    for key in (
-        "mandatory_services",
-        "suppressed_required_service_ids",
-        "addons",
-        "site_work",
-        "options",
-        "pricing_version",
-        "calculation_snapshot",
-        "calculated_at",
-        "validation",
-    ):
-        if key in priced:
-            quote[key] = priced[key]
-    apply_factory_cost_pricing(quote, user)
-    quote["totals"] = calculate_quote_totals(quote, await settings_for_quote())
-    quote["pricing_engine_version"] = PRICING_ENGINE_VERSION
+    settings = await settings_for_quote()
+
+    if quote.get("pricing_mode") == PORTAL_V05_PRICING_MODE:
+        _price_portal_v05_quote(quote, settings)
+        quote["pricing_engine_version"] = PORTAL_V05_PRICING_VERSION
+    else:
+        priced = apply_pricing_rules(deepcopy(quote))
+        for key in (
+            "mandatory_services",
+            "suppressed_required_service_ids",
+            "addons",
+            "site_work",
+            "options",
+            "pricing_version",
+            "calculation_snapshot",
+            "calculated_at",
+            "validation",
+        ):
+            if key in priced:
+                quote[key] = priced[key]
+        apply_factory_cost_pricing(quote, user)
+        quote["totals"] = calculate_quote_totals(quote, settings)
+        quote["pricing_engine_version"] = PRICING_ENGINE_VERSION
+
     quote["pricing_engine_calculated_at"] = now_iso()
     quote["updated_at"] = now_iso()
     if user:
@@ -307,7 +344,11 @@ def reset_historical_pricing_metadata(quote: dict) -> None:
 
 
 async def public_render_payload(quote: dict) -> dict:
-    """Recalculate customer totals and redact every internal pricing field."""
+    """Recalculate customer totals using the quote's own mode and redact internal data."""
     working = deepcopy(quote)
-    working["totals"] = calculate_quote_totals(working, await settings_for_quote())
+    settings = await settings_for_quote()
+    if working.get("pricing_mode") == PORTAL_V05_PRICING_MODE:
+        working["totals"] = calculate_portal_v05_quote_totals(working, settings)
+    else:
+        working["totals"] = calculate_quote_totals(working, settings)
     return public_quote(working)
