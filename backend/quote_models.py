@@ -139,6 +139,9 @@ class Quote(BaseModel):
     site: Optional[QuoteSite] = None
     base_price: float = 0
     factory_cost: float = 0
+    land_price: float = 0
+    delivery_price: float = 0
+    delivery_cost: float = 0
     options: list[LineItem] = Field(default_factory=list)
     mandatory_services: list[LineItem] = Field(default_factory=list)
     suppressed_required_service_ids: list[str] = Field(default_factory=list)
@@ -177,6 +180,9 @@ class QuoteCreate(BaseModel):
     site: Optional[QuoteSite] = None
     base_price: float = 0
     factory_cost: float = 0
+    land_price: float = 0
+    delivery_price: float = 0
+    delivery_cost: float = 0
     options: list[LineItem] = Field(default_factory=list)
     mandatory_services: list[LineItem] = Field(default_factory=list)
     suppressed_required_service_ids: list[str] = Field(default_factory=list)
