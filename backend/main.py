@@ -23,6 +23,8 @@ from auth import (
     require_admin,
     verify_password,
 )
+from catalog import router as catalog_router
+from customers import router as customers_router
 from database import ensure_indexes, get_db, ping_database
 from models import (
     ChangePasswordRequest,
@@ -43,6 +45,8 @@ app = FastAPI(
     docs_url="/api/docs" if os.environ.get("ENABLE_API_DOCS", "false").lower() == "true" else None,
     redoc_url=None,
 )
+app.include_router(catalog_router)
+app.include_router(customers_router)
 app.include_router(properties_router)
 
 
