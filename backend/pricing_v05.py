@@ -26,10 +26,11 @@ def calculate_portal_v05_quote_totals(
 ) -> dict[str, Any]:
     """Mirror the current frontend quote-builder math exactly."""
     settings = settings or {}
+    site = quote.get("site") or {}
     home_subtotal = float(quote.get("base_price") or 0)
-    land_subtotal = float(quote.get("land_price") or 0)
-    delivery_total = float(quote.get("delivery_price") or 0)
-    delivery_cost = float(quote.get("delivery_cost") or 0)
+    land_subtotal = float(quote.get("land_price") or site.get("land_price") or 0)
+    delivery_total = float(quote.get("delivery_price") or site.get("delivery_price") or 0)
+    delivery_cost = float(quote.get("delivery_cost") or site.get("delivery_cost") or 0)
 
     mandatory = quote.get("mandatory_services") or []
     site_work = quote.get("site_work") or []
