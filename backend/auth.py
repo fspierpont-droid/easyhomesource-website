@@ -2,17 +2,23 @@
 
 Existing EHS bcrypt password hashes remain valid after database copy. New or
 changed passwords are hashed here; plaintext passwords are never stored.
+
+The browser never needs an EHS API bearer token. The Next.js portal may call
+protected backend routes server-to-server with a private internal key plus the
+signed portal user's database ID. The backend re-loads that employee on every
+request, so deactivation and role changes take effect immediately.
 """
 from __future__ import annotations
 
 import os
 import re
+import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
 import bcrypt
 import jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, Header, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
 from database import get_db
@@ -50,7 +56,17 @@ def _jwt_secret() -> str:
     return DEV_JWT_SECRET
 
 
+def _internal_api_key() -> str | None:
+    value = (os.environ.get("EHS_INTERNAL_API_KEY") or "").strip()
+    if value and len(value) < 32:
+        raise RuntimeError("EHS_INTERNAL_API_KEY must be at least 32 characters")
+    if not value and APP_ENV in PRODUCTION_ENVS:
+        raise RuntimeError("EHS_INTERNAL_API_KEY is required in production")
+    return value or None
+
+
 JWT_SECRET = _jwt_secret()
+INTERNAL_API_KEY = _internal_api_key()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=False)
 
 
@@ -119,7 +135,34 @@ def decode_token(token: str) -> dict[str, Any]:
     )
 
 
-async def get_current_user(token: Optional[str] = Depends(oauth2_scheme)) -> dict:
+async def _active_user(user_id: str) -> dict:
+    user = await get_db().users.find_one(
+        {"id": user_id},
+        {"_id": 0, "password_hash": 0},
+    )
+    if not user or not user.get("active", True):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+    return user
+
+
+async def get_current_user(
+    token: Optional[str] = Depends(oauth2_scheme),
+    internal_key: Optional[str] = Header(default=None, alias="X-EHS-Internal-Key"),
+    internal_user_id: Optional[str] = Header(default=None, alias="X-EHS-User-ID"),
+) -> dict:
+    """Authenticate either a direct API bearer or the trusted Next.js portal.
+
+    If either internal-auth header is supplied, the request must satisfy the
+    entire internal-auth contract. A bad internal key never falls back to bearer
+    authentication.
+    """
+    if internal_key is not None or internal_user_id is not None:
+        if not INTERNAL_API_KEY or not internal_key or not internal_user_id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+        if not secrets.compare_digest(internal_key, INTERNAL_API_KEY):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+        return await _active_user(internal_user_id.strip())
+
     if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
     try:
@@ -128,16 +171,10 @@ async def get_current_user(token: Optional[str] = Depends(oauth2_scheme)) -> dic
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
     user_id = payload.get("sub")
-    if not user_id:
+    if not isinstance(user_id, str) or not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
-    user = await get_db().users.find_one(
-        {"id": user_id},
-        {"_id": 0, "password_hash": 0},
-    )
-    if not user or not user.get("active", True):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    return user
+    return await _active_user(user_id)
 
 
 async def require_admin(user: dict = Depends(get_current_user)) -> dict:
