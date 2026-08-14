@@ -4,13 +4,20 @@ import { createPortalSession, PORTAL_SESSION_COOKIE } from '@/lib/auth/portalSes
 
 export async function POST(request: Request) {
   const { email, password } = await request.json().catch(() => ({}));
-  const credential = validatePortalCredentials(email, password);
+  const credential = await validatePortalCredentials(email, password);
+
   if (credential.status === 'configuration-missing') {
-    console.error('Portal authentication failed: AUTH_CONFIGURATION_MISSING');
+    console.error('Portal authentication failed: EHS_BACKEND_URL is not configured.');
     return NextResponse.json({ error: 'Portal authentication is not configured.' }, { status: 503 });
   }
+
+  if (credential.status === 'service-unavailable') {
+    console.error('Portal authentication failed: EHS authentication service unavailable.');
+    return NextResponse.json({ error: 'Portal authentication is temporarily unavailable.' }, { status: 503 });
+  }
+
   if (credential.status !== 'valid') {
-    console.warn(`Portal authentication rejected: ${credential.status === 'unknown-user' ? 'UNKNOWN_USER' : 'BAD_PASSWORD'}`);
+    console.warn('Portal authentication rejected: INVALID_CREDENTIALS');
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
 
@@ -21,7 +28,14 @@ export async function POST(request: Request) {
     console.error('Portal authentication failed: SESSION_CREATION_FAILURE', error);
     return NextResponse.json({ error: 'Portal session is unavailable. Please contact an administrator.' }, { status: 503 });
   }
+
   const response = NextResponse.json({ user: credential.user });
-  response.cookies.set(PORTAL_SESSION_COOKIE, session.value, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', path: '/', maxAge: session.maxAge });
+  response.cookies.set(PORTAL_SESSION_COOKIE, session.value, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    path: '/',
+    maxAge: session.maxAge,
+  });
   return response;
 }
