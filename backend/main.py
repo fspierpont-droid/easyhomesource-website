@@ -11,7 +11,7 @@ import os
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
+from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError
@@ -32,6 +32,7 @@ from models import (
     UserPublic,
     UserUpdate,
 )
+from properties import router as properties_router
 
 logger = logging.getLogger("easyhomesource.api")
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
@@ -42,6 +43,7 @@ app = FastAPI(
     docs_url="/api/docs" if os.environ.get("ENABLE_API_DOCS", "false").lower() == "true" else None,
     redoc_url=None,
 )
+app.include_router(properties_router)
 
 
 def _cors_origins() -> list[str]:
@@ -107,20 +109,16 @@ async def _audit(
 
 
 async def _enforce_login_rate_limit(email: str) -> None:
-    """Database-backed per-identity login throttling.
-
-    The key is a one-way digest so raw employee email addresses are not used as
-    rate-limit document identifiers.
-    """
+    """Database-backed per-identity login throttling."""
     key = hashlib.sha256(email.encode("utf-8")).hexdigest()
     now = datetime.now(timezone.utc)
     window = timedelta(minutes=5)
     limit = 10
     collection = get_db().rate_limits
-    doc = await collection.find_one({"key": key})
-    reset_at = doc.get("reset_at") if doc else None
+    document = await collection.find_one({"key": key})
+    reset_at = document.get("reset_at") if document else None
 
-    if not doc or not isinstance(reset_at, datetime) or reset_at <= now:
+    if not document or not isinstance(reset_at, datetime) or reset_at <= now:
         await collection.update_one(
             {"key": key},
             {"$set": {"key": key, "count": 1, "reset_at": now + window, "updated_at": now}},
@@ -128,7 +126,7 @@ async def _enforce_login_rate_limit(email: str) -> None:
         )
         return
 
-    if int(doc.get("count", 0)) >= limit:
+    if int(document.get("count", 0)) >= limit:
         raise HTTPException(status_code=429, detail="Too many login attempts. Please wait and try again.")
 
     await collection.update_one(
@@ -260,3 +258,26 @@ async def update_user(
 
     await _audit("user_updated", user=admin, target_user_id=user_id, request=request)
     return UserPublic(**document)
+
+
+@app.get("/api/admin/system-check")
+async def system_check(_admin: dict = Depends(require_admin)) -> dict:
+    db = get_db()
+    collections = (
+        "users",
+        "customers",
+        "quotes",
+        "projects",
+        "homes",
+        "properties",
+        "home_inventory",
+        "key_contacts",
+        "settings",
+    )
+    counts = {name: await db[name].count_documents({}) for name in collections}
+    return {
+        "ok": True,
+        "service": "easyhomesource-api",
+        "database": os.environ.get("DB_NAME"),
+        "collection_counts": counts,
+    }
