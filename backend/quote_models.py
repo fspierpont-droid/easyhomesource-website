@@ -129,7 +129,7 @@ class Quote(BaseModel):
     quote_number: str
     quote_date: str
     status: str = "draft"
-    pricing_mode: Optional[str] = None
+    pricing_mode: Optional[str] = "portal_v05"
     associate_id: str
     associate_name: Optional[str] = None
     associate_email: Optional[str] = None
@@ -175,7 +175,7 @@ class QuoteCreate(BaseModel):
     id: Optional[str] = None
     quote_number: Optional[str] = None
     quote_date: Optional[str] = None
-    pricing_mode: Optional[str] = None
+    pricing_mode: Optional[str] = "portal_v05"
     customer_id: Optional[str] = None
     customer_snapshot: Optional[dict[str, Any]] = None
     home: Optional[QuoteHomeSnapshot] = None
