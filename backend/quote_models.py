@@ -55,6 +55,7 @@ class DiscountItem(BaseModel):
 
 
 class DepositItem(BaseModel):
+    model_config = ConfigDict(extra="allow")
     label: str = "Deposit"
     amount_required: float = 0
     amount_paid: float = 0
