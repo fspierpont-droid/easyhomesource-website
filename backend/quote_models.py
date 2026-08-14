@@ -168,8 +168,11 @@ class Quote(BaseModel):
 
 class QuoteCreate(BaseModel):
     model_config = ConfigDict(extra="ignore")
+    id: Optional[str] = None
+    quote_number: Optional[str] = None
     quote_date: Optional[str] = None
     customer_id: Optional[str] = None
+    customer_snapshot: Optional[dict[str, Any]] = None
     home: Optional[QuoteHomeSnapshot] = None
     site: Optional[QuoteSite] = None
     base_price: float = 0
