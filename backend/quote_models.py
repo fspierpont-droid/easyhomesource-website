@@ -100,7 +100,7 @@ class QuoteSite(BaseModel):
 
 
 class QuoteFinancing(BaseModel):
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="allow")
     purchase_type: str = "financing"
     financing_status: Optional[str] = None
     pre_approval_amount: Optional[float] = None
@@ -193,6 +193,8 @@ class QuoteCreate(BaseModel):
     next_steps: Optional[str] = None
     disclaimer: Optional[str] = None
     status: Optional[str] = None
+    share_token: Optional[str] = None
+    share_enabled: bool = False
     pricing_version: Optional[str] = None
     calculation_snapshot: Optional[dict[str, Any]] = None
     calculated_at: Optional[str] = None
