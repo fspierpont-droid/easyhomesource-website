@@ -116,12 +116,38 @@ async def _audit(
         logger.exception("Audit log write failed")
 
 
-async def _enforce_login_rate_limit(email: str) -> None:
-    """Database-backed per-identity login throttling."""
-    key = hashlib.sha256(email.encode("utf-8")).hexdigest()
+def _login_rate_limit_key(email: str) -> str:
+    return hashlib.sha256(email.encode("utf-8")).hexdigest()
+
+
+async def _check_login_rate_limit(email: str) -> None:
+    """Block only identities that have reached the failed-login threshold."""
+    key = _login_rate_limit_key(email)
+    now = datetime.now(timezone.utc)
+    collection = get_db().rate_limits
+    document = await collection.find_one({"key": key})
+    if not document:
+        return
+
+    reset_at = document.get("reset_at")
+    if not isinstance(reset_at, datetime) or reset_at <= now:
+        await collection.delete_one({"key": key})
+        return
+
+    if int(document.get("count", 0)) >= 10:
+        retry_after = max(1, int((reset_at - now).total_seconds()))
+        raise HTTPException(
+            status_code=429,
+            detail="Too many failed login attempts. Please wait and try again.",
+            headers={"Retry-After": str(retry_after)},
+        )
+
+
+async def _record_failed_login(email: str) -> None:
+    """Record one failed credential attempt for the identity."""
+    key = _login_rate_limit_key(email)
     now = datetime.now(timezone.utc)
     window = timedelta(minutes=5)
-    limit = 10
     collection = get_db().rate_limits
     document = await collection.find_one({"key": key})
     reset_at = document.get("reset_at") if document else None
@@ -134,13 +160,15 @@ async def _enforce_login_rate_limit(email: str) -> None:
         )
         return
 
-    if int(document.get("count", 0)) >= limit:
-        raise HTTPException(status_code=429, detail="Too many login attempts. Please wait and try again.")
-
     await collection.update_one(
         {"key": key},
         {"$inc": {"count": 1}, "$set": {"updated_at": now}},
     )
+
+
+async def _clear_login_failures(email: str) -> None:
+    """A successful login resets the consecutive-failure counter."""
+    await get_db().rate_limits.delete_one({"key": _login_rate_limit_key(email)})
 
 
 @app.on_event("startup")
@@ -159,7 +187,7 @@ async def health() -> dict:
 @app.post("/api/auth/login", response_model=LoginResponse)
 async def login(payload: LoginRequest, request: Request) -> LoginResponse:
     email = str(payload.email).lower().strip()
-    await _enforce_login_rate_limit(email)
+    await _check_login_rate_limit(email)
 
     user = await get_db().users.find_one({"email": email})
     valid = bool(
@@ -168,9 +196,11 @@ async def login(payload: LoginRequest, request: Request) -> LoginResponse:
         and verify_password(payload.password, user.get("password_hash", ""))
     )
     if not valid:
+        await _record_failed_login(email)
         await _audit("login_attempt", success=False, reason="invalid_credentials", request=request)
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
+    await _clear_login_failures(email)
     public_user = UserPublic(**_safe_user(user))
     token = create_access_token(public_user.id, extra={"role": public_user.role})
     await _audit("login_attempt", user=user, success=True, request=request)
