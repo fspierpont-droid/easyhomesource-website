@@ -1,4 +1,4 @@
-import { calculateComprehensiveQuoteTotals } from '../../data/pricingSpreadsheet';
+import { calculateComprehensiveQuoteTotals } from '../../data/pricingSpreadsheet.ts';
 import type { SavedQuote, SelectedQuoteLineItem } from '../../data/quotesStore';
 
 export const SKIRTING_PACKAGE_SKU = 'SITE-SKIRTING-VINYL';
