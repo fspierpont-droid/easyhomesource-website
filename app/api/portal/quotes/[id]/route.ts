@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 import { fromBackendQuote, toBackendQuote } from '@/lib/quotes/permanentQuote';
+import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortalQuote';
 import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
 import type { SavedQuote } from '@/data/quotesStore';
 
@@ -25,7 +26,7 @@ export async function PATCH(
 ) {
   try {
     const quote: SavedQuote = await request.json();
-    const candidate = { ...quote, id: params.id };
+    const candidate = normalizePortalQuoteForPersistence({ ...quote, id: params.id });
     const validationError = validateQuoteForPersistence(candidate);
     if (validationError) {
       return NextResponse.json({ success: false, error: validationError }, { status: 400 });
