@@ -1,7 +1,7 @@
 import {
   calculateComprehensiveQuoteTotals,
   type QuoteFinancialTotals,
-} from '../../data/pricingSpreadsheet';
+} from '../../data/pricingSpreadsheet.ts';
 
 export interface NewQuoteTotalsInput {
   homePrice: number;
