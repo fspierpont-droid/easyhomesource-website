@@ -42,7 +42,7 @@ const depositStatus = (value: unknown): GhlProject['depositStatus'] => {
 };
 
 async function handleFetchProjectPhaseOpps(request: NextRequest) {
-  const access = requirePortalAccess(request);
+  const access = await requirePortalAccess(request);
   if (access.response) return access.response;
   try {
     const [rawOpps, usersData] = await Promise.all([

@@ -1,8 +1,14 @@
 import { VERIFIED_TEAM_USERS, type TeamUser, type UserRole } from '../../data/teamMembers.ts';
 
+export const PERMANENT_EHS_BACKEND_URL = 'https://easyhomesource-api.onrender.com';
+
 export type PortalCredentialResult =
+  | { status: 'valid'; user: TeamUser; accessToken: string }
+  | { status: 'invalid-credentials' | 'service-unavailable' };
+
+export type PortalIdentityResult =
   | { status: 'valid'; user: TeamUser }
-  | { status: 'invalid-credentials' | 'configuration-missing' | 'service-unavailable' };
+  | { status: 'unauthenticated' | 'service-unavailable' };
 
 type EhsAuthUser = {
   id?: unknown;
@@ -15,21 +21,34 @@ type EhsAuthUser = {
 };
 
 type EhsLoginResponse = {
+  access_token?: unknown;
   user?: EhsAuthUser;
 };
 
-function configuredBackendUrl() {
+/**
+ * Production and Vercel Preview deployments are deliberately pinned to the
+ * permanent EHS API. The public Render origin is not a secret, and making it
+ * canonical removes a deployment-environment variable as an authentication
+ * dependency. Local development may still override it with EHS_BACKEND_URL.
+ */
+export function portalBackendUrl() {
+  if (process.env.NODE_ENV === 'production') return PERMANENT_EHS_BACKEND_URL;
+
   const raw = process.env.EHS_BACKEND_URL?.trim().replace(/\/+$/, '');
-  if (!raw) return null;
+  if (!raw) return PERMANENT_EHS_BACKEND_URL;
 
   try {
     const url = new URL(raw);
-    const localDevelopment = process.env.NODE_ENV !== 'production' && ['localhost', '127.0.0.1'].includes(url.hostname);
-    if (url.protocol !== 'https:' && !localDevelopment) return null;
-    return url.toString().replace(/\/+$/, '');
+    const localDevelopment = ['localhost', '127.0.0.1'].includes(url.hostname);
+    if (url.protocol === 'https:' || (url.protocol === 'http:' && localDevelopment)) {
+      return url.toString().replace(/\/+$/, '');
+    }
   } catch {
-    return null;
+    // Fall through to the permanent origin below.
   }
+
+  console.error('Ignoring invalid EHS_BACKEND_URL override; using permanent EHS API origin.');
+  return PERMANENT_EHS_BACKEND_URL;
 }
 
 function normalizeRole(role: unknown): UserRole {
@@ -39,7 +58,7 @@ function normalizeRole(role: unknown): UserRole {
   return 'Associate';
 }
 
-function normalizeAuthenticatedUser(remote: EhsAuthUser, requestedEmail: string): TeamUser | null {
+function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string): TeamUser | null {
   if (
     typeof remote.id !== 'string' ||
     typeof remote.name !== 'string' ||
@@ -47,7 +66,7 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, requestedEmail: string)
   ) return null;
 
   const email = remote.email.trim().toLowerCase();
-  if (!email || email !== requestedEmail || remote.active === false) return null;
+  if (!email || (expectedEmail && email !== expectedEmail) || remote.active === false) return null;
 
   const displayProfile = VERIFIED_TEAM_USERS.find((candidate) => candidate.email.toLowerCase() === email);
 
@@ -64,16 +83,16 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, requestedEmail: string)
 }
 
 export async function validatePortalCredentials(email: unknown, password: unknown): Promise<PortalCredentialResult> {
-  const backendUrl = configuredBackendUrl();
-  if (!backendUrl) return { status: 'configuration-missing' };
-  if (typeof email !== 'string' || typeof password !== 'string' || !password) return { status: 'invalid-credentials' };
+  if (typeof email !== 'string' || typeof password !== 'string' || password.length === 0) {
+    return { status: 'invalid-credentials' };
+  }
 
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) return { status: 'invalid-credentials' };
 
   let response: Response;
   try {
-    response = await fetch(`${backendUrl}/api/auth/login`, {
+    response = await fetch(`${portalBackendUrl()}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ email: normalizedEmail, password }),
@@ -95,7 +114,37 @@ export async function validatePortalCredentials(email: unknown, password: unknow
   }
 
   const user = payload.user ? normalizeAuthenticatedUser(payload.user, normalizedEmail) : null;
-  if (!user) return { status: 'service-unavailable' };
+  const accessToken = typeof payload.access_token === 'string' ? payload.access_token.trim() : '';
+  if (!user || !accessToken) return { status: 'service-unavailable' };
 
-  return { status: 'valid', user };
+  return { status: 'valid', user, accessToken };
+}
+
+export async function validatePortalAccessToken(token: string | undefined): Promise<PortalIdentityResult> {
+  if (!token) return { status: 'unauthenticated' };
+
+  let response: Response;
+  try {
+    response = await fetch(`${portalBackendUrl()}/api/auth/me`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
+      cache: 'no-store',
+    });
+  } catch (error) {
+    console.error('EHS session validation request failed', error);
+    return { status: 'service-unavailable' };
+  }
+
+  if (response.status === 401 || response.status === 403) return { status: 'unauthenticated' };
+  if (!response.ok) return { status: 'service-unavailable' };
+
+  let remote: EhsAuthUser;
+  try {
+    remote = await response.json() as EhsAuthUser;
+  } catch {
+    return { status: 'service-unavailable' };
+  }
+
+  const user = normalizeAuthenticatedUser(remote);
+  return user ? { status: 'valid', user } : { status: 'unauthenticated' };
 }

@@ -5,7 +5,7 @@ import { ghlRequest } from '@/lib/ghl/client';
 import type { ProjectStage } from '@/types/project';
 
 export async function POST(request: NextRequest) {
-  const access = requirePortalAccess(request, true);
+  const access = await requirePortalAccess(request, true);
   if (access.response) return access.response;
   try {
     const { ghlOpportunityId, newStage } = await request.json() as { ghlOpportunityId?: string; newStage?: ProjectStage };
