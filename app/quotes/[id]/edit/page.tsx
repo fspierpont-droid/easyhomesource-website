@@ -85,6 +85,8 @@ export default function EditQuotePage() {
     try {
       const persisted = await saveQuoteToServer({
         ...updatedQuote,
+        customerPhone: updatedQuote.customerPhone.trim(),
+        propertyAddress: updatedQuote.propertyAddress.trim(),
         id: quote?.id || updatedQuote.id,
         quoteNumber: quote?.quoteNumber || updatedQuote.quoteNumber,
         createdAt: quote?.createdAt || updatedQuote.createdAt,
@@ -136,6 +138,16 @@ export default function EditQuotePage() {
     );
   }
 
+  // The legacy full-editor component still uses truthy fallback values for
+  // blank optional fields. A single whitespace character renders blank while
+  // preventing prototype data from being reintroduced. handleSave trims these
+  // values before permanent persistence.
+  const editorQuote: SavedQuote = {
+    ...quote,
+    customerPhone: quote.customerPhone || ' ',
+    propertyAddress: quote.propertyAddress || ' ',
+  };
+
   return (
     <AuthGate>
       <div className="min-h-screen bg-slate-100">
@@ -160,7 +172,7 @@ export default function EditQuotePage() {
           onSaveQuote={(updatedQuote) => {
             void handleSave(updatedQuote);
           }}
-          existingQuote={quote}
+          existingQuote={editorQuote}
           availableProperties={properties}
         />
       </div>
