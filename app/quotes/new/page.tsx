@@ -10,22 +10,22 @@ import {
   type MasterCatalogHome,
   getEffectiveMasterCatalog
 } from '@/data/fullMasterCatalog.generated';
-import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
 import {
   SERVICE_CATALOG,
   calculateBlockTieDown,
   calculateSkirtingByDimensions,
-  calculateComprehensiveQuoteTotals,
   type QuoteFinancialTotals
 } from '@/data/pricingSpreadsheet';
+import { calculateNewQuoteTotals } from '@/lib/quotes/newQuoteTotals';
 import { AuthGate } from '@/components/portal/AuthGate';
 import { useAuth } from '@/lib/auth/AuthContext';
 import {
-  saveQuoteToStore,
+  saveQuoteToServer,
   type SavedQuote,
   type SelectedQuoteLineItem,
   type DepositItem
 } from '@/data/quotesStore';
+import type { Property } from '@/types/property';
 
 export default function NewQuoteBuilderPage() {
   const router = useRouter();
@@ -39,12 +39,14 @@ export default function NewQuoteBuilderPage() {
 
   // 1. Customer Details
   const [customerName, setCustomerName] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('352-555-0199');
+  const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
-  const [customerAddress, setCustomerAddress] = useState('Central Florida Homesite');
+  const [customerAddress, setCustomerAddress] = useState('');
   const [salesperson, setSalesperson] = useState(user?.name || 'Scott Pierpont');
   const [salespersonEmail, setSalespersonEmail] = useState(user?.email || 'scott@easyhomesource.com');
   const [status, setStatus] = useState<'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT'>('DRAFT');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // 2. Selected Home (from verified Master Catalog)
   const [masterCatalog, setMasterCatalog] = useState<MasterCatalogHome[]>([]);
@@ -64,6 +66,35 @@ export default function NewQuoteBuilderPage() {
       window.removeEventListener('ehs_catalog_updated', syncCatalog);
     };
   }, []);
+
+  const [availableProperties, setAvailableProperties] = useState<Property[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    async function loadProperties() {
+      try {
+        const response = await fetch('/api/portal/properties', { cache: 'no-store' });
+        const data = await response.json().catch(() => ({}));
+        if (cancelled) return;
+        if (response.ok && data.success && Array.isArray(data.properties)) {
+          setAvailableProperties(
+            data.properties.filter((property: Property) => property.status === 'AVAILABLE'),
+          );
+        } else {
+          setAvailableProperties([]);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error('Failed to load permanent properties for quote builder:', error);
+          setAvailableProperties([]);
+        }
+      }
+    }
+    void loadProperties();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const [homeModel, setHomeModel] = useState(FULL_MASTER_CATALOG_HOMES[0]?.name || 'Move on Up (18x60 3b/2ba)');
   const [manufacturer, setManufacturer] = useState(FULL_MASTER_CATALOG_HOMES[0]?.manufacturer || 'CLAYTON Addison');
   const [series, setSeries] = useState(FULL_MASTER_CATALOG_HOMES[0]?.series || 'Tempo Series');
@@ -79,13 +110,13 @@ export default function NewQuoteBuilderPage() {
   // 3. Site & Delivery
   const [landOption, setLandOption] = useState<'OWNED' | 'PARCEL' | 'CUSTOM'>('OWNED');
   const [selectedParcelId, setSelectedParcelId] = useState('');
-  const [propertyAddress, setPropertyAddress] = useState('6645 W Erlen Ln, Homosassa, FL 34446');
+  const [propertyAddress, setPropertyAddress] = useState('');
   const [propertyPrice, setPropertyPrice] = useState<number>(0);
-  const [deliveryRouteType, setDeliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('dealer_to_customer');
-  const [deliveryMiles, setDeliveryMiles] = useState<number>(32);
-  const [escortsCount, setEscortsCount] = useState<number>(1);
-  const [deliveryFreightPrice, setDeliveryFreightPrice] = useState<number>(3850);
-  const [deliveryFreightCost, setDeliveryFreightCost] = useState<number>(3500);
+  const [deliveryRouteType] = useState<'dealer_to_customer' | 'factory_to_customer' | 'factory_to_dealer'>('dealer_to_customer');
+  const [deliveryMiles] = useState<number>(32);
+  const [escortsCount] = useState<number>(1);
+  const [deliveryFreightPrice] = useState<number>(3850);
+  const [deliveryFreightCost] = useState<number>(3500);
 
   // 4. Line Items & Services (Permits $2,000 flat)
   const [lineItems, setLineItems] = useState<SelectedQuoteLineItem[]>([
@@ -175,19 +206,19 @@ export default function NewQuoteBuilderPage() {
     }
   ]);
   const [selectedServiceSku, setSelectedServiceSku] = useState(SERVICE_CATALOG[0]?.sku || 'SITE-PERMIT-PLAN');
-  const [discounts, setDiscounts] = useState<number>(0);
+  const [discounts] = useState<number>(0);
 
   // 5. Financing Tab (Optional Loan Officer & Deposits)
-  const [purchaseType, setPurchaseType] = useState<'cash' | 'financing'>('financing');
-  const [financingStatus, setFinancingStatus] = useState('pending');
-  const [preApprovalAmount, setPreApprovalAmount] = useState<number>(180000);
-  const [targetBudget, setTargetBudget] = useState<number>(180000);
+  const [purchaseType] = useState<'cash' | 'financing'>('financing');
+  const [financingStatus] = useState('pending');
+  const [preApprovalAmount] = useState<number>(180000);
+  const [targetBudget] = useState<number>(180000);
   const [ehsLoanOfficerUsed, setEhsLoanOfficerUsed] = useState<boolean>(false);
-  const [deposits, setDeposits] = useState<DepositItem[]>([]);
+  const [deposits] = useState<DepositItem[]>([]);
 
   // 6. Notes
   const [notesCustomer, setNotesCustomer] = useState('Standard turnkey package proposal for Central Florida.');
-  const [notesInternal, setNotesInternal] = useState('');
+  const [notesInternal] = useState('');
 
   // Handle Home Selection
   const handleSelectHome = (h: MasterCatalogHome) => {
@@ -230,7 +261,11 @@ export default function NewQuoteBuilderPage() {
         if (item.sku === 'SITE-SKIRTING-VINYL' || item.sku === 'SITE-SKIRTING-VALOR') {
           return {
             ...item,
-            quantity: skirting.linearFeet,
+            unitPrice: skirting.price,
+            unitCost: skirting.cost,
+            quantity: 1,
+            totalPrice: skirting.price,
+            totalCost: skirting.cost,
             description: `Vented vinyl perimeter skirting (${skirting.linearFeet} linear ft) with top rail and ground track.`
           };
         }
@@ -267,12 +302,13 @@ export default function NewQuoteBuilderPage() {
   const handleLandOptionChange = (opt: 'OWNED' | 'PARCEL' | 'CUSTOM') => {
     setLandOption(opt);
     if (opt === 'OWNED') {
+      setSelectedParcelId('');
       setPropertyPrice(0);
     } else if (opt === 'PARCEL') {
-      const p = INITIAL_PROPERTIES[0];
+      const p = availableProperties[0];
       if (p) {
         setSelectedParcelId(p.id);
-        setPropertyPrice(p.price || 49900);
+        setPropertyPrice(p.price || 0);
         setPropertyAddress(`${p.address}, ${p.city}, FL ${p.zip}`);
       }
     }
@@ -280,7 +316,7 @@ export default function NewQuoteBuilderPage() {
 
   const handleParcelSelect = (parcelId: string) => {
     setSelectedParcelId(parcelId);
-    const p = INITIAL_PROPERTIES.find((prop) => prop.id === parcelId);
+    const p = availableProperties.find((prop) => prop.id === parcelId);
     if (p) {
       setPropertyPrice(p.price || 0);
       setPropertyAddress(`${p.address}, ${p.city}, FL ${p.zip}`);
@@ -299,18 +335,19 @@ export default function NewQuoteBuilderPage() {
   const activeLoanFee = ehsLoanOfficerUsed ? 1000 : 0;
 
   const quoteTotals: QuoteFinancialTotals = useMemo(() => {
-    return calculateComprehensiveQuoteTotals(
-      basePrice + propertyPrice,
-      deliveryFreightPrice,
-      subtotalSiteWork,
-      subtotalAddOns,
-      discounts,
+    return calculateNewQuoteTotals({
+      homePrice: basePrice,
+      landPrice: propertyPrice,
+      deliveryPrice: deliveryFreightPrice,
+      siteWorkPrice: subtotalSiteWork,
+      addonsPrice: subtotalAddOns,
+      discountsPrice: discounts,
       factoryCost,
-      deliveryFreightCost,
-      costSiteWork + costAddOns,
-      activeLoanFee,
-      0.03
-    );
+      deliveryCost: deliveryFreightCost,
+      siteWorkCost: costSiteWork,
+      addonsCost: costAddOns,
+      taxRate: 0.03,
+    });
   }, [
     basePrice,
     propertyPrice,
@@ -322,10 +359,9 @@ export default function NewQuoteBuilderPage() {
     deliveryFreightCost,
     costSiteWork,
     costAddOns,
-    activeLoanFee
   ]);
 
-  const netTakeHome = quoteTotals.house_gross_margin + quoteTotals.service_profit - quoteTotals.admin_fee - quoteTotals.loan_fee - quoteTotals.salesperson_commission;
+  const netTakeHome = quoteTotals.house_gross_margin + quoteTotals.service_profit - quoteTotals.admin_fee - activeLoanFee - quoteTotals.salesperson_commission;
   const targetMet = netTakeHome >= 20000;
 
   const filteredCatalog = useMemo(() => {
@@ -339,15 +375,26 @@ export default function NewQuoteBuilderPage() {
     });
   }, [masterCatalog, builderFilter, homeSearch]);
 
-  const handleSaveAndCreate = (initialStatus?: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT') => {
+  const handleSaveAndCreate = async (initialStatus?: 'DRAFT' | 'SENT_TO_BUYER' | 'LENDER_REVIEW' | 'APPROVED' | 'IN_CONTRACT') => {
+    if (isSaving) return;
+    setSaveError(null);
+
+    const cleanCustomerName = customerName.trim();
+    if (!cleanCustomerName) {
+      setActiveTab('customer');
+      setSaveError('Customer name is required before creating a permanent quote.');
+      return;
+    }
+
+    const now = new Date().toISOString();
     const finalQuote: SavedQuote = {
       id: newId,
       quoteNumber: newQuoteNumber,
-      quoteDate: new Date().toISOString().slice(0, 10),
-      customerName: customerName.trim() || 'New Home Buyer',
-      customerPhone,
-      customerEmail,
-      customerAddress,
+      quoteDate: now.slice(0, 10),
+      customerName: cleanCustomerName,
+      customerPhone: customerPhone.trim(),
+      customerEmail: customerEmail.trim(),
+      customerAddress: customerAddress.trim(),
       salesperson,
       salespersonEmail,
       salespersonTitle: 'Authorized Housing Consultant',
@@ -364,7 +411,7 @@ export default function NewQuoteBuilderPage() {
       homeLength,
       homePrice: basePrice,
       factoryCost,
-      propertyAddress,
+      propertyAddress: propertyAddress.trim(),
       propertyPrice,
       deliveryRouteType,
       deliveryMiles,
@@ -394,12 +441,20 @@ export default function NewQuoteBuilderPage() {
       notesCustomer,
       notesInternal,
       shareToken: newId,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      createdAt: now,
+      updatedAt: now
     };
 
-    saveQuoteToStore(finalQuote);
-    router.push(`/quotes/${newId}/edit`);
+    setIsSaving(true);
+    try {
+      const persisted = await saveQuoteToServer(finalQuote);
+      router.push(`/quotes/${encodeURIComponent(persisted.id)}/edit`);
+    } catch (error) {
+      console.error('Permanent new quote save failed:', error);
+      setSaveError(error instanceof Error ? error.message : 'The quote could not be saved.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -442,10 +497,11 @@ export default function NewQuoteBuilderPage() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => handleSaveAndCreate('DRAFT')}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-xs cursor-pointer"
+                onClick={() => void handleSaveAndCreate('DRAFT')}
+                disabled={isSaving}
+                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-xs cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                ✓ Create &amp; Open in Full Editor
+                {isSaving ? 'Saving to EHS…' : '✓ Create & Open in Full Editor'}
               </button>
             </div>
           </header>
@@ -476,6 +532,12 @@ export default function NewQuoteBuilderPage() {
             ))}
           </div>
 
+          {saveError && (
+            <div role="alert" className="mx-6 mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-800">
+              {saveError}
+            </div>
+          )}
+
           <div className="p-6 max-w-7xl w-full mx-auto grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               {activeTab === 'customer' && (
@@ -499,6 +561,7 @@ export default function NewQuoteBuilderPage() {
                         type="tel"
                         value={customerPhone}
                         onChange={(e) => setCustomerPhone(e.target.value)}
+                        placeholder="Customer phone (optional)"
                         className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold"
                       />
                     </div>
@@ -529,12 +592,12 @@ export default function NewQuoteBuilderPage() {
 
               {activeTab === 'home' && (
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-                  <h2 className="text-lg font-black text-[#0B1E38]">Select Manufactured Home (225 Verified Models)</h2>
+                  <h2 className="text-lg font-black text-[#0B1E38]">Select Manufactured Home ({FULL_MASTER_CATALOG_HOMES.length} Verified Models)</h2>
                   <input
                     type="text"
                     value={homeSearch}
                     onChange={(e) => setHomeSearch(e.target.value)}
-                    placeholder="Search 225 models by name, beds, sqft..."
+                    placeholder={`Search ${FULL_MASTER_CATALOG_HOMES.length} models by name, beds, sqft...`}
                     className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold"
                   />
                   <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl text-xs">
@@ -600,14 +663,15 @@ export default function NewQuoteBuilderPage() {
                       <button
                         type="button"
                         onClick={() => handleLandOptionChange('PARCEL')}
-                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors ${
+                        disabled={availableProperties.length === 0}
+                        className={`p-3.5 rounded-xl border text-left cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                           landOption === 'PARCEL'
                             ? 'bg-[#0B1E38] text-white border-[#0B1E38]'
                             : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                         }`}
                       >
                         <div>📍 Central FL Parcel</div>
-                        <div className="text-[11px] font-normal opacity-80 mt-0.5">Choose from {INITIAL_PROPERTIES.length} Listings</div>
+                        <div className="text-[11px] font-normal opacity-80 mt-0.5">Choose from {availableProperties.length} verified available properties</div>
                       </button>
 
                       <button
@@ -632,7 +696,7 @@ export default function NewQuoteBuilderPage() {
                           onChange={(e) => handleParcelSelect(e.target.value)}
                           className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold bg-white"
                         >
-                          {INITIAL_PROPERTIES.map((p) => (
+                          {availableProperties.map((p) => (
                             <option key={p.id} value={p.id}>
                               {p.address} ({p.county} County) — ${(p.price || 0).toLocaleString()} ({p.lotSize || 'N/A'})
                             </option>
@@ -658,7 +722,7 @@ export default function NewQuoteBuilderPage() {
                           value={propertyAddress}
                           onChange={(e) => setPropertyAddress(e.target.value)}
                           className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
-                          placeholder="e.g. 6645 W Erlen Ln, Homosassa, FL 34446"
+                          placeholder="Enter customer homesite or selected property address"
                         />
                       </div>
                     </div>
@@ -756,6 +820,12 @@ export default function NewQuoteBuilderPage() {
                   <span>Site Work</span>
                   <span className="font-semibold tabular">${subtotalSiteWork.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
+                {subtotalAddOns > 0 && (
+                  <div className="flex justify-between">
+                    <span>Add-Ons</span>
+                    <span className="font-semibold tabular">${subtotalAddOns.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                )}
 
                 <div className="my-1.5 border-t border-slate-100" />
 
@@ -778,10 +848,11 @@ export default function NewQuoteBuilderPage() {
 
               <button
                 type="button"
-                onClick={() => handleSaveAndCreate('DRAFT')}
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-md cursor-pointer"
+                onClick={() => void handleSaveAndCreate('DRAFT')}
+                disabled={isSaving}
+                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-md cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                ✓ Create &amp; Save Master Quote
+                {isSaving ? 'Saving to EHS…' : '✓ Create & Open in Full Editor'}
               </button>
             </div>
           </div>
