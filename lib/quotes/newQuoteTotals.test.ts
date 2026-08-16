@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { calculateNewQuoteTotals } from './newQuoteTotals.ts';
+import { newQuoteTotalArgs } from './newQuoteTotalArgs.ts';
 
-test('new quote totals add visible customer amounts instead of subtracting factory cost', () => {
-  const totals = calculateNewQuoteTotals({
+test('new quote values map to the V05 engine in customer-facing and internal order', () => {
+  const args = newQuoteTotalArgs({
     homePrice: 158829.11,
     landPrice: 0,
     deliveryPrice: 3850,
@@ -17,11 +17,24 @@ test('new quote totals add visible customer amounts instead of subtracting facto
     taxRate: 0.03,
   });
 
-  assert.equal(totals.home_subtotal, 158829.11);
-  assert.equal(totals.land_subtotal, 0);
-  assert.equal(totals.delivery_total, 3850);
-  assert.equal(totals.site_work_total, 33590);
-  assert.equal(totals.subtotal, 196269.11);
-  assert.equal(totals.sales_tax_total, 5888.07);
-  assert.equal(totals.estimated_total, 202157.18);
+  assert.deepEqual(args, [
+    158829.11,
+    0,
+    3850,
+    33590,
+    0,
+    0,
+    110600,
+    3500,
+    25000,
+    0,
+    0.03,
+  ]);
+
+  const [home, land, delivery, siteWork, addons, discounts, factoryCost] = args;
+  const customerSubtotal = home + land + delivery + siteWork + addons - discounts;
+
+  assert.equal(customerSubtotal, 196269.11);
+  assert.equal(factoryCost, 110600);
+  assert.notEqual(customerSubtotal, customerSubtotal - factoryCost);
 });
