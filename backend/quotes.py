@@ -108,6 +108,7 @@ async def list_quotes(
             {"quote_number": {"$regex": escaped, "$options": "i"}},
             {"customer_snapshot.first_name": {"$regex": escaped, "$options": "i"}},
             {"customer_snapshot.last_name": {"$regex": escaped, "$options": "i"}},
+            {"customer_snapshot.name": {"$regex": escaped, "$options": "i"}},
             {"home.model_name": {"$regex": escaped, "$options": "i"}},
         ]
     documents = await get_db().quotes.find(query, {"_id": 0}).sort("updated_at", -1).to_list(1000)
@@ -156,12 +157,14 @@ async def create_quote(
 
     associate_name = user.get("name") or user.get("email") or "Associate"
     settings = await settings_for_quote()
-    snapshot = await customer_snapshot(payload.customer_id)
-    quote_number = await generate_quote_number(
+    canonical_snapshot = await customer_snapshot(payload.customer_id)
+    snapshot = canonical_snapshot or payload.customer_snapshot
+    quote_number = payload.quote_number or await generate_quote_number(
         associate_name, payload.home.model_name if payload.home else None
     )
 
     quote = Quote(
+        id=payload.id or new_id(),
         quote_number=quote_number,
         quote_date=payload.quote_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         status=payload.status or "draft",
@@ -202,8 +205,9 @@ async def create_quote(
 
     try:
         await get_db().quotes.insert_one(quote)
-    except DuplicateKeyError:
-        # A simultaneous create may have consumed the same human-readable number.
+    except DuplicateKeyError as exc:
+        if payload.id or payload.quote_number:
+            raise HTTPException(status_code=409, detail="Quote already exists") from exc
         quote["quote_number"] = await generate_quote_number(
             associate_name, (quote.get("home") or {}).get("model_name")
         )
@@ -218,7 +222,9 @@ async def get_quote(
     quote_id: str,
     _user: dict = Depends(get_current_user),
 ) -> dict:
-    document = await get_db().quotes.find_one({"id": quote_id}, {"_id": 0})
+    document = await get_db().quotes.find_one(
+        {"$or": [{"id": quote_id}, {"quote_number": quote_id}]}, {"_id": 0}
+    )
     if not document:
         raise HTTPException(status_code=404, detail="Quote not found")
     return normalize_quote_for_read(document)
@@ -236,18 +242,22 @@ async def update_quote(
     assert_can_manage_quote(document, user)
 
     raw_update = normalize_update_data(payload)
+    raw_update.pop("id", None)
+    raw_update.pop("quote_number", None)
     requested_pricing_fields = set(raw_update) & QUOTE_PRICE_AUDIT_FIELDS
     if requested_pricing_fields and not can_edit_quote_pricing(user):
         raise HTTPException(status_code=403, detail="Quote pricing access is required.")
 
     before = deepcopy(document)
     migrate_pricing = bool(raw_update.pop("migrate_pricing", False))
-    raw_update.pop("quote_updates", None)  # server is authoritative for calculated totals/version
+    raw_update.pop("quote_updates", None)
     if migrate_pricing and not is_manager_or_admin(user):
         raise HTTPException(status_code=403, detail="Only managers and admins can migrate historical pricing.")
 
     if "customer_id" in raw_update:
-        raw_update["customer_snapshot"] = await customer_snapshot(raw_update.get("customer_id"))
+        canonical_snapshot = await customer_snapshot(raw_update.get("customer_id"))
+        if canonical_snapshot is not None:
+            raw_update["customer_snapshot"] = canonical_snapshot
 
     historical_without_migration = is_historical_quote(document) and not migrate_pricing
     if historical_without_migration:
@@ -381,6 +391,8 @@ async def duplicate_and_reprice_quote(
 
     associate_name = user.get("name") or user.get("email") or "Associate"
     updates = normalize_update_data(payload) if payload else {}
+    updates.pop("id", None)
+    updates.pop("quote_number", None)
     updates.pop("migrate_pricing", None)
     updates.pop("quote_updates", None)
     updates.pop("reset_ehs_price_override", None)
@@ -406,7 +418,9 @@ async def duplicate_and_reprice_quote(
     duplicate["updated_by_id"] = user["id"]
 
     if "customer_id" in updates:
-        duplicate["customer_snapshot"] = await customer_snapshot(updates.get("customer_id"))
+        canonical_snapshot = await customer_snapshot(updates.get("customer_id"))
+        if canonical_snapshot is not None:
+            duplicate["customer_snapshot"] = canonical_snapshot
 
     requested_base_price = updates.get("base_price") if "base_price" in updates else None
     if requested_base_price is not None:

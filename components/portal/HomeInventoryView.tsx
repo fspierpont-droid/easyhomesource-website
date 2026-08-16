@@ -1,635 +1,74 @@
 'use client';
 
-import React, { useState } from 'react';
-import type { DisplayHomeRecord, DisplayStatus } from '@/types/displayInventory';
-import { INITIAL_DISPLAY_INVENTORY } from '@/types/displayInventory';
+import React from 'react';
 import Link from 'next/link';
 
 export function HomeInventoryView() {
-  const [displayHomes, setDisplayHomes] = useState<DisplayHomeRecord[]>(INITIAL_DISPLAY_INVENTORY);
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
-  const [editingHome, setEditingHome] = useState<DisplayHomeRecord | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  // Auto-calculated Floorplan Metrics
-  const totalFloorplanFinanced = displayHomes.reduce((acc, h) => acc + (h.financeAmount || 0), 0);
-  const totalTransportCost = displayHomes.reduce((acc, h) => acc + (h.transportCost || 0), 0);
-  const totalSetupCost = displayHomes.reduce((acc, h) => acc + (h.lotSetupCost || 0), 0);
-  const onLotCount = displayHomes.filter((h) => h.displayStatus === 'ON_LOT_DISPLAY').length;
-
-  const filteredList = displayHomes.filter((h) => {
-    if (statusFilter !== 'ALL' && h.displayStatus !== statusFilter) return false;
-    if (!search.trim()) return true;
-    const text = [
-      h.stockNumber,
-      h.modelName,
-      h.manufacturer,
-      h.serialNumber,
-      h.bankUsed,
-      h.padLocation,
-      h.keyBoxCode,
-      h.notes
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .toLowerCase();
-    return text.includes(search.toLowerCase().trim());
-  });
-
-  const getStatusBadge = (status: DisplayStatus) => {
-    switch (status) {
-      case 'ON_LOT_DISPLAY':
-        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-      case 'SETUP_IN_PROGRESS':
-        return 'bg-ehsSoftBlue text-ehsDeepBlue border-ehsBlue/20';
-      case 'IN_TRANSIT':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
-      case 'ORDERED_AT_FACTORY':
-        return 'bg-purple-50 text-purple-700 border-purple-200';
-      default:
-        return 'bg-slate-50 text-slate-600 border-slate-200';
-    }
-  };
-
-  const handleSaveHome = (updated: DisplayHomeRecord) => {
-    setDisplayHomes((prev) => prev.map((h) => (h.id === updated.id ? updated : h)));
-    setEditingHome(null);
-  };
-
-  const handleDeleteHome = (id: string) => {
-    if (confirm('Are you sure you want to decommission this display unit record?')) {
-      setDisplayHomes((prev) => prev.filter((h) => h.id !== id));
-      setEditingHome(null);
-    }
-  };
-
-  const handleCreateDisplayHome = (newRecord: Partial<DisplayHomeRecord>) => {
-    const nextNum = displayHomes.length + 1;
-    const record: DisplayHomeRecord = {
-      id: `disp-${Date.now()}`,
-      stockNumber: `DISP-2026-${String(nextNum).padStart(2, '0')}`,
-      modelName: newRecord.modelName || 'New Display Model',
-      manufacturer: newRecord.manufacturer || 'Clayton TRU',
-      serialNumber: newRecord.serialNumber || `FL-${Date.now()}`,
-      dimensions: newRecord.dimensions || "14' x 60'",
-      beds: newRecord.beds || 2,
-      baths: newRecord.baths || 2,
-      squareFeet: newRecord.squareFeet || 790,
-      displayStatus: newRecord.displayStatus || 'ON_LOT_DISPLAY',
-      padLocation: newRecord.padLocation || 'Pad # - Highway Display',
-      orderDate: newRecord.orderDate || new Date().toISOString().split('T')[0],
-      deliveryDate: newRecord.deliveryDate || new Date().toISOString().split('T')[0],
-      bankUsed: newRecord.bankUsed || '21st Mortgage Floorplan',
-      financeAmount: newRecord.financeAmount || 45000,
-      wholesaleInvoice: newRecord.wholesaleInvoice || 43500,
-      transportCost: newRecord.transportCost || 3500,
-      lotSetupCost: newRecord.lotSetupCost || 4000,
-      interestRateFloorplan: newRecord.interestRateFloorplan || 7.25,
-      optionsIncluded: newRecord.optionsIncluded || ['Standard Display Options Package'],
-      notes: newRecord.notes || 'Display home on Brooksville lot.',
-      keyBoxCode: newRecord.keyBoxCode || '4920',
-      updatedAt: new Date().toISOString()
-    };
-
-    setDisplayHomes((prev) => [record, ...prev]);
-    setIsAddModalOpen(false);
-  };
-
   return (
     <div className="space-y-6 text-xs">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <span className="text-[11px] font-black uppercase tracking-wider text-ehsBlue">
-            DEALERSHIP FLOORPLAN &amp; DISPLAY ALLOCATIONS
+          <span className="text-[11px] font-black uppercase tracking-wider text-[#1E6FA8]">
+            DEALERSHIP DISPLAY INVENTORY
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-ehsNavy mt-0.5">
-            Home Inventory &amp; Display Tracker ({displayHomes.length} Ordered Units)
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0B1E38] mt-0.5">
+            Home Inventory &amp; Display Tracker
           </h2>
-          <p className="text-xs sm:text-sm text-ehsNavy/65 font-medium mt-1">
-            Internal inventory: Track wholesale orders, serial/VIN numbers, floorplan lenders, financed balances, transport freight, and display staging in Brooksville (Not for sale).
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 max-w-3xl leading-relaxed">
+            This module is intentionally frozen for the platform baseline while the verified on-lot inventory and floorplan-financing workflow are defined and migrated.
           </p>
         </div>
-
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="px-5 py-2.5 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full text-xs shadow-lg shadow-ehsBlue/20 cursor-pointer flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
-        >
-          <span>+</span>
-          <span>Add Display Order</span>
-        </button>
+        <span className="inline-flex self-start px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-black text-[10px] uppercase tracking-wider">
+          Migration Frozen
+        </span>
       </div>
 
-      {/* 4 Financial & Operational Floorplan Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Floorplan Balance</span>
-            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-emerald-600 font-bold flex items-center justify-center text-xs">
-              🏦
+      <div className="p-6 sm:p-8 bg-white border border-amber-200 rounded-[2rem] shadow-sm">
+        <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
+          <div className="w-14 h-14 shrink-0 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-2xl">
+            🛡️
+          </div>
+          <div className="flex-1 space-y-4">
+            <div>
+              <h3 className="text-lg font-black text-[#0B1E38]">Unverified prototype inventory removed from runtime</h3>
+              <p className="mt-1 text-sm text-slate-600 leading-relaxed max-w-3xl">
+                The previous screen used browser-only seeded records containing model names alongside unverified serial numbers, lender balances, interest rates, transport/setup costs, key-box codes, order dates, and other operational values. Those records are not being promoted into the permanent EHS database.
+              </p>
             </div>
-          </div>
-          <div className="mt-2 text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight">
-            ${totalFloorplanFinanced.toLocaleString()}
-          </div>
-          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Active credit line balance</p>
-        </div>
 
-        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">On-Lot Display Models</span>
-            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-ehsDeepBlue font-bold flex items-center justify-center text-xs">
-              🏡
+            <div className="grid sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Displayed records</span>
+                <div className="mt-1 text-2xl font-black text-[#0B1E38]">0</div>
+                <p className="mt-1 text-[11px] text-slate-500">Until verified inventory is migrated</p>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Financial balances</span>
+                <div className="mt-1 text-sm font-black text-[#0B1E38]">Not displayed</div>
+                <p className="mt-1 text-[11px] text-slate-500">No unverified floorplan amounts</p>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Editing</span>
+                <div className="mt-1 text-sm font-black text-[#0B1E38]">Locked</div>
+                <p className="mt-1 text-[11px] text-slate-500">Prevents browser-only changes</p>
+              </div>
             </div>
-          </div>
-          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
-            {onLotCount} Displays
-          </div>
-          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">9011 McIntyre Rd, Brooksville</p>
-        </div>
 
-        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Transport Invested</span>
-            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-amber-600 font-bold flex items-center justify-center text-xs">
-              🚚
+            <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/60 text-slate-700 leading-relaxed">
+              <strong className="text-[#0B1E38]">After the baseline:</strong> we will define exactly what “inventory” means for EHS—display homes, homes owned by EHS, consignment units, customer-sold units awaiting delivery, factory orders, floorplan-financed units, and lot location—and then build that workflow against verified data.
             </div>
-          </div>
-          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
-            ${totalTransportCost.toLocaleString()}
-          </div>
-          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Factory-to-lot freight total</p>
-        </div>
 
-        <div className="p-5 rounded-[1.5rem] bg-white border border-ehsBlue/10 shadow-sm shadow-ehsNavy/5 hover:border-ehsBlue/30 hover:shadow-md transition-all">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-black text-ehsNavy/60 uppercase tracking-wide">Lot Setup &amp; Staging</span>
-            <div className="w-8 h-8 rounded-full bg-ehsSoftBlue text-purple-600 font-bold flex items-center justify-center text-xs">
-              🪜
+            <div className="flex flex-wrap gap-2 pt-1">
+              <Link href="/portal?view=property-packages" className="px-4 py-2.5 rounded-xl bg-[#0B1E38] text-white font-bold text-xs">
+                Open Property Packages
+              </Link>
+              <Link href="/settings" className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs">
+                View System Status
+              </Link>
             </div>
           </div>
-          <div className="mt-2 text-2xl sm:text-3xl font-black text-ehsNavy tracking-tight">
-            ${totalSetupCost.toLocaleString()}
-          </div>
-          <p className="mt-1 text-[11px] text-ehsNavy/55 font-semibold">Pads, stairs, skirting &amp; A/C</p>
         </div>
       </div>
-
-      {/* Search & Filter Controls */}
-      <div className="p-4 bg-white border border-ehsBlue/10 rounded-[1.5rem] flex flex-wrap items-center justify-between gap-3 shadow-sm shadow-ehsNavy/5">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search stock #, model, serial/VIN, lender, pad location..."
-          className="w-full max-w-sm px-4 py-2 border border-borderGray rounded-full text-xs font-semibold focus:outline-none focus:border-ehsBlue focus:ring-2 focus:ring-ehsLightBlue/50"
-        />
-
-        <div className="flex flex-wrap items-center gap-1.5 font-bold text-xs">
-          <button
-            type="button"
-            onClick={() => setStatusFilter('ALL')}
-            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
-              statusFilter === 'ALL'
-                ? 'bg-ehsDeepBlue text-white border-ehsDeepBlue'
-                : 'bg-ehsSoftBlue text-ehsNavy border-ehsBlue/20 hover:bg-white'
-            }`}
-          >
-            All Units ({displayHomes.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('ON_LOT_DISPLAY')}
-            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
-              statusFilter === 'ON_LOT_DISPLAY'
-                ? 'bg-emerald-700 text-white border-emerald-700'
-                : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100/50'
-            }`}
-          >
-            On Lot ({onLotCount})
-          </button>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('IN_TRANSIT')}
-            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
-              statusFilter === 'IN_TRANSIT'
-                ? 'bg-amber-700 text-white border-amber-700'
-                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100/50'
-            }`}
-          >
-            In Transit
-          </button>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('ORDERED_AT_FACTORY')}
-            className={`px-3.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
-              statusFilter === 'ORDERED_AT_FACTORY'
-                ? 'bg-purple-700 text-white border-purple-700'
-                : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100/50'
-            }`}
-          >
-            Factory Queue
-          </button>
-        </div>
-      </div>
-
-      {/* Display Home Inventory Table */}
-      <div className="bg-white border border-ehsBlue/10 rounded-[1.75rem] shadow-sm shadow-ehsNavy/5 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr className="border-b border-ehsBlue/10 bg-ehsSoftBlue/70 text-[11px] font-black text-ehsNavy uppercase tracking-wider">
-                <th className="py-3 px-4">Stock #</th>
-                <th className="py-3 px-4">Model &amp; Builder</th>
-                <th className="py-3 px-4">Serial / VIN #</th>
-                <th className="py-3 px-4">Status &amp; Pad</th>
-                <th className="py-3 px-4">Floorplan Lender</th>
-                <th className="py-3 px-4">Financed Balance</th>
-                <th className="py-3 px-4">Freight &amp; Setup</th>
-                <th className="py-3 px-4">Keybox</th>
-                <th className="py-3 px-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
-              {filteredList.map((home) => (
-                <tr key={home.id} className="hover:bg-ehsSoftBlue/30 transition-colors group">
-                  <td className="py-3.5 px-4 font-mono font-bold text-ehsBlue">
-                    {home.stockNumber}
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <div className="font-black text-ehsNavy">{home.modelName}</div>
-                    <div className="text-[10px] text-slate-400 font-medium">
-                      {home.manufacturer} • {home.dimensions}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 font-mono text-slate-700 font-bold text-[11px]">
-                    {home.serialNumber}
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <span
-                      className={`font-black px-2.5 py-0.5 rounded-full border text-[10px] inline-block ${getStatusBadge(
-                        home.displayStatus
-                      )}`}
-                    >
-                      {home.displayStatus.replace(/_/g, ' ')}
-                    </span>
-                    <div className="text-[10px] text-slate-500 mt-0.5 truncate max-w-[140px]">
-                      {home.padLocation}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <div className="font-semibold text-slate-900">{home.bankUsed}</div>
-                    <div className="text-[10px] text-slate-400 font-medium">
-                      Rate: {home.interestRateFloorplan}%
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 font-black text-ehsNavy text-sm">
-                    ${home.financeAmount.toLocaleString()}
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <div className="font-semibold text-slate-800">
-                      Freight: ${home.transportCost.toLocaleString()}
-                    </div>
-                    <div className="text-[10px] text-slate-400">
-                      Setup: ${home.lotSetupCost.toLocaleString()}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 font-mono font-bold text-amber-800 bg-amber-50 rounded text-center">
-                    🔑 {home.keyBoxCode}
-                  </td>
-                  <td className="py-3.5 px-4 text-right">
-                    <button
-                      type="button"
-                      onClick={() => setEditingHome(home)}
-                      className="px-3 py-1 bg-ehsSoftBlue hover:bg-ehsLightBlue/40 text-ehsDeepBlue font-black rounded-lg text-xs border border-ehsBlue/20 cursor-pointer"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Edit Display Home Drawer */}
-      {editingHome && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-ehsNavy/60 backdrop-blur-xs flex justify-end animate-in fade-in duration-150">
-          <div className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-200">
-            <div className="p-5 border-b border-ehsBlue/10 bg-gradient-to-r from-ehsNavy to-ehsDeepBlue text-white flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-ehsLightBlue font-bold">
-                  {editingHome.stockNumber}
-                </span>
-                <h3 className="text-base font-black text-white mt-0.5">
-                  Edit Display: {editingHome.modelName}
-                </h3>
-              </div>
-              <button
-                onClick={() => setEditingHome(null)}
-                className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSaveHome(editingHome);
-              }}
-              className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 text-xs"
-            >
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Model Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingHome.modelName}
-                    onChange={(e) => setEditingHome({ ...editingHome, modelName: e.target.value })}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Manufacturer *</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingHome.manufacturer}
-                    onChange={(e) => setEditingHome({ ...editingHome, manufacturer: e.target.value })}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-semibold"
-                  />
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Serial Number / VIN *</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingHome.serialNumber}
-                    onChange={(e) => setEditingHome({ ...editingHome, serialNumber: e.target.value })}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-mono font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Display Status</label>
-                  <select
-                    value={editingHome.displayStatus}
-                    onChange={(e) =>
-                      setEditingHome({ ...editingHome, displayStatus: e.target.value as DisplayStatus })
-                    }
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-bold bg-white"
-                  >
-                    <option value="ON_LOT_DISPLAY">On Lot Display</option>
-                    <option value="SETUP_IN_PROGRESS">Setup in Progress</option>
-                    <option value="IN_TRANSIT">In Transit</option>
-                    <option value="ORDERED_AT_FACTORY">Ordered at Factory</option>
-                    <option value="DECOMMISSIONED">Decommissioned</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Floorplan & Bank Financing Details */}
-              <div className="p-4 bg-ehsSoftBlue/50 border border-ehsBlue/10 rounded-2xl space-y-3">
-                <h4 className="font-extrabold text-xs text-ehsNavy uppercase">
-                  Floorplan Financing &amp; Wholesale Invoicing
-                </h4>
-
-                <div className="grid sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-medium text-slate-600 mb-0.5">Floorplan Bank / Lender</label>
-                    <input
-                      type="text"
-                      value={editingHome.bankUsed}
-                      onChange={(e) => setEditingHome({ ...editingHome, bankUsed: e.target.value })}
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-medium text-slate-600 mb-0.5">Financed Credit Draw ($)</label>
-                    <input
-                      type="number"
-                      value={editingHome.financeAmount}
-                      onChange={(e) =>
-                        setEditingHome({ ...editingHome, financeAmount: Number(e.target.value) })
-                      }
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white text-emerald-700"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-medium text-slate-600 mb-0.5">Transport Freight ($)</label>
-                    <input
-                      type="number"
-                      value={editingHome.transportCost}
-                      onChange={(e) =>
-                        setEditingHome({ ...editingHome, transportCost: Number(e.target.value) })
-                      }
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-medium text-slate-600 mb-0.5">Lot Setup &amp; A/C ($)</label>
-                    <input
-                      type="number"
-                      value={editingHome.lotSetupCost}
-                      onChange={(e) =>
-                        setEditingHome({ ...editingHome, lotSetupCost: Number(e.target.value) })
-                      }
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Display Pad Location</label>
-                  <input
-                    type="text"
-                    value={editingHome.padLocation}
-                    onChange={(e) => setEditingHome({ ...editingHome, padLocation: e.target.value })}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-semibold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Keybox Lock Code</label>
-                  <input
-                    type="text"
-                    value={editingHome.keyBoxCode}
-                    onChange={(e) => setEditingHome({ ...editingHome, keyBoxCode: e.target.value })}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-mono font-bold"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">Internal Display Notes</label>
-                <textarea
-                  rows={3}
-                  value={editingHome.notes}
-                  onChange={(e) => setEditingHome({ ...editingHome, notes: e.target.value })}
-                  className="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs"
-                />
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => handleDeleteHome(editingHome.id)}
-                  className="px-3.5 py-2 text-rose-600 hover:bg-rose-50 rounded-full font-bold cursor-pointer"
-                >
-                  Decommission Unit
-                </button>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setEditingHome(null)}
-                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full font-bold cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 bg-ehsBlue hover:bg-ehsDeepBlue text-white font-black rounded-full shadow-md cursor-pointer"
-                  >
-                    Save Unit Record
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Add New Display Unit Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-ehsNavy/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[2rem] p-6 max-w-lg w-full shadow-2xl border border-ehsBlue/20 space-y-4">
-            <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-              <h3 className="text-base font-black text-ehsNavy">Add Ordered Display Unit</h3>
-              <button onClick={() => setIsAddModalOpen(false)} className="text-slate-400 font-bold cursor-pointer">
-                ✕
-              </button>
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.currentTarget;
-                const fd = new FormData(form);
-                handleCreateDisplayHome({
-                  modelName: fd.get('modelName') as string,
-                  manufacturer: fd.get('manufacturer') as string,
-                  serialNumber: fd.get('serialNumber') as string,
-                  bankUsed: fd.get('bankUsed') as string,
-                  financeAmount: Number(fd.get('financeAmount')),
-                  transportCost: Number(fd.get('transportCost')),
-                  padLocation: fd.get('padLocation') as string,
-                  keyBoxCode: fd.get('keyBoxCode') as string
-                });
-              }}
-              className="space-y-3"
-            >
-              <div>
-                <label className="block font-bold text-slate-700 mb-0.5">Model Name *</label>
-                <input
-                  type="text"
-                  name="modelName"
-                  required
-                  placeholder="e.g. The White Oak CS-3221"
-                  className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-bold"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Manufacturer *</label>
-                  <input
-                    type="text"
-                    name="manufacturer"
-                    required
-                    placeholder="e.g. Timber Creek"
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-semibold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Serial / VIN *</label>
-                  <input
-                    type="text"
-                    name="serialNumber"
-                    required
-                    placeholder="e.g. TC-CS-2026-991"
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-mono"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Floorplan Bank</label>
-                  <input
-                    type="text"
-                    name="bankUsed"
-                    defaultValue="21st Mortgage Floorplan"
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-semibold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Financed Draw ($)</label>
-                  <input
-                    type="number"
-                    name="financeAmount"
-                    defaultValue={55000}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-bold"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Transport Freight ($)</label>
-                  <input
-                    type="number"
-                    name="transportCost"
-                    defaultValue={3850}
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-0.5">Keybox Code</label>
-                  <input
-                    type="text"
-                    name="keyBoxCode"
-                    defaultValue="4920"
-                    className="w-full px-3 py-1.5 border border-slate-200 rounded-xl font-mono font-bold"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 rounded-full font-bold cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-ehsBlue hover:bg-ehsDeepBlue text-white rounded-full font-black shadow-md cursor-pointer"
-                >
-                  Add Display Unit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

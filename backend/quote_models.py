@@ -55,6 +55,7 @@ class DiscountItem(BaseModel):
 
 
 class DepositItem(BaseModel):
+    model_config = ConfigDict(extra="allow")
     label: str = "Deposit"
     amount_required: float = 0
     amount_paid: float = 0
@@ -100,7 +101,7 @@ class QuoteSite(BaseModel):
 
 
 class QuoteFinancing(BaseModel):
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="allow")
     purchase_type: str = "financing"
     financing_status: Optional[str] = None
     pre_approval_amount: Optional[float] = None
@@ -129,6 +130,7 @@ class Quote(BaseModel):
     quote_number: str
     quote_date: str
     status: str = "draft"
+    pricing_mode: Optional[str] = "portal_v05"
     associate_id: str
     associate_name: Optional[str] = None
     associate_email: Optional[str] = None
@@ -139,6 +141,9 @@ class Quote(BaseModel):
     site: Optional[QuoteSite] = None
     base_price: float = 0
     factory_cost: float = 0
+    land_price: float = 0
+    delivery_price: float = 0
+    delivery_cost: float = 0
     options: list[LineItem] = Field(default_factory=list)
     mandatory_services: list[LineItem] = Field(default_factory=list)
     suppressed_required_service_ids: list[str] = Field(default_factory=list)
@@ -168,12 +173,19 @@ class Quote(BaseModel):
 
 class QuoteCreate(BaseModel):
     model_config = ConfigDict(extra="ignore")
+    id: Optional[str] = None
+    quote_number: Optional[str] = None
     quote_date: Optional[str] = None
+    pricing_mode: Optional[str] = "portal_v05"
     customer_id: Optional[str] = None
+    customer_snapshot: Optional[dict[str, Any]] = None
     home: Optional[QuoteHomeSnapshot] = None
     site: Optional[QuoteSite] = None
     base_price: float = 0
     factory_cost: float = 0
+    land_price: float = 0
+    delivery_price: float = 0
+    delivery_cost: float = 0
     options: list[LineItem] = Field(default_factory=list)
     mandatory_services: list[LineItem] = Field(default_factory=list)
     suppressed_required_service_ids: list[str] = Field(default_factory=list)
@@ -190,6 +202,8 @@ class QuoteCreate(BaseModel):
     next_steps: Optional[str] = None
     disclaimer: Optional[str] = None
     status: Optional[str] = None
+    share_token: Optional[str] = None
+    share_enabled: bool = False
     pricing_version: Optional[str] = None
     calculation_snapshot: Optional[dict[str, Any]] = None
     calculated_at: Optional[str] = None

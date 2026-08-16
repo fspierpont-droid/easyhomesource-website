@@ -1,88 +1,66 @@
 import { NextResponse } from 'next/server';
-import { INITIAL_SAVED_QUOTES, SavedQuote } from '@/data/quotesStore';
-
-// Reference server cache
-let SERVER_QUOTES: SavedQuote[] = [...INITIAL_SAVED_QUOTES];
+import { permanentApiRequest } from '@/lib/auth/permanentApi';
+import { fromBackendQuote, toBackendQuote } from '@/lib/quotes/permanentQuote';
+import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortalQuote';
+import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
+import type { SavedQuote } from '@/data/quotesStore';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
-  const quoteId = params.id;
-  const quote = SERVER_QUOTES.find(
-    (q) => q.id === quoteId || q.quoteNumber === quoteId || q.shareToken === quoteId
-  ) || INITIAL_SAVED_QUOTES.find(
-    (q) => q.id === quoteId || q.quoteNumber === quoteId || q.shareToken === quoteId
-  );
-
-  if (quote) {
-    return NextResponse.json({ success: true, quote });
+  const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`);
+  const payload = await backend.json().catch(() => ({}));
+  if (!backend.ok) {
+    return NextResponse.json(
+      { success: false, error: payload.detail || 'Quote not found' },
+      { status: backend.status },
+    );
   }
-
-  return NextResponse.json({ success: false, error: 'Quote not found' }, { status: 404 });
+  return NextResponse.json({ success: true, quote: fromBackendQuote(payload) });
 }
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
-    const quoteId = params.id;
-    const updates: Partial<SavedQuote> = await request.json();
-    const existingIndex = SERVER_QUOTES.findIndex(
-      (q) => q.id === quoteId || q.quoteNumber === quoteId
-    );
-
-    if (existingIndex >= 0) {
-      SERVER_QUOTES[existingIndex] = {
-        ...SERVER_QUOTES[existingIndex],
-        ...updates,
-        updatedAt: new Date().toISOString()
-      };
-      return NextResponse.json({ success: true, quote: SERVER_QUOTES[existingIndex] });
+    const quote: SavedQuote = await request.json();
+    const candidate = normalizePortalQuoteForPersistence({ ...quote, id: params.id });
+    const validationError = validateQuoteForPersistence(candidate);
+    if (validationError) {
+      return NextResponse.json({ success: false, error: validationError }, { status: 400 });
     }
 
-    // If not found in server quotes, create from initial
-    const fallback = INITIAL_SAVED_QUOTES.find((q) => q.id === quoteId) || {
-      id: quoteId,
-      quoteNumber: quoteId,
-      customerName: 'Valued Customer',
-      customerPhone: '352-555-0199',
-      customerEmail: 'info@easyhomesource.com',
-      salesperson: 'Scott Pierpont',
-      status: 'APPROVED' as const,
-      homeModel: 'Manufactured Home',
-      homePrice: 94900,
-      factoryCost: 68328,
-      propertyAddress: 'Central FL',
-      propertyPrice: 0,
-      freightDelivery: 3850,
-      siteWorkTotal: 30000,
-      discounts: 0,
-      lineItems: [],
-      subtotal: 128750,
-      taxBasis: 128750,
-      salesTax: 3862.5,
-      totalTurnkeyPrice: 132612.5,
-      estimatedTotal: 132612.5,
-      notes: 'Turnkey proposal',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-
-    const updated = { ...fallback, ...updates, updatedAt: new Date().toISOString() };
-    SERVER_QUOTES = [updated, ...SERVER_QUOTES];
-    return NextResponse.json({ success: true, quote: updated });
-  } catch (err: any) {
-    return NextResponse.json({ success: false, error: err.message }, { status: 400 });
+    const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`, {
+      method: 'PATCH',
+      body: JSON.stringify(toBackendQuote(candidate)),
+    });
+    const payload = await backend.json().catch(() => ({}));
+    if (!backend.ok) {
+      return NextResponse.json(
+        { success: false, error: payload.detail || 'Failed to update quote' },
+        { status: backend.status },
+      );
+    }
+    return NextResponse.json({ success: true, quote: fromBackendQuote(payload) });
+  } catch (error) {
+    console.error(`Failed to update quote ${params.id}:`, error);
+    return NextResponse.json({ success: false, error: 'Failed to update quote' }, { status: 500 });
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
-  const quoteId = params.id;
-  SERVER_QUOTES = SERVER_QUOTES.filter((q) => q.id !== quoteId && q.quoteNumber !== quoteId);
-  return NextResponse.json({ success: true });
+  const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`, { method: 'DELETE' });
+  const payload = await backend.json().catch(() => ({}));
+  if (!backend.ok) {
+    return NextResponse.json(
+      { success: false, error: payload.detail || 'Failed to delete quote' },
+      { status: backend.status },
+    );
+  }
+  return NextResponse.json({ success: true, deleted: Boolean(payload.ok) });
 }
