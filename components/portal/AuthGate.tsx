@@ -43,7 +43,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     try {
       await login(cleanEmail, cleanPass);
     } catch (err) {
-      setError('Invalid employee credentials. Please try again.');
+      setError(err instanceof Error ? err.message : 'Sign in failed. Please try again.');
     } finally {
       setSubmitting(false);
     }

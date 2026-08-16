@@ -2,12 +2,12 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { VERIFIED_TEAM_USERS, type TeamUser } from '@/data/teamMembers';
+import type { TeamUser } from '@/data/teamMembers';
 
 interface AuthContextType {
   user: TeamUser | null;
   loading: boolean;
-  login: (email: string, password?: string) => Promise<TeamUser>;
+  login: (email: string, password: string) => Promise<TeamUser>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -15,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  login: async () => VERIFIED_TEAM_USERS[6],
+  login: async () => { throw new Error('Authentication provider is unavailable.'); },
   logout: () => {},
   isAuthenticated: false
 });
@@ -33,18 +33,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email: string, password?: string): Promise<TeamUser> => {
+  const login = async (email: string, password: string): Promise<TeamUser> => {
     const response = await fetch('/api/portal/auth/login', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.user) throw new Error(data.error || 'Sign in failed.');
+
+    try {
+      localStorage.setItem('ehs_user', JSON.stringify(data.user));
+    } catch (error) {
+      console.warn('Auth presentation storage unavailable:', error);
+    }
+
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
+    try {
+      localStorage.removeItem('ehs_token');
+      localStorage.removeItem('ehs_user');
+    } catch (error) {
+      console.warn('Auth presentation storage unavailable:', error);
+    }
+
     void fetch('/api/portal/auth/logout', { method: 'POST' }).finally(() => {
       setUser(null);
       router.push('/login');

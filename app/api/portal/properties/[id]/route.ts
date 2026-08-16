@@ -1,82 +1,58 @@
-import { NextResponse } from "next/server";
-import {
-  getPropertyById,
-  updateProperty,
-  deleteProperty
-} from "@/lib/db/propertyStore";
+import { NextResponse } from 'next/server';
+import { permanentApiRequest } from '@/lib/auth/permanentApi';
+import { fromBackendProperty, toBackendProperty } from '@/lib/properties/permanentProperty';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
-  try {
-    const property = getPropertyById(params.id);
-    if (!property) {
-      return NextResponse.json(
-        { success: false, error: `Property ${params.id} not found.` },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json({ success: true, property });
-  } catch (error) {
+  const backend = await permanentApiRequest(request, `/api/properties/${encodeURIComponent(params.id)}`);
+  const payload = await backend.json().catch(() => ({}));
+  if (!backend.ok) {
     return NextResponse.json(
-      { success: false, error: "Failed to fetch property" },
-      { status: 500 }
+      { success: false, error: payload.detail || `Property ${params.id} not found.` },
+      { status: backend.status },
     );
   }
+  return NextResponse.json({ success: true, property: fromBackendProperty(payload) });
 }
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const body = await request.json();
-    const user = body._user || "Portal User";
     delete body._user;
-
-    const updated = updateProperty(params.id, body, user);
-    if (!updated) {
+    const backend = await permanentApiRequest(request, `/api/properties/${encodeURIComponent(params.id)}`, {
+      method: 'PATCH',
+      body: JSON.stringify(toBackendProperty(body)),
+    });
+    const payload = await backend.json().catch(() => ({}));
+    if (!backend.ok) {
       return NextResponse.json(
-        { success: false, error: `Property ${params.id} not found.` },
-        { status: 404 }
+        { success: false, error: payload.detail || `Failed to update property ${params.id}.` },
+        { status: backend.status },
       );
     }
-
-    return NextResponse.json({
-      success: true,
-      message: "Property updated successfully.",
-      property: updated
-    });
+    return NextResponse.json({ success: true, message: 'Property updated successfully.', property: fromBackendProperty(payload) });
   } catch (error) {
     console.error(`Failed to update property ${params.id}:`, error);
-    return NextResponse.json(
-      { success: false, error: "Failed to update property." },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Failed to update property.' }, { status: 500 });
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
-  try {
-    const deleted = deleteProperty(params.id);
-    if (!deleted) {
-      return NextResponse.json(
-        { success: false, error: `Property ${params.id} not found.` },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json({
-      success: true,
-      message: `Property ${params.id} removed from Property Center.`
-    });
-  } catch (error) {
+  const backend = await permanentApiRequest(request, `/api/properties/${encodeURIComponent(params.id)}`, { method: 'DELETE' });
+  const payload = await backend.json().catch(() => ({}));
+  if (!backend.ok) {
     return NextResponse.json(
-      { success: false, error: "Failed to delete property." },
-      { status: 500 }
+      { success: false, error: payload.detail || `Failed to archive property ${params.id}.` },
+      { status: backend.status },
     );
   }
+  return NextResponse.json({ success: true, archived: Boolean(payload.archived), message: `Property ${params.id} archived.` });
 }
