@@ -1,4 +1,5 @@
 import type { QuoteFinancialTotals } from './pricingSpreadsheet';
+import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortalQuote';
 
 export interface SelectedQuoteLineItem {
   id: string;
@@ -160,10 +161,11 @@ export async function fetchQuoteFromServer(id: string): Promise<SavedQuote | nul
 }
 
 export async function saveQuoteToServer(quote: SavedQuote): Promise<SavedQuote> {
+  const normalized = normalizePortalQuoteForPersistence(quote);
   const response = await fetch('/api/portal/quotes', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(quote),
+    body: JSON.stringify(normalized),
   });
   const data = await response.json();
   if (!response.ok || !data.success || !data.quote) {
@@ -177,11 +179,16 @@ export async function saveQuoteToServer(quote: SavedQuote): Promise<SavedQuote> 
 }
 
 export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
-  void saveQuoteToServer(quote).catch((error) => {
+  const normalized = normalizePortalQuoteForPersistence(quote);
+  const current = readCache().filter(
+    (item) => item.id !== normalized.id && item.quoteNumber !== normalized.quoteNumber,
+  );
+  writeCache([normalized, ...current]);
+  void saveQuoteToServer(normalized).catch((error) => {
     console.error('Permanent quote save failed:', error);
     syncError(error instanceof Error ? error.message : 'Permanent quote save failed.');
   });
-  return quote;
+  return normalized;
 }
 
 export async function deleteQuoteFromServer(id: string): Promise<boolean> {
