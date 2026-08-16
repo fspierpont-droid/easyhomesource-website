@@ -1,19 +1,11 @@
-import { calculateComprehensiveQuoteTotals } from '../../data/pricingSpreadsheet.ts';
+import { calculateComprehensiveQuoteTotals } from '../../data/pricingSpreadsheet';
 import type { SavedQuote, SelectedQuoteLineItem } from '../../data/quotesStore';
+import { normalizeSkirtingPackageLine, SKIRTING_PACKAGE_SKU } from './skirtingPackage';
 
-export const SKIRTING_PACKAGE_SKU = 'SITE-SKIRTING-VINYL';
+export { SKIRTING_PACKAGE_SKU };
 
 export function normalizePortalLineItem(item: SelectedQuoteLineItem): SelectedQuoteLineItem {
-  if (item.sku !== SKIRTING_PACKAGE_SKU) return item;
-
-  // calculateSkirtingByDimensions already returns the full perimeter package
-  // price/cost. Linear footage belongs in the description, not in quantity.
-  return {
-    ...item,
-    quantity: 1,
-    totalPrice: Number(item.unitPrice) || 0,
-    totalCost: Number(item.unitCost) || 0,
-  };
+  return normalizeSkirtingPackageLine(item);
 }
 
 export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuote {
