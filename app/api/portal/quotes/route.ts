@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 import { fromBackendQuote, toBackendQuote } from '@/lib/quotes/permanentQuote';
+import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortalQuote';
 import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
 import type { SavedQuote } from '@/data/quotesStore';
 
@@ -29,7 +30,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const quote: SavedQuote = await request.json();
+    const rawQuote: SavedQuote = await request.json();
+    const quote = normalizePortalQuoteForPersistence(rawQuote);
     if (!quote.id || !quote.quoteNumber) {
       return NextResponse.json({ success: false, error: 'Quote ID and quote number are required.' }, { status: 400 });
     }
