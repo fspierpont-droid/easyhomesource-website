@@ -26,7 +26,24 @@ export const BLOCK_TIE_DOWN_TABLE = legacy.BLOCK_TIE_DOWN_TABLE;
 export const calculateBlockTieDown = legacy.calculateBlockTieDown;
 export const calculateDirtPadPricing = legacy.calculateDirtPadPricing;
 
-const dirtPadOptions: ServiceCatalogItem[] = DIRT_PAD_LOAD_PRICING.map((row) => ({
+type MasterServiceInput = Omit<ServiceCatalogItem, 'categoryTitle' | 'calcType'> & {
+  categoryTitle?: string;
+  calcType?: ServiceCatalogItem['calcType'];
+};
+
+function service(input: MasterServiceInput): ServiceCatalogItem {
+  const categoryTitle = input.categoryTitle || (
+    input.category === 'mandatory_services' ? 'Setup & Install' :
+    input.category === 'site_work' ? 'Site Work' :
+    input.category === 'addons' ? 'Add-Ons' : 'Options'
+  );
+  const calcType = input.calcType || (
+    input.requiresBid ? 'bid_required' : input.unit === 'linear ft' ? 'per_foot' : 'flat'
+  );
+  return { ...input, categoryTitle, calcType };
+}
+
+const dirtPadOptions: MasterServiceInput[] = DIRT_PAD_LOAD_PRICING.map((row) => ({
   sku: `SITE-DIRTPAD-${row.loads}-LOAD${row.loads === 1 ? '' : 'S'}`,
   name: `Dirt Pad & Laser Site Grading (${row.loads} Load${row.loads === 1 ? '' : 's'})`,
   category: 'site_work',
@@ -36,53 +53,99 @@ const dirtPadOptions: ServiceCatalogItem[] = DIRT_PAD_LOAD_PRICING.map((row) => 
   unit: 'package',
 }));
 
-const acOptions: ServiceCatalogItem[] = [
-  ['HVAC-SC-2TON', '2.0-Ton Split — Whole System', 4500, 4950],
-  ['HVAC-HP-2TON', '2.0-Ton Heat Pump — Whole System', 4700, 5170],
-  ['HVAC-SC-2_5TON', '2.5-Ton Split — Whole System', 4600, 5060],
-  ['HVAC-HP-2_5TON', '2.5-Ton Heat Pump — Whole System', 4800, 5280],
-  ['HVAC-SC-3TON', '3.0-Ton Split — Whole System', 4500, 4950],
-  ['HVAC-HP-3TON', '3.0-Ton Heat Pump — Whole System', 5050, 5555],
-  ['HVAC-SC-3_5TON', '3.5-Ton Split — Whole System', 4900, 5390],
-  ['HVAC-HP-3_5TON', '3.5-Ton Heat Pump — Whole System', 5100, 5610],
-  ['HVAC-SC-4TON', '4.0-Ton Split — Whole System', 5300, 5830],
-  ['HVAC-HP-4TON', '4.0-Ton Heat Pump — Whole System', 5550, 6105],
-  ['HVAC-SC-5TON', '5.0-Ton Split — Whole System', 5750, 6325],
-  ['HVAC-HP-5TON', '5.0-Ton Heat Pump — Whole System', 5950, 6545],
-].map(([sku, name, cost, price]) => ({
-  sku: String(sku),
-  name: String(name),
-  category: 'mandatory_services' as const,
-  description: 'Master Quote 5 A/C system selection. Choose the correct tonnage/configuration for the home; do not infer a system from a sample quote.',
-  defaultCost: Number(cost),
-  defaultPrice: Number(price),
+const acRows: Array<[string, string, number, number]> = [
+  ['HVAC-PKG-SC-2TON', '2.0-Ton Package Straight Cool', 4500, 4950],
+  ['HVAC-PKG-HP-2TON', '2.0-Ton Package Heat Pump', 4700, 5170],
+  ['HVAC-SPLIT-SC-2TON', '2.0-Ton Split — Whole System', 3800, 4180],
+  ['HVAC-SPLIT-HP-2TON', '2.0-Ton Split Heat Pump — Whole System', 4050, 4455],
+  ['HVAC-PKG-SC-2_5TON', '2.5-Ton Package Straight Cool', 4600, 5060],
+  ['HVAC-PKG-HP-2_5TON', '2.5-Ton Package Heat Pump', 4800, 5280],
+  ['HVAC-SPLIT-SC-2_5TON', '2.5-Ton Split — Whole System', 4100, 4510],
+  ['HVAC-SPLIT-HP-2_5TON', '2.5-Ton Split Heat Pump — Whole System', 4300, 4730],
+  ['HVAC-PKG-SC-3TON', '3.0-Ton Package Straight Cool', 4750, 5225],
+  ['HVAC-PKG-HP-3TON', '3.0-Ton Package Heat Pump', 5050, 5555],
+  ['HVAC-SPLIT-SC-3TON', '3.0-Ton Split — Whole System', 4500, 4950],
+  ['HVAC-SPLIT-HP-3TON', '3.0-Ton Split Heat Pump — Whole System', 4700, 5170],
+  ['HVAC-PKG-SC-3_5TON', '3.5-Ton Package Straight Cool', 4950, 5445],
+  ['HVAC-PKG-HP-3_5TON', '3.5-Ton Package Heat Pump', 5200, 5720],
+  ['HVAC-SPLIT-SC-3_5TON', '3.5-Ton Split — Whole System', 4900, 5390],
+  ['HVAC-SPLIT-HP-3_5TON', '3.5-Ton Split Heat Pump — Whole System', 5100, 5610],
+  ['HVAC-PKG-SC-4TON', '4.0-Ton Package Straight Cool', 5150, 5665],
+  ['HVAC-PKG-HP-4TON', '4.0-Ton Package Heat Pump', 5500, 6050],
+  ['HVAC-SPLIT-SC-4TON', '4.0-Ton Split — Whole System', 5300, 5830],
+  ['HVAC-SPLIT-HP-4TON', '4.0-Ton Split Heat Pump — Whole System', 5550, 6105],
+  ['HVAC-PKG-SC-5TON', '5.0-Ton Package Straight Cool', 6000, 6600],
+  ['HVAC-PKG-HP-5TON', '5.0-Ton Package Heat Pump', 6500, 7150],
+  ['HVAC-SPLIT-SC-5TON', '5.0-Ton Split — Whole System', 5750, 6325],
+  ['HVAC-SPLIT-HP-5TON', '5.0-Ton Split Heat Pump — Whole System', 5950, 6545],
+];
+
+const acOptions: MasterServiceInput[] = acRows.map(([sku, name, cost, price]) => ({
+  sku,
+  name,
+  category: 'mandatory_services',
+  categoryTitle: 'A/C & Heating',
+  description: 'Master Quote 5 A/C selection. Choose the actual tonnage and package/split configuration; no sample system is assumed to fit every home.',
+  defaultCost: cost,
+  defaultPrice: price,
   unit: 'system',
+  calcType: 'per_ton',
 }));
 
-export const SERVICE_CATALOG: ServiceCatalogItem[] = [
+const serviceInputs: MasterServiceInput[] = [
   {
     sku: 'SITE-BLOCK-TIEDOWN',
     name: 'Block & Tie-Down & Vapor Barrier',
     category: 'mandatory_services',
-    description: 'Structural stabilization, block/level, tie-down and vapor barrier. Price is calculated from home width/section count and length.',
+    description: 'Structural stabilization, block/level, tie-down and vapor barrier. Calculated from home section count and length.',
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'system',
+    calcType: 'per_side',
   },
   {
-    sku: 'SITE-TRIM',
+    sku: 'SITE-TRIMOUT',
     name: 'Trim Out',
     category: 'mandatory_services',
     description: 'Final interior detailing after the home is set. Master Quote 5: single-wide $1,000/$1,100; double-wide $3,000/$3,300; triple-wide $4,000/$4,400 cost/price.',
     defaultCost: 3000,
     defaultPrice: 3300,
     unit: 'job',
+    calcType: 'per_side',
+  },
+  {
+    sku: 'SITE-STEPS-2SET',
+    name: 'Wooden Steps — 2 Sets',
+    category: 'mandatory_services',
+    description: 'Master Quote 5 selected two-set wooden-step package.',
+    defaultCost: 1000,
+    defaultPrice: 2500,
+    unit: 'package',
+  },
+  {
+    sku: 'SITE-PERIMETER-STABILIZATION',
+    name: 'Perimeter Stabilization',
+    category: 'mandatory_services',
+    description: 'Perimeter stabilization to prevent washouts and maintain level ground around the home.',
+    defaultCost: 1000,
+    defaultPrice: 1100,
+    unit: 'job',
+  },
+  {
+    sku: 'SITE-SKIRTING-VALOR',
+    name: 'Basic Valor Skirting',
+    category: 'mandatory_services',
+    description: 'Basic Valor skirting with vents, corners and trim. $8 cost / $10 customer price per linear foot.',
+    defaultCost: 8,
+    defaultPrice: 10,
+    unit: 'linear ft',
+    calcType: 'per_foot',
   },
   {
     sku: 'ELEC-POLE-PANEL',
     name: 'Electric Pole & Panel',
     category: 'addons',
-    description: 'Selected Master Quote 5 pole/panel package; verify the site power scope before finalizing.',
+    description: 'Selected Master Quote 5 pole/panel package; verify site power scope before finalizing.',
     defaultCost: 1850,
     defaultPrice: 2035,
     unit: 'job',
@@ -91,7 +154,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     sku: 'ELEC-HOOKUP',
     name: 'Electric Hookups',
     category: 'addons',
-    description: 'Electrical hookup package. Master Quote 5 selected sample price is $1,320; component scope must be confirmed before finalization.',
+    description: 'Master Quote 5 selected hookup package price is $1,320. Component scope must be confirmed before finalization.',
     defaultCost: 1200,
     defaultPrice: 1320,
     unit: 'job',
@@ -100,7 +163,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     sku: 'SITE-WELL-4INCH',
     name: '4-Inch Potable Water Well System',
     category: 'addons',
-    description: 'Master Quote 5 drilling depth + installation baseline. Verify drilling depth, electric connection and hookup distance before final.',
+    description: 'Drilling depth + installation baseline. Verify drilling depth, electric connection and hookup distance before final.',
     defaultCost: 8500,
     defaultPrice: 9350,
     unit: 'system',
@@ -118,7 +181,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     sku: 'SITE-WELL-HOOKUP-50-100',
     name: 'Well Hookup (50–100 ft)',
     category: 'addons',
-    description: 'Well hookup from 50–100 ft. Master sheet notes $150 for each additional 50 ft beyond this range.',
+    description: 'Well hookup 50–100 ft. Master Quote 5 notes $150 for each additional 50 ft beyond this range.',
     defaultCost: 500,
     defaultPrice: 550,
     unit: 'job',
@@ -187,33 +250,6 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     unit: 'allowance',
   },
   ...acOptions,
-  {
-    sku: 'SITE-PERIMETER-STABILIZATION',
-    name: 'Perimeter Stabilization',
-    category: 'mandatory_services',
-    description: 'Perimeter stabilization to prevent washouts and maintain level ground around the home.',
-    defaultCost: 1000,
-    defaultPrice: 1100,
-    unit: 'job',
-  },
-  {
-    sku: 'SITE-STEPS-2SET',
-    name: 'Wooden Steps — 2 Sets',
-    category: 'mandatory_services',
-    description: 'Master Quote 5 selected two-set wooden-step package.',
-    defaultCost: 1000,
-    defaultPrice: 2500,
-    unit: 'package',
-  },
-  {
-    sku: 'SITE-SKIRTING-VALOR',
-    name: 'Basic Valor Skirting',
-    category: 'mandatory_services',
-    description: 'Basic Valor skirting with vents, corners and trim. $8 cost / $10 customer price per linear foot.',
-    defaultCost: 0,
-    defaultPrice: 0,
-    unit: 'linear ft',
-  },
   ...dirtPadOptions,
   {
     sku: 'SITE-DEMO-BID',
@@ -223,6 +259,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
   {
     sku: 'SITE-CLEARING-BID',
@@ -232,6 +269,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
   {
     sku: 'SITE-APRON',
@@ -250,6 +288,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
   {
     sku: 'ADDON-DECK-BID',
@@ -259,6 +298,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
   {
     sku: 'ADDON-PORCH-BID',
@@ -268,6 +308,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
   {
     sku: 'ADDON-GUTTERS',
@@ -277,6 +318,7 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 10,
     defaultPrice: 11,
     unit: 'linear ft',
+    calcType: 'per_foot',
   },
   {
     sku: 'ADDON-LANDSCAPING-BID',
@@ -286,8 +328,11 @@ export const SERVICE_CATALOG: ServiceCatalogItem[] = [
     defaultCost: 0,
     defaultPrice: 0,
     unit: 'job',
+    requiresBid: true,
   },
 ];
+
+export const SERVICE_CATALOG: ServiceCatalogItem[] = serviceInputs.map(service);
 
 export function calculateTrimOut(sectionCount: number): { cost: number; price: number; label: string } {
   if (sectionCount <= 1) return { cost: 1000, price: 1100, label: 'Single-wide' };
@@ -317,7 +362,10 @@ export function getRecommendedSepticTankSize(bedrooms: number, squareFeet: numbe
 export function calculateMasterQuote5HousePrice(unitFactoryCost: number): number {
   const cost = Number(unitFactoryCost) || 0;
   if (cost <= 0) return 0;
-  const markupFactor = Math.max(27368 / cost, MASTER_QUOTE_5_GLOBALS.pricingMultiplier * Math.pow(cost, -MASTER_QUOTE_5_GLOBALS.curveMultiplier));
+  const markupFactor = Math.max(
+    27368 / cost,
+    MASTER_QUOTE_5_GLOBALS.pricingMultiplier * Math.pow(cost, -MASTER_QUOTE_5_GLOBALS.curveMultiplier),
+  );
   return cost * (markupFactor + 1);
 }
 
