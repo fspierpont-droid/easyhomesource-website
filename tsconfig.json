@@ -15,7 +15,11 @@
     "jsx": "preserve",
     "incremental": true,
     "plugins": [{ "name": "next" }],
-    "paths": { "@/*": ["./*"] }
+    "paths": {
+      "@/data/fullMasterCatalog.generated": ["./data/masterQuote5Catalog.ts"],
+      "@/data/pricingSpreadsheet": ["./data/masterQuote5Pricing.ts"],
+      "@/*": ["./*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
