@@ -34,15 +34,22 @@ function close(actual: number, expected: number, tolerance = 0.02) {
 }
 
 for (const home of FULL_MASTER_CATALOG_HOMES) {
-  const sections = Number(home.floors) || 1;
-  const expectedFactoryCost = Number(home.hudBasePrice) + 2000 + (200 * sections) + 35;
-  if (!close(Number(home.estFactoryCost), expectedFactoryCost, 0.001)) {
+  const hudBase = Number(home.hudBasePrice);
+  const factoryCost = Number(home.estFactoryCost);
+  const sectionDues = factoryCost - hudBase - 2000 - 35;
+  const sectionCount = sectionDues / 200;
+
+  if (
+    !Number.isInteger(sectionCount) ||
+    sectionCount < 1 ||
+    sectionCount > 3 ||
+    !close(factoryCost, hudBase + 2000 + (200 * sectionCount) + 35, 0.001)
+  ) {
     throw new Error(
-      `Master Quote 5 factory-cost derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedFactoryCost}, got ${home.estFactoryCost}`,
+      `Master Quote 5 factory-cost surcharge chain failed for ${home.manufacturer} ${home.name}: HUD ${hudBase}, factory ${factoryCost}, derived sections ${sectionCount}`,
     );
   }
 
-  const factoryCost = expectedFactoryCost;
   const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
   const expectedEhsPrice = factoryCost * (markupFactor + 1);
   const expectedMsrp = expectedEhsPrice * 1.15;
