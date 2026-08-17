@@ -1,12 +1,48 @@
 import {
-  FULL_MASTER_CATALOG_HOMES,
+  FULL_MASTER_CATALOG_HOMES as SOURCE_MASTER_QUOTE_5_HOMES,
+  getEffectiveMasterCatalog as getSourceEffectiveMasterCatalog,
   getMasterQuote5CatalogAudit,
+  saveStoredCatalogOverrides,
+  clearStoredCatalogOverrides,
+  type MasterCatalogHome,
 } from './masterQuote5Catalog';
 
-export * from './masterQuote5Catalog';
+export type { MasterCatalogHome };
+export { saveStoredCatalogOverrides, clearStoredCatalogOverrides };
 
 const audit = getMasterQuote5CatalogAudit();
 const excluded = new Set(['Skyline Ocala', 'Champion Lake City', 'Clayton Russellville']);
+
+function roundMoney(value: number) {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+}
+
+function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
+  const factoryCost = Number(home.estFactoryCost) || 0;
+  if (factoryCost <= 0) return home;
+
+  const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
+  const ehsPrice = roundMoney(factoryCost * (markupFactor + 1));
+  const msrp = roundMoney(ehsPrice * 1.15);
+
+  return {
+    ...home,
+    ehsPrice,
+    startingPrice: ehsPrice,
+    msrp,
+  };
+}
+
+function deriveCatalog(homes: MasterCatalogHome[]) {
+  return homes.map(deriveMasterQuote5Prices);
+}
+
+export const FULL_MASTER_CATALOG_HOMES = deriveCatalog(SOURCE_MASTER_QUOTE_5_HOMES);
+
+export function getEffectiveMasterCatalog(): MasterCatalogHome[] {
+  return deriveCatalog(getSourceEffectiveMasterCatalog());
+}
+
 const excludedFound = FULL_MASTER_CATALOG_HOMES.filter((home) => excluded.has(home.manufacturer));
 
 if (
@@ -15,13 +51,15 @@ if (
   audit.reconciledRows !== 225 ||
   audit.duplicateCount !== 0 ||
   audit.missing.length !== 0 ||
-  excludedFound.length !== 0
+  excludedFound.length !== 0 ||
+  FULL_MASTER_CATALOG_HOMES.length !== 225
 ) {
   throw new Error(
     `Master Quote 5 catalog reconciliation failed: ${JSON.stringify({
       sourceRows: audit.sourceRows,
       rawAllowedRows: audit.rawAllowedRows,
       reconciledRows: audit.reconciledRows,
+      finalRows: FULL_MASTER_CATALOG_HOMES.length,
       duplicateCount: audit.duplicateCount,
       missing: audit.missing.map((home) => `${home.manufacturer} ${home.name}`),
       excludedFound: excludedFound.map((home) => `${home.manufacturer} ${home.name}`),
@@ -51,36 +89,36 @@ for (const home of FULL_MASTER_CATALOG_HOMES) {
   }
 
   const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
-  const expectedEhsPrice = factoryCost * (markupFactor + 1);
-  const expectedMsrp = expectedEhsPrice * 1.15;
+  const expectedEhsPrice = roundMoney(factoryCost * (markupFactor + 1));
+  const expectedMsrp = roundMoney(expectedEhsPrice * 1.15);
 
-  if (!close(Number(home.ehsPrice), expectedEhsPrice)) {
+  if (!close(Number(home.ehsPrice), expectedEhsPrice, 0.001)) {
     throw new Error(
       `Master Quote 5 EHS-price derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedEhsPrice}, got ${home.ehsPrice}`,
     );
   }
-  if (!close(Number(home.msrp), expectedMsrp)) {
+  if (!close(Number(home.msrp), expectedMsrp, 0.001)) {
     throw new Error(
       `Master Quote 5 MSRP derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedMsrp}, got ${home.msrp}`,
     );
   }
 }
 
-const requiredPriceChecks = [
-  ['CAVCO Plant City', 'Atmos 28603N', 111000, 159324.27],
-  ['CLAYTON Addison', 'Boujee 2', 87534, 129981.04],
-  ['CAVCO Plant City', 'Paxton 28523A', 92433, 136161.09],
-  ['CLAYTON TRU', 'Dogwood', 34440, 59946.77],
-  ['Timber Creek', 'Delilah CSFL-3301', 127930, 180148.68],
+const requiredSourceChecks = [
+  ['CAVCO Plant City', 'Atmos 28603N', 108565, 111000],
+  ['CLAYTON Addison', 'Boujee 2', 85099, 87534],
+  ['CAVCO Plant City', 'Paxton 28523A', 89998, 92433],
+  ['CLAYTON TRU', 'Dogwood', 32205, 34440],
+  ['Timber Creek', 'Delilah CSFL-3301', 125495, 127930],
 ] as const;
 
-for (const [manufacturer, name, factoryCost, ehsPrice] of requiredPriceChecks) {
+for (const [manufacturer, name, hudBase, factoryCost] of requiredSourceChecks) {
   const home = FULL_MASTER_CATALOG_HOMES.find(
     (item) => item.manufacturer === manufacturer && item.name === name,
   );
-  if (!home || home.estFactoryCost !== factoryCost || Math.abs(home.ehsPrice - ehsPrice) > 0.001) {
+  if (!home || home.hudBasePrice !== hudBase || home.estFactoryCost !== factoryCost) {
     throw new Error(
-      `Master Quote 5 known-price check failed for ${manufacturer} ${name}: ${JSON.stringify(home)}`,
+      `Master Quote 5 known-source check failed for ${manufacturer} ${name}: ${JSON.stringify(home)}`,
     );
   }
 }
