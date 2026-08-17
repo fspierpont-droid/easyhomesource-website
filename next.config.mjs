@@ -11,13 +11,12 @@ const nextConfig = {
   webpack(config) {
     // Vercel's production bundler was resolving these two application imports
     // to the legacy physical files even though tsconfig paths redirected them
-    // during local/GitHub builds. Force the application-facing requests to the
-    // audited Master Quote 5 runtime layers. Keep relative imports untouched so
-    // those layers can still read the legacy files as source/reference data
-    // without creating circular aliases.
+    // during local/GitHub builds. Force application-facing requests to the
+    // audited pricing/catalog bridges. Relative source imports remain untouched,
+    // avoiding circular aliases inside the validation layers.
     config.resolve.alias['@/data/pricingSpreadsheet'] = path.resolve(
       rootDir,
-      'data/masterQuote5RuntimeBridge.ts',
+      'data/masterQuote5PricingBridge.ts',
     );
     config.resolve.alias['@/data/fullMasterCatalog.generated'] = path.resolve(
       rootDir,
