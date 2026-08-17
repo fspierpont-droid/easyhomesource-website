@@ -17,8 +17,25 @@ function roundMoney(value: number) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
+function correctedFactoryCost(home: MasterCatalogHome): number {
+  const hudBase = Number(home.hudBasePrice) || 0;
+  const sourceFactory = Number(home.estFactoryCost) || 0;
+
+  // Master Quote 5's Timber Creek rows are incomplete: most omit the
+  // $200-per-section state/association dues even though the workbook's global
+  // factory-cost rule requires them. Timber Creek's 16-ft models are singles;
+  // its 32-ft models are doubles. Rebuild the factory cost from HUD Base so the
+  // missing dues cannot flow into EHS/MSRP pricing.
+  if (home.manufacturer === 'Timber Creek') {
+    const sections = Number(home.width) <= 18 ? 1 : 2;
+    return hudBase + 2000 + (200 * sections) + 35;
+  }
+
+  return sourceFactory;
+}
+
 function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
-  const factoryCost = Number(home.estFactoryCost) || 0;
+  const factoryCost = correctedFactoryCost(home);
   if (factoryCost <= 0) return home;
 
   const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
@@ -27,6 +44,7 @@ function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
 
   return {
     ...home,
+    estFactoryCost: factoryCost,
     ehsPrice,
     startingPrice: ehsPrice,
     msrp,
@@ -110,6 +128,8 @@ const requiredSourceChecks = [
   ['CAVCO Plant City', 'Paxton 28523A', 89998, 92433],
   ['CLAYTON TRU', 'Dogwood', 32205, 34440],
   ['Timber Creek', 'Delilah CSFL-3301', 125495, 127930],
+  ['Timber Creek', 'The Magnolia CS-3220', 126995, 129430],
+  ['Timber Creek', 'Keystone CS-1625', 69495, 71730],
 ] as const;
 
 for (const [manufacturer, name, hudBase, factoryCost] of requiredSourceChecks) {
