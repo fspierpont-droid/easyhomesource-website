@@ -29,6 +29,36 @@ if (
   );
 }
 
+function close(actual: number, expected: number, tolerance = 0.02) {
+  return Math.abs(actual - expected) <= tolerance;
+}
+
+for (const home of FULL_MASTER_CATALOG_HOMES) {
+  const sections = Number(home.floors) || 1;
+  const expectedFactoryCost = Number(home.hudBasePrice) + 2000 + (200 * sections) + 35;
+  if (!close(Number(home.estFactoryCost), expectedFactoryCost, 0.001)) {
+    throw new Error(
+      `Master Quote 5 factory-cost derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedFactoryCost}, got ${home.estFactoryCost}`,
+    );
+  }
+
+  const factoryCost = expectedFactoryCost;
+  const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
+  const expectedEhsPrice = factoryCost * (markupFactor + 1);
+  const expectedMsrp = expectedEhsPrice * 1.15;
+
+  if (!close(Number(home.ehsPrice), expectedEhsPrice)) {
+    throw new Error(
+      `Master Quote 5 EHS-price derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedEhsPrice}, got ${home.ehsPrice}`,
+    );
+  }
+  if (!close(Number(home.msrp), expectedMsrp)) {
+    throw new Error(
+      `Master Quote 5 MSRP derivation failed for ${home.manufacturer} ${home.name}: expected ${expectedMsrp}, got ${home.msrp}`,
+    );
+  }
+}
+
 const requiredPriceChecks = [
   ['CAVCO Plant City', 'Atmos 28603N', 111000, 159324.27],
   ['CLAYTON Addison', 'Boujee 2', 87534, 129981.04],
