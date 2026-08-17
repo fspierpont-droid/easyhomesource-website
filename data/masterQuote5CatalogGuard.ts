@@ -1,0 +1,49 @@
+import {
+  FULL_MASTER_CATALOG_HOMES,
+  getMasterQuote5CatalogAudit,
+} from './masterQuote5Catalog';
+
+export * from './masterQuote5Catalog';
+
+const audit = getMasterQuote5CatalogAudit();
+const excluded = new Set(['Skyline Ocala', 'Champion Lake City', 'Clayton Russellville']);
+const excludedFound = FULL_MASTER_CATALOG_HOMES.filter((home) => excluded.has(home.manufacturer));
+
+if (
+  audit.sourceRows !== 225 ||
+  audit.rawAllowedRows !== 225 ||
+  audit.reconciledRows !== 225 ||
+  audit.duplicateCount !== 0 ||
+  audit.missing.length !== 0 ||
+  excludedFound.length !== 0
+) {
+  throw new Error(
+    `Master Quote 5 catalog reconciliation failed: ${JSON.stringify({
+      sourceRows: audit.sourceRows,
+      rawAllowedRows: audit.rawAllowedRows,
+      reconciledRows: audit.reconciledRows,
+      duplicateCount: audit.duplicateCount,
+      missing: audit.missing.map((home) => `${home.manufacturer} ${home.name}`),
+      excludedFound: excludedFound.map((home) => `${home.manufacturer} ${home.name}`),
+    })}`,
+  );
+}
+
+const requiredPriceChecks = [
+  ['CAVCO Plant City', 'Atmos 28603N', 111000, 159324.27],
+  ['CLAYTON Addison', 'Boujee 2', 87534, 129981.04],
+  ['CAVCO Plant City', 'Paxton 28523A', 92433, 136161.09],
+  ['CLAYTON TRU', 'Dogwood', 34440, 59946.77],
+  ['Timber Creek', 'Delilah CSFL-3301', 127930, 180148.68],
+] as const;
+
+for (const [manufacturer, name, factoryCost, ehsPrice] of requiredPriceChecks) {
+  const home = FULL_MASTER_CATALOG_HOMES.find(
+    (item) => item.manufacturer === manufacturer && item.name === name,
+  );
+  if (!home || home.estFactoryCost !== factoryCost || Math.abs(home.ehsPrice - ehsPrice) > 0.001) {
+    throw new Error(
+      `Master Quote 5 known-price check failed for ${manufacturer} ${name}: ${JSON.stringify(home)}`,
+    );
+  }
+}
