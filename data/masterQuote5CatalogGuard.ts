@@ -4,10 +4,10 @@ import {
   getMasterQuote5CatalogAudit,
   saveStoredCatalogOverrides,
   clearStoredCatalogOverrides,
-  type MasterCatalogHome,
+  type MasterCatalogHome as SourceMasterCatalogHome,
 } from './masterQuote5Catalog';
 
-export type { MasterCatalogHome };
+export type MasterCatalogHome = SourceMasterCatalogHome & { floors?: number };
 export { saveStoredCatalogOverrides, clearStoredCatalogOverrides };
 
 const audit = getMasterQuote5CatalogAudit();
@@ -17,7 +17,11 @@ function roundMoney(value: number) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
-function correctedFactoryCost(home: MasterCatalogHome): number {
+function timberCreekSections(home: SourceMasterCatalogHome) {
+  return Number(home.width) <= 18 ? 1 : 2;
+}
+
+function correctedFactoryCost(home: SourceMasterCatalogHome): number {
   const hudBase = Number(home.hudBasePrice) || 0;
   const sourceFactory = Number(home.estFactoryCost) || 0;
 
@@ -27,16 +31,37 @@ function correctedFactoryCost(home: MasterCatalogHome): number {
   // its 32-ft models are doubles. Rebuild the factory cost from HUD Base so the
   // missing dues cannot flow into EHS/MSRP pricing.
   if (home.manufacturer === 'Timber Creek') {
-    const sections = Number(home.width) <= 18 ? 1 : 2;
-    return hudBase + 2000 + (200 * sections) + 35;
+    return hudBase + 2000 + (200 * timberCreekSections(home)) + 35;
   }
 
   return sourceFactory;
 }
 
-function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
+function exactSectionCount(home: Pick<MasterCatalogHome, 'hudBasePrice' | 'estFactoryCost'>) {
+  const sectionCount = (
+    Number(home.estFactoryCost) - Number(home.hudBasePrice) - 2000 - 35
+  ) / 200;
+  return Number.isInteger(sectionCount) && sectionCount >= 1 && sectionCount <= 3
+    ? sectionCount
+    : 0;
+}
+
+export function getMasterQuote5SectionCount(home: Pick<MasterCatalogHome, 'hudBasePrice' | 'estFactoryCost'>) {
+  const count = exactSectionCount(home);
+  if (!count) {
+    throw new Error('Unable to derive Master Quote 5 section count from factory-cost surcharge chain.');
+  }
+  return count;
+}
+
+function deriveMasterQuote5Prices(home: SourceMasterCatalogHome): MasterCatalogHome {
   const factoryCost = correctedFactoryCost(home);
-  if (factoryCost <= 0) return home;
+  if (factoryCost <= 0) return home as MasterCatalogHome;
+
+  const sectionCount = exactSectionCount({ hudBasePrice: home.hudBasePrice, estFactoryCost: factoryCost });
+  if (!sectionCount) {
+    throw new Error(`Unable to derive section count for ${home.manufacturer} ${home.name}.`);
+  }
 
   const markupFactor = Math.max(27368 / factoryCost, 85 * Math.pow(factoryCost, -0.454));
   const ehsPrice = roundMoney(factoryCost * (markupFactor + 1));
@@ -44,6 +69,7 @@ function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
 
   return {
     ...home,
+    floors: sectionCount,
     estFactoryCost: factoryCost,
     ehsPrice,
     startingPrice: ehsPrice,
@@ -51,7 +77,7 @@ function deriveMasterQuote5Prices(home: MasterCatalogHome): MasterCatalogHome {
   };
 }
 
-function deriveCatalog(homes: MasterCatalogHome[]) {
+function deriveCatalog(homes: SourceMasterCatalogHome[]): MasterCatalogHome[] {
   return homes.map(deriveMasterQuote5Prices);
 }
 
@@ -92,17 +118,17 @@ function close(actual: number, expected: number, tolerance = 0.02) {
 for (const home of FULL_MASTER_CATALOG_HOMES) {
   const hudBase = Number(home.hudBasePrice);
   const factoryCost = Number(home.estFactoryCost);
-  const sectionDues = factoryCost - hudBase - 2000 - 35;
-  const sectionCount = sectionDues / 200;
+  const sectionCount = getMasterQuote5SectionCount(home);
 
-  if (
-    !Number.isInteger(sectionCount) ||
-    sectionCount < 1 ||
-    sectionCount > 3 ||
-    !close(factoryCost, hudBase + 2000 + (200 * sectionCount) + 35, 0.001)
-  ) {
+  if (!close(factoryCost, hudBase + 2000 + (200 * sectionCount) + 35, 0.001)) {
     throw new Error(
       `Master Quote 5 factory-cost surcharge chain failed for ${home.manufacturer} ${home.name}: HUD ${hudBase}, factory ${factoryCost}, derived sections ${sectionCount}`,
+    );
+  }
+
+  if (home.floors !== sectionCount) {
+    throw new Error(
+      `Master Quote 5 section-count exposure failed for ${home.manufacturer} ${home.name}: expected ${sectionCount}, got ${home.floors}`,
     );
   }
 
@@ -123,20 +149,25 @@ for (const home of FULL_MASTER_CATALOG_HOMES) {
 }
 
 const requiredSourceChecks = [
-  ['CAVCO Plant City', 'Atmos 28603N', 108565, 111000],
-  ['CLAYTON Addison', 'Boujee 2', 85099, 87534],
-  ['CAVCO Plant City', 'Paxton 28523A', 89998, 92433],
-  ['CLAYTON TRU', 'Dogwood', 32205, 34440],
-  ['Timber Creek', 'Delilah CSFL-3301', 125495, 127930],
-  ['Timber Creek', 'The Magnolia CS-3220', 126995, 129430],
-  ['Timber Creek', 'Keystone CS-1625', 69495, 71730],
+  ['CAVCO Plant City', 'Atmos 28603N', 108565, 111000, 2],
+  ['CLAYTON Addison', 'Boujee 2', 85099, 87534, 2],
+  ['CAVCO Plant City', 'Paxton 28523A', 89998, 92433, 2],
+  ['CLAYTON TRU', 'Dogwood', 32205, 34440, 1],
+  ['Timber Creek', 'Delilah CSFL-3301', 125495, 127930, 2],
+  ['Timber Creek', 'The Magnolia CS-3220', 126995, 129430, 2],
+  ['Timber Creek', 'Keystone CS-1625', 69495, 71730, 1],
 ] as const;
 
-for (const [manufacturer, name, hudBase, factoryCost] of requiredSourceChecks) {
+for (const [manufacturer, name, hudBase, factoryCost, sections] of requiredSourceChecks) {
   const home = FULL_MASTER_CATALOG_HOMES.find(
     (item) => item.manufacturer === manufacturer && item.name === name,
   );
-  if (!home || home.hudBasePrice !== hudBase || home.estFactoryCost !== factoryCost) {
+  if (
+    !home ||
+    home.hudBasePrice !== hudBase ||
+    home.estFactoryCost !== factoryCost ||
+    getMasterQuote5SectionCount(home) !== sections
+  ) {
     throw new Error(
       `Master Quote 5 known-source check failed for ${manufacturer} ${name}: ${JSON.stringify(home)}`,
     );
