@@ -4,9 +4,9 @@ import {
   calculateMasterQuote5Profit,
   calculateSkirtingByDimensions,
   calculateTrimOut,
-} from './masterQuote5PricingV2';
+} from './masterQuote5PricingFinal';
 
-export * from './masterQuote5PricingV2';
+export * from './masterQuote5PricingFinal';
 
 function assertClose(actual: number, expected: number, label: string, tolerance = 0.01) {
   if (Math.abs(actual - expected) > tolerance) {
