@@ -1,1 +1,1 @@
-export { default } from '@/components/portal/MasterQuote5NewQuotePage';
+export { default } from '@/components/portal/EhsNewQuoteBuilder';
