@@ -1,7 +1,7 @@
 import {
   calculateComprehensiveQuoteTotals,
   type QuoteFinancialTotals,
-} from '../../data/masterQuote5Pricing.ts';
+} from '../../data/masterQuote5PricingV2.ts';
 import {
   newQuoteTotalArgs,
   type NewQuoteTotalsInput,
