@@ -16,7 +16,7 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/data/fullMasterCatalog.generated": ["./data/masterQuote5Catalog.ts"],
+      "@/data/fullMasterCatalog.generated": ["./data/masterQuote5CatalogGuard.ts"],
       "@/data/pricingSpreadsheet": ["./data/masterQuote5PricingV2.ts"],
       "@/*": ["./*"]
     }
