@@ -18,6 +18,8 @@ type ImportRecord = {
   notes: string;
 };
 
+// Source of truth: EHS_Property_Tracker.xlsx dated 2026-08-04.
+// Do not silently replace tracker values with outside parcel/address research.
 const VERIFIED_TRACKER_RECORDS: ImportRecord[] = [
   { legacyId: 'EHS-001', address: '6645 W Erlen Ln', city: 'Homosassa', state: 'FL', zip: '34446', status: 'AVAILABLE', propertyType: 'HOME', units: 1, notes: 'Finished home, ready on market' },
   { legacyId: 'EHS-002', address: '3219 Welsh St', city: 'Spring Hill', state: 'FL', zip: '34606', status: 'AVAILABLE', propertyType: 'HOME', units: 1, notes: 'Finished home, ready on market' },
@@ -25,8 +27,8 @@ const VERIFIED_TRACKER_RECORDS: ImportRecord[] = [
   { legacyId: 'EHS-004', address: '7112 Fitzpatrick Ave', city: 'Brooksville', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot' },
   { legacyId: 'EHS-005', address: '9248 Denmarsh Dr', city: 'Brooksville', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot' },
   { legacyId: 'EHS-006', address: '9254 Denmarsh Dr', city: 'Brooksville', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot' },
-  { legacyId: 'EHS-007', address: '9868 Lake Dr', city: 'Weeki Wachee', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot. City standardized to Weeki Wachee from current Hernando County parcel/permit records; EHS availability/type retained from internal tracker.' },
-  { legacyId: 'EHS-008', address: '9862 Lake Dr', city: 'Weeki Wachee', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot. City/ZIP corrected to Weeki Wachee 34613 from current Hernando County parcel/permit records; EHS availability/type retained from internal tracker.' },
+  { legacyId: 'EHS-007', address: '9868 Lake Dr', city: 'Spring Hill', state: 'FL', zip: '34613', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot' },
+  { legacyId: 'EHS-008', address: '9862 Lake Dr', city: 'Spring Hill', state: 'FL', zip: '34446', status: 'AVAILABLE', propertyType: 'LAND', units: 1, notes: 'Vacant lot' },
   { legacyId: 'EHS-009', address: '5043 Southtowne Loop', city: 'New Port Richey', state: 'FL', zip: '34652', status: 'AVAILABLE', propertyType: 'LAND', units: 15, notes: '15 on-stilts vacant lots' },
   { legacyId: 'EHS-010', address: '1295 S Rock Crusher Rd', city: 'Homosassa', state: 'FL', zip: '34448', status: 'AVAILABLE', propertyType: 'LAND', units: 23, notes: '23 vacant lots; approximately half-acre home sites' },
   { legacyId: 'EHS-011', address: '26007 Shangri Dr', city: 'Brooksville', state: 'FL', zip: '34601', status: 'COMING_SOON', propertyType: 'SPEC_HOME', units: 1, notes: 'Home in progress; expected to be ready in a few months' },
@@ -90,6 +92,7 @@ export default function PropertyImportPage() {
             zip: record.zip,
             status: record.status,
             propertyType: record.propertyType,
+            units: record.units,
             price: null,
             photos: [],
             description: record.notes,
@@ -132,7 +135,7 @@ export default function PropertyImportPage() {
             </Link>
             <h1 className="mt-3 text-3xl font-black">Verified Property Tracker Import</h1>
             <p className="mt-2 text-sm leading-6 text-slate-600">
-              Temporary migration utility for the EHS Property Tracker dated August 4, 2026. It imports only the 13 records with known city, ZIP, status and property type. It never assigns a sales price and never publishes a property to the public website.
+              Temporary migration utility for the EHS Property Tracker dated August 4, 2026. It imports only the 13 records with known city, ZIP, status and property type. It preserves the source tracker values, including multi-site counts. It never assigns a sales price and never publishes a property to the public website.
             </p>
           </div>
 
