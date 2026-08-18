@@ -15,14 +15,15 @@ export interface ModernQuoteTotalsInput {
   siteWorkCost?: number;
   addonsCost?: number;
   taxRate?: number;
+  ehsLoanOfficerUsed?: boolean;
 }
 
 /**
  * Named-argument boundary for the modern quote builder.
  *
- * The V05 calculator is positional. Keeping the screen on named inputs prevents
- * factory cost, discounts, land, delivery, or service totals from sliding into
- * the wrong parameter slot when the UI evolves.
+ * Master Quote 5 remains authoritative. The screen uses named inputs here so
+ * land, delivery, service, cost, discount, tax, and loan-fee values cannot slide
+ * into the wrong positional slot as the UI evolves.
  */
 export function calculateModernQuoteTotals(
   input: ModernQuoteTotalsInput,
@@ -39,5 +40,6 @@ export function calculateModernQuoteTotals(
     input.siteWorkCost ?? 0,
     input.addonsCost ?? 0,
     input.taxRate ?? 0.03,
+    input.ehsLoanOfficerUsed ?? false,
   );
 }
