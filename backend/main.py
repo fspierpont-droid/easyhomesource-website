@@ -26,6 +26,7 @@ from auth import (
 from catalog import router as catalog_router
 from customers import router as customers_router
 from database import ensure_indexes, get_db, ping_database
+from legacy_quotes import router as legacy_quotes_router
 from models import (
     ChangePasswordRequest,
     LoginRequest,
@@ -52,6 +53,7 @@ app.include_router(customers_router)
 app.include_router(properties_router)
 app.include_router(quotes_router)
 app.include_router(public_quotes_router)
+app.include_router(legacy_quotes_router)
 
 
 def _cors_origins() -> list[str]:
@@ -275,6 +277,7 @@ async def system_check(_admin: dict = Depends(require_admin)) -> dict:
         "users",
         "customers",
         "quotes",
+        "legacy_quotes",
         "projects",
         "homes",
         "properties",
