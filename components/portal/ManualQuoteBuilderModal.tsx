@@ -438,25 +438,15 @@ export function ManualQuoteBuilderModal({
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150 text-xs">
       <div className="bg-white rounded-[2rem] shadow-2xl border border-borderGray w-full max-w-5xl max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header with Easy HomeSource Navy Palette */}
-        <div className="p-5 sm:p-6 border-b border-[#0F2A47]/20 bg-gradient-to-r from-[#0B1E38] via-[#0F2A47] to-[#1E6FA8] text-white flex items-center justify-between shadow-md">
+        {/* Clean quote builder header */}
+        <div className="p-4 sm:p-5 border-b border-[#0F2A47]/20 bg-gradient-to-r from-[#0B1E38] via-[#0F2A47] to-[#1E6FA8] text-white flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-xl shadow-xs">
               📋
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-base font-black tracking-tight text-white">
-                  Master Turnkey Quote Tool (Spreadsheet Engine)
-                </h3>
-                <span className="bg-emerald-400/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[10px] border border-emerald-300/30">
-                  {FULL_MASTER_CATALOG_HOMES.length} Models Loaded
-                </span>
-              </div>
-              <p className="text-[11px] text-[#A8C8E6] font-medium">
-                Live pricing from Master Spreadsheet: All {FULL_MASTER_CATALOG_HOMES.length} Models • Dropdown Line Items • Auto Delivery Calculation
-              </p>
-            </div>
+            <h3 className="text-lg font-black tracking-tight text-white">
+              Master Quote Builder
+            </h3>
           </div>
 
           <button
@@ -467,8 +457,8 @@ export function ManualQuoteBuilderModal({
           </button>
         </div>
 
-        {/* 6-Step Navigation Ribbon (Clean Ribbon without duplicated total box) */}
-        <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 font-black text-xs">
+        {/* 6-Step Navigation Ribbon */}
+        <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center gap-2 font-black text-xs">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { num: 1, label: '1. Customer Info' },
@@ -491,13 +481,6 @@ export function ManualQuoteBuilderModal({
                 {s.label}
               </button>
             ))}
-          </div>
-
-          <div className="text-right shrink-0">
-            <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Total</span>
-            <span className="text-base font-black text-[#0F2A47]">
-              ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </span>
           </div>
         </div>
 
@@ -582,7 +565,7 @@ export function ManualQuoteBuilderModal({
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-slate-100">
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">
-                      Master Spreadsheet Catalog ({FULL_MASTER_CATALOG_HOMES.length} Models)
+                      Home Catalog
                     </span>
                     <h4 className="font-black text-sm text-[#0B1E38]">
                       1. Select Base Manufactured Home
@@ -606,7 +589,7 @@ export function ManualQuoteBuilderModal({
                       type="text"
                       value={homeSearch}
                       onChange={(e) => setHomeSearch(e.target.value)}
-                      placeholder={`Search all ${FULL_MASTER_CATALOG_HOMES.length} models...`}
+                      placeholder="Search homes..."
                       className="px-3 py-1.5 border border-slate-200 rounded-xl text-xs font-semibold"
                     />
                   </div>
@@ -823,9 +806,9 @@ export function ManualQuoteBuilderModal({
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 4</span>
-                  <h4 className="text-lg font-black text-[#0B1E38]">Service Catalog &amp; Dropdown Line Items</h4>
+                  <h4 className="text-lg font-black text-[#0B1E38]">Services &amp; Line Items</h4>
                   <p className="text-xs text-slate-500">
-                    Mandatory services, A/C heat pump matrices, permits ($2,000), well/septic, and site work.
+                    Add the services, site work, utilities, permits, and upgrades needed for this quote.
                   </p>
                 </div>
 
@@ -857,7 +840,6 @@ export function ManualQuoteBuilderModal({
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-600">
                       <th className="py-2.5 px-3">Service / Line Item</th>
-                      <th className="py-2.5 px-3">Category</th>
                       <th className="py-2.5 px-3">Unit Price ($)</th>
                       <th className="py-2.5 px-3">Qty</th>
                       <th className="py-2.5 px-3">Total ($)</th>
@@ -875,11 +857,6 @@ export function ManualQuoteBuilderModal({
                             className="font-bold text-xs text-slate-900 w-full bg-transparent outline-none focus:underline"
                           />
                           <div className="text-[10px] text-slate-400 truncate max-w-sm">{item.description}</div>
-                        </td>
-                        <td className="py-2 px-3">
-                          <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                            {item.category}
-                          </span>
                         </td>
                         <td className="py-2 px-3">
                           <input
@@ -1003,27 +980,19 @@ export function ManualQuoteBuilderModal({
             <div className="space-y-6">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Step 6</span>
-                <h4 className="text-lg font-black text-[#0B1E38]">Formal Proposal Summary &amp; Financial Totals</h4>
+                <h4 className="text-lg font-black text-[#0B1E38]">Proposal Summary &amp; Totals</h4>
                 <p className="text-xs text-slate-500">
-                  Verified breakdown matching the Easy HomeSource ERP spreadsheet with 3% Florida sales tax and internal metrics.
+                  Review the customer-facing price breakdown and internal deal metrics before saving.
                 </p>
               </div>
 
               {/* Customer-Facing Summary Breakdown */}
               <div className="p-6 bg-slate-50 border border-slate-200 rounded-[1.75rem] shadow-sm space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">Customer Facing</span>
-                    <h5 className="font-extrabold text-sm text-slate-900">
-                      {customHomeName} • {deliveryAddress}
-                    </h5>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] text-slate-500 uppercase font-bold block">Estimated Total</span>
-                    <span className="text-xl font-black text-[#0F2A47]">
-                      ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </span>
-                  </div>
+                <div className="pb-3 border-b border-slate-200">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">Customer Facing</span>
+                  <h5 className="font-extrabold text-sm text-slate-900">
+                    {customHomeName} • {deliveryAddress}
+                  </h5>
                 </div>
 
                 {/* Breakdown Line Items (Every line item explicitly listed with exact sum) */}
@@ -1083,9 +1052,8 @@ export function ManualQuoteBuilderModal({
                     <span className="text-[#1E6FA8]">${quoteTotals.sales_tax_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
 
-                  {/* Prominent Navy Estimated Total Banner */}
                   <div className="flex items-center justify-between rounded-xl bg-[#0F2A47] text-white px-4 py-3 mt-3 shadow-md">
-                    <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
+                    <span className="text-xs uppercase tracking-wider font-extrabold">QUOTE TOTAL</span>
                     <span className="font-black text-2xl tracking-tight">
                       ${quoteTotals.estimated_total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
