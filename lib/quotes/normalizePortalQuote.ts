@@ -11,10 +11,13 @@ export function normalizePortalLineItem(item: SelectedQuoteLineItem): SelectedQu
 export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuote {
   const lineItems = (quote.lineItems || []).map(normalizePortalLineItem);
   const siteWorkItems = lineItems.filter(
-    (item) => item.category === 'mandatory_services' || item.category === 'site_work',
+    (item) =>
+      item.category === 'mandatory_services' ||
+      item.category === 'site_work' ||
+      item.category === 'custom',
   );
   const addOnItems = lineItems.filter(
-    (item) => item.category === 'addons' || item.category === 'options' || item.category === 'custom',
+    (item) => item.category === 'addons' || item.category === 'options',
   );
 
   const siteWorkTotal = siteWorkItems.reduce((sum, item) => sum + (Number(item.totalPrice) || 0), 0);
