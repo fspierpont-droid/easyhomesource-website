@@ -5,11 +5,20 @@ import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortal
 import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
 import type { SavedQuote } from '@/data/quotesStore';
 
+const legacyMutationError = () => NextResponse.json(
+  { success: false, error: 'Historical quotes are read-only and cannot be changed.' },
+  { status: 403 },
+);
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } },
 ) {
-  const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`);
+  const legacy = params.id.startsWith('legacy:');
+  const path = legacy
+    ? `/api/legacy-quotes/${encodeURIComponent(params.id)}`
+    : `/api/quotes/${encodeURIComponent(params.id)}`;
+  const backend = await permanentApiRequest(request, path);
   const payload = await backend.json().catch(() => ({}));
   if (!backend.ok) {
     return NextResponse.json(
@@ -24,8 +33,12 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
 ) {
+  if (params.id.startsWith('legacy:')) return legacyMutationError();
+
   try {
     const quote: SavedQuote = await request.json();
+    if (quote.legacyReadOnly) return legacyMutationError();
+
     const candidate = normalizePortalQuoteForPersistence({ ...quote, id: params.id });
     const validationError = validateQuoteForPersistence(candidate);
     if (validationError) {
@@ -54,6 +67,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } },
 ) {
+  if (params.id.startsWith('legacy:')) return legacyMutationError();
+
   const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`, { method: 'DELETE' });
   const payload = await backend.json().catch(() => ({}));
   if (!backend.ok) {
