@@ -11,9 +11,22 @@ export const metadata: Metadata = {
 export default function PortalPage() {
   return (
     <AuthGate>
-      <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
-        <PropertyPackageManager initialNav="dashboard" />
-      </Suspense>
+      <div className="ehs-portal-layer-root">
+        <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
+          <PropertyPackageManager initialNav="dashboard" />
+        </Suspense>
+
+        {/*
+          Leaflet and the Project Board intentionally use z-index values in the
+          400-450 range for map controls and the docked inspector. Full-screen
+          portal modals must sit above those map-specific layers.
+        */}
+        <style>{`
+          .ehs-portal-layer-root .fixed.inset-0.z-50.overflow-hidden {
+            z-index: 1000 !important;
+          }
+        `}</style>
+      </div>
     </AuthGate>
   );
 }
