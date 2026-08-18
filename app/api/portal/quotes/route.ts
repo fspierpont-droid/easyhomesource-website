@@ -5,6 +5,45 @@ import { normalizePortalQuoteForPersistence } from '@/lib/quotes/normalizePortal
 import { validateQuoteForPersistence } from '@/lib/quotes/validateQuote';
 import type { SavedQuote } from '@/data/quotesStore';
 
+function normalizeAddress(value: unknown): string {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+async function validateNoFreeEhsProperty(request: Request, quote: SavedQuote): Promise<string | null> {
+  const siteAddress = quote.propertyAddress?.trim();
+  const landPrice = Number(quote.propertyPrice) || 0;
+
+  // Customer-owned land and Land TBD may legitimately carry a $0 land value.
+  // We only intervene when the quote's site address matches an AVAILABLE record
+  // in the permanent EHS Property Center.
+  if (!siteAddress || landPrice > 0) return null;
+
+  const response = await permanentApiRequest(request, '/api/properties');
+  if (!response.ok) {
+    return 'Unable to verify the selected EHS property price. Refresh Property Center and try again.';
+  }
+
+  const documents = await response.json().catch(() => []);
+  if (!Array.isArray(documents)) {
+    return 'Unable to verify the selected EHS property price.';
+  }
+
+  const quoteAddress = normalizeAddress(siteAddress);
+  const matched = documents.find((document: Record<string, unknown>) => {
+    if (document.status !== 'AVAILABLE') return false;
+    const permanentAddress = normalizeAddress(
+      [document.street, document.city, document.state, document.zip].filter(Boolean).join(' '),
+    );
+    return permanentAddress === quoteAddress;
+  });
+
+  if (matched) {
+    return 'The selected EHS property does not have a verified land/package price. Enter the actual land or package price before saving this quote.';
+  }
+
+  return null;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
@@ -39,6 +78,11 @@ export async function POST(request: Request) {
     const validationError = validateQuoteForPersistence(quote);
     if (validationError) {
       return NextResponse.json({ success: false, error: validationError }, { status: 400 });
+    }
+
+    const propertyValidationError = await validateNoFreeEhsProperty(request, quote);
+    if (propertyValidationError) {
+      return NextResponse.json({ success: false, error: propertyValidationError }, { status: 400 });
     }
 
     const backendPayload = toBackendQuote(quote);

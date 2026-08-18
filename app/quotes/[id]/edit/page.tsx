@@ -85,6 +85,8 @@ export default function EditQuotePage() {
     try {
       const persisted = await saveQuoteToServer({
         ...updatedQuote,
+        customerPhone: updatedQuote.customerPhone.trim(),
+        propertyAddress: updatedQuote.propertyAddress.trim(),
         id: quote?.id || updatedQuote.id,
         quoteNumber: quote?.quoteNumber || updatedQuote.quoteNumber,
         createdAt: quote?.createdAt || updatedQuote.createdAt,
@@ -136,9 +138,117 @@ export default function EditQuotePage() {
     );
   }
 
+  // The legacy full-editor component still uses truthy fallback values for
+  // blank optional fields. A single whitespace character renders blank while
+  // preventing prototype data from being reintroduced. handleSave trims these
+  // values before permanent persistence.
+  const editorQuote: SavedQuote = {
+    ...quote,
+    customerPhone: quote.customerPhone || ' ',
+    propertyAddress: quote.propertyAddress || ' ',
+  };
+
   return (
     <AuthGate>
-      <div className="min-h-screen bg-slate-100">
+      <div className="ehs-full-quote-editor min-h-screen bg-slate-100">
+        <style jsx global>{`
+          @media (max-width: 640px) {
+            .ehs-full-quote-editor .fixed.inset-0 > div {
+              max-height: calc(100dvh - 16px) !important;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) {
+              display: block;
+              width: 100%;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) thead {
+              display: none;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody {
+              display: block;
+              width: 100%;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody tr {
+              display: grid;
+              grid-template-columns: minmax(0, 1fr) minmax(0, 0.55fr);
+              gap: 10px 12px;
+              padding: 14px;
+              border-bottom: 1px solid #e2e8f0;
+              background: #ffffff;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody tr:last-child {
+              border-bottom: 0;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td {
+              padding: 0 !important;
+              min-width: 0;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(1),
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(2),
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(5),
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(6) {
+              grid-column: 1 / -1;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(3),
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(4),
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(5) {
+              display: flex;
+              flex-direction: column;
+              align-items: stretch;
+              gap: 5px;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(3)::before,
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(4)::before,
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(5)::before {
+              color: #64748b;
+              font-size: 10px;
+              font-weight: 900;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(3)::before {
+              content: 'Price / Custom Price';
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(4)::before {
+              content: 'Qty';
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(5)::before {
+              content: 'Line Total';
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody input[type='number'] {
+              width: 100% !important;
+              min-height: 44px;
+              padding: 9px 10px;
+              border-radius: 10px;
+              font-size: 16px !important;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(5) {
+              padding: 10px 12px !important;
+              border: 1px solid #e2e8f0;
+              border-radius: 12px;
+              background: #f8fafc;
+              font-size: 15px;
+            }
+
+            .ehs-full-quote-editor table:has(tbody input[type='number']) tbody td:nth-child(6) {
+              text-align: right;
+            }
+          }
+        `}</style>
+
         {(saving || saveError) && (
           <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[70] w-[min(92vw,620px)]">
             <div
@@ -160,7 +270,7 @@ export default function EditQuotePage() {
           onSaveQuote={(updatedQuote) => {
             void handleSave(updatedQuote);
           }}
-          existingQuote={quote}
+          existingQuote={editorQuote}
           availableProperties={properties}
         />
       </div>
