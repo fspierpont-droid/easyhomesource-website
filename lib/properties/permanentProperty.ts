@@ -34,6 +34,7 @@ export function fromBackendProperty(document: BackendProperty): Property {
     longitude: asNumber(document.longitude),
     status: (document.status || 'STATUS_TO_CONFIRM') as Property['status'],
     propertyType: (document.property_type || document.propertyType || 'LAND') as Property['propertyType'],
+    units: Math.max(1, asNumber(document.units, 1)),
     builder: document.builder ?? null,
     community: document.community ?? null,
     price: asNullableNumber(document.price ?? document.package_price ?? document.land_price),
@@ -73,6 +74,7 @@ export function toBackendProperty(property: Partial<Property>) {
   assign('longitude', property.longitude);
   assign('status', property.status);
   assign('property_type', property.propertyType);
+  assign('units', property.units);
   assign('builder', property.builder);
   assign('community', property.community);
   assign('price', property.price);
