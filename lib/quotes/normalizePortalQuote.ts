@@ -1,4 +1,4 @@
-import { calculateComprehensiveQuoteTotals } from '../../data/pricingSpreadsheet';
+import { calculateComprehensiveQuoteTotals } from '../../data/masterQuote5PricingBridge';
 import type { SavedQuote, SelectedQuoteLineItem } from '../../data/quotesStore';
 import { normalizeSkirtingPackageLine, SKIRTING_PACKAGE_SKU } from './skirtingPackage';
 
@@ -11,10 +11,13 @@ export function normalizePortalLineItem(item: SelectedQuoteLineItem): SelectedQu
 export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuote {
   const lineItems = (quote.lineItems || []).map(normalizePortalLineItem);
   const siteWorkItems = lineItems.filter(
-    (item) => item.category === 'mandatory_services' || item.category === 'site_work',
+    (item) =>
+      item.category === 'mandatory_services' ||
+      item.category === 'site_work' ||
+      item.category === 'custom',
   );
   const addOnItems = lineItems.filter(
-    (item) => item.category === 'addons' || item.category === 'options' || item.category === 'custom',
+    (item) => item.category === 'addons' || item.category === 'options',
   );
 
   const siteWorkTotal = siteWorkItems.reduce((sum, item) => sum + (Number(item.totalPrice) || 0), 0);
@@ -22,7 +25,7 @@ export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuot
   const addonsTotal = addOnItems.reduce((sum, item) => sum + (Number(item.totalPrice) || 0), 0);
   const addonsCost = addOnItems.reduce((sum, item) => sum + (Number(item.totalCost) || 0), 0);
   const freight = Number(quote.freightDelivery) || 0;
-  const freightCost = Number(quote.freightCost) || (freight > 0 ? Math.round(freight / 1.1) : 0);
+  const freightCost = Number(quote.freightCost) || 0;
   const taxRate = quote.financialTotals?.sales_tax_rate ?? 0.03;
 
   const totals = calculateComprehensiveQuoteTotals(
@@ -37,6 +40,7 @@ export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuot
     siteWorkCost,
     addonsCost,
     taxRate,
+    Boolean(quote.ehsLoanOfficerUsed),
   );
 
   return {
