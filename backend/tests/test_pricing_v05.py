@@ -36,12 +36,16 @@ def test_portal_v05_totals_match_frontend_formula_exactly():
     assert totals["tax_basis"] == 188000.0
     assert totals["sales_tax_total"] == 5640.0
     assert totals["estimated_total"] == 193640.0
+
+    # Verified Master Quote 5 internal formula:
+    # gross margin 30,000 - 5% admin (1,500) = 28,500 commissionable;
+    # salesperson commission = 20% of 28,500 = 5,700.
     assert totals["house_gross_margin"] == 30000.0
-    assert totals["commissionable_house_margin"] == 29000.0
-    assert totals["salesperson_commission"] == 5800.0
+    assert totals["commissionable_house_margin"] == 28500.0
+    assert totals["salesperson_commission"] == 5700.0
     assert totals["service_profit"] == 9500.0
-    assert totals["admin_fee"] == 9400.0
-    assert totals["net_take_home"] == 24300.0
+    assert totals["admin_fee"] == 1500.0
+    assert totals["net_take_home"] == 32300.0
 
 
 def test_portal_v05_does_not_require_hidden_default_lines_for_totals():
