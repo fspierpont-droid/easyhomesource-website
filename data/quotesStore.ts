@@ -90,6 +90,9 @@ export interface SavedQuote {
   shareToken?: string;
   createdAt: string;
   updatedAt: string;
+  legacyReadOnly?: boolean;
+  legacySourceId?: string;
+  legacySourceDb?: string;
 }
 
 export const INITIAL_SAVED_QUOTES: SavedQuote[] = [];
@@ -119,6 +122,12 @@ function syncError(message: string) {
   window.dispatchEvent(new CustomEvent('ehs_quote_sync_error', { detail: message }));
 }
 
+function assertCurrentQuote(quote: SavedQuote) {
+  if (quote.legacyReadOnly) {
+    throw new Error('Historical quotes are read-only and cannot be changed in the current quote system.');
+  }
+}
+
 export function getSavedQuotes(): SavedQuote[] {
   if (typeof window !== 'undefined' && !hydrationStarted) {
     hydrationStarted = true;
@@ -145,10 +154,17 @@ export async function refreshQuotesFromServer(): Promise<SavedQuote[]> {
     throw new Error(data.error || 'Failed to load permanent quote records.');
   }
   writeCache(data.quotes);
+  if (data.legacySync?.ok === false && data.legacySync?.error) {
+    console.warn('Legacy quote synchronization warning:', data.legacySync.error);
+    syncError(data.legacySync.error);
+  }
   return data.quotes;
 }
 
 export async function fetchQuoteFromServer(id: string): Promise<SavedQuote | null> {
+  const cached = getSavedQuoteById(id);
+  if (cached?.legacyReadOnly) return cached;
+
   const response = await fetch(`/api/portal/quotes/${encodeURIComponent(id)}`, { cache: 'no-store' });
   const data = await response.json();
   if (response.status === 404) return null;
@@ -161,6 +177,7 @@ export async function fetchQuoteFromServer(id: string): Promise<SavedQuote | nul
 }
 
 export async function saveQuoteToServer(quote: SavedQuote): Promise<SavedQuote> {
+  assertCurrentQuote(quote);
   const normalized = normalizePortalQuoteForPersistence(quote);
   const response = await fetch('/api/portal/quotes', {
     method: 'POST',
@@ -179,6 +196,7 @@ export async function saveQuoteToServer(quote: SavedQuote): Promise<SavedQuote> 
 }
 
 export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
+  assertCurrentQuote(quote);
   const normalized = normalizePortalQuoteForPersistence(quote);
   const current = readCache().filter(
     (item) => item.id !== normalized.id && item.quoteNumber !== normalized.quoteNumber,
@@ -192,6 +210,10 @@ export function saveQuoteToStore(quote: SavedQuote): SavedQuote {
 }
 
 export async function deleteQuoteFromServer(id: string): Promise<boolean> {
+  const cached = getSavedQuoteById(id);
+  if (cached?.legacyReadOnly) {
+    throw new Error('Historical quotes are read-only and cannot be deleted.');
+  }
   const response = await fetch(`/api/portal/quotes/${encodeURIComponent(id)}`, { method: 'DELETE' });
   const data = await response.json();
   if (!response.ok || !data.success) {
@@ -202,6 +224,11 @@ export async function deleteQuoteFromServer(id: string): Promise<boolean> {
 }
 
 export function deleteQuoteFromStore(id: string): boolean {
+  const cached = getSavedQuoteById(id);
+  if (cached?.legacyReadOnly) {
+    syncError('Historical quotes are read-only and cannot be deleted.');
+    return false;
+  }
   void deleteQuoteFromServer(id).catch((error) => {
     console.error('Permanent quote delete failed:', error);
     syncError(error instanceof Error ? error.message : 'Permanent quote delete failed.');
