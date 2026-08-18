@@ -39,6 +39,7 @@ export interface Property {
   longitude: number;
   status: PropertyStatus;
   propertyType: PropertyType;
+  units?: number;
   builder?: string | null;
   community?: string | null;
   price?: number | null;
