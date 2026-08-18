@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import type { SavedQuote } from '@/data/quotesStore';
 
 interface QuoteLibraryViewProps {
@@ -18,14 +17,15 @@ export function QuoteLibraryView({
   onUpdateQuote,
   onDeleteQuote
 }: QuoteLibraryViewProps) {
-  const router = useRouter();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [selectedQuoteForPreview, setSelectedQuoteForPreview] = useState<SavedQuote | null>(null);
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
+  const legacyCount = quotes.filter((quote) => quote.legacyReadOnly).length;
 
   const filteredQuotes = quotes.filter((q) => {
-    if (statusFilter !== 'ALL' && q.status !== statusFilter) return false;
+    if (statusFilter === 'LEGACY' && !q.legacyReadOnly) return false;
+    if (statusFilter !== 'ALL' && statusFilter !== 'LEGACY' && q.status !== statusFilter) return false;
     if (!search.trim()) return true;
     const text = [
       q.quoteNumber,
@@ -64,6 +64,7 @@ export function QuoteLibraryView({
   };
 
   const handleCopyShareLink = (q: SavedQuote) => {
+    if (q.legacyReadOnly) return;
     const url = getShareUrl(q);
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
@@ -88,7 +89,7 @@ export function QuoteLibraryView({
             Quote Library &amp; Pricing Records ({quotes.length} Quotes)
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            Official EHS proposals with itemized breakdown of home, freight, site prep, utilities, 3% sales tax, and full-quote editing.
+            Current EHS proposals plus read-only historical quotes from the retired portal.
           </p>
         </div>
 
@@ -125,6 +126,19 @@ export function QuoteLibraryView({
           >
             All ({quotes.length})
           </button>
+          {legacyCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setStatusFilter('LEGACY')}
+              className={`px-3.5 py-1.5 rounded-xl border transition-colors cursor-pointer ${
+                statusFilter === 'LEGACY'
+                  ? 'bg-slate-700 text-white border-slate-700'
+                  : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50'
+              }`}
+            >
+              Historical ({legacyCount})
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setStatusFilter('APPROVED')}
@@ -184,7 +198,7 @@ export function QuoteLibraryView({
                 <th className="py-3 px-4">Homesite / Address</th>
                 <th className="py-3 px-4">Subtotal</th>
                 <th className="py-3 px-4">3% Tax</th>
-                <th className="py-3 px-4">Estimated Total</th>
+                <th className="py-3 px-4">Quote Total</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
@@ -206,26 +220,35 @@ export function QuoteLibraryView({
 
                   const subtotal = q.subtotal || (homeP + landP + freightP + siteP - disc);
                   const tax = q.salesTax || Math.round(subtotal * 0.03 * 100) / 100;
-                  const estimatedTotal = q.estimatedTotal || q.totalTurnkeyPrice || Math.round((subtotal + tax) * 100) / 100;
+                  const quoteTotal = q.estimatedTotal || q.totalTurnkeyPrice || Math.round((subtotal + tax) * 100) / 100;
 
                   return (
                     <tr key={q.id} className="hover:bg-slate-50/80 transition-colors group">
                       <td className="py-3.5 px-4 font-mono font-bold text-[#1E6FA8]">
-                        <Link
-                          href={`/quotes/${q.id}`}
-                          className="hover:underline"
-                          title="Open Executive Quote Sheet"
-                        >
-                          {q.quoteNumber}
-                        </Link>
+                        {q.legacyReadOnly ? (
+                          <div className="flex items-center gap-2">
+                            <span>{q.quoteNumber}</span>
+                            <span className="font-sans text-[9px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                              Historical
+                            </span>
+                          </div>
+                        ) : (
+                          <Link
+                            href={`/quotes/${q.id}`}
+                            className="hover:underline"
+                            title="Open Executive Quote Sheet"
+                          >
+                            {q.quoteNumber}
+                          </Link>
+                        )}
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-black text-[#0B1E38]">{q.customerName}</div>
+                        <div className="font-black text-[#0B1E38]">{q.customerName || 'Customer not recorded'}</div>
                         <div className="text-[10px] text-slate-400 font-medium">{q.customerPhone}</div>
                       </td>
-                      <td className="py-3.5 px-4 font-semibold text-slate-800">{q.homeModel}</td>
+                      <td className="py-3.5 px-4 font-semibold text-slate-800">{q.homeModel || '—'}</td>
                       <td className="py-3.5 px-4 text-slate-500 truncate max-w-[180px]" title={q.propertyAddress}>
-                        {q.propertyAddress}
+                        {q.propertyAddress || '—'}
                       </td>
                       <td className="py-3.5 px-4 font-bold text-slate-700 tabular">
                         ${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -234,7 +257,7 @@ export function QuoteLibraryView({
                         ${tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td className="py-3.5 px-4 font-black text-[#0F2A47] text-sm tabular">
-                        ${estimatedTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        ${quoteTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td className="py-3.5 px-4">
                         <span
@@ -242,7 +265,7 @@ export function QuoteLibraryView({
                             q.status
                           )}`}
                         >
-                          {q.status}
+                          {q.status.replaceAll('_', ' ')}
                         </span>
                       </td>
                       <td className="py-3.5 px-4 text-right">
@@ -256,28 +279,35 @@ export function QuoteLibraryView({
                             Preview
                           </button>
 
-                          {/* Full Quote System Edit Button */}
-                          <Link
-                            href={`/quotes/${q.id}/edit`}
-                            className="px-3 py-1.5 bg-[#0F2A47] hover:bg-[#1E6FA8] text-white font-black rounded-lg text-[11px] shadow-2xs flex items-center gap-1 transition-all cursor-pointer hover:scale-105 active:scale-95"
-                            title="Edit absolutely everything in the full quote system"
-                          >
-                            <span>✏️</span>
-                            <span>Edit Quote</span>
-                          </Link>
+                          {q.legacyReadOnly ? (
+                            <span className="px-3 py-1.5 bg-slate-100 text-slate-500 font-bold rounded-lg text-[10px] border border-slate-200">
+                              Read only
+                            </span>
+                          ) : (
+                            <>
+                              <Link
+                                href={`/quotes/${q.id}/edit`}
+                                className="px-3 py-1.5 bg-[#0F2A47] hover:bg-[#1E6FA8] text-white font-black rounded-lg text-[11px] shadow-2xs flex items-center gap-1 transition-all cursor-pointer hover:scale-105 active:scale-95"
+                                title="Edit quote"
+                              >
+                                <span>✏️</span>
+                                <span>Edit Quote</span>
+                              </Link>
 
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (confirm(`Delete quote ${q.quoteNumber} for ${q.customerName}?`)) {
-                                onDeleteQuote?.(q.id);
-                              }
-                            }}
-                            className="text-rose-600 hover:text-rose-800 p-1.5 font-bold cursor-pointer transition-colors"
-                            title="Delete Quote"
-                          >
-                            🗑️
-                          </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (confirm(`Delete quote ${q.quoteNumber} for ${q.customerName}?`)) {
+                                    onDeleteQuote?.(q.id);
+                                  }
+                                }}
+                                className="text-rose-600 hover:text-rose-800 p-1.5 font-bold cursor-pointer transition-colors"
+                                title="Delete Quote"
+                              >
+                                🗑️
+                              </button>
+                            </>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -296,39 +326,47 @@ export function QuoteLibraryView({
             {/* Modal Header */}
             <div className="p-6 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-mono text-xs font-bold text-[#1E6FA8]">
                     {selectedQuoteForPreview.quoteNumber}
                   </span>
                   <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold px-2 py-0.5 rounded text-[10px]">
-                    {selectedQuoteForPreview.status}
+                    {selectedQuoteForPreview.status.replaceAll('_', ' ')}
                   </span>
+                  {selectedQuoteForPreview.legacyReadOnly && (
+                    <span className="bg-slate-100 text-slate-600 border border-slate-200 font-bold px-2 py-0.5 rounded text-[10px]">
+                      HISTORICAL • READ ONLY
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-xl font-black text-[#0B1E38] mt-1">
-                  {selectedQuoteForPreview.customerName}
+                  {selectedQuoteForPreview.customerName || 'Customer not recorded'}
                 </h3>
                 <p className="text-slate-500 text-xs">
-                  {selectedQuoteForPreview.homeModel} • {selectedQuoteForPreview.propertyAddress}
+                  {selectedQuoteForPreview.homeModel || 'Home not recorded'}{selectedQuoteForPreview.propertyAddress ? ` • ${selectedQuoteForPreview.propertyAddress}` : ''}
                 </p>
               </div>
 
               <div className="flex items-center gap-2">
-                {/* Full Quote System Edit Button */}
-                <Link
-                  href={`/quotes/${selectedQuoteForPreview.id}/edit`}
-                  className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer"
-                >
-                  <span>✏️</span>
-                  <span>Edit in Full Quote System</span>
-                </Link>
+                {!selectedQuoteForPreview.legacyReadOnly && (
+                  <>
+                    <Link
+                      href={`/quotes/${selectedQuoteForPreview.id}/edit`}
+                      className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer"
+                    >
+                      <span>✏️</span>
+                      <span>Edit in Full Quote System</span>
+                    </Link>
 
-                <Link
-                  href={`/quotes/${selectedQuoteForPreview.id}`}
-                  className="px-3.5 py-2 bg-white hover:bg-slate-100 text-[#0F2A47] font-bold rounded-xl text-xs border border-slate-200 shadow-2xs flex items-center gap-1.5 transition-colors"
-                >
-                  <span>📄</span>
-                  <span>Executive Sheet</span>
-                </Link>
+                    <Link
+                      href={`/quotes/${selectedQuoteForPreview.id}`}
+                      className="px-3.5 py-2 bg-white hover:bg-slate-100 text-[#0F2A47] font-bold rounded-xl text-xs border border-slate-200 shadow-2xs flex items-center gap-1.5 transition-colors"
+                    >
+                      <span>📄</span>
+                      <span>Executive Sheet</span>
+                    </Link>
+                  </>
+                )}
 
                 <button
                   type="button"
@@ -336,7 +374,7 @@ export function QuoteLibraryView({
                   className="px-3.5 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>🖨️</span>
-                  <span>Print PDF</span>
+                  <span>Print</span>
                 </button>
 
                 <button
@@ -350,7 +388,7 @@ export function QuoteLibraryView({
 
             {/* Modal Scrollable Body */}
             <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6">
-              {/* Financial Breakdown Box (100% Mathematically Exact) */}
+              {/* Financial Breakdown Box */}
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
                 <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
                   Itemized Turnkey Investment Breakdown
@@ -363,9 +401,10 @@ export function QuoteLibraryView({
                   const siteP = Number(selectedQuoteForPreview.siteWorkTotal) || 0;
                   const disc = Number(selectedQuoteForPreview.discounts) || 0;
 
-                  const subtotal = homeP + landP + freightP + siteP - disc;
-                  const tax = Math.round(subtotal * 0.03 * 100) / 100;
-                  const estimatedTotal = Math.round((subtotal + tax) * 100) / 100;
+                  const fallbackSubtotal = homeP + landP + freightP + siteP - disc;
+                  const subtotal = Number(selectedQuoteForPreview.subtotal) || fallbackSubtotal;
+                  const tax = Number(selectedQuoteForPreview.salesTax) || Math.round(subtotal * 0.03 * 100) / 100;
+                  const quoteTotal = Number(selectedQuoteForPreview.estimatedTotal || selectedQuoteForPreview.totalTurnkeyPrice) || Math.round((subtotal + tax) * 100) / 100;
 
                   return (
                     <div className="space-y-2 text-xs text-slate-700">
@@ -404,24 +443,15 @@ export function QuoteLibraryView({
                         <span>Subtotal:</span>
                         <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
-                      <div className="flex justify-between text-slate-600 text-[11px]">
-                        <span>Financed subtotal:</span>
-                        <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                      </div>
-                      <div className="flex justify-between text-slate-600 text-[11px]">
-                        <span>Tax basis:</span>
-                        <span className="tabular">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                      </div>
                       <div className="flex justify-between font-bold text-[#1E6FA8]">
-                        <span>3% Florida Sales Tax (3.00%):</span>
+                        <span>Sales Tax:</span>
                         <span className="tabular">${tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
 
-                      {/* Prominent Dark Navy ESTIMATED TOTAL banner */}
                       <div className="flex justify-between items-center bg-[#0F2A47] text-white p-4 rounded-xl shadow-md mt-3">
-                        <span className="font-extrabold text-xs uppercase tracking-wider">ESTIMATED TOTAL</span>
+                        <span className="font-extrabold text-xs uppercase tracking-wider">QUOTE TOTAL</span>
                         <span className="font-black text-2xl tracking-tight tabular">
-                          ${estimatedTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          ${quoteTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                       </div>
                     </div>
@@ -454,29 +484,35 @@ export function QuoteLibraryView({
               {/* Consultant Notes */}
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 leading-relaxed space-y-1">
                 <span className="font-bold text-slate-900 block">Consultant Notes:</span>
-                <p>{selectedQuoteForPreview.notes || 'Standard turnkey package estimate for Central Florida with site prep, delivery, tie-downs, A/C, and permits.'}</p>
+                <p>{selectedQuoteForPreview.notes || 'No notes were stored with this quote.'}</p>
               </div>
 
-              {/* Footer Share Actions */}
+              {/* Footer Actions */}
               <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
                 <span className="text-[11px] text-slate-400">
                   Easy HomeSource • 9011 McIntyre Rd, Brooksville, FL 34601 • (352) 558-8888
                 </span>
-                <div className="flex items-center gap-2">
-                  <Link
-                    href={`/quotes/${selectedQuoteForPreview.id}/edit`}
-                    className="px-4 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
-                  >
-                    ✏️ Open Full Quote Editor
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => handleCopyShareLink(selectedQuoteForPreview)}
-                    className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F2A47] font-bold rounded-xl text-xs transition-colors cursor-pointer"
-                  >
-                    {copiedToken === selectedQuoteForPreview.id ? '✓ Copied Share Link!' : '🔗 Copy Share Link'}
-                  </button>
-                </div>
+                {selectedQuoteForPreview.legacyReadOnly ? (
+                  <span className="px-4 py-2 bg-slate-100 text-slate-500 font-bold rounded-xl border border-slate-200">
+                    Historical record • Read only
+                  </span>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/quotes/${selectedQuoteForPreview.id}/edit`}
+                      className="px-4 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                    >
+                      ✏️ Open Full Quote Editor
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyShareLink(selectedQuoteForPreview)}
+                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F2A47] font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                    >
+                      {copiedToken === selectedQuoteForPreview.id ? '✓ Copied Share Link!' : '🔗 Copy Share Link'}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

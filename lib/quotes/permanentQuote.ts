@@ -8,6 +8,19 @@ const number = (value: unknown, fallback = 0) => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+function normalizeStatus(value: unknown): SavedQuote['status'] {
+  const normalized = String(value || 'DRAFT')
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, '_');
+
+  if (['APPROVED', 'ACCEPTED'].includes(normalized)) return 'APPROVED';
+  if (['IN_CONTRACT', 'CONTRACT', 'UNDER_CONTRACT'].includes(normalized)) return 'IN_CONTRACT';
+  if (['LENDER_REVIEW', 'LENDER', 'FINANCING_REVIEW'].includes(normalized)) return 'LENDER_REVIEW';
+  if (['SENT', 'SENT_TO_BUYER', 'SENT_TO_CUSTOMER', 'DELIVERED'].includes(normalized)) return 'SENT_TO_BUYER';
+  return 'DRAFT';
+}
+
 function fromBackendLine(item: Record<string, any>, category: SelectedQuoteLineItem['category']): SelectedQuoteLineItem {
   const qty = number(item.qty, 1);
   const unitPrice = number(item.unit_price);
@@ -106,6 +119,7 @@ export function fromBackendQuote(document: BackendQuote): SavedQuote {
   const financing = document.financing || {};
   const timeline = document.timeline || {};
   const totals = document.totals || {};
+  const legacyReadOnly = Boolean(document.legacy_read_only);
 
   const lineItems: SelectedQuoteLineItem[] = [
     ...(document.mandatory_services || []).map((item: any) => fromBackendLine(item, 'mandatory_services')),
@@ -116,19 +130,20 @@ export function fromBackendQuote(document: BackendQuote): SavedQuote {
 
   const siteWorkItems = lineItems.filter((item) => item.category === 'mandatory_services' || item.category === 'site_work');
   const siteWorkCost = siteWorkItems.reduce((sum, item) => sum + item.totalCost, 0);
+  const siteWorkPrice = siteWorkItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return {
     id: String(document.id || ''),
     quoteNumber: String(document.quote_number || document.id || ''),
     quoteDate: document.quote_date || undefined,
-    customerName: String(customer.name || [customer.first_name, customer.last_name].filter(Boolean).join(' ') || ''),
+    customerName: String(customer.name || customer.full_name || [customer.first_name, customer.last_name].filter(Boolean).join(' ') || ''),
     customerPhone: String(customer.phone || ''),
     customerEmail: String(customer.email || ''),
-    customerAddress: String(customer.address || customer.full_address || site.delivery_address || ''),
+    customerAddress: String(customer.address || customer.full_address || customer.current_address || site.delivery_address || ''),
     salesperson: String(document.associate_name || ''),
     salespersonEmail: document.associate_email || undefined,
     salespersonPhone: document.associate_phone || undefined,
-    status: (document.status || 'DRAFT') as SavedQuote['status'],
+    status: normalizeStatus(document.status),
     homeModel: String(home.model_name || ''),
     manufacturer: home.manufacturer || undefined,
     series: home.series || undefined,
@@ -142,13 +157,13 @@ export function fromBackendQuote(document: BackendQuote): SavedQuote {
     factoryCost: number(document.factory_cost),
     homeDescription: home.description || undefined,
     propertyAddress: String(site.delivery_address || site.property_address || ''),
-    propertyPrice: number(document.land_price || site.land_price),
+    propertyPrice: number(document.land_price ?? site.land_price ?? site.land_budget),
     deliveryRouteType: site.delivery_route_type || undefined,
     deliveryMiles: site.delivery_miles == null ? undefined : number(site.delivery_miles),
     escortsCount: site.escorts_count == null ? undefined : number(site.escorts_count),
-    freightDelivery: number(document.delivery_price || site.delivery_price || totals.delivery_total),
-    freightCost: number(document.delivery_cost || site.delivery_cost),
-    siteWorkTotal: number(totals.site_work_total ?? totals.site_work_subtotal),
+    freightDelivery: number(document.delivery_price ?? site.delivery_price ?? totals.delivery_total),
+    freightCost: number(document.delivery_cost ?? site.delivery_cost),
+    siteWorkTotal: number(totals.site_work_total ?? totals.site_work_subtotal, siteWorkPrice),
     siteWorkCost,
     lineItems,
     discounts: number(totals.discounts_total ?? (document.discounts || []).reduce((sum: number, item: any) => sum + number(item.amount), 0)),
@@ -170,7 +185,7 @@ export function fromBackendQuote(document: BackendQuote): SavedQuote {
     subtotal: number(totals.subtotal),
     financedSubtotal: number(totals.financed_subtotal ?? totals.subtotal),
     nonFinancedSubtotal: number(totals.non_financed_subtotal),
-    taxBasis: number(totals.tax_basis),
+    taxBasis: number(totals.tax_basis ?? totals.subtotal),
     salesTax: number(totals.sales_tax_total ?? totals.sales_tax),
     totalTurnkeyPrice: number(totals.estimated_total ?? totals.grand_total),
     estimatedTotal: number(totals.estimated_total ?? totals.grand_total),
@@ -178,13 +193,20 @@ export function fromBackendQuote(document: BackendQuote): SavedQuote {
     notes: String(document.notes_customer || document.notes_internal || ''),
     notesCustomer: document.notes_customer || undefined,
     notesInternal: document.notes_internal || undefined,
-    shareToken: document.share_token || undefined,
-    createdAt: String(document.created_at || ''),
-    updatedAt: String(document.updated_at || ''),
+    shareToken: legacyReadOnly ? undefined : document.share_token || undefined,
+    createdAt: String(document.created_at || document.quote_date || ''),
+    updatedAt: String(document.updated_at || document.created_at || document.quote_date || ''),
+    legacyReadOnly,
+    legacySourceId: document.legacy_source_id || undefined,
+    legacySourceDb: document.legacy_source_db || undefined,
   };
 }
 
 export function toBackendQuote(quote: SavedQuote) {
+  if (quote.legacyReadOnly) {
+    throw new Error('Historical quotes are read-only and cannot be sent through the current quote engine.');
+  }
+
   const mandatory = quote.lineItems.filter((item) => item.category === 'mandatory_services').map(toBackendLine);
   const siteWork = quote.lineItems.filter((item) => item.category === 'site_work' || item.category === 'custom').map(toBackendLine);
   const addons = quote.lineItems.filter((item) => item.category === 'addons').map(toBackendLine);

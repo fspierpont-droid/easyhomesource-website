@@ -61,6 +61,13 @@ async def ensure_indexes() -> None:
     await db.quotes.create_index("associate_id")
     await db.quotes.create_index([("updated_at", -1)])
 
+    # Historical records live in their own collection so they can never affect
+    # the current quote engine, pricing rules, or active quote lifecycle.
+    await db.legacy_quotes.create_index("legacy_source_id", unique=True)
+    await db.legacy_quotes.create_index("quote_number")
+    await db.legacy_quotes.create_index([("updated_at", -1)])
+    await db.legacy_quotes.create_index([("legacy_archived_at", -1)])
+
     await db.projects.create_index("id", unique=True)
     await db.projects.create_index("associate_id")
     await db.projects.create_index([("archived", 1), ("updated_at", -1)])
