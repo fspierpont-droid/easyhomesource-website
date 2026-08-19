@@ -90,6 +90,20 @@ def _safe_user(document: dict) -> dict:
     return {key: value for key, value in document.items() if key not in {"_id", "password_hash"}}
 
 
+def _as_utc(value: object) -> datetime | None:
+    """Normalize MongoDB datetimes so login throttling comparisons are safe.
+
+    PyMongo/Motor returns BSON datetimes as naive UTC values by default, while
+    application timestamps use timezone-aware UTC datetimes. Comparing those
+    directly raises TypeError and turns a normal login attempt into HTTP 500.
+    """
+    if not isinstance(value, datetime):
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc)
+
+
 async def _audit(
     action: str,
     *,
@@ -126,9 +140,9 @@ async def _enforce_login_rate_limit(email: str) -> None:
     limit = 10
     collection = get_db().rate_limits
     document = await collection.find_one({"key": key})
-    reset_at = document.get("reset_at") if document else None
+    reset_at = _as_utc(document.get("reset_at")) if document else None
 
-    if not document or not isinstance(reset_at, datetime) or reset_at <= now:
+    if not document or reset_at is None or reset_at <= now:
         await collection.update_one(
             {"key": key},
             {"$set": {"key": key, "count": 1, "reset_at": now + window, "updated_at": now}},
