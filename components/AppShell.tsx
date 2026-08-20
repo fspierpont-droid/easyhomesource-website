@@ -21,7 +21,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     pathname?.startsWith('/quote');
 
   if (isPortal) {
-    return <>{children}</>;
+    return (
+      <div className="ehs-portal-scope min-h-screen w-full min-w-0 overflow-x-hidden">
+        {children}
+      </div>
+    );
   }
 
   return (

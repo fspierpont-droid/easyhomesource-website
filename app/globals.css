@@ -47,3 +47,146 @@ body {
 .leaflet-popup-tip {
   background: white;
 }
+
+/*
+ * EHS portal mobile-first responsive layer.
+ * Scoped so the public marketing website is not affected.
+ */
+.ehs-portal-scope {
+  width: 100%;
+  min-width: 0;
+}
+
+body:has(.ehs-portal-scope) {
+  padding-bottom: 0;
+  overflow-x: hidden;
+}
+
+@media (max-width: 1023px) {
+  .ehs-portal-scope {
+    min-height: 100dvh;
+  }
+
+  .ehs-portal-scope aside {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .ehs-portal-scope header.sticky {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
+  /* Keep controls finger-friendly and prevent mobile browser input zoom. */
+  .ehs-portal-scope input:not([type='checkbox']):not([type='radio']),
+  .ehs-portal-scope select,
+  .ehs-portal-scope textarea {
+    min-height: 44px;
+    font-size: 16px !important;
+  }
+
+  .ehs-portal-scope button {
+    min-height: 40px;
+  }
+
+  .ehs-portal-scope h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Tables remain usable instead of compressing columns into unreadable widths. */
+  .ehs-portal-scope .overflow-x-auto,
+  .ehs-portal-scope .overflow-hidden:has(> table) {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .ehs-portal-scope table {
+    min-width: 760px;
+  }
+
+  /* Keep full-screen editors inside the dynamic mobile viewport. */
+  .ehs-portal-scope .fixed.inset-0 > div {
+    max-width: calc(100vw - 1rem) !important;
+    max-height: calc(100dvh - 1rem) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /*
+   * ProjectMap and PropertyMap are desktop split panes with a fixed outer
+   * height. On a stacked mobile layout the h-full inspector can consume the
+   * available height and collapse Leaflet to zero. These relational selectors
+   * make the outer card content-sized, reserve a real map viewport, then place
+   * the inspector below it.
+   */
+  .ehs-portal-scope div:has(> div > div > .leaflet-container) {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ehs-portal-scope div:has(> div > .leaflet-container) {
+    flex: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .ehs-portal-scope div:has(> .leaflet-container) {
+    flex: 0 0 clamp(320px, 52dvh, 420px) !important;
+    height: clamp(320px, 52dvh, 420px) !important;
+    min-height: 320px !important;
+    overflow: hidden !important;
+  }
+
+  /* The inspector becomes a normal document-flow panel under the map. */
+  .ehs-portal-scope div:has(> div > .leaflet-container) > div:nth-child(2) {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+  }
+
+  .ehs-portal-scope div:has(> div > .leaflet-container) > div:nth-child(2) > div {
+    max-height: none !important;
+  }
+
+  /* Simplify overlays on a phone-sized map and enlarge map controls. */
+  .ehs-portal-scope div:has(> .leaflet-container) > .absolute.bottom-4 {
+    display: none !important;
+  }
+
+  .ehs-portal-scope .map-hud-control {
+    top: 0.75rem !important;
+    left: 0.75rem !important;
+  }
+
+  .ehs-portal-scope .map-hud-control button {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  /* Map filter toolbars scroll horizontally instead of consuming the screen. */
+  .ehs-portal-scope div:has(> div > div > .leaflet-container) > div:first-child {
+    align-items: flex-start !important;
+  }
+
+  .ehs-portal-scope div:has(> div > div > .leaflet-container) > div:first-child > div:last-child {
+    width: 100%;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ehs-portal-scope div:has(> div > div > .leaflet-container) > div:first-child > div:last-child > * {
+    flex: none;
+  }
+
+  .ehs-portal-scope div:has(> div > div > .leaflet-container) input {
+    width: min(72vw, 18rem) !important;
+  }
+}
