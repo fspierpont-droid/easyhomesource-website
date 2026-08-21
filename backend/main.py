@@ -36,6 +36,7 @@ from models import (
     UserPublic,
     UserUpdate,
 )
+from permitting import router as permitting_router
 from properties import router as properties_router
 from quotes import public_router as public_quotes_router
 from quotes import router as quotes_router
@@ -53,6 +54,7 @@ app.include_router(catalog_router)
 app.include_router(customers_router)
 app.include_router(properties_router)
 app.include_router(delivery_router)
+app.include_router(permitting_router)
 app.include_router(quotes_router)
 app.include_router(public_quotes_router)
 app.include_router(legacy_quotes_router)
@@ -93,12 +95,6 @@ def _safe_user(document: dict) -> dict:
 
 
 def _as_utc(value: object) -> datetime | None:
-    """Normalize MongoDB datetimes so login throttling comparisons are safe.
-
-    PyMongo/Motor returns BSON datetimes as naive UTC values by default, while
-    application timestamps use timezone-aware UTC datetimes. Comparing those
-    directly raises TypeError and turns a normal login attempt into HTTP 500.
-    """
     if not isinstance(value, datetime):
         return None
     if value.tzinfo is None:
@@ -135,7 +131,6 @@ async def _audit(
 
 
 async def _enforce_login_rate_limit(email: str) -> None:
-    """Database-backed per-identity login throttling."""
     key = hashlib.sha256(email.encode("utf-8")).hexdigest()
     now = datetime.now(timezone.utc)
     window = timedelta(minutes=5)
@@ -290,16 +285,8 @@ async def update_user(
 async def system_check(_admin: dict = Depends(require_admin)) -> dict:
     db = get_db()
     collections = (
-        "users",
-        "customers",
-        "quotes",
-        "legacy_quotes",
-        "projects",
-        "homes",
-        "properties",
-        "home_inventory",
-        "key_contacts",
-        "settings",
+        "users", "customers", "quotes", "legacy_quotes", "projects", "homes", "properties",
+        "home_inventory", "key_contacts", "permit_jobs", "settings",
     )
     counts = {name: await db[name].count_documents({}) for name in collections}
     return {
