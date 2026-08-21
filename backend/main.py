@@ -36,6 +36,7 @@ from models import (
     UserPublic,
     UserUpdate,
 )
+from permitting import router as permitting_router
 from properties import router as properties_router
 from quotes import public_router as public_quotes_router
 from quotes import router as quotes_router
@@ -53,6 +54,7 @@ app.include_router(catalog_router)
 app.include_router(customers_router)
 app.include_router(properties_router)
 app.include_router(delivery_router)
+app.include_router(permitting_router)
 app.include_router(quotes_router)
 app.include_router(public_quotes_router)
 app.include_router(legacy_quotes_router)
@@ -299,6 +301,7 @@ async def system_check(_admin: dict = Depends(require_admin)) -> dict:
         "properties",
         "home_inventory",
         "key_contacts",
+        "permit_jobs",
         "settings",
     )
     counts = {name: await db[name].count_documents({}) for name in collections}

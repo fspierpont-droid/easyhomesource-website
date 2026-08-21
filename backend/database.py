@@ -61,8 +61,6 @@ async def ensure_indexes() -> None:
     await db.quotes.create_index("associate_id")
     await db.quotes.create_index([("updated_at", -1)])
 
-    # Historical records live in their own collection so they can never affect
-    # the current quote engine, pricing rules, or active quote lifecycle.
     await db.legacy_quotes.create_index("legacy_source_id", unique=True)
     await db.legacy_quotes.create_index("quote_number")
     await db.legacy_quotes.create_index([("updated_at", -1)])
@@ -84,6 +82,15 @@ async def ensure_indexes() -> None:
 
     await db.key_contacts.create_index("id", unique=True)
     await db.key_contacts.create_index([("active", 1), ("priority", -1), ("category", 1)])
+
+    await db.permit_jobs.create_index("id", unique=True)
+    await db.permit_jobs.create_index([("archived", 1), ("status", 1), ("updated_at", -1)])
+    await db.permit_jobs.create_index("county")
+    await db.permit_jobs.create_index("parcel_number")
+    await db.permit_jobs.create_index("permit_number")
+    await db.permit_jobs.create_index("project_id")
+    await db.permit_jobs.create_index("property_id")
+    await db.permit_jobs.create_index("quote_id")
 
     await db.audit_logs.create_index([("timestamp", -1)])
     await db.audit_logs.create_index([("actor_user_id", 1), ("timestamp", -1)])
