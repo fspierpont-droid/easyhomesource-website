@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { SiteLogo } from '@/components/SiteLogo';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 interface QuotePortalShellProps {
@@ -85,6 +84,15 @@ export function QuotePortalShell({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       )
+    },
+    {
+      id: 'amhi',
+      label: 'AMHI Permitting',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 12h6m-6 4h4" />
+        </svg>
+      )
     }
   ];
 
@@ -109,6 +117,8 @@ export function QuotePortalShell({
     setMobileOpen(false);
     if (id === 'catalog') {
       window.open('/homes', '_blank');
+    } else if (id === 'amhi') {
+      window.location.href = '/portal/amhi';
     } else {
       onNavChange(id);
     }
@@ -116,7 +126,6 @@ export function QuotePortalShell({
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col lg:flex-row antialiased w-full overflow-x-hidden">
-      {/* Mobile Top Header Bar (Only visible on small screens < lg) */}
       <header className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
         <div className="flex items-center gap-3">
           <button
@@ -135,9 +144,7 @@ export function QuotePortalShell({
               EHS
             </div>
             <div>
-              <div className="font-extrabold text-xs text-slate-900 leading-tight">
-                QUOTE PORTAL
-              </div>
+              <div className="font-extrabold text-xs text-slate-900 leading-tight">QUOTE PORTAL</div>
               <div className="text-[9px] font-bold text-emerald-600">ERP V05</div>
             </div>
           </Link>
@@ -154,7 +161,6 @@ export function QuotePortalShell({
         </div>
       </header>
 
-      {/* Mobile Drawer Backdrop Overlay */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-xs lg:hidden transition-opacity"
@@ -162,24 +168,18 @@ export function QuotePortalShell({
         />
       )}
 
-      {/* Responsive Left Sidebar */}
       <aside
         className={`fixed top-0 bottom-0 left-0 z-50 w-64 max-w-[85vw] border-r border-slate-200 bg-white flex flex-col shrink-0 min-h-screen shadow-2xl lg:shadow-2xs transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Brand Header */}
         <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between">
           <Link href="/portal" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5 text-slate-900 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-xs flex items-center justify-center shadow-xs">
-              EHS
-            </div>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0B1E38] to-[#1E6FA8] text-white font-black text-xs flex items-center justify-center shadow-xs">EHS</div>
             <div>
               <div className="font-extrabold text-xs tracking-tight text-slate-900 flex items-center gap-1.5">
                 <span>QUOTE PORTAL</span>
-                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.2 rounded border border-emerald-200">
-                  ERP V05
-                </span>
+                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.2 rounded border border-emerald-200">ERP V05</span>
               </div>
               <p className="text-[10px] text-slate-400 font-medium">Operations Single Source</p>
             </div>
@@ -195,7 +195,6 @@ export function QuotePortalShell({
           </button>
         </div>
 
-        {/* New Manual Quote Action Button */}
         <div className="p-4">
           <button
             type="button"
@@ -205,18 +204,14 @@ export function QuotePortalShell({
             }}
             className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-extrabold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-[1.01] active:scale-95 cursor-pointer"
           >
-            <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[11px] font-black">
-              +
-            </span>
+            <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[11px] font-black">+</span>
             <span>New Manual Quote</span>
           </button>
         </div>
 
-        {/* Navigation Items */}
         <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = item.id === activeNav;
-
             return (
               <button
                 key={item.id}
@@ -228,18 +223,14 @@ export function QuotePortalShell({
                     : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
-                <span className={isActive ? 'text-[#0B1E38]' : 'text-slate-400'}>
-                  {item.icon}
-                </span>
+                <span className={isActive ? 'text-[#0B1E38]' : 'text-slate-400'}>{item.icon}</span>
                 <span>{item.label}</span>
               </button>
             );
           })}
         </nav>
 
-        {/* Bottom Sidebar Settings & User Profile Section */}
         <div className="p-3 border-t border-slate-100 bg-slate-50/50 space-y-2.5">
-          {/* GHL & Pricing / Users Links */}
           <div className="space-y-1">
             <Link
               href="/settings?tab=imports"
@@ -264,22 +255,14 @@ export function QuotePortalShell({
             </Link>
           </div>
 
-          {/* Logged in User Profile Card */}
           <div className="p-2.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
-              {userInitials}
-            </div>
+            <div className="w-8 h-8 rounded-full bg-[#0B1E38] text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs">{userInitials}</div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-black text-slate-900 truncate">
-                {user?.name || 'Scott Pierpont'}
-              </p>
-              <p className="text-[10px] text-slate-500 font-semibold truncate">
-                {user?.role || 'Admin'}
-              </p>
+              <p className="text-xs font-black text-slate-900 truncate">{user?.name || 'Scott Pierpont'}</p>
+              <p className="text-[10px] text-slate-500 font-semibold truncate">{user?.role || 'Admin'}</p>
             </div>
           </div>
 
-          {/* Change Password & Sign Out */}
           <div className="space-y-0.5 text-[11px] font-semibold text-slate-500">
             <Link
               href="/settings?tab=users"
@@ -302,10 +285,7 @@ export function QuotePortalShell({
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 overflow-y-auto">
-        {children}
-      </div>
+      <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 overflow-y-auto">{children}</div>
     </div>
   );
 }
