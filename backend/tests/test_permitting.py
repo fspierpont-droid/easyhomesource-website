@@ -7,10 +7,9 @@ import permitting
 
 
 def test_permitting_router_exposes_job_and_document_contracts():
-    methods_by_path = {
-        route.path: set(route.methods or [])
-        for route in permitting.router.routes
-    }
+    methods_by_path: dict[str, set[str]] = {}
+    for route in permitting.router.routes:
+        methods_by_path.setdefault(route.path, set()).update(route.methods or [])
 
     assert methods_by_path['/api/permitting/jobs'] >= {'GET', 'POST'}
     assert methods_by_path['/api/permitting/jobs/{job_id}'] >= {'PATCH', 'DELETE'}
