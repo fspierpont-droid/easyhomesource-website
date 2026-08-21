@@ -287,6 +287,34 @@ export function AmhiPermittingHub() {
     }
   }
 
+  async function deleteJob() {
+    if (!selected || saving) return;
+    const currentId = selected.id;
+    const label = selected.customer_name || selected.project_name || selected.address || 'this permit job';
+    const confirmed = window.confirm(
+      `Delete the permit job for ${label}?\n\nIt will be removed from the active AMHI workspace.`,
+    );
+    if (!confirmed) return;
+
+    setSaving(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/portal/permitting/jobs/${encodeURIComponent(currentId)}`, {
+        method: 'DELETE',
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload?.detail || 'Unable to delete permit job.');
+
+      const remaining = jobs.filter((job) => job.id !== currentId);
+      setJobs(remaining);
+      setSelectedId(remaining[0]?.id || null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to delete permit job.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
   async function uploadDocument(file: File) {
     if (!selected) return;
     const currentId = selected.id;
@@ -456,13 +484,24 @@ export function AmhiPermittingHub() {
                         {selected.address}{selected.city ? `, ${selected.city}` : ''} {selected.zip || ''}
                       </p>
                     </div>
-                    <select
-                      value={selected.status}
-                      onChange={(event) => void patchJob({ status: event.target.value as PermitStatus })}
-                      className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-black bg-white"
-                    >
-                      {STATUSES.map((status) => <option key={status}>{status}</option>)}
-                    </select>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={selected.status}
+                        disabled={saving}
+                        onChange={(event) => void patchJob({ status: event.target.value as PermitStatus })}
+                        className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-black bg-white disabled:opacity-60"
+                      >
+                        {STATUSES.map((status) => <option key={status}>{status}</option>)}
+                      </select>
+                      <button
+                        type="button"
+                        disabled={saving}
+                        onClick={() => void deleteJob()}
+                        className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-black text-rose-700 hover:bg-rose-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Delete Permit
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-3">
