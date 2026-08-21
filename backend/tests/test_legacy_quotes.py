@@ -46,3 +46,24 @@ def test_archive_legacy_quote_can_fall_back_to_quote_number_for_identity():
     assert archived["id"] == "legacy:OLD-Q-100"
     assert archived["legacy_source_id"] == "OLD-Q-100"
     assert archived["totals"]["grand_total"] == 123456.78
+
+
+def test_archive_legacy_quote_preserves_zero_value_financials_exactly():
+    source = {
+        "id": "old-zero-quote",
+        "quote_number": "OLD-ZERO-100",
+        "totals": {
+            "subtotal": 0,
+            "sales_tax": 0,
+            "grand_total": 0,
+            "delivery_total": 0,
+            "site_work_total": 0,
+        },
+    }
+
+    archived = archive_legacy_quote(source, archived_at="2026-08-18T19:00:00+00:00")
+
+    assert archived["totals"] == source["totals"]
+    assert archived["totals"]["subtotal"] == 0
+    assert archived["totals"]["sales_tax"] == 0
+    assert archived["totals"]["grand_total"] == 0
