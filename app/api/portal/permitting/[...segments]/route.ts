@@ -1,11 +1,11 @@
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 
 interface RouteContext {
-  params: Promise<{ segments: string[] }>;
+  params: { segments: string[] };
 }
 
 async function proxy(request: Request, context: RouteContext, method: string) {
-  const { segments } = await context.params;
+  const { segments } = context.params;
   const suffix = (segments || []).map(encodeURIComponent).join('/');
   const path = `/api/permitting/${suffix}`;
   const init: RequestInit = { method };
