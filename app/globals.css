@@ -47,3 +47,81 @@ body {
 .leaflet-popup-tip {
   background: white;
 }
+
+/* Customer quote printing: keep the attractive screen proposal, but remove
+   screen-only card/page sizing when Chrome/Safari saves the proposal as PDF. */
+@media print {
+  @page {
+    size: Letter portrait;
+    margin: 0.38in 0.42in;
+  }
+
+  html,
+  body {
+    width: auto !important;
+    min-height: 0 !important;
+    background: #ffffff !important;
+  }
+
+  body {
+    font-size: 10pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:min-h-screen,
+  .print\:min-h-0 {
+    min-height: 0 !important;
+  }
+
+  .print\:break-after-page {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:rounded-none {
+    border-radius: 0 !important;
+  }
+
+  .print\:border-0 {
+    border-width: 0 !important;
+  }
+
+  .print\:p-0 {
+    padding: 0 !important;
+  }
+
+  .print\:mt-0 {
+    margin-top: 0 !important;
+  }
+
+  section,
+  article,
+  table,
+  tr,
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+}
