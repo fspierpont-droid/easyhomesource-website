@@ -19,6 +19,7 @@ DEFAULT_DEALERSHIP_ADDRESS = "9011 McIntyre Rd, Brooksville, FL 34601"
 DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json"
 METERS_PER_MILE = 1609.344
 VALID_ROUTE_TYPES = {"dealer_to_customer", "factory_to_dealer", "factory_to_customer"}
+FACTORY_ROUTE_TYPES = {"factory_to_dealer", "factory_to_customer"}
 
 
 class DeliveryEstimateRequest(BaseModel):
@@ -76,7 +77,7 @@ def _default_escorts(width: float, miles: float, sides: int) -> int:
 
 
 def _pricing(route_type: str, miles: float, sides: int, escorts: int) -> tuple[float, float]:
-    if route_type in {"factory_to_customer", "factory_to_dealer"}:
+    if route_type in FACTORY_ROUTE_TYPES:
         return round(6000 * sides, 2), round(6600 * sides, 2)
 
     if miles <= 0:
@@ -144,6 +145,10 @@ def _google_distance(origin: str, destination: str, key: str) -> tuple[float, st
     return miles, distance_text, duration_text, resolved_origin, resolved_destination
 
 
+def _factory_baseline_message() -> str:
+    return "Factory route uses the verified Master Quote 5 $6,000 cost / $6,600 customer price per transported section. Driving mileage was not required to price this route."
+
+
 @router.post("/estimate", response_model=DeliveryEstimateResponse)
 def estimate_delivery(
     payload: DeliveryEstimateRequest,
@@ -161,27 +166,41 @@ def estimate_delivery(
             miles = float(math.ceil(raw_miles))
             source = "google_distance_matrix"
         except Exception as exc:
-            if manual_miles <= 0:
+            if manual_miles > 0:
+                miles = float(math.ceil(manual_miles))
+                distance_text = f"{miles:g} mi (manual)"
+                duration_text = None
+                source = "manual_fallback"
+                warning = f"Google route lookup was unavailable; manual route mileage was used. Reason: {exc}"
+            elif route_type in FACTORY_ROUTE_TYPES:
+                miles = 0.0
+                distance_text = None
+                duration_text = None
+                source = "factory_baseline"
+                warning = f"{_factory_baseline_message()} Google route lookup reason: {exc}"
+            else:
                 raise HTTPException(
                     status_code=503,
                     detail=f"Driving-distance lookup failed. Enter manual route miles and retry. Reason: {exc}",
                 )
+    else:
+        if manual_miles > 0:
             miles = float(math.ceil(manual_miles))
             distance_text = f"{miles:g} mi (manual)"
             duration_text = None
             source = "manual_fallback"
-            warning = f"Google route lookup was unavailable; manual route mileage was used. Reason: {exc}"
-    else:
-        if manual_miles <= 0:
+            warning = "Google Maps is not configured on the permanent API; manual route mileage was used."
+        elif route_type in FACTORY_ROUTE_TYPES:
+            miles = 0.0
+            distance_text = None
+            duration_text = None
+            source = "factory_baseline"
+            warning = _factory_baseline_message()
+        else:
             raise HTTPException(
                 status_code=503,
                 detail="Automatic driving-distance lookup is not configured on the permanent API. Enter manual route miles, or configure GOOGLE_MAPS_API_KEY on Render.",
             )
-        miles = float(math.ceil(manual_miles))
-        distance_text = f"{miles:g} mi (manual)"
-        duration_text = None
-        source = "manual_fallback"
-        warning = "Google Maps is not configured on the permanent API; manual route mileage was used."
 
     sides = _transport_sides(payload.home_width)
     escorts = (
