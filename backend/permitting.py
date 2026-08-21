@@ -8,7 +8,7 @@ from typing import Any
 from uuid import uuid4
 
 from bson import ObjectId
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
 from pymongo import ReturnDocument
@@ -169,7 +169,7 @@ async def archive_job(job_id: str, user: dict = Depends(get_current_user)) -> di
 async def upload_document(
     job_id: str,
     file: UploadFile = File(...),
-    category: str = "Other",
+    category: str = Form("Other"),
     user: dict = Depends(get_current_user),
 ) -> dict:
     job = await get_db().permit_jobs.find_one(_require_job(job_id))
