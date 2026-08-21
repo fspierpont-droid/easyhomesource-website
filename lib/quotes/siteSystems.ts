@@ -24,9 +24,11 @@ export interface SiteSystemSelection {
 
 const HVAC_PREFIX = 'HVAC-';
 const WELL_PREFIXES = ['SITE-WELL-'];
-const WATER_PREFIXES = ['SITE-WATER-HOOKUP'];
+const WATER_HOOKUP_PREFIXES = ['SITE-WATER-HOOKUP'];
+const WATER_EXISTING_SKU = 'SITE-WATER-EXISTING';
 const SEPTIC_PREFIXES = ['SITE-SEPTIC-'];
-const SEWER_PREFIXES = ['SITE-SEWER-HOOKUP'];
+const SEWER_HOOKUP_PREFIXES = ['SITE-SEWER-HOOKUP'];
+const SEWER_EXISTING_SKU = 'SITE-SEWER-EXISTING';
 const ELECTRIC_PREFIXES = ['ELEC-PANEL-NEW-POST', 'SITE-ELEC-PANEL'];
 const DIRT_PREFIXES = ['SITE-DIRTPAD'];
 
@@ -48,6 +50,24 @@ function lineFromCatalog(sku: string, id = `line-${Date.now()}-${Math.random().t
     quantity: 1,
     totalPrice: Number(source.defaultPrice) || 0,
     totalCost: Number(source.defaultCost) || 0,
+  };
+}
+
+function existingConnectionLine(kind: 'water' | 'sewer'): SelectedQuoteLineItem {
+  const water = kind === 'water';
+  return {
+    id: `site-existing-${kind}-${Date.now()}`,
+    sku: water ? WATER_EXISTING_SKU : SEWER_EXISTING_SKU,
+    name: water ? 'Existing Water Connection' : 'Existing Sewer / Septic Connection',
+    description: water
+      ? 'Customer/site has an existing water source or connection; no new EHS well or city-water hookup is included in this quote.'
+      : 'Customer/site has an existing sewer or septic connection; no new EHS sewer hookup or septic system is included in this quote.',
+    category: 'addons',
+    unitPrice: 0,
+    unitCost: 0,
+    quantity: 1,
+    totalPrice: 0,
+    totalCost: 0,
   };
 }
 
@@ -73,9 +93,11 @@ export function inferSiteSystems(lines: SelectedQuoteLineItem[], squareFeet: num
   const hvac = lines.find((line) => String(line.sku || '').startsWith(HVAC_PREFIX));
   const ac = parseAcLine(hvac);
   const well = lines.some((line) => startsWithAny(String(line.sku || ''), WELL_PREFIXES));
-  const water = lines.some((line) => startsWithAny(String(line.sku || ''), WATER_PREFIXES));
+  const waterHookup = lines.some((line) => startsWithAny(String(line.sku || ''), WATER_HOOKUP_PREFIXES));
+  const waterExisting = lines.some((line) => String(line.sku || '') === WATER_EXISTING_SKU);
   const septic = lines.some((line) => startsWithAny(String(line.sku || ''), SEPTIC_PREFIXES));
-  const sewer = lines.some((line) => startsWithAny(String(line.sku || ''), SEWER_PREFIXES));
+  const sewerHookup = lines.some((line) => startsWithAny(String(line.sku || ''), SEWER_HOOKUP_PREFIXES));
+  const sewerExisting = lines.some((line) => String(line.sku || '') === SEWER_EXISTING_SKU);
   const electricPanel = lines.some((line) => startsWithAny(String(line.sku || ''), ELECTRIC_PREFIXES));
   const dirt = lines.find((line) => startsWithAny(String(line.sku || ''), DIRT_PREFIXES));
   const dirtMatch = `${dirt?.sku || ''} ${dirt?.name || ''}`.match(/(\d+)\s*[- ]?load/i);
@@ -85,8 +107,8 @@ export function inferSiteSystems(lines: SelectedQuoteLineItem[], squareFeet: num
     acTonnage: ac?.tonnage || recommendedAcTonnage(squareFeet),
     acSystemType: ac?.acSystemType || 'heat_pump',
     acEquipmentType: ac?.acEquipmentType || 'package',
-    waterSource: well ? 'well' : water ? 'city_water' : 'none',
-    sewerSource: septic ? 'septic' : sewer ? 'city_sewer' : 'none',
+    waterSource: well ? 'well' : waterHookup ? 'city_water' : waterExisting ? 'existing' : 'none',
+    sewerSource: septic ? 'septic' : sewerHookup ? 'city_sewer' : sewerExisting ? 'existing' : 'none',
     electricPanel,
     dirtPadLoads: dirtMatch ? Number(dirtMatch[1]) : dirt ? 2 : 0,
   };
@@ -169,20 +191,26 @@ export function applySiteSystems(
     lines = lines.filter((line) => !hvacPredicate(line));
   }
 
-  const waterPredicate = (line: SelectedQuoteLineItem) =>
-    startsWithAny(String(line.sku || ''), [...WELL_PREFIXES, ...WATER_PREFIXES]);
+  const waterPredicate = (line: SelectedQuoteLineItem) => {
+    const sku = String(line.sku || '');
+    return startsWithAny(sku, [...WELL_PREFIXES, ...WATER_HOOKUP_PREFIXES]) || sku === WATER_EXISTING_SKU;
+  };
   if (selection.waterSource === 'well') {
     const well = lineFromCatalog('SITE-WELL-4INCH');
     lines = replaceFamily(lines, waterPredicate, well, (existing) => startsWithAny(String(existing.sku || ''), WELL_PREFIXES));
   } else if (selection.waterSource === 'city_water') {
     const water = lineFromCatalog('SITE-WATER-HOOKUP');
-    lines = replaceFamily(lines, waterPredicate, water, (existing) => startsWithAny(String(existing.sku || ''), WATER_PREFIXES));
+    lines = replaceFamily(lines, waterPredicate, water, (existing) => startsWithAny(String(existing.sku || ''), WATER_HOOKUP_PREFIXES));
+  } else if (selection.waterSource === 'existing') {
+    lines = replaceFamily(lines, waterPredicate, existingConnectionLine('water'), (existing) => String(existing.sku || '') === WATER_EXISTING_SKU);
   } else {
     lines = lines.filter((line) => !waterPredicate(line));
   }
 
-  const sewerPredicate = (line: SelectedQuoteLineItem) =>
-    startsWithAny(String(line.sku || ''), [...SEPTIC_PREFIXES, ...SEWER_PREFIXES]);
+  const sewerPredicate = (line: SelectedQuoteLineItem) => {
+    const sku = String(line.sku || '');
+    return startsWithAny(sku, [...SEPTIC_PREFIXES, ...SEWER_HOOKUP_PREFIXES]) || sku === SEWER_EXISTING_SKU;
+  };
   if (selection.sewerSource === 'septic') {
     const size = getRecommendedSepticTankSize(bedrooms, squareFeet);
     const septic = size <= 900 ? lineFromCatalog('SITE-SEPTIC-900') : buildCustomSepticLine(size);
@@ -192,7 +220,9 @@ export function applySiteSystems(
     });
   } else if (selection.sewerSource === 'city_sewer') {
     const sewerLine = lineFromCatalog('SITE-SEWER-HOOKUP-50');
-    lines = replaceFamily(lines, sewerPredicate, sewerLine, (existing) => startsWithAny(String(existing.sku || ''), SEWER_PREFIXES));
+    lines = replaceFamily(lines, sewerPredicate, sewerLine, (existing) => startsWithAny(String(existing.sku || ''), SEWER_HOOKUP_PREFIXES));
+  } else if (selection.sewerSource === 'existing') {
+    lines = replaceFamily(lines, sewerPredicate, existingConnectionLine('sewer'), (existing) => String(existing.sku || '') === SEWER_EXISTING_SKU);
   } else {
     lines = lines.filter((line) => !sewerPredicate(line));
   }
