@@ -17,6 +17,17 @@ function readPortalAccessToken(request: Request): string | null {
   }
 }
 
+function prepareHeaders(init: RequestInit, token?: string) {
+  const headers = new Headers(init.headers);
+  if (token) headers.set('Authorization', `Bearer ${token}`);
+  headers.set('Accept', 'application/json');
+  const isFormData = typeof FormData !== 'undefined' && init.body instanceof FormData;
+  if (init.body && !headers.has('Content-Type') && !isFormData) {
+    headers.set('Content-Type', 'application/json');
+  }
+  return headers;
+}
+
 export async function permanentApiRequest(
   request: Request,
   path: string,
@@ -27,10 +38,7 @@ export async function permanentApiRequest(
     return Response.json({ detail: 'Authentication required.' }, { status: 401 });
   }
 
-  const headers = new Headers(init.headers);
-  headers.set('Authorization', `Bearer ${token}`);
-  headers.set('Accept', 'application/json');
-  if (init.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+  const headers = prepareHeaders(init, token);
 
   try {
     return await fetch(`${portalBackendUrl()}${path}`, {
@@ -48,9 +56,7 @@ export async function permanentPublicApiRequest(
   path: string,
   init: RequestInit = {},
 ): Promise<Response> {
-  const headers = new Headers(init.headers);
-  headers.set('Accept', 'application/json');
-  if (init.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+  const headers = prepareHeaders(init);
 
   try {
     return await fetch(`${portalBackendUrl()}${path}`, {
