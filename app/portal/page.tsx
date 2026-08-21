@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
 import { AuthGate } from '@/components/portal/AuthGate';
@@ -16,15 +15,6 @@ export default function PortalPage() {
         <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
           <PropertyPackageManager initialNav="dashboard" />
         </Suspense>
-
-        <Link
-          href="/portal/amhi"
-          className="fixed right-5 bottom-5 z-[460] inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 text-[#0B1E38] px-4 py-3 text-xs font-black shadow-xl border border-amber-300 transition-all active:scale-95"
-          title="Advance Mobile Home Installation permitting workspace"
-        >
-          <span className="text-base">📋</span>
-          <span>AMHI Permitting</span>
-        </Link>
 
         {/*
           Leaflet and the Project Board intentionally use z-index values in the
