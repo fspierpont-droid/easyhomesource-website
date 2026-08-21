@@ -15,12 +15,15 @@ export interface PermitResourceLink {
 
 export const FLORIDA_BUILDING_JURISDICTION_SEARCH = 'https://floridabuilding.org/sc/sc_org_srch.aspx';
 
+// Direct links are intentionally limited to portals/department pages we have
+// positively verified. Every other county remains available through Florida's
+// official Building Jurisdiction Search rather than guessing a deep portal URL.
 const DIRECT: Record<string, Partial<CountyPermitResource>> = {
   Hernando: {
     portalUrl: 'https://hernandocountyfl-energovweb.tylerhost.net/apps/selfservice#/home',
     portalLabel: 'Hernando Civic Access',
     departmentUrl: 'https://www.hernandocounty.us/building-development/building/',
-    notes: 'New permits use Tyler Civic Access. Legacy portal is for older permits only.'
+    notes: 'New permits use Tyler Civic Access. The legacy portal is for older permits only.'
   },
   Citrus: {
     portalUrl: 'https://portal.citrusbocc.com/',
@@ -53,9 +56,8 @@ const DIRECT: Record<string, Partial<CountyPermitResource>> = {
     departmentUrl: 'https://www.sumtercountyfl.gov/139/Online-Permitting'
   },
   Lake: {
-    portalUrl: 'https://lakecountyfl.portal.opengov.com/',
-    portalLabel: 'Lake County OpenGov',
-    departmentUrl: 'https://c.lakecountyfl.gov/offices/building_services/'
+    departmentUrl: 'https://c.lakecountyfl.gov/offices/building_services/',
+    notes: 'Use the county Building Services page for the current Online Permitting links and mobile-home permitting resources.'
   },
   Orange: {
     portalUrl: 'https://fasttrack.ocfl.net/OnlineServices/login.aspx',
@@ -68,13 +70,18 @@ const DIRECT: Record<string, Partial<CountyPermitResource>> = {
     departmentUrl: 'https://www.volusia.org/services/growth-and-resource-management/building-and-zoning/'
   },
   Pinellas: {
-    departmentUrl: 'https://pinellas.gov/department/building-services/'
+    portalUrl: 'https://aca-prod.accela.com/pinellas',
+    portalLabel: 'Pinellas County Access Portal',
+    departmentUrl: 'https://pinellas.gov/building-services/',
+    notes: 'County Building Services only serves unincorporated Pinellas and its listed partner communities; verify jurisdiction for city addresses.'
   },
   Manatee: {
-    departmentUrl: 'https://www.mymanatee.org/departments/development_services/building___development_services'
+    departmentUrl: 'https://www.mymanatee.org/departments/development-services-department/building-division/permitting-section',
+    notes: 'Use the official Permitting Section page to enter the current Accela Online Services portal.'
   },
   Sarasota: {
-    departmentUrl: 'https://www.scgov.net/government/planning-and-development-services/building'
+    departmentUrl: 'https://www.scgov.net/government/planning-and-development-services/online-permitting',
+    notes: 'Sarasota County uses Accela Civic Application and Digital Plan Room for online permitting.'
   }
 };
 
