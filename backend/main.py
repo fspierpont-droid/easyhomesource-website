@@ -159,9 +159,9 @@ async def _check_login_rate_limit(email: str) -> None:
     if int(document.get("count", 0)) >= 10:
         retry_after = max(1, int((reset_at - now).total_seconds()))
         raise HTTPException(
-  status_code=429,
-  detail="Too many failed login attempts. Please wait and try again.",
-  headers={"Retry-After": str(retry_after)},
+            status_code=429,
+            detail="Too many failed login attempts. Please wait and try again.",
+            headers={"Retry-After": str(retry_after)},
         )
 
 
@@ -176,9 +176,9 @@ async def _record_failed_login(email: str) -> None:
 
     if not document or reset_at is None or reset_at <= now:
         await collection.update_one(
-  {"key": key},
-  {"$set": {"key": key, "count": 1, "reset_at": now + window, "updated_at": now}},
-  upsert=True,
+            {"key": key},
+            {"$set": {"key": key, "count": 1, "reset_at": now + window, "updated_at": now}},
+            upsert=True,
         )
         return
 
@@ -191,6 +191,7 @@ async def _record_failed_login(email: str) -> None:
 async def _clear_login_failures(email: str) -> None:
     """Reset the consecutive-failure counter after a successful login."""
     await get_db().rate_limits.delete_one({"key": _login_rate_limit_key(email)})
+
 
 @app.on_event("startup")
 async def startup() -> None:
