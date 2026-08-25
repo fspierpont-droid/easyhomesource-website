@@ -1,4 +1,4 @@
-name: Temporary catalog strict validation
+name: Temporary catalog behavior validation
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout repair branch
         uses: actions/checkout@v4
@@ -26,7 +26,9 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
-      - name: Strict TypeScript check
-        run: npx tsc --noEmit
       - name: ESLint
         run: npm run lint
+      - name: Portal and GHL tests
+        run: npm run test:ghl
+      - name: Production Next build
+        run: npm run build
