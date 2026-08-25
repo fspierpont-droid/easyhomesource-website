@@ -4,6 +4,9 @@ from datetime import datetime, timezone
 import permit_monitoring
 
 
+HUMAN_UPDATED_AT = datetime(2026, 8, 24, 12, 0, tzinfo=timezone.utc)
+
+
 class FakeCollection:
     def __init__(self, documents=None):
         self.documents = list(documents or [])
@@ -55,6 +58,8 @@ class FakeDb:
                 "id": "permit-1",
                 "status": "Submitted",
                 "archived": False,
+                "updated_at": HUMAN_UPDATED_AT,
+                "updated_by": "human-user-1",
             }
         ])
         self.permit_external_snapshots = FakeCollection()
@@ -91,7 +96,13 @@ def test_material_changes_reports_only_external_field_differences():
     }
 
 
-def test_first_observation_creates_baseline_without_changing_human_status():
+def assert_human_workflow_metadata_unchanged(job):
+    assert job["status"] == "Submitted"
+    assert job["updated_at"] == HUMAN_UPDATED_AT
+    assert job["updated_by"] == "human-user-1"
+
+
+def test_first_observation_creates_baseline_without_changing_human_workflow_metadata():
     db = FakeDb()
     observed_at = datetime(2026, 8, 25, 13, 0, tzinfo=timezone.utc)
 
@@ -108,11 +119,12 @@ def test_first_observation_creates_baseline_without_changing_human_status():
     )
 
     job = db.permit_jobs.documents[0]
-    assert job["status"] == "Submitted"
+    assert_human_workflow_metadata_unchanged(job)
     assert job["external_status"] == "In Review"
     assert job["external_monitor_state"] == "healthy"
     assert job["external_last_checked_at"] == observed_at
     assert job["external_last_changed_at"] == observed_at
+    assert job["external_observed_by"] == "system:permit-monitor"
     assert result["human_status_unchanged"] is True
     assert len(db.permit_external_snapshots.documents) == 1
     assert db.permit_events.documents[0]["event_type"] == "external_baseline_recorded"
@@ -145,15 +157,15 @@ def test_unchanged_observation_adds_snapshot_but_not_change_event():
     )
 
     job = db.permit_jobs.documents[0]
+    assert_human_workflow_metadata_unchanged(job)
     assert len(db.permit_external_snapshots.documents) == 2
     assert len(db.permit_events.documents) == 1
     assert result["changes"] == {}
     assert job["external_last_checked_at"] == second_time
     assert job["external_last_changed_at"] == first_time
-    assert job["status"] == "Submitted"
 
 
-def test_changed_observation_creates_change_event_and_preserves_human_status():
+def test_changed_observation_creates_change_event_and_preserves_human_workflow_metadata():
     db = FakeDb()
     first_time = datetime(2026, 8, 25, 13, 0, tzinfo=timezone.utc)
     second_time = datetime(2026, 8, 25, 17, 0, tzinfo=timezone.utc)
@@ -180,7 +192,7 @@ def test_changed_observation_creates_change_event_and_preserves_human_status():
     )
 
     job = db.permit_jobs.documents[0]
-    assert job["status"] == "Submitted"
+    assert_human_workflow_metadata_unchanged(job)
     assert job["external_status"] == "Approved"
     assert job["external_last_changed_at"] == second_time
     assert result["changes"]["status"] == {"before": "In Review", "after": "Approved"}
