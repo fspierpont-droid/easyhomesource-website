@@ -73,7 +73,22 @@ JOB_FIELDS = {
     "parcel_number", "jurisdiction", "permit_type", "status", "permit_number", "application_number",
     "quote_id", "project_id", "property_id", "assigned_to", "installer", "submitted_at", "issued_at",
     "expires_at", "target_install_date", "next_action", "notes", "checklist",
+    "monitor_enabled", "portal_connector_id", "external_record_id",
 }
+
+MONITOR_CONFIG_FIELDS = {"monitor_enabled", "portal_connector_id", "external_record_id"}
+MONITOR_VIEW_FIELDS = (
+    "monitor_enabled",
+    "portal_connector_id",
+    "external_record_id",
+    "external_status",
+    "external_status_detail",
+    "external_source_url",
+    "external_snapshot_hash",
+    "external_last_checked_at",
+    "external_last_changed_at",
+    "external_monitor_state",
+)
 
 
 def _now() -> datetime:
@@ -87,6 +102,14 @@ def _text(value: Any) -> str | None:
     return value or None
 
 
+def _boolean(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "on"}
+    return bool(value)
+
+
 def _serialize(doc: dict) -> dict:
     result = dict(doc)
     result.pop("_id", None)
@@ -98,6 +121,12 @@ def _serialize(doc: dict) -> dict:
 
 def _require_job(job_id: str):
     return {"id": job_id, "archived": {"$ne": True}}
+
+
+def _monitor_state(enabled: bool, connector_id: Any, external_record_id: Any) -> str:
+    if enabled and _text(connector_id) and _text(external_record_id):
+        return "pending"
+    return "not_configured"
 
 
 @router.get("/jobs")
@@ -115,6 +144,9 @@ async def create_job(payload: dict, user: dict = Depends(get_current_user)) -> d
         raise HTTPException(status_code=400, detail="Address and county are required")
     status_value = _text(data.get("status")) or "Research"
     permit_type = _text(data.get("permit_type")) or "Manufactured Home Installation"
+    monitor_enabled = _boolean(data.get("monitor_enabled", False))
+    portal_connector_id = _text(data.get("portal_connector_id"))
+    external_record_id = _text(data.get("external_record_id"))
     now = _now()
     doc = {
         "id": f"permit-{uuid4()}",
@@ -125,6 +157,10 @@ async def create_job(payload: dict, user: dict = Depends(get_current_user)) -> d
         "status": status_value if status_value in STATUSES else "Research",
         "permit_type": permit_type if permit_type in PERMIT_TYPES else "Other",
         "installer": _text(data.get("installer")) or "Advance Mobile Home Installation",
+        "monitor_enabled": monitor_enabled,
+        "portal_connector_id": portal_connector_id,
+        "external_record_id": external_record_id,
+        "external_monitor_state": _monitor_state(monitor_enabled, portal_connector_id, external_record_id),
         "documents": [],
         "archived": False,
         "created_at": now,
@@ -138,19 +174,65 @@ async def create_job(payload: dict, user: dict = Depends(get_current_user)) -> d
 
 @router.patch("/jobs/{job_id}")
 async def update_job(job_id: str, payload: dict, user: dict = Depends(get_current_user)) -> dict:
+    db = get_db()
+    existing = await db.permit_jobs.find_one(_require_job(job_id))
+    if not existing:
+        raise HTTPException(status_code=404, detail="Permit job not found")
+
     update = {key: payload.get(key) for key in JOB_FIELDS if key in payload}
     if "status" in update:
         update["status"] = update["status"] if update["status"] in STATUSES else "Research"
     if "permit_type" in update:
         update["permit_type"] = update["permit_type"] if update["permit_type"] in PERMIT_TYPES else "Other"
+    if "monitor_enabled" in update:
+        update["monitor_enabled"] = _boolean(update["monitor_enabled"])
+    if "portal_connector_id" in update:
+        update["portal_connector_id"] = _text(update["portal_connector_id"])
+    if "external_record_id" in update:
+        update["external_record_id"] = _text(update["external_record_id"])
+
+    if MONITOR_CONFIG_FIELDS.intersection(update):
+        effective_enabled = update.get("monitor_enabled", existing.get("monitor_enabled", False))
+        effective_connector = update.get("portal_connector_id", existing.get("portal_connector_id"))
+        effective_record_id = update.get("external_record_id", existing.get("external_record_id"))
+        update["external_monitor_state"] = _monitor_state(
+            _boolean(effective_enabled), effective_connector, effective_record_id
+        )
+
     update["updated_at"] = _now()
     update["updated_by"] = user.get("id")
-    doc = await get_db().permit_jobs.find_one_and_update(
+    doc = await db.permit_jobs.find_one_and_update(
         _require_job(job_id), {"$set": update}, return_document=ReturnDocument.AFTER
     )
     if not doc:
         raise HTTPException(status_code=404, detail="Permit job not found")
     return _serialize(doc)
+
+
+@router.get("/jobs/{job_id}/monitor")
+async def get_monitor_state(job_id: str, user: dict = Depends(get_current_user)) -> dict:
+    db = get_db()
+    job = await db.permit_jobs.find_one(_require_job(job_id))
+    if not job:
+        raise HTTPException(status_code=404, detail="Permit job not found")
+    latest_snapshot = await db.permit_external_snapshots.find_one(
+        {"permit_job_id": job_id}, sort=[("observed_at", -1)]
+    )
+    result = {field: job.get(field) for field in MONITOR_VIEW_FIELDS}
+    result["permit_job_id"] = job_id
+    result["human_status"] = job.get("status")
+    result["latest_snapshot"] = _serialize(latest_snapshot) if latest_snapshot else None
+    return _serialize(result)
+
+
+@router.get("/jobs/{job_id}/events")
+async def list_job_events(job_id: str, user: dict = Depends(get_current_user)) -> list[dict]:
+    db = get_db()
+    job = await db.permit_jobs.find_one(_require_job(job_id))
+    if not job:
+        raise HTTPException(status_code=404, detail="Permit job not found")
+    events = await db.permit_events.find({"permit_job_id": job_id}).sort("created_at", -1).to_list(200)
+    return [_serialize(event) for event in events]
 
 
 @router.delete("/jobs/{job_id}")
