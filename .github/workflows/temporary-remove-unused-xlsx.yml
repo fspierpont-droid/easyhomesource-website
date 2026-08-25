@@ -1,0 +1,45 @@
+name: Temporary remove unused xlsx
+
+on:
+  push:
+    branches:
+      - 'chore/remove-unused-xlsx'
+    paths:
+      - '.github/workflows/temporary-remove-unused-xlsx.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  remove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: chore/remove-unused-xlsx
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Remove unused xlsx package
+        run: npm uninstall xlsx --save
+
+      - name: Commit package cleanup
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo 'No package changes required.'
+          else
+            git commit -m 'Remove unused xlsx dependency'
+            git push origin HEAD:chore/remove-unused-xlsx
+          fi
