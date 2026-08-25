@@ -97,6 +97,65 @@ async def append_permit_event(
     return event
 
 
+async def record_monitor_issue(
+    db,
+    *,
+    permit_job_id: str,
+    state: str,
+    message: str,
+    connector_id: str | None = None,
+    actor: str = MONITOR_ACTOR,
+    observed_at: datetime | None = None,
+) -> dict[str, Any]:
+    """Record a connector/configuration issue without changing human workflow data."""
+    if state not in {"manual_required", "error", "stale"}:
+        raise ValueError("Monitor issue state must be manual_required, error, or stale")
+
+    job = await db.permit_jobs.find_one({"id": permit_job_id, "archived": {"$ne": True}})
+    if not job:
+        raise ValueError("Permit job not found")
+
+    timestamp = observed_at or _now()
+    cleaned_message = _clean_text(message) or "Permit portal monitor issue"
+    cleaned_connector = _clean_text(connector_id)
+    changed = (
+        job.get("external_monitor_state") != state
+        or job.get("external_monitor_error") != cleaned_message
+        or (cleaned_connector and job.get("portal_connector_id") != cleaned_connector)
+    )
+
+    update: dict[str, Any] = {
+        "external_monitor_state": state,
+        "external_monitor_error": cleaned_message,
+        "external_last_checked_at": timestamp,
+        "external_observed_by": actor,
+    }
+    if cleaned_connector:
+        update["portal_connector_id"] = cleaned_connector
+
+    await db.permit_jobs.update_one(
+        {"id": permit_job_id, "archived": {"$ne": True}},
+        {"$set": update},
+    )
+
+    event = None
+    if changed:
+        event = await append_permit_event(
+            db,
+            permit_job_id=permit_job_id,
+            event_type=f"external_monitor_{state}",
+            actor=actor,
+            source="permit_portal",
+            details={
+                "connector_id": cleaned_connector,
+                "message": cleaned_message,
+            },
+            created_at=timestamp,
+        )
+
+    return {"state": state, "message": cleaned_message, "event": event}
+
+
 async def record_external_observation(
     db,
     *,
@@ -155,6 +214,7 @@ async def record_external_observation(
         "external_snapshot_hash": digest,
         "external_last_checked_at": timestamp,
         "external_monitor_state": "healthy",
+        "external_monitor_error": None,
         "external_observed_by": actor,
     }
     if previous is None or changes:
