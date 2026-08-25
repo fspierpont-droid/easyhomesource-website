@@ -110,9 +110,10 @@ async def record_external_observation(
 ) -> dict[str, Any]:
     """Persist one connector observation and update external-only job fields.
 
-    The human `permit_jobs.status` field is intentionally never written here.
-    `source_url` is metadata only; this function never fetches it. Future
-    connectors must supply source URLs from an allow-listed connector registry.
+    The human `permit_jobs.status`, `updated_at`, and `updated_by` fields are
+    intentionally never written here. `source_url` is metadata only; this
+    function never fetches it. Future connectors must supply source URLs from an
+    allow-listed connector registry.
     """
     job = await db.permit_jobs.find_one({"id": permit_job_id, "archived": {"$ne": True}})
     if not job:
@@ -154,8 +155,7 @@ async def record_external_observation(
         "external_snapshot_hash": digest,
         "external_last_checked_at": timestamp,
         "external_monitor_state": "healthy",
-        "updated_at": timestamp,
-        "updated_by": actor,
+        "external_observed_by": actor,
     }
     if previous is None or changes:
         external_update["external_last_changed_at"] = timestamp
