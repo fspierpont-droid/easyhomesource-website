@@ -27,6 +27,7 @@ from catalog import router as catalog_router
 from customers import router as customers_router
 from database import ensure_indexes, get_db, ping_database
 from delivery import router as delivery_router
+from home_inventory import router as home_inventory_router
 from legacy_quotes import router as legacy_quotes_router
 from models import (
     ChangePasswordRequest,
@@ -53,6 +54,7 @@ app = FastAPI(
 app.include_router(catalog_router)
 app.include_router(customers_router)
 app.include_router(properties_router)
+app.include_router(home_inventory_router)
 app.include_router(delivery_router)
 app.include_router(permitting_router)
 app.include_router(quotes_router)
