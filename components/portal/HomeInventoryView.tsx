@@ -1,74 +1,565 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAuth } from '@/lib/auth/AuthContext';
+import {
+  INVENTORY_DOCUMENT_CATEGORIES,
+  type HomeInventoryRecord,
+  type HomeInventoryStatus,
+  type InventoryDocument,
+  type InventoryDocumentCategory,
+} from '@/types/homeInventory';
+
+const STATUS_LABELS: Record<HomeInventoryStatus, string> = {
+  ON_LOT: 'On Lot',
+  ORDERED: 'Ordered',
+  IN_TRANSIT: 'In Transit',
+  SETUP_IN_PROGRESS: 'Setup in Progress',
+  SOLD_AWAITING_DELIVERY: 'Sold — Awaiting Delivery',
+  OFF_LOT: 'Off Lot',
+  STATUS_TO_CONFIRM: 'Status to Confirm',
+};
+
+const EMPTY_FORM = {
+  display_name: '',
+  manufacturer: '',
+  model_name: '',
+  series: '',
+  serial_number: '',
+  status: 'STATUS_TO_CONFIRM' as HomeInventoryStatus,
+  lot_location: '',
+  notes: '',
+  ehs_retail_price: '',
+  factory_invoice_cost: '',
+  floorplan_financing_balance: '',
+  active: true,
+};
+
+type InventoryForm = typeof EMPTY_FORM;
+
+function money(value?: number | null) {
+  if (value == null) return '—';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function fileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function toForm(record: HomeInventoryRecord): InventoryForm {
+  return {
+    display_name: record.display_name || '',
+    manufacturer: record.manufacturer || '',
+    model_name: record.model_name || '',
+    series: record.series || '',
+    serial_number: record.serial_number || '',
+    status: record.status || 'STATUS_TO_CONFIRM',
+    lot_location: record.lot_location || '',
+    notes: record.notes || '',
+    ehs_retail_price: record.ehs_retail_price == null ? '' : String(record.ehs_retail_price),
+    factory_invoice_cost: record.factory_invoice_cost == null ? '' : String(record.factory_invoice_cost),
+    floorplan_financing_balance:
+      record.floorplan_financing_balance == null ? '' : String(record.floorplan_financing_balance),
+    active: record.active !== false,
+  };
+}
+
+function nullableText(value: string) {
+  const cleaned = value.trim();
+  return cleaned || null;
+}
+
+function nullableMoney(value: string) {
+  const cleaned = value.trim();
+  if (!cleaned) return null;
+  const parsed = Number(cleaned.replace(/[$,]/g, ''));
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+}
 
 export function HomeInventoryView() {
+  const { user } = useAuth();
+  const canManage = user?.role === 'Admin' || user?.role === 'Manager';
+  const [inventory, setInventory] = useState<HomeInventoryRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<HomeInventoryRecord | null>(null);
+  const [documents, setDocuments] = useState<InventoryDocument[]>([]);
+  const [documentsLoading, setDocumentsLoading] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [form, setForm] = useState<InventoryForm>(EMPTY_FORM);
+  const [saving, setSaving] = useState(false);
+  const [documentCategory, setDocumentCategory] = useState<InventoryDocumentCategory>('Other');
+  const [uploading, setUploading] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
+
+  const loadInventory = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/portal/home-inventory', { cache: 'no-store' });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success || !Array.isArray(data.inventory)) {
+        throw new Error(data.error || 'Unable to retrieve permanent home inventory.');
+      }
+      setInventory(data.inventory);
+      setSelected((current) => {
+        if (!current) return null;
+        return data.inventory.find((record: HomeInventoryRecord) => record.id === current.id) || null;
+      });
+    } catch (cause) {
+      setInventory([]);
+      setSelected(null);
+      setError(cause instanceof Error ? cause.message : 'Unable to retrieve permanent home inventory.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const loadDocuments = useCallback(async (inventoryId: string) => {
+    setDocumentsLoading(true);
+    setActionError(null);
+    try {
+      const response = await fetch(`/api/portal/home-inventory/${encodeURIComponent(inventoryId)}/documents`, {
+        cache: 'no-store',
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success || !Array.isArray(data.documents)) {
+        throw new Error(data.error || 'Unable to retrieve inventory documents.');
+      }
+      setDocuments(data.documents);
+    } catch (cause) {
+      setDocuments([]);
+      setActionError(cause instanceof Error ? cause.message : 'Unable to retrieve inventory documents.');
+    } finally {
+      setDocumentsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadInventory();
+  }, [loadInventory]);
+
+  useEffect(() => {
+    if (selected) void loadDocuments(selected.id);
+    else setDocuments([]);
+  }, [selected, loadDocuments]);
+
+  const filtered = useMemo(() => {
+    const needle = search.trim().toLowerCase();
+    if (!needle) return inventory;
+    return inventory.filter((record) =>
+      [
+        record.display_name,
+        record.manufacturer,
+        record.model_name,
+        record.series,
+        record.serial_number,
+        record.lot_location,
+        STATUS_LABELS[record.status],
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(needle),
+    );
+  }, [inventory, search]);
+
+  const totals = useMemo(() => ({
+    records: inventory.length,
+    onLot: inventory.filter((record) => record.status === 'ON_LOT').length,
+    needsConfirmation: inventory.filter((record) => record.status === 'STATUS_TO_CONFIRM').length,
+    financing: inventory.reduce((sum, record) => sum + (record.floorplan_financing_balance || 0), 0),
+  }), [inventory]);
+
+  const openCreate = () => {
+    setForm(EMPTY_FORM);
+    setSelected(null);
+    setEditorOpen(true);
+    setActionError(null);
+  };
+
+  const openEdit = (record: HomeInventoryRecord) => {
+    setSelected(record);
+    setForm(toForm(record));
+    setEditorOpen(true);
+    setActionError(null);
+  };
+
+  const saveRecord = async () => {
+    if (!canManage || !form.display_name.trim()) return;
+    setSaving(true);
+    setActionError(null);
+    const body = {
+      display_name: form.display_name.trim(),
+      manufacturer: nullableText(form.manufacturer),
+      model_name: nullableText(form.model_name),
+      series: nullableText(form.series),
+      serial_number: nullableText(form.serial_number),
+      status: form.status,
+      lot_location: nullableText(form.lot_location),
+      notes: form.notes.trim(),
+      ehs_retail_price: nullableMoney(form.ehs_retail_price),
+      factory_invoice_cost: nullableMoney(form.factory_invoice_cost),
+      floorplan_financing_balance: nullableMoney(form.floorplan_financing_balance),
+      active: form.active,
+    };
+    const editing = selected?.id;
+    try {
+      const response = await fetch(
+        editing
+          ? `/api/portal/home-inventory/${encodeURIComponent(editing)}`
+          : '/api/portal/home-inventory',
+        {
+          method: editing ? 'PATCH' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        },
+      );
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Inventory record was not saved.');
+      }
+      setEditorOpen(false);
+      setSelected(data.inventory || null);
+      await loadInventory();
+    } catch (cause) {
+      setActionError(cause instanceof Error ? cause.message : 'Inventory record was not saved.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const archiveRecord = async (record: HomeInventoryRecord) => {
+    if (!canManage) return;
+    if (!window.confirm(`Archive ${record.display_name}? The record will remain in the permanent database.`)) return;
+    setActionError(null);
+    try {
+      const response = await fetch(`/api/portal/home-inventory/${encodeURIComponent(record.id)}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) throw new Error(data.error || 'Unable to archive inventory record.');
+      setSelected(null);
+      await loadInventory();
+    } catch (cause) {
+      setActionError(cause instanceof Error ? cause.message : 'Unable to archive inventory record.');
+    }
+  };
+
+  const uploadDocument = async (file: File | null) => {
+    if (!canManage || !selected || !file) return;
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      setActionError('Only PDF documents can be uploaded to inventory records.');
+      return;
+    }
+    setUploading(true);
+    setActionError(null);
+    try {
+      const response = await fetch(
+        `/api/portal/home-inventory/${encodeURIComponent(selected.id)}/documents?category=${encodeURIComponent(documentCategory)}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/pdf',
+            'X-Filename': encodeURIComponent(file.name),
+          },
+          body: file,
+        },
+      );
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) throw new Error(data.error || 'Document upload failed.');
+      await loadDocuments(selected.id);
+    } catch (cause) {
+      setActionError(cause instanceof Error ? cause.message : 'Document upload failed.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeDocument = async (document: InventoryDocument) => {
+    if (!canManage || !selected) return;
+    if (!window.confirm(`Remove ${document.filename} from this inventory record?`)) return;
+    setActionError(null);
+    try {
+      const response = await fetch(
+        `/api/portal/home-inventory/${encodeURIComponent(selected.id)}/documents/${encodeURIComponent(document.id)}`,
+        { method: 'DELETE' },
+      );
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) throw new Error(data.error || 'Unable to remove document.');
+      await loadDocuments(selected.id);
+    } catch (cause) {
+      setActionError(cause instanceof Error ? cause.message : 'Unable to remove document.');
+    }
+  };
+
   return (
-    <div className="space-y-6 text-xs">
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+    <div className="space-y-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <span className="text-[11px] font-black uppercase tracking-wider text-[#1E6FA8]">
-            DEALERSHIP DISPLAY INVENTORY
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#0B1E38] mt-0.5">
-            Home Inventory &amp; Display Tracker
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 max-w-3xl leading-relaxed">
-            This module is intentionally frozen for the platform baseline while the verified on-lot inventory and floorplan-financing workflow are defined and migrated.
+          <p className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-600">Permanent Operations</p>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">Home Inventory</h1>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-500">
+            Verified physical inventory, unit-level financial tracking, and private operational documents. Catalog homes are not inventory unless a permanent inventory record exists here.
           </p>
         </div>
-        <span className="inline-flex self-start px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-black text-[10px] uppercase tracking-wider">
-          Migration Frozen
-        </span>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => void loadInventory()}
+            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-sm hover:bg-slate-50"
+          >
+            Refresh
+          </button>
+          {canManage && (
+            <button
+              type="button"
+              onClick={openCreate}
+              className="rounded-xl bg-[#0B1E38] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#081628]"
+            >
+              + Add Inventory Home
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="p-6 sm:p-8 bg-white border border-amber-200 rounded-[2rem] shadow-sm">
-        <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
-          <div className="w-14 h-14 shrink-0 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-2xl">
-            🛡️
-          </div>
-          <div className="flex-1 space-y-4">
+      {error && (
+        <div role="alert" className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-800">
+          {error} No browser seed or placeholder records were loaded.
+        </div>
+      )}
+      {actionError && (
+        <div role="alert" className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-900">
+          {actionError}
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Metric label="Active records" value={String(totals.records)} />
+        <Metric label="Confirmed on lot" value={String(totals.onLot)} />
+        <Metric label="Needs confirmation" value={String(totals.needsConfirmation)} />
+        <Metric label="Financing balance" value={money(totals.financing)} />
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="border-b border-slate-100 p-4">
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search name, serial, manufacturer, model, status…"
+            className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-sky-500 md:max-w-xl"
+          />
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-[1120px] w-full text-left">
+            <thead className="bg-slate-50 text-[10px] uppercase tracking-wider text-slate-500">
+              <tr>
+                <th className="px-4 py-3">Inventory Home</th>
+                <th className="px-4 py-3">Serial</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">EHS Retail Price</th>
+                <th className="px-4 py-3 text-right">Factory / Invoice Cost</th>
+                <th className="px-4 py-3 text-right">Floorplan / Financing Balance</th>
+                <th className="px-4 py-3">Documents</th>
+                {canManage && <th className="px-4 py-3 text-right">Actions</th>}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
+                <tr><td colSpan={canManage ? 8 : 7} className="px-4 py-12 text-center text-sm text-slate-400">Loading permanent inventory…</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan={canManage ? 8 : 7} className="px-4 py-12 text-center text-sm text-slate-400">No permanent inventory records match this view.</td></tr>
+              ) : filtered.map((record) => (
+                <tr key={record.id} className="hover:bg-slate-50/70">
+                  <td className="px-4 py-3">
+                    <button type="button" onClick={() => setSelected(record)} className="text-left">
+                      <div className="font-bold text-slate-900 hover:text-sky-700">{record.display_name}</div>
+                      <div className="mt-0.5 text-xs text-slate-400">
+                        {[record.manufacturer, record.model_name].filter(Boolean).join(' · ') || 'Model details not yet confirmed'}
+                      </div>
+                    </button>
+                  </td>
+                  <td className="px-4 py-3 font-mono text-xs text-slate-600">{record.serial_number || '—'}</td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${record.status === 'STATUS_TO_CONFIRM' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'}`}>
+                      {STATUS_LABELS[record.status]}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right text-sm font-semibold text-slate-700">{money(record.ehs_retail_price)}</td>
+                  <td className="px-4 py-3 text-right text-sm font-semibold text-slate-700">{money(record.factory_invoice_cost)}</td>
+                  <td className="px-4 py-3 text-right text-sm font-semibold text-slate-700">{money(record.floorplan_financing_balance)}</td>
+                  <td className="px-4 py-3">
+                    <button type="button" onClick={() => setSelected(record)} className="text-xs font-bold text-sky-700 hover:underline">Open vault</button>
+                  </td>
+                  {canManage && (
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex justify-end gap-2">
+                        <button type="button" onClick={() => openEdit(record)} className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-50">Edit</button>
+                        <button type="button" onClick={() => void archiveRecord(record)} className="rounded-lg border border-rose-200 px-2.5 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-50">Archive</button>
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {selected && !editorOpen && (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h3 className="text-lg font-black text-[#0B1E38]">Unverified prototype inventory removed from runtime</h3>
-              <p className="mt-1 text-sm text-slate-600 leading-relaxed max-w-3xl">
-                The previous screen used browser-only seeded records containing model names alongside unverified serial numbers, lender balances, interest rates, transport/setup costs, key-box codes, order dates, and other operational values. Those records are not being promoted into the permanent EHS database.
-              </p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-sky-600">Private Document Vault</p>
+              <h2 className="mt-1 text-xl font-extrabold text-slate-900">{selected.display_name}</h2>
+              <p className="mt-1 text-xs text-slate-500">Serial: {selected.serial_number || 'Not confirmed'}</p>
             </div>
+            <button type="button" onClick={() => setSelected(null)} className="text-xs font-bold text-slate-500 hover:text-slate-900">Close vault</button>
+          </div>
 
-            <div className="grid sm:grid-cols-3 gap-3">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Displayed records</span>
-                <div className="mt-1 text-2xl font-black text-[#0B1E38]">0</div>
-                <p className="mt-1 text-[11px] text-slate-500">Until verified inventory is migrated</p>
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Financial balances</span>
-                <div className="mt-1 text-sm font-black text-[#0B1E38]">Not displayed</div>
-                <p className="mt-1 text-[11px] text-slate-500">No unverified floorplan amounts</p>
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Editing</span>
-                <div className="mt-1 text-sm font-black text-[#0B1E38]">Locked</div>
-                <p className="mt-1 text-[11px] text-slate-500">Prevents browser-only changes</p>
-              </div>
+          {canManage && (
+            <div className="mt-5 grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 md:grid-cols-[240px_1fr] md:items-end">
+              <label className="text-xs font-bold text-slate-700">
+                Document category
+                <select
+                  value={documentCategory}
+                  onChange={(event) => setDocumentCategory(event.target.value as InventoryDocumentCategory)}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
+                >
+                  {INVENTORY_DOCUMENT_CATEGORIES.map((category) => <option key={category}>{category}</option>)}
+                </select>
+              </label>
+              <label className="text-xs font-bold text-slate-700">
+                Secure PDF upload
+                <input
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  disabled={uploading}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0] || null;
+                    void uploadDocument(file);
+                    event.currentTarget.value = '';
+                  }}
+                  className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1 file:text-xs file:font-bold"
+                />
+              </label>
+              {uploading && <p className="text-xs font-semibold text-sky-700 md:col-span-2">Uploading PDF to private permanent storage…</p>}
             </div>
+          )}
 
-            <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/60 text-slate-700 leading-relaxed">
-              <strong className="text-[#0B1E38]">After the baseline:</strong> we will define exactly what “inventory” means for EHS—display homes, homes owned by EHS, consignment units, customer-sold units awaiting delivery, factory orders, floorplan-financed units, and lot location—and then build that workflow against verified data.
+          <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
+            {documentsLoading ? (
+              <div className="p-6 text-center text-sm text-slate-400">Loading documents…</div>
+            ) : documents.length === 0 ? (
+              <div className="p-6 text-center text-sm text-slate-400">No documents are attached to this inventory record.</div>
+            ) : (
+              <div className="divide-y divide-slate-100">
+                {documents.map((document) => (
+                  <div key={document.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-bold text-slate-900">{document.filename}</div>
+                      <div className="mt-1 text-xs text-slate-500">{document.category} · {fileSize(document.size_bytes)}</div>
+                    </div>
+                    <div className="flex gap-2">
+                      <a
+                        href={`/api/portal/home-inventory/${encodeURIComponent(selected.id)}/documents/${encodeURIComponent(document.id)}/download`}
+                        className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white"
+                      >
+                        Download
+                      </a>
+                      {canManage && (
+                        <button type="button" onClick={() => void removeDocument(document)} className="rounded-lg border border-rose-200 px-3 py-2 text-xs font-bold text-rose-700 hover:bg-rose-50">Remove</button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {editorOpen && canManage && (
+        <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-slate-950/45 p-4" role="dialog" aria-modal="true">
+          <div className="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-sky-600">Permanent Inventory Record</p>
+                <h2 className="text-xl font-extrabold text-slate-900">{selected ? `Edit ${selected.display_name}` : 'Add Inventory Home'}</h2>
+              </div>
+              <button type="button" onClick={() => setEditorOpen(false)} className="text-xl text-slate-400 hover:text-slate-900">×</button>
             </div>
+            <div className="grid gap-4 p-5 md:grid-cols-2">
+              <Field label="Inventory display name *" value={form.display_name} onChange={(value) => setForm((current) => ({ ...current, display_name: value }))} />
+              <Field label="Serial / VIN" value={form.serial_number} onChange={(value) => setForm((current) => ({ ...current, serial_number: value }))} />
+              <Field label="Manufacturer" value={form.manufacturer} onChange={(value) => setForm((current) => ({ ...current, manufacturer: value }))} />
+              <Field label="Model name" value={form.model_name} onChange={(value) => setForm((current) => ({ ...current, model_name: value }))} />
+              <Field label="Series" value={form.series} onChange={(value) => setForm((current) => ({ ...current, series: value }))} />
+              <Field label="Lot location" value={form.lot_location} onChange={(value) => setForm((current) => ({ ...current, lot_location: value }))} />
+              <label className="text-xs font-bold text-slate-700">
+                Status
+                <select value={form.status} onChange={(event) => setForm((current) => ({ ...current, status: event.target.value as HomeInventoryStatus }))} className="mt-1.5 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm">
+                  {(Object.keys(STATUS_LABELS) as HomeInventoryStatus[]).map((status) => <option key={status} value={status}>{STATUS_LABELS[status]}</option>)}
+                </select>
+              </label>
+              <label className="flex items-center gap-2 self-end pb-2 text-xs font-bold text-slate-700">
+                <input type="checkbox" checked={form.active} onChange={(event) => setForm((current) => ({ ...current, active: event.target.checked }))} /> Active inventory record
+              </label>
 
-            <div className="flex flex-wrap gap-2 pt-1">
-              <Link href="/portal?view=property-packages" className="px-4 py-2.5 rounded-xl bg-[#0B1E38] text-white font-bold text-xs">
-                Open Property Packages
-              </Link>
-              <Link href="/settings" className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs">
-                View System Status
-              </Link>
+              <div className="md:col-span-2 grid gap-3 rounded-xl border border-sky-100 bg-sky-50/50 p-4 md:grid-cols-3">
+                <MoneyField label="EHS Retail Price" value={form.ehs_retail_price} onChange={(value) => setForm((current) => ({ ...current, ehs_retail_price: value }))} />
+                <MoneyField label="Factory / Invoice Cost" value={form.factory_invoice_cost} onChange={(value) => setForm((current) => ({ ...current, factory_invoice_cost: value }))} />
+                <MoneyField label="Floorplan / Financing Balance" value={form.floorplan_financing_balance} onChange={(value) => setForm((current) => ({ ...current, floorplan_financing_balance: value }))} />
+                <p className="md:col-span-3 text-[11px] font-semibold text-slate-500">These values are stored independently. A missing value stays blank; one field never substitutes for another.</p>
+              </div>
+
+              <label className="md:col-span-2 text-xs font-bold text-slate-700">
+                Internal inventory notes
+                <textarea value={form.notes} onChange={(event) => setForm((current) => ({ ...current, notes: event.target.value }))} rows={4} className="mt-1.5 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm" />
+              </label>
+            </div>
+            <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-5 py-4">
+              <button type="button" onClick={() => setEditorOpen(false)} className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700">Cancel</button>
+              <button type="button" disabled={saving || !form.display_name.trim()} onClick={() => void saveRecord()} className="rounded-xl bg-[#0B1E38] px-5 py-2 text-xs font-bold text-white disabled:opacity-50">{saving ? 'Saving…' : 'Save to Permanent Inventory'}</button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="text-[11px] font-bold text-slate-500">{label}</div>
+      <div className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900">{value}</div>
+    </div>
+  );
+}
+
+function Field({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+  return (
+    <label className="text-xs font-bold text-slate-700">
+      {label}
+      <input value={value} onChange={(event) => onChange(event.target.value)} className="mt-1.5 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm" />
+    </label>
+  );
+}
+
+function MoneyField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+  return (
+    <label className="text-xs font-bold text-slate-700">
+      {label}
+      <input inputMode="decimal" value={value} onChange={(event) => onChange(event.target.value)} placeholder="Leave blank if unconfirmed" className="mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm" />
+    </label>
   );
 }
