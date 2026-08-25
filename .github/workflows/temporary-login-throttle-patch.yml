@@ -1,0 +1,111 @@
+name: Temporary login throttle patch
+
+on:
+  push:
+    branches:
+      - 'fix/login-failure-throttling'
+    paths:
+      - '.github/workflows/temporary-login-throttle-patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/login-failure-throttling
+
+      - name: Patch backend login throttling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('backend/main.py')
+          text = path.read_text()
+
+          start = text.index('async def _enforce_login_rate_limit(email: str) -> None:\n')
+          end = text.index('\n\n@app.on_event("startup")', start)
+          replacement = '''def _login_rate_limit_key(email: str) -> str:
+              return hashlib.sha256(email.encode("utf-8")).hexdigest()
+
+
+          async def _check_login_rate_limit(email: str) -> None:
+              """Block identities only after repeated failed credential attempts."""
+              key = _login_rate_limit_key(email)
+              now = datetime.now(timezone.utc)
+              collection = get_db().rate_limits
+              document = await collection.find_one({"key": key})
+              if not document:
+                  return
+
+              reset_at = _as_utc(document.get("reset_at"))
+              if reset_at is None or reset_at <= now:
+                  await collection.delete_one({"key": key})
+                  return
+
+              if int(document.get("count", 0)) >= 10:
+                  retry_after = max(1, int((reset_at - now).total_seconds()))
+                  raise HTTPException(
+                      status_code=429,
+                      detail="Too many failed login attempts. Please wait and try again.",
+                      headers={"Retry-After": str(retry_after)},
+                  )
+
+
+          async def _record_failed_login(email: str) -> None:
+              """Record one failed credential attempt for the identity."""
+              key = _login_rate_limit_key(email)
+              now = datetime.now(timezone.utc)
+              window = timedelta(minutes=5)
+              collection = get_db().rate_limits
+              document = await collection.find_one({"key": key})
+              reset_at = _as_utc(document.get("reset_at")) if document else None
+
+              if not document or reset_at is None or reset_at <= now:
+                  await collection.update_one(
+                      {"key": key},
+                      {"$set": {"key": key, "count": 1, "reset_at": now + window, "updated_at": now}},
+                      upsert=True,
+                  )
+                  return
+
+              await collection.update_one(
+                  {"key": key},
+                  {"$inc": {"count": 1}, "$set": {"updated_at": now}},
+              )
+
+
+          async def _clear_login_failures(email: str) -> None:
+              """Reset the consecutive-failure counter after a successful login."""
+              await get_db().rate_limits.delete_one({"key": _login_rate_limit_key(email)})
+          '''
+          replacement = '\n'.join(line[10:] if line.startswith('          ') else line for line in replacement.splitlines())
+          text = text[:start] + replacement + text[end:]
+
+          old_login = '''    email = str(payload.email).lower().strip()\n    await _enforce_login_rate_limit(email)\n\n    user = await get_db().users.find_one({"email": email})'''
+          new_login = '''    email = str(payload.email).lower().strip()\n    await _check_login_rate_limit(email)\n\n    user = await get_db().users.find_one({"email": email})'''
+          if old_login not in text:
+              raise SystemExit('Expected login pre-check block not found')
+          text = text.replace(old_login, new_login, 1)
+
+          old_failure = '''    if not valid:\n        await _audit("login_attempt", success=False, reason="invalid_credentials", request=request)\n        raise HTTPException(status_code=401, detail="Invalid email or password")\n\n    public_user = UserPublic(**_safe_user(user))'''
+          new_failure = '''    if not valid:\n        await _record_failed_login(email)\n        await _audit("login_attempt", success=False, reason="invalid_credentials", request=request)\n        raise HTTPException(status_code=401, detail="Invalid email or password")\n\n    await _clear_login_failures(email)\n    public_user = UserPublic(**_safe_user(user))'''
+          if old_failure not in text:
+              raise SystemExit('Expected login failure block not found')
+          text = text.replace(old_failure, new_failure, 1)
+
+          path.write_text(text)
+          PY
+
+      - name: Commit focused auth patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backend/main.py
+          git commit -m 'Count only failed login attempts for throttling'
+          git push origin HEAD:fix/login-failure-throttling
