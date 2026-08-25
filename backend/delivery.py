@@ -17,6 +17,7 @@ router = APIRouter(prefix="/api/delivery-calculator", tags=["delivery-calculator
 
 DEFAULT_DEALERSHIP_ADDRESS = "9011 McIntyre Rd, Brooksville, FL 34601"
 DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json"
+GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 METERS_PER_MILE = 1609.344
 VALID_ROUTE_TYPES = {"dealer_to_customer", "factory_to_dealer", "factory_to_customer"}
 FACTORY_ROUTE_TYPES = {"factory_to_dealer", "factory_to_customer"}
@@ -47,6 +48,19 @@ class DeliveryEstimateResponse(BaseModel):
     maps_configured: bool
     source: str
     warning: Optional[str] = None
+
+
+class GeocodeRequest(BaseModel):
+    address: str
+
+
+class GeocodeResponse(BaseModel):
+    ok: bool
+    address: str
+    formatted_address: str
+    latitude: float
+    longitude: float
+    source: str
 
 
 def _maps_key() -> str:
@@ -145,8 +159,60 @@ def _google_distance(origin: str, destination: str, key: str) -> tuple[float, st
     return miles, distance_text, duration_text, resolved_origin, resolved_destination
 
 
+def _google_geocode(address: str, key: str) -> tuple[float, float, str]:
+    query = urlencode({"address": address, "key": key})
+    with urlopen(f"{GEOCODING_URL}?{query}", timeout=12) as response:
+        data = json.loads(response.read().decode("utf-8"))
+
+    if data.get("status") != "OK":
+        raise RuntimeError(data.get("error_message") or data.get("status") or "Google geocoding failed")
+    results = data.get("results") or []
+    if not results:
+        raise RuntimeError("No geocoding result found")
+
+    result = results[0] or {}
+    location = ((result.get("geometry") or {}).get("location") or {})
+    latitude = float(location.get("lat"))
+    longitude = float(location.get("lng"))
+    if not (-90 <= latitude <= 90 and -180 <= longitude <= 180):
+        raise RuntimeError("Google returned invalid coordinates")
+    formatted_address = str(result.get("formatted_address") or address)
+    return latitude, longitude, formatted_address
+
+
 def _factory_baseline_message() -> str:
     return "Factory route uses the verified Master Quote 5 $6,000 cost / $6,600 customer price per transported section. Driving mileage was not required to price this route."
+
+
+@router.post("/geocode", response_model=GeocodeResponse)
+def geocode_address(
+    payload: GeocodeRequest,
+    _user: dict = Depends(get_current_user),
+) -> GeocodeResponse:
+    address = _clean(payload.address)
+    if not address:
+        raise HTTPException(status_code=400, detail="Address is required")
+
+    maps_key = _maps_key()
+    if not maps_key:
+        raise HTTPException(
+            status_code=503,
+            detail="Google Maps is not configured on the permanent API.",
+        )
+
+    try:
+        latitude, longitude, formatted_address = _google_geocode(address, maps_key)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Address geocoding failed. Reason: {exc}") from exc
+
+    return GeocodeResponse(
+        ok=True,
+        address=address,
+        formatted_address=formatted_address,
+        latitude=latitude,
+        longitude=longitude,
+        source="google_geocoding",
+    )
 
 
 @router.post("/estimate", response_model=DeliveryEstimateResponse)
