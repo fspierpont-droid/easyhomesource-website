@@ -43,6 +43,7 @@ DocumentCategory = Literal[
 # Vercel Functions cap request/response payloads at 4.5 MB, so we keep a safe
 # margin below that platform ceiling and enforce the same operational limit here.
 MAX_PDF_BYTES = 4 * 1024 * 1024
+DATE_PATTERN = r"^\d{4}-\d{2}-\d{2}$"
 
 
 class InventoryCreate(BaseModel):
@@ -51,13 +52,23 @@ class InventoryCreate(BaseModel):
     model_name: Optional[str] = Field(default=None, max_length=200)
     series: Optional[str] = Field(default=None, max_length=160)
     serial_number: Optional[str] = Field(default=None, max_length=160)
+    hud_labels: list[str] = Field(default_factory=list, max_length=10)
     catalog_home_id: Optional[str] = Field(default=None, max_length=160)
     status: InventoryStatus = "STATUS_TO_CONFIRM"
     lot_location: Optional[str] = Field(default=None, max_length=200)
     notes: str = Field(default="", max_length=5000)
     ehs_retail_price: Optional[float] = Field(default=None, ge=0)
+    # Legacy compatibility only. New operational UI writes invoice_without_freight.
     factory_invoice_cost: Optional[float] = Field(default=None, ge=0)
+    invoice_without_freight: Optional[float] = Field(default=None, ge=0)
+    freight_financed: Optional[float] = Field(default=None, ge=0)
+    freight_paid: Optional[float] = Field(default=None, ge=0)
+    final_invoice_total: Optional[float] = Field(default=None, ge=0)
     floorplan_financing_balance: Optional[float] = Field(default=None, ge=0)
+    financing_provider: Optional[str] = Field(default=None, max_length=120)
+    ordered_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
+    delivered_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
+    estimated_offline_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
     active: bool = True
 
 
@@ -67,13 +78,23 @@ class InventoryUpdate(BaseModel):
     model_name: Optional[str] = Field(default=None, max_length=200)
     series: Optional[str] = Field(default=None, max_length=160)
     serial_number: Optional[str] = Field(default=None, max_length=160)
+    hud_labels: Optional[list[str]] = Field(default=None, max_length=10)
     catalog_home_id: Optional[str] = Field(default=None, max_length=160)
     status: Optional[InventoryStatus] = None
     lot_location: Optional[str] = Field(default=None, max_length=200)
     notes: Optional[str] = Field(default=None, max_length=5000)
     ehs_retail_price: Optional[float] = Field(default=None, ge=0)
+    # Legacy compatibility only. New operational UI writes invoice_without_freight.
     factory_invoice_cost: Optional[float] = Field(default=None, ge=0)
+    invoice_without_freight: Optional[float] = Field(default=None, ge=0)
+    freight_financed: Optional[float] = Field(default=None, ge=0)
+    freight_paid: Optional[float] = Field(default=None, ge=0)
+    final_invoice_total: Optional[float] = Field(default=None, ge=0)
     floorplan_financing_balance: Optional[float] = Field(default=None, ge=0)
+    financing_provider: Optional[str] = Field(default=None, max_length=120)
+    ordered_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
+    delivered_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
+    estimated_offline_date: Optional[str] = Field(default=None, pattern=DATE_PATTERN)
     active: Optional[bool] = None
     archived: Optional[bool] = None
 
@@ -95,6 +116,19 @@ def _normalized_serial(value: str | None) -> str | None:
         return None
     cleaned = value.strip().upper()
     return cleaned or None
+
+
+def _normalized_hud_labels(values: list[str] | None) -> list[str]:
+    normalized: list[str] = []
+    for value in values or []:
+        cleaned = str(value).strip().upper()
+        if not cleaned:
+            continue
+        if len(cleaned) > 80:
+            raise HTTPException(status_code=400, detail="HUD label is too long")
+        if cleaned not in normalized:
+            normalized.append(cleaned)
+    return normalized
 
 
 async def _ensure_serial_available(serial_number: str | None, *, exclude_id: str | None = None) -> None:
@@ -145,6 +179,7 @@ async def create_inventory(
     now = _now()
     data = payload.model_dump()
     data["serial_number"] = serial
+    data["hud_labels"] = _normalized_hud_labels(payload.hud_labels)
     document = {
         "id": f"EHS-INV-{str(uuid4()).split('-')[0].upper()}",
         **data,
@@ -170,6 +205,8 @@ async def update_inventory(
     if "serial_number" in update:
         update["serial_number"] = _normalized_serial(update.get("serial_number"))
         await _ensure_serial_available(update["serial_number"], exclude_id=inventory_id)
+    if "hud_labels" in update:
+        update["hud_labels"] = _normalized_hud_labels(update.get("hud_labels"))
     update["updated_at"] = _now()
     update["updated_by_id"] = user.get("id")
     document = await get_db().home_inventory.find_one_and_update(
