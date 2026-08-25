@@ -54,7 +54,29 @@ interface PermitJob {
   notes?: string;
   checklist?: Record<string, boolean>;
   documents?: PermitDocument[];
+  monitor_enabled?: boolean;
+  portal_connector_id?: string;
+  external_record_id?: string;
+  external_status?: string;
+  external_status_detail?: string;
+  external_source_url?: string;
+  external_last_checked_at?: string;
+  external_last_changed_at?: string;
+  external_monitor_state?: 'not_configured' | 'pending' | 'healthy' | 'stale' | 'manual_required' | 'error';
   updated_at?: string;
+}
+
+interface PermitEvent {
+  id: string;
+  event_type: string;
+  actor?: string;
+  source?: string;
+  created_at?: string;
+  details?: {
+    connector_id?: string;
+    external_record_id?: string;
+    changes?: Record<string, { before?: string | null; after?: string | null }>;
+  };
 }
 
 type EditableJobField =
@@ -148,6 +170,26 @@ function formatFileSize(bytes = 0) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function formatMonitorTimestamp(value?: string) {
+  if (!value) return 'Not yet';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString();
+}
+
+function formatMonitorState(value?: PermitJob['external_monitor_state']) {
+  return (value || 'not_configured').replace(/_/g, ' ');
+}
+
+function eventSummary(event: PermitEvent) {
+  if (event.event_type === 'external_baseline_recorded') return 'Initial portal baseline recorded';
+  if (event.event_type === 'external_portal_changed') {
+    const count = Object.keys(event.details?.changes || {}).length;
+    return `Portal change detected${count ? ` · ${count} field${count === 1 ? '' : 's'}` : ''}`;
+  }
+  return event.event_type.replace(/_/g, ' ');
+}
+
 export function AmhiPermittingHub() {
   const [tab, setTab] = useState<'jobs' | 'counties' | 'tools'>('jobs');
   const [jobs, setJobs] = useState<PermitJob[]>([]);
@@ -155,6 +197,8 @@ export function AmhiPermittingHub() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [events, setEvents] = useState<PermitEvent[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [countySearch, setCountySearch] = useState('');
   const [documentCategory, setDocumentCategory] = useState('Permit Application');
@@ -203,6 +247,36 @@ export function AmhiPermittingHub() {
       target_install_date: selected.target_install_date || '',
     });
     setNotesDraft(selected.notes || '');
+  }, [selectedId]);
+
+  useEffect(() => {
+    if (!selectedId) {
+      setEvents([]);
+      setEventsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    setEventsLoading(true);
+    void fetch(`/api/portal/permitting/jobs/${encodeURIComponent(selectedId)}/events`, { cache: 'no-store' })
+      .then(async (response) => {
+        if (!response.ok) return [];
+        const payload = await response.json().catch(() => []);
+        return Array.isArray(payload) ? payload : [];
+      })
+      .then((payload) => {
+        if (!cancelled) setEvents(payload);
+      })
+      .catch(() => {
+        if (!cancelled) setEvents([]);
+      })
+      .finally(() => {
+        if (!cancelled) setEventsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [selectedId]);
 
   async function loadJobs(preferredId?: string | null) {
@@ -519,6 +593,64 @@ export function AmhiPermittingHub() {
                         />
                       </label>
                     ))}
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                      <div>
+                        <h3 className="text-sm font-black text-[#0B1E38]">External Portal Monitoring</h3>
+                        <p className="mt-1 text-[11px] text-slate-500 max-w-2xl">
+                          County portal observations stay separate from the EHS workflow status above. Automated checks can report changes, but they cannot move this job to another EHS status.
+                        </p>
+                      </div>
+                      <span className="w-fit rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[9px] font-black uppercase tracking-wide text-slate-600">
+                        {formatMonitorState(selected.external_monitor_state)}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                      {[
+                        ['Portal Status', selected.external_status || (selected.external_monitor_state === 'pending' ? 'Awaiting first check' : 'Not connected')],
+                        ['Last Checked', formatMonitorTimestamp(selected.external_last_checked_at)],
+                        ['Last Changed', formatMonitorTimestamp(selected.external_last_changed_at)],
+                        ['External Record', selected.external_record_id || selected.permit_number || selected.application_number || 'Not set'],
+                      ].map(([label, value]) => (
+                        <div key={String(label)} className="rounded-xl border border-slate-200 bg-white p-3">
+                          <div className="text-[9px] font-black uppercase tracking-wide text-slate-400">{label}</div>
+                          <div className="mt-1 text-xs font-bold text-slate-800 break-words">{value}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {selected.external_status_detail && (
+                      <div className="mt-3 rounded-xl border border-blue-100 bg-blue-50/60 px-3 py-2 text-xs text-slate-700">
+                        <span className="font-black text-[#0B1E38]">Portal detail:</span> {selected.external_status_detail}
+                      </div>
+                    )}
+
+                    <div className="mt-4 border-t border-slate-200 pt-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-500">Portal Change History</h4>
+                        <span className="text-[10px] text-slate-400">{events.length} recorded</span>
+                      </div>
+                      {eventsLoading ? (
+                        <div className="mt-2 text-[11px] text-slate-400">Loading portal history…</div>
+                      ) : events.length === 0 ? (
+                        <div className="mt-2 text-[11px] text-slate-400">No automated portal observations have been recorded yet.</div>
+                      ) : (
+                        <div className="mt-2 space-y-2">
+                          {events.slice(0, 5).map((event) => (
+                            <div key={event.id} className="flex items-start justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2">
+                              <div>
+                                <div className="text-xs font-bold text-slate-800">{eventSummary(event)}</div>
+                                <div className="mt-0.5 text-[10px] text-slate-400">{event.actor || 'system'} · {event.source || 'permit portal'}</div>
+                              </div>
+                              <div className="shrink-0 text-[10px] text-slate-400">{formatMonitorTimestamp(event.created_at)}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div>
