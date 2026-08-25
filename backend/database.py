@@ -79,6 +79,13 @@ async def ensure_indexes() -> None:
     await db.home_inventory.create_index("catalog_home_id")
     await db.home_inventory.create_index("customer_id")
     await db.home_inventory.create_index("quote_id")
+    await db.home_inventory.create_index("serial_number")
+
+    await db.inventory_documents.create_index("id", unique=True)
+    await db.inventory_documents.create_index(
+        [("inventory_id", 1), ("deleted", 1), ("uploaded_at", -1)]
+    )
+    await db.inventory_documents.create_index([("inventory_id", 1), ("category", 1)])
 
     await db.key_contacts.create_index("id", unique=True)
     await db.key_contacts.create_index([("active", 1), ("priority", -1), ("category", 1)])
