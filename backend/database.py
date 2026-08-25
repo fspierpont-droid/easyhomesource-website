@@ -92,12 +92,26 @@ async def ensure_indexes() -> None:
 
     await db.permit_jobs.create_index("id", unique=True)
     await db.permit_jobs.create_index([("archived", 1), ("status", 1), ("updated_at", -1)])
+    await db.permit_jobs.create_index([("archived", 1), ("monitor_enabled", 1), ("external_last_checked_at", 1)])
     await db.permit_jobs.create_index("county")
     await db.permit_jobs.create_index("parcel_number")
     await db.permit_jobs.create_index("permit_number")
     await db.permit_jobs.create_index("project_id")
     await db.permit_jobs.create_index("property_id")
     await db.permit_jobs.create_index("quote_id")
+
+    await db.permit_portal_connectors.create_index("id", unique=True)
+    await db.permit_portal_connectors.create_index([("active", 1), ("provider", 1)])
+    await db.permit_portal_connectors.create_index([("county", 1), ("jurisdiction", 1)])
+
+    await db.permit_external_snapshots.create_index("id", unique=True)
+    await db.permit_external_snapshots.create_index([("permit_job_id", 1), ("observed_at", -1)])
+    await db.permit_external_snapshots.create_index([("connector_id", 1), ("observed_at", -1)])
+    await db.permit_external_snapshots.create_index("snapshot_hash")
+
+    await db.permit_events.create_index("id", unique=True)
+    await db.permit_events.create_index([("permit_job_id", 1), ("created_at", -1)])
+    await db.permit_events.create_index([("event_type", 1), ("created_at", -1)])
 
     await db.audit_logs.create_index([("timestamp", -1)])
     await db.audit_logs.create_index([("actor_user_id", 1), ("timestamp", -1)])
