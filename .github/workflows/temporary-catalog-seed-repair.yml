@@ -1,0 +1,67 @@
+name: Temporary catalog seed repair
+
+on:
+  push:
+    branches:
+      - 'fix/catalog-seed-duplicate-fields'
+    paths:
+      - '.github/workflows/temporary-catalog-seed-repair.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repair branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/catalog-seed-duplicate-fields
+
+      - name: Remove duplicate null field groups safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('data/catalogHomeSeeds.ts')
+          lines = path.read_text().splitlines()
+          duplicate_tail = ', modelNumber: null, bedrooms: null, bathrooms: null, squareFeet: null, width: null, length: null, size: null, startingPrice: null'
+          changed = 0
+          repaired = []
+
+          for line in lines:
+              if line.count('modelNumber:') >= 2 and duplicate_tail in line:
+                  line = line.replace(duplicate_tail, '', 1)
+                  changed += 1
+              repaired.append(line)
+
+          if changed == 0:
+              raise SystemExit('No duplicate catalog seed field groups found; refusing no-op repair')
+
+          duplicate_rows = []
+          for number, line in enumerate(repaired, start=1):
+              if not line.lstrip().startswith('{'):
+                  continue
+              keys = re.findall(r'(?<![A-Za-z0-9_])([A-Za-z][A-Za-z0-9_]*):', line)
+              seen = set()
+              dups = sorted({key for key in keys if key in seen or seen.add(key)})
+              if dups:
+                  duplicate_rows.append((number, dups))
+
+          if duplicate_rows:
+              raise SystemExit(f'Duplicate keys remain after repair: {duplicate_rows[:10]}')
+
+          path.write_text('\n'.join(repaired) + '\n')
+          print(f'Repaired {changed} catalog seed rows')
+          PY
+
+      - name: Commit focused catalog repair
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/catalogHomeSeeds.ts
+          git commit -m 'Remove duplicate null fields from catalog seeds'
+          git push origin HEAD:fix/catalog-seed-duplicate-fields
