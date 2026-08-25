@@ -1,0 +1,34 @@
+name: Temporary AMHI monitor UI validation
+
+on:
+  push:
+    branches:
+      - 'feature/amhi-monitoring-status-ui'
+    paths:
+      - '.github/workflows/temporary-amhi-monitor-ui-validation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout UI branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/amhi-monitoring-status-ui
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: ESLint
+        run: npm run lint
+      - name: Portal and GHL tests
+        run: npm run test:ghl
+      - name: Production Next build
+        run: npm run build
