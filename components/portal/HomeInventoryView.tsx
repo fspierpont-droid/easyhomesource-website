@@ -603,6 +603,14 @@ export function HomeInventoryView() {
                         <div className="mt-1 text-xs text-slate-500">{document.category} · {fileSize(document.size_bytes)}</div>
                       </div>
                       <div className="flex gap-2">
+                        <a
+                          href={`/api/portal/home-inventory/${encodeURIComponent(selected.id)}/documents/${encodeURIComponent(document.id)}/view`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-800 hover:bg-slate-50"
+                        >
+                          View
+                        </a>
                         <a href={`/api/portal/home-inventory/${encodeURIComponent(selected.id)}/documents/${encodeURIComponent(document.id)}/download`} className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white">Download</a>
                         {canManage && <button type="button" onClick={() => void removeDocument(document)} className="rounded-lg border border-rose-200 px-3 py-2 text-xs font-bold text-rose-700 hover:bg-rose-50">Remove</button>}
                       </div>
