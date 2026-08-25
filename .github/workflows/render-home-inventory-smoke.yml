@@ -1,0 +1,38 @@
+name: Render Home Inventory Smoke
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify Render health endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          health="$(curl --fail --silent --show-error --max-time 30 https://easyhomesource-api.onrender.com/api/health)"
+          echo "Health response: $health"
+          python - "$health" <<'PY'
+          import json, sys
+          payload = json.loads(sys.argv[1])
+          assert payload.get("ok") is True, payload
+          assert payload.get("service") == "easyhomesource-api", payload
+          PY
+
+      - name: Verify Home Inventory router is live and protected
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl --silent --show-error --max-time 30 -o response.json -w '%{http_code}' https://easyhomesource-api.onrender.com/api/home-inventory)"
+          cat response.json
+          test "$code" = "401"
+          python - <<'PY'
+          import json
+          with open('response.json', 'r', encoding='utf-8') as handle:
+              payload = json.load(handle)
+          assert 'detail' in payload, payload
+          PY
