@@ -64,6 +64,7 @@ class GeocodeResponse(BaseModel):
 
 
 def _maps_key() -> str:
+    """Prefer the current shared Google Maps key; keep the legacy env name as a safe fallback."""
     return (
         os.environ.get("GOOGLE_MAPS_API_KEY")
         or os.environ.get("GOOGLE_DISTANCE_MATRIX_API_KEY")
