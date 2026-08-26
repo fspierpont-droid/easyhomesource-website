@@ -180,3 +180,11 @@ def test_project_geocode_returns_verified_coordinates(monkeypatch):
     assert result.latitude == 28.5571
     assert result.longitude == -82.5773
     assert result.formatted_address.startswith("10198 Inlet St")
+
+
+def test_google_maps_key_is_preferred_but_legacy_variable_remains_supported(monkeypatch):
+    _clear_maps_env(monkeypatch)
+    monkeypatch.setenv("GOOGLE_DISTANCE_MATRIX_API_KEY", "legacy-key")
+    assert delivery._maps_key() == "legacy-key"
+    monkeypatch.setenv("GOOGLE_MAPS_API_KEY", "primary-key")
+    assert delivery._maps_key() == "primary-key"
