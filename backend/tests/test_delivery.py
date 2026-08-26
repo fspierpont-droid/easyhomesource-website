@@ -84,6 +84,7 @@ def test_google_routes_distance_is_rounded_up_before_pricing(monkeypatch):
 
 
 def test_routes_request_uses_server_key_field_mask_and_stable_traffic_unaware_route(monkeypatch):
+    """Freight mileage must not change merely because live traffic changes."""
     captured = {}
 
     class FakeResponse:
