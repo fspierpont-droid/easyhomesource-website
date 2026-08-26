@@ -6,7 +6,7 @@ import math
 import os
 from typing import Optional
 from urllib.parse import urlencode
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -16,7 +16,7 @@ from auth import get_current_user
 router = APIRouter(prefix="/api/delivery-calculator", tags=["delivery-calculator"])
 
 DEFAULT_DEALERSHIP_ADDRESS = "9011 McIntyre Rd, Brooksville, FL 34601"
-DISTANCE_MATRIX_URL = "https://maps.googleapis.com/maps/api/distancematrix/json"
+ROUTES_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
 GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 METERS_PER_MILE = 1609.344
 VALID_ROUTE_TYPES = {"dealer_to_customer", "factory_to_dealer", "factory_to_customer"}
@@ -65,8 +65,8 @@ class GeocodeResponse(BaseModel):
 
 def _maps_key() -> str:
     return (
-        os.environ.get("GOOGLE_DISTANCE_MATRIX_API_KEY")
-        or os.environ.get("GOOGLE_MAPS_API_KEY")
+        os.environ.get("GOOGLE_MAPS_API_KEY")
+        or os.environ.get("GOOGLE_DISTANCE_MATRIX_API_KEY")
         or ""
     ).strip()
 
@@ -128,35 +128,62 @@ def _route_points(payload: DeliveryEstimateRequest) -> tuple[str, str]:
     return factory, destination
 
 
-def _google_distance(origin: str, destination: str, key: str) -> tuple[float, str, str, str, str]:
-    query = urlencode(
-        {
-            "origins": origin,
-            "destinations": destination,
-            "units": "imperial",
-            "key": key,
-        }
+def _duration_text(raw_duration: object) -> Optional[str]:
+    value = _clean(raw_duration)
+    if not value.endswith("s"):
+        return None
+    try:
+        total_seconds = max(0, int(round(float(value[:-1]))))
+    except (TypeError, ValueError):
+        return None
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes = int(round(remainder / 60))
+    if minutes == 60:
+        hours += 1
+        minutes = 0
+    if hours and minutes:
+        return f"{hours} hr {minutes} min"
+    if hours:
+        return f"{hours} hr"
+    return f"{minutes} min"
+
+
+def _google_route_distance(origin: str, destination: str, key: str) -> tuple[float, str, Optional[str], str, str]:
+    payload = {
+        "origin": {"address": origin},
+        "destination": {"address": destination},
+        "travelMode": "DRIVE",
+        "routingPreference": "TRAFFIC_UNAWARE",
+        "computeAlternativeRoutes": False,
+        "languageCode": "en-US",
+        "units": "IMPERIAL",
+    }
+    request = Request(
+        ROUTES_URL,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": key,
+            "X-Goog-FieldMask": "routes.distanceMeters,routes.duration",
+        },
+        method="POST",
     )
-    with urlopen(f"{DISTANCE_MATRIX_URL}?{query}", timeout=12) as response:
+    with urlopen(request, timeout=12) as response:
         data = json.loads(response.read().decode("utf-8"))
 
-    if data.get("status") != "OK":
-        raise RuntimeError(data.get("error_message") or data.get("status") or "Google distance lookup failed")
-    rows = data.get("rows") or []
-    element = ((rows[0] or {}).get("elements") or [{}])[0] if rows else {}
-    if element.get("status") != "OK":
-        raise RuntimeError(element.get("status") or "No driving route found")
+    routes = data.get("routes") or []
+    if not routes:
+        raise RuntimeError("Google Routes API returned no driving route")
 
-    meters = float((element.get("distance") or {}).get("value") or 0)
+    route = routes[0] or {}
+    meters = float(route.get("distanceMeters") or 0)
     if meters <= 0:
-        raise RuntimeError("Google returned an invalid route distance")
+        raise RuntimeError("Google Routes API returned an invalid route distance")
 
     miles = meters / METERS_PER_MILE
-    distance_text = str((element.get("distance") or {}).get("text") or "")
-    duration_text = str((element.get("duration") or {}).get("text") or "")
-    resolved_origin = str((data.get("origin_addresses") or [origin])[0] or origin)
-    resolved_destination = str((data.get("destination_addresses") or [destination])[0] or destination)
-    return miles, distance_text, duration_text, resolved_origin, resolved_destination
+    distance_text = f"{miles:.1f} mi"
+    duration_text = _duration_text(route.get("duration"))
+    return miles, distance_text, duration_text, origin, destination
 
 
 def _google_geocode(address: str, key: str) -> tuple[float, float, str]:
@@ -228,9 +255,9 @@ def estimate_delivery(
 
     if maps_key:
         try:
-            raw_miles, distance_text, duration_text, origin, destination = _google_distance(origin, destination, maps_key)
+            raw_miles, distance_text, duration_text, origin, destination = _google_route_distance(origin, destination, maps_key)
             miles = float(math.ceil(raw_miles))
-            source = "google_distance_matrix"
+            source = "google_routes"
         except Exception as exc:
             if manual_miles > 0:
                 miles = float(math.ceil(manual_miles))
