@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from fastapi import HTTPException
 
@@ -49,15 +51,15 @@ def test_factory_route_keeps_master_quote_baseline_when_maps_is_not_configured(m
     assert "Master Quote 5" in (result.warning or "")
 
 
-def test_google_driving_distance_is_rounded_up_before_pricing(monkeypatch):
+def test_google_routes_distance_is_rounded_up_before_pricing(monkeypatch):
     monkeypatch.setenv("GOOGLE_MAPS_API_KEY", "test-key")
     monkeypatch.setattr(
         delivery,
-        "_google_distance",
+        "_google_route_distance",
         lambda origin, destination, key: (
             52.2,
             "52.2 mi",
-            "1 hour 4 mins",
+            "1 hr 4 min",
             "9011 McIntyre Rd, Brooksville, FL 34601",
             "27449 St Clair Rd, Brooksville, FL 34602",
         ),
@@ -72,11 +74,60 @@ def test_google_driving_distance_is_rounded_up_before_pricing(monkeypatch):
         _user={"id": "test-user"},
     )
 
-    assert result.source == "google_distance_matrix"
+    assert result.source == "google_routes"
     assert result.miles == 53
+    assert result.distance_text == "52.2 mi"
+    assert result.duration_text == "1 hr 4 min"
     assert result.escort_count == 1
     assert result.delivery_cost == 1081.5
     assert result.delivery_price == 1189.65
+
+
+def test_routes_request_uses_server_key_field_mask_and_stable_traffic_unaware_route(monkeypatch):
+    captured = {}
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return json.dumps(
+                {"routes": [{"distanceMeters": 84008, "duration": "3840s"}]}
+            ).encode("utf-8")
+
+    def fake_urlopen(request, timeout):
+        captured["request"] = request
+        captured["timeout"] = timeout
+        return FakeResponse()
+
+    monkeypatch.setattr(delivery, "urlopen", fake_urlopen)
+    miles, distance_text, duration_text, origin, destination = delivery._google_route_distance(
+        "9011 McIntyre Rd, Brooksville, FL 34601",
+        "27449 St Clair Rd, Brooksville, FL 34602",
+        "server-key",
+    )
+
+    request = captured["request"]
+    payload = json.loads(request.data.decode("utf-8"))
+    headers = {key.lower(): value for key, value in request.header_items()}
+
+    assert request.full_url == "https://routes.googleapis.com/directions/v2:computeRoutes"
+    assert request.get_method() == "POST"
+    assert captured["timeout"] == 12
+    assert headers["x-goog-api-key"] == "server-key"
+    assert headers["x-goog-fieldmask"] == "routes.distanceMeters,routes.duration"
+    assert payload["origin"]["address"].startswith("9011 McIntyre")
+    assert payload["destination"]["address"].startswith("27449 St Clair")
+    assert payload["travelMode"] == "DRIVE"
+    assert payload["routingPreference"] == "TRAFFIC_UNAWARE"
+    assert miles == pytest.approx(84008 / delivery.METERS_PER_MILE)
+    assert distance_text.endswith(" mi")
+    assert duration_text == "1 hr 4 min"
+    assert origin.startswith("9011 McIntyre")
+    assert destination.startswith("27449 St Clair")
 
 
 def test_dealership_route_fails_loudly_instead_of_saving_zero_when_no_route_exists(monkeypatch):
