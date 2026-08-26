@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { requirePortalAccess } from '@/lib/auth/portalSession';
+import { permanentApiRequest } from '@/lib/auth/permanentApi';
 import { DEPOSIT_STATUS_FIELD_ID, GHL_LOCATION_ID, PROJECT_PIPELINE_ID, ghlRequest, searchOpportunities } from '@/lib/ghl/client';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
@@ -40,6 +41,12 @@ const depositStatus = (value: unknown): GhlProject['depositStatus'] => {
   if (normalized === 'escrow') return 'ESCROW';
   return null;
 };
+const usableAddressPart = (value: unknown) => {
+  const cleaned = typeof value === 'string' ? value.trim() : '';
+  return cleaned && cleaned.toLowerCase() !== 'not provided' ? cleaned : '';
+};
+
+type ResolvedCoordinates = { latitude: number; longitude: number };
 
 async function handleFetchProjectPhaseOpps(request: NextRequest) {
   const access = await requirePortalAccess(request);
@@ -56,13 +63,49 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
       opp.id && opp.pipelineId === PROJECT_PIPELINE_ID && GHL_STAGE_TO_PORTAL[opp.pipelineStageId]
     );
     const syncedAt = new Date().toISOString();
+    const geocodeCache = new Map<string, Promise<ResolvedCoordinates | null>>();
+
+    const geocodeAddress = (fullAddress: string): Promise<ResolvedCoordinates | null> => {
+      const normalized = fullAddress.trim().replace(/\s+/g, ' ');
+      if (!normalized) return Promise.resolve(null);
+      const cacheKey = normalized.toLowerCase();
+      const cached = geocodeCache.get(cacheKey);
+      if (cached) return cached;
+
+      const pending = (async () => {
+        try {
+          const backend = await permanentApiRequest(request, '/api/delivery-calculator/geocode', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: normalized })
+          });
+          const payload = await backend.json().catch(() => ({}));
+          const candidate = {
+            latitude: number(payload.latitude),
+            longitude: number(payload.longitude)
+          };
+          if (!backend.ok || !payload.ok || !hasValidCoordinates(candidate)) return null;
+          return { latitude: candidate.latitude, longitude: candidate.longitude };
+        } catch (error) {
+          console.warn('Project address geocoding failed:', normalized, error);
+          return null;
+        }
+      })();
+
+      geocodeCache.set(cacheKey, pending);
+      return pending;
+    };
+
     const projects: GhlProject[] = await Promise.all(opportunities.map(async (opp) => {
       const embeddedContact = opp.contact || {};
       const contactId = opp.contactId || embeddedContact.id || '';
       // Opportunity search can return a partial embedded contact. Hydrate only
       // partial records, and retain genuine embedded values if contact lookup
       // is unavailable.
-      const embeddedCoordinates = { latitude: embeddedContact.latitude, longitude: embeddedContact.longitude };
+      const embeddedCoordinates = {
+        latitude: number(embeddedContact.latitude),
+        longitude: number(embeddedContact.longitude)
+      };
       const needsHydration = contactId && (!embeddedContact.name || !embeddedContact.phone || !embeddedContact.email || !embeddedContact.address1 || !hasValidCoordinates(embeddedCoordinates));
       const hydrated = needsHydration
         ? await ghlRequest<{ contact?: Record<string, unknown> }>(`/contacts/${encodeURIComponent(contactId)}`).then((data) => data.contact || {}).catch(() => ({}))
@@ -72,8 +115,17 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
       const stage = GHL_STAGE_TO_PORTAL[opp.pipelineStageId];
       const rep = users.get(opp.assignedTo) as any;
       const address = customValue(fields, 'dHjTQIz3TiLyA1nTjBKY') ?? contact.address1;
-      const coordinates = { latitude: contact.latitude, longitude: contact.longitude };
-      const hasCoordinates = hasValidCoordinates(coordinates);
+      const coordinates = {
+        latitude: number(contact.latitude),
+        longitude: number(contact.longitude)
+      };
+      const fullAddress = [address, contact.city, contact.state, contact.postalCode]
+        .map(usableAddressPart)
+        .filter(Boolean)
+        .join(', ');
+      const resolvedCoordinates = hasValidCoordinates(coordinates)
+        ? { latitude: coordinates.latitude, longitude: coordinates.longitude }
+        : await geocodeAddress(fullAddress);
       const canonical = {
         contactId, opportunityId: opp.id, pipelineId: opp.pipelineId,
         pipelineStageId: opp.pipelineStageId || '', status: opp.status || '', monetaryValue: opp.monetaryValue ?? null,
@@ -85,8 +137,8 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
         jobId: `GHL-${opp.id.slice(0, 7).toUpperCase()}`, customerName: text(contact.name || opp.name),
         customerPhone: text(contact.phone), customerEmail: text(contact.email), jobAddress: text(address),
         city: text(contact.city), county: text(customValue(fields, process.env.GHL_COUNTY_FIELD_ID || '')),
-        state: text(contact.state), zip: text(contact.postalCode), latitude: hasCoordinates ? coordinates.latitude : null,
-        longitude: hasCoordinates ? coordinates.longitude : null,
+        state: text(contact.state), zip: text(contact.postalCode), latitude: resolvedCoordinates?.latitude ?? null,
+        longitude: resolvedCoordinates?.longitude ?? null,
         stage: stage.stage, stageLabel: stage.label, progressPct: stage.progressPct, dealValue: number(opp.monetaryValue),
         depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: depositStatus(customValue(fields, DEPOSIT_STATUS_FIELD_ID)),
         assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
