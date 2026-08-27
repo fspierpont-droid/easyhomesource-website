@@ -10,6 +10,7 @@ import { boujee2ManufacturerMedia } from "@/data/boujee2ManufacturerMedia";
 import { craftSelect15663aManufacturerMedia } from "@/data/craftSelect15663aManufacturerMedia";
 import { boujeeXl2MediaOverride } from "@/data/boujeeXl2MediaOverride";
 import { oakMediaOverride } from "@/data/oakMediaOverride";
+import { timberCreekCatalogMedia } from "@/data/timberCreekCatalogMedia";
 
 export type ImportedMediaCategory =
   | "exterior"
@@ -113,7 +114,8 @@ const rawMasterMedia: HomeMediaManifest = {
   ...boujee2ManufacturerMedia,
   ...craftSelect15663aManufacturerMedia,
   ...boujeeXl2MediaOverride,
-  ...oakMediaOverride
+  ...oakMediaOverride,
+  ...timberCreekCatalogMedia
 };
 
 // 4. Exact Slugs / Aliases Map
