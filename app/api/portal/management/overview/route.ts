@@ -164,22 +164,40 @@ export async function GET(request: Request) {
     searchOpportunities(),
   ]);
 
+  // Inventory contains management-sensitive capital exposure. Fail closed when
+  // that source is unavailable rather than rendering authoritative-looking $0
+  // financial bars from an incomplete payload.
+  if (inventoryResult.status === 'rejected') {
+    console.error('Management dashboard inventory source unavailable:', inventoryResult.reason);
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Home Inventory financial reporting is temporarily unavailable. The management dashboard is withheld rather than displaying incomplete financial exposure.',
+      },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store' } },
+    );
+  }
+
   const sources: ManagementOverview['sources'] = {
     quotes: quotesResult.status === 'fulfilled' ? 'ok' : 'error',
-    inventory: inventoryResult.status === 'fulfilled' ? 'ok' : 'error',
+    inventory: 'ok',
     properties: propertiesResult.status === 'fulfilled' ? 'ok' : 'error',
     permitting: permittingResult.status === 'fulfilled' ? 'ok' : 'error',
     ghlReady: ghlResult.status === 'fulfilled' ? 'ok' : 'error',
     ghlProjects: ghlResult.status === 'fulfilled' ? 'ok' : 'error',
   };
 
-  const quotes = quotesResult.status === 'fulfilled'
-    ? quotesResult.value.map(fromBackendQuote).filter((quote) => !quote.legacyReadOnly)
+  const rawQuotes = quotesResult.status === 'fulfilled'
+    ? quotesResult.value.filter((document: any) => !document?.legacy_read_only)
     : [];
+  const quotes = rawQuotes.map(fromBackendQuote);
   const activeQuotes = quotes.filter((quote) => ACTIVE_QUOTE_STATUSES.has(quote.status));
   const contractQuotes = quotes.filter((quote) => quote.status === 'IN_CONTRACT');
-  const marginHealthQuotes = quotes.filter((quote) => typeof quote.financialTotals?.target_met === 'boolean');
-  const marginHealthy = marginHealthQuotes.filter((quote) => quote.financialTotals?.target_met).length;
+  // Inspect the raw permanent totals before fromBackendQuote normalizes a
+  // missing target_met field to false. Unknown historical values must not be
+  // treated as failed margin checks.
+  const marginHealthRecords = rawQuotes.filter((document: any) => typeof document?.totals?.target_met === 'boolean');
+  const marginHealthy = marginHealthRecords.filter((document: any) => document.totals.target_met === true).length;
 
   const opportunities = ghlResult.status === 'fulfilled' ? ghlResult.value as any[] : [];
   const readyOpportunities = opportunities.filter(isReadyOpportunity);
@@ -207,7 +225,7 @@ export async function GET(request: Request) {
     (left, right) => numeric(left.progressPct) - numeric(right.progressPct),
   );
 
-  const inventory = inventoryResult.status === 'fulfilled' ? inventoryResult.value : [];
+  const inventory = inventoryResult.value;
   const inventoryStatuses = stageCounts(
     inventory.map((item: any) => String(item.status || 'STATUS_TO_CONFIRM')),
     ['ON_LOT', 'ORDERED', 'IN_TRANSIT', 'SETUP_IN_PROGRESS', 'SOLD_AWAITING_DELIVERY', 'OFF_LOT', 'STATUS_TO_CONFIRM'],
@@ -229,8 +247,8 @@ export async function GET(request: Request) {
   const propertiesNeedingConfirmation = properties.filter((item: any) => item.status === 'STATUS_TO_CONFIRM');
 
   const permits = permittingResult.status === 'fulfilled' ? permittingResult.value : [];
-  const finalPermitStatuses = new Set(['Final / CO']);
-  const activePermits = permits.filter((job: any) => !finalPermitStatuses.has(job.status));
+  const inactivePermitStatuses = new Set(['Final / CO', 'On Hold']);
+  const activePermits = permits.filter((job: any) => !inactivePermitStatuses.has(job.status));
   const stalePermits = activePermits.filter((job: any) => {
     const age = daysSince(job.updated_at || job.created_at);
     return age !== null && age >= 14;
@@ -257,7 +275,7 @@ export async function GET(request: Request) {
   if (ghlResult.status === 'fulfilled' && readyOpportunities.length > 0) {
     alerts.push({ id: 'ready', severity: readyOpportunities.length >= 5 ? 'warning' : 'info', label: 'Ready to Quote', value: readyOpportunities.length, destination: '/portal?view=ready' });
   }
-  const belowTarget = marginHealthQuotes.length - marginHealthy;
+  const belowTarget = marginHealthRecords.length - marginHealthy;
   if (belowTarget > 0) {
     alerts.push({ id: 'margin', severity: 'warning', label: 'Quotes below take-home target', value: belowTarget, destination: '/portal?view=library' });
   }
@@ -290,10 +308,10 @@ export async function GET(request: Request) {
       avgActiveQuote: quotesResult.status === 'fulfilled' && activeQuotes.length > 0
         ? activeQuotes.reduce((sum, quote) => sum + numeric(quote.totalTurnkeyPrice || quote.estimatedTotal), 0) / activeQuotes.length
         : null,
-      marginHealthPct: quotesResult.status === 'fulfilled' && marginHealthQuotes.length > 0
-        ? Math.round((marginHealthy / marginHealthQuotes.length) * 100)
+      marginHealthPct: quotesResult.status === 'fulfilled' && marginHealthRecords.length > 0
+        ? Math.round((marginHealthy / marginHealthRecords.length) * 100)
         : null,
-      marginHealthSample: marginHealthQuotes.length,
+      marginHealthSample: marginHealthRecords.length,
       stages: quoteStages,
       trend: quotesResult.status === 'fulfilled' ? quoteTrend(quotes) : [],
       reps: quotesResult.status === 'fulfilled' ? repPerformance(quotes) : [],
@@ -312,12 +330,12 @@ export async function GET(request: Request) {
       stages: projectStages,
     },
     inventory: {
-      count: inventoryResult.status === 'fulfilled' ? inventory.length : null,
-      retailValue: inventoryResult.status === 'fulfilled' ? inventoryRetail : null,
-      invoiceValue: inventoryResult.status === 'fulfilled' ? inventoryInvoice : null,
-      floorplanBalance: inventoryResult.status === 'fulfilled' ? inventoryFloorplan : null,
-      statusToConfirm: inventoryResult.status === 'fulfilled' ? inventoryNeedsConfirmation : null,
-      statuses: inventoryResult.status === 'fulfilled' ? inventoryStatuses : [],
+      count: inventory.length,
+      retailValue: inventoryRetail,
+      invoiceValue: inventoryInvoice,
+      floorplanBalance: inventoryFloorplan,
+      statusToConfirm: inventoryNeedsConfirmation,
+      statuses: inventoryStatuses,
     },
     properties: {
       count: propertiesResult.status === 'fulfilled' ? properties.length : null,
