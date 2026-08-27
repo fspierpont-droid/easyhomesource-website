@@ -82,6 +82,9 @@ class QuoteHomeSnapshot(HomeMediaMixin):
     length: Optional[float] = None
     dimensions: Optional[str] = None
     wind_zone: Optional[str] = None
+    msrp_price: Optional[float] = None
+    ehs_price: Optional[float] = None
+    vip_price: Optional[float] = None
 
 
 class QuoteSite(BaseModel):
