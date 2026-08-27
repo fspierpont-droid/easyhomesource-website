@@ -18,8 +18,18 @@ export function QuotePortalShell({
 }: QuotePortalShellProps) {
   const { user, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isManagement = user?.role === 'Admin' || user?.role === 'Manager';
 
   const navItems = [
+    ...(isManagement ? [{
+      id: 'management',
+      label: 'Master Dashboard',
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 19V9m5 10V5m5 14v-7m5 7V3M3 21h18" />
+        </svg>
+      )
+    }] : []),
     {
       id: 'dashboard',
       label: 'Quote Dashboard',
@@ -114,7 +124,9 @@ export function QuotePortalShell({
 
   const handleNavClick = (id: string) => {
     setMobileOpen(false);
-    if (id === 'catalog') {
+    if (id === 'management') {
+      window.location.href = '/portal/management';
+    } else if (id === 'catalog') {
       window.open('/homes', '_blank');
     } else if (id === 'amhi') {
       window.location.href = '/portal/amhi';
