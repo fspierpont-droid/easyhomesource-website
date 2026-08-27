@@ -1,0 +1,36 @@
+name: Catalog checks
+
+on:
+  pull_request:
+    paths:
+      - 'app/homes/**'
+      - 'components/HomeCard.tsx'
+      - 'components/HomeImage.tsx'
+      - 'components/HomeMediaGallery.tsx'
+      - 'data/homes.ts'
+      - 'data/catalogHomeSeeds.ts'
+      - 'data/homeMedia.ts'
+      - 'data/*Media*.ts'
+      - 'data/timberCreekCatalog.ts'
+      - 'scripts/validate-catalog.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/catalog-checks.yml'
+
+jobs:
+  validate-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate public catalog
+        run: npm run validate:catalog
+      - name: Build production Next.js app
+        run: npm run build
