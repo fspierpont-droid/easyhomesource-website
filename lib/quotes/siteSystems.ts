@@ -2,9 +2,9 @@ import {
   AC_HEATING_MATRIX,
   DIRT_PAD_LOADS_TABLE,
   SERVICE_CATALOG,
-  getRecommendedSepticTankSize,
 } from '@/data/pricingSpreadsheet';
 import type { SelectedQuoteLineItem } from '@/data/quotesStore';
+import { getEhsRecommendedSepticTankSize } from './septicSizing';
 
 export type WaterSource = 'well' | 'city_water' | 'existing' | 'none';
 export type SewerSource = 'septic' | 'city_sewer' | 'existing' | 'none';
@@ -144,8 +144,8 @@ function buildCustomSepticLine(size: number): SelectedQuoteLineItem {
   return {
     id: `site-septic-${Date.now()}`,
     sku: `SITE-SEPTIC-CUSTOM-${size}`,
-    name: `${size.toLocaleString()}-Gallon Septic System - Verified Price Required`,
-    description: 'Master Quote 5 only carries a verified table price for the 900-gallon base system. Enter the confirmed site-specific price for this larger system.',
+    name: `${size.toLocaleString()}-Gallon Septic System - Bid / Verification Required`,
+    description: `EHS preliminary sizing recommends ${size.toLocaleString()} gallons. No approved standard EHS price is configured for this tank size. Enter the confirmed contractor/site-specific customer price before finalizing the quote. Final permitted system size and design are subject to county/DEP review and site evaluation.`,
     category: 'addons',
     unitPrice: 0,
     unitCost: 0,
@@ -153,6 +153,21 @@ function buildCustomSepticLine(size: number): SelectedQuoteLineItem {
     totalPrice: 0,
     totalCost: 0,
   };
+}
+
+function buildSepticLine(size: number): SelectedQuoteLineItem {
+  if (size === 1050) {
+    const configured = lineFromCatalog('SITE-SEPTIC-1050');
+    if (configured) {
+      return {
+        ...configured,
+        name: '1,050-Gallon Septic Tank & Drainfield - Placeholder Estimate',
+        description: 'EHS preliminary sizing recommends 1,050 gallons. The configured quote amount is a placeholder estimate only until the septic contractor/site evaluation confirms final tank size, drainfield design, permit requirements, and price.',
+      };
+    }
+  }
+
+  return buildCustomSepticLine(size);
 }
 
 function replaceFamily(
@@ -212,11 +227,12 @@ export function applySiteSystems(
     return startsWithAny(sku, [...SEPTIC_PREFIXES, ...SEWER_HOOKUP_PREFIXES]) || sku === SEWER_EXISTING_SKU;
   };
   if (selection.sewerSource === 'septic') {
-    const size = getRecommendedSepticTankSize(bedrooms, squareFeet);
-    const septic = size <= 900 ? lineFromCatalog('SITE-SEPTIC-900') : buildCustomSepticLine(size);
+    const size = getEhsRecommendedSepticTankSize(bedrooms, squareFeet);
+    const septic = buildSepticLine(size);
     lines = replaceFamily(lines, sewerPredicate, septic, (existing) => {
       const sku = String(existing.sku || '');
-      return size <= 900 ? sku === 'SITE-SEPTIC-900' : sku === `SITE-SEPTIC-CUSTOM-${size}`;
+      if (size === 1050) return sku === 'SITE-SEPTIC-1050';
+      return sku === `SITE-SEPTIC-CUSTOM-${size}`;
     });
   } else if (selection.sewerSource === 'city_sewer') {
     const sewerLine = lineFromCatalog('SITE-SEWER-HOOKUP-50');
@@ -260,5 +276,5 @@ export function applySiteSystems(
 }
 
 export function recommendedSepticSize(bedrooms: number, squareFeet: number) {
-  return getRecommendedSepticTankSize(bedrooms, squareFeet);
+  return getEhsRecommendedSepticTankSize(bedrooms, squareFeet);
 }
