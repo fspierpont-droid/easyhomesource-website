@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SiteLogo } from '@/components/SiteLogo';
+import { getEffectiveMasterCatalog } from '@/data/fullMasterCatalog.generated';
 import { fetchQuoteFromServer, type SavedQuote } from '@/data/quotesStore';
 
 export default function QuoteDetailPage() {
@@ -130,6 +131,22 @@ export default function QuoteDetailPage() {
       })),
     homeDescription: quoteData.homeDescription || '',
   };
+
+  const catalogHomes = getEffectiveMasterCatalog();
+  const catalogHome = catalogHomes.find((home) =>
+    home.name === quote.homeModel && (!quote.manufacturer || home.manufacturer === quote.manufacturer),
+  ) || catalogHomes.find((home) => home.name === quote.homeModel);
+  const msrpPrice = Number(quoteData.msrpPrice) || Number(catalogHome?.msrp) || 0;
+  const ehsPrice = Number(quoteData.ehsPrice) || Number(catalogHome?.ehsPrice) || Number(quoteData.financialTotals?.ehs_price_calculated) || quote.homePrice;
+  const vipPrice = Number(quoteData.vipPrice) > 0
+    ? Number(quoteData.vipPrice)
+    : quote.homePrice > 0 && ehsPrice > 0 && quote.homePrice < ehsPrice - 0.005
+      ? quote.homePrice
+      : 0;
+  const customerHomePrice = vipPrice > 0 ? vipPrice : quote.homePrice;
+  const ehsSavings = msrpPrice > ehsPrice ? msrpPrice - ehsPrice : 0;
+  const vipSavings = vipPrice > 0 && ehsPrice > vipPrice ? ehsPrice - vipPrice : 0;
+  const totalHomeSavings = msrpPrice > customerHomePrice ? msrpPrice - customerHomePrice : 0;
 
   const deliveryTotal = quote.deliveryItems.reduce((acc, item) => acc + item.amount, 0);
   const siteWorkTotal = quote.siteWorkItems.reduce((acc, item) => acc + item.amount, 0);
@@ -262,6 +279,54 @@ export default function QuoteDetailPage() {
             </div>
           </div>
 
+          {(msrpPrice > 0 || ehsPrice > 0) && (
+            <div className="rounded-2xl border border-sky-200 bg-sky-50/60 p-4 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Home Price Advantage</h2>
+                  <p className="mt-0.5 text-[10.5px] text-slate-500">See the difference between MSRP and your Easy HomeSource home price.</p>
+                </div>
+                {totalHomeSavings > 0 && (
+                  <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-black text-emerald-700">
+                    YOU SAVE ${totalHomeSavings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                )}
+              </div>
+
+              <div className={`grid gap-3 ${vipPrice > 0 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+                {msrpPrice > 0 && (
+                  <div className="rounded-xl border border-slate-200 bg-white p-3">
+                    <div className="text-[9px] font-black uppercase tracking-wider text-slate-400">MSRP</div>
+                    <div className="mt-1 font-mono text-lg font-black text-slate-500 line-through">
+                      ${msrpPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                    <div className="mt-1 text-[9.5px] text-slate-400">Manufacturer suggested retail price</div>
+                  </div>
+                )}
+
+                {ehsPrice > 0 && (
+                  <div className="rounded-xl border border-sky-200 bg-white p-3">
+                    <div className="text-[9px] font-black uppercase tracking-wider text-[#1E6FA8]">Easy HomeSource Price</div>
+                    <div className="mt-1 font-mono text-lg font-black text-[#0B4F86]">
+                      ${ehsPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                    {ehsSavings > 0 && <div className="mt-1 text-[9.5px] font-bold text-emerald-700">${ehsSavings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} below MSRP</div>}
+                  </div>
+                )}
+
+                {vipPrice > 0 && (
+                  <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 shadow-xs">
+                    <div className="text-[9px] font-black uppercase tracking-wider text-emerald-700">VIP Price</div>
+                    <div className="mt-1 font-mono text-xl font-black text-emerald-800">
+                      ${vipPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                    <div className="mt-1 text-[9.5px] font-bold text-emerald-700">Additional VIP savings: ${vipSavings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-4 pt-1">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Pricing Details</h2>
 
@@ -322,7 +387,7 @@ export default function QuoteDetailPage() {
           <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Pricing Summary</h2>
             <div className="space-y-2 text-xs text-slate-700">
-              <div className="flex justify-between font-semibold"><span>Home Subtotal</span><span className="font-mono font-bold text-slate-900">${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+              <div className="flex justify-between font-semibold"><span>{vipPrice > 0 ? 'VIP Home Price' : 'Easy HomeSource Home Price'}</span><span className="font-mono font-bold text-slate-900">${quote.homePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
               {quote.propertyPrice > 0 && <div className="flex justify-between font-semibold"><span>Land / Homesite Parcel</span><span className="font-mono font-bold text-slate-900">${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>}
               <div className="flex justify-between font-semibold"><span>Delivery</span><span className="font-mono font-bold text-slate-900">${deliveryTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
               <div className="flex justify-between font-semibold"><span>Site Work</span><span className="font-mono font-bold text-slate-900">${siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>

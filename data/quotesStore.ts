@@ -45,6 +45,9 @@ export interface SavedQuote {
   homeWidth?: number;
   homeLength?: number;
   homePrice: number;
+  msrpPrice?: number;
+  ehsPrice?: number;
+  vipPrice?: number;
   factoryCost: number;
   homeDescription?: string;
   propertyAddress: string;
