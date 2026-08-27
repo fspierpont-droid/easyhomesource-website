@@ -1,3 +1,4 @@
+import { FULL_MASTER_CATALOG_HOMES } from '../../data/masterQuote5CatalogGuard';
 import { calculateComprehensiveQuoteTotals } from '../../data/masterQuote5PricingBridge';
 import type { SavedQuote, SelectedQuoteLineItem } from '../../data/quotesStore';
 import { normalizeSkirtingPackageLine, SKIRTING_PACKAGE_SKU } from './skirtingPackage';
@@ -28,8 +29,24 @@ export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuot
   const freightCost = Number(quote.freightCost) || 0;
   const taxRate = quote.financialTotals?.sales_tax_rate ?? 0.03;
 
+  const catalogHome = FULL_MASTER_CATALOG_HOMES.find((home) =>
+    home.name === quote.homeModel && (!quote.manufacturer || home.manufacturer === quote.manufacturer),
+  ) || FULL_MASTER_CATALOG_HOMES.find((home) => home.name === quote.homeModel);
+  const homePrice = Number(quote.homePrice) || 0;
+  const ehsPrice =
+    Number(quote.ehsPrice) ||
+    Number(catalogHome?.ehsPrice) ||
+    Number(quote.financialTotals?.ehs_price_calculated) ||
+    homePrice;
+  const msrpPrice = Number(quote.msrpPrice) || Number(catalogHome?.msrp) || 0;
+  const vipPrice = Number(quote.vipPrice) > 0
+    ? Number(quote.vipPrice)
+    : homePrice > 0 && ehsPrice > 0 && homePrice < ehsPrice - 0.005
+      ? homePrice
+      : 0;
+
   const totals = calculateComprehensiveQuoteTotals(
-    Number(quote.homePrice) || 0,
+    homePrice,
     Number(quote.propertyPrice) || 0,
     freight,
     siteWorkTotal,
@@ -45,6 +62,9 @@ export function normalizePortalQuoteForPersistence(quote: SavedQuote): SavedQuot
 
   return {
     ...quote,
+    msrpPrice,
+    ehsPrice,
+    vipPrice,
     lineItems,
     siteWorkTotal,
     siteWorkCost,
