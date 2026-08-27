@@ -1,4 +1,4 @@
-name: Frontend auth checks
+name: Frontend checks
 
 on:
   pull_request:
@@ -11,6 +11,16 @@ on:
       - 'components/portal/HomeInventoryView.tsx'
       - 'types/homeInventory.ts'
       - 'app/login/**'
+      - 'app/homes/**'
+      - 'components/HomeCard.tsx'
+      - 'components/HomeImage.tsx'
+      - 'components/HomeMediaGallery.tsx'
+      - 'data/homes.ts'
+      - 'data/catalogHomeSeeds.ts'
+      - 'data/homeMedia.ts'
+      - 'data/*Media*.ts'
+      - 'data/timberCreekCatalog.ts'
+      - 'scripts/validate-catalog.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/frontend-auth-checks.yml'
@@ -28,6 +38,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Validate public catalog
+        run: npm run validate:catalog
       - name: Run portal/GHL tests
         run: npm run test:ghl
       - name: Build production Next.js app

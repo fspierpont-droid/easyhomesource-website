@@ -1,6 +1,7 @@
 import { catalogHomeSeeds } from "@/data/catalogHomeSeeds";
 import { getImportedHomeMedia } from "@/data/homeMedia";
 import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
+import { timberCreekCatalog, timberCreekCatalogBySlug } from "@/data/timberCreekCatalog";
 
 export type HomeStatus = "Available" | "Coming Soon" | "Sold";
 export type GalleryCategory = "exterior" | "interior" | "kitchen" | "bathroom" | "bedroom" | "floorplan" | "video" | "other";
@@ -16,6 +17,7 @@ export type Home = {
   alternateName?: string | null;
   slug: string;
   manufacturer?: string | null;
+  manufacturerUrl?: string | null;
   modelNumber?: string | null;
   series?: string | null;
   homeType?: string | null;
@@ -65,11 +67,82 @@ const standardFeatures: StandardFeatureGroup[] = [
   { category: "Energy / Insulation", items: ["Insulation and energy details confirmed by home specification sheet"] },
   { category: "Options / Upgrades", items: ["Available options and upgrades confirmed with Easy HomeSource"] }
 ];
+
+const timberCreekStandardFeatures: StandardFeatureGroup[] = [
+  {
+    category: "Exterior & Construction",
+    items: [
+      "2 x 4 exterior walls at 16 in. O.C.",
+      "3/4 in. tongue-and-groove OSB floor decking",
+      "Floor joist spacing and specification matched to home width",
+      "7/16 in. OSB roof decking",
+      "Vinyl siding with OSB underlayment",
+      "Low-E thermopane windows",
+      "Fiberglass shingle roof"
+    ]
+  },
+  {
+    category: "Interior",
+    items: [
+      "1/2 in. finished drywall throughout",
+      "3 1/4 in. shaker molding package",
+      "5-panel interior doors with mortised hinges",
+      "Residential light-stipple ceiling finish"
+    ]
+  },
+  {
+    category: "Kitchen",
+    items: [
+      "Double-bowl stainless steel sink",
+      "Stainless side-by-side refrigerator with ice and water",
+      "Glass-top range, stainless dishwasher, and stainless microwave",
+      "Recessed kitchen lighting",
+      "42 in. Eastern White Oak MDF cabinets",
+      "Solido rolled-edge countertops",
+      "Adjustable shelving, hidden hinges, and decorative cabinet pulls"
+    ]
+  },
+  {
+    category: "Bathroom",
+    items: [
+      "LED recessed lighting",
+      "China lavatories with brushed-nickel metal faucets",
+      "Fiberglass tubs and showers per selected floor plan",
+      "Elongated commodes"
+    ]
+  },
+  {
+    category: "Mechanical",
+    items: [
+      "200-amp electrical service",
+      "Whole-house and fixture water shutoffs",
+      "Digital thermostat",
+      "50-gallon dual-element water heater"
+    ]
+  },
+  {
+    category: "Energy / Insulation",
+    items: [
+      "Typical published Creekside insulation package: R-11 floors, R-11 walls, and R-21 ceiling; confirm the selected factory build sheet"
+    ]
+  },
+  {
+    category: "Options / Upgrades",
+    items: [
+      "Final colors, materials, specifications, and optional features are confirmed on the selected factory order/build sheet"
+    ]
+  }
+];
+
 const displayFeatures = ["Available through Easy HomeSource", "Pricing guidance available", "Delivery and setup conversation available", "Financing conversation available"];
 const catalogFeatures = ["Online floor plan catalog model", "Available to quote or order", "Pricing confirmed by Easy HomeSource", "Delivery, setup, and financing guidance available"];
 
 const desc = (name: string, catalogModel = false, slug?: string) => {
   if (slug === "tulip") return `${name} is the TRU Mini TRT12482PH, offered by Easy HomeSource at the advertised special price. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
+  const timberCreek = slug ? timberCreekCatalogBySlug[slug] : undefined;
+  if (timberCreek) {
+    return `${timberCreek.displayName} is a ${timberCreek.bedrooms}-bedroom, ${timberCreek.bathrooms}-bath Creekside Series home with approximately ${timberCreek.squareFeet.toLocaleString()} square feet in a ${timberCreek.size} layout. It is available through Easy HomeSource with Timber Creek floor-plan information, factory brochure access, and manufacturer specifications. Contact our Brooksville team for current order availability, selected options, EHS pricing, delivery and setup, financing guidance, and a final quote.`;
+  }
   return catalogModel
     ? `${name} is part of the Easy HomeSource online floor plan catalog. Contact our Brooksville team for current availability, order options, pricing, delivery and setup, financing guidance, and a final quote.`
     : `The ${name} is part of the Easy HomeSource display inventory. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
@@ -96,9 +169,40 @@ const knownLineupSeeds: Seed[] = [
   { name: "White Oak", displayName: "The White Oak", slug: "white-oak", manufacturer: "Timber Creek Housing", series: "Creekside Series", modelNumber: "CS-3221", bedrooms: 3, bathrooms: 2, squareFeet: 2280, width: 30, length: 76, size: "30' x 76'", startingPrice: 189900, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: true },
   { name: "Boujee 2", slug: "boujee-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "44BOU28603BH", bedrooms: 3, bathrooms: 2, squareFeet: 1580, width: 28, length: 60, size: "28' x 60'", startingPrice: 132400, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
   { name: "Delilah", slug: "delilah", manufacturer: "Timber Creek Housing", series: "Creekside Series", modelNumber: "CSFL-3301", bedrooms: 4, bathrooms: 2, squareFeet: 2280, width: 30, length: 76, size: "30' x 76'", startingPrice: 168900, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: true },
-  { name: "Craft Select 15663A", slug: "craft-select-15663a", manufacturer: "Cavco Plant City / Palm Harbor", series: "Craft Select", modelNumber: "15663A", bedrooms: 3, bathrooms: 2, squareFeet: 1140, width: 15, length: 76, size: "15' x 76'", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
-  { name: "Creekside Series", slug: "creekside-series", manufacturer: "Timber Creek Housing", series: "Creekside Series", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }
+  { name: "Craft Select 15663A", slug: "craft-select-15663a", manufacturer: "Cavco Plant City / Palm Harbor", series: "Craft Select", modelNumber: "15663A", bedrooms: 3, bathrooms: 2, squareFeet: 1140, width: 15, length: 76, size: "15' x 76'", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }
 ];
+
+const cleanKey = (s?: string | null) => (s ? s.toLowerCase().replace(/[^a-z0-9]/g, "") : "");
+
+const curatedKeys = new Set([
+  ...displaySeeds.flatMap((home) => [cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)]),
+  ...knownLineupSeeds.flatMap((home) => [cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)])
+].filter(Boolean));
+
+const timberCreekSeeds: Seed[] = timberCreekCatalog
+  .filter((home) => ![cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)].some((key) => key && curatedKeys.has(key)))
+  .map((home) => ({
+    name: home.name,
+    displayName: home.displayName,
+    slug: home.slug,
+    manufacturer: "Timber Creek Housing",
+    series: "Creekside Series",
+    modelNumber: home.modelNumber,
+    bedrooms: home.bedrooms,
+    bathrooms: home.bathrooms,
+    squareFeet: home.squareFeet,
+    width: home.width,
+    length: home.length,
+    size: home.size,
+    startingPrice: null,
+    priceLabel: "Call/Text for starting price",
+    isFeatured: false,
+    isOnDisplay: false,
+    isCatalogModel: true,
+    isSpecialOffer: false,
+    isNewArrival: true,
+    note: `Verified from Timber Creek Housing's Easy Homesource dealer catalog, floorplan ${home.floorplanId}. Manufacturer media and specifications are representative; final colors, options, EHS pricing, and availability must be confirmed before quoting.`
+  }));
 
 /**
  * Generated-catalog URLs that refer to an already curated public home.
@@ -113,31 +217,25 @@ export const legacyHomeSlugAliases: Record<string, string> = {
   "palm-harbor-plant-city-craft-select-28603a": "craft-select-28603a",
   "timber-creek-creekside-series-the-white-oak": "white-oak",
   "timber-creek-creekside-series-the-delilah": "delilah",
-  "palm-harbor-plant-city-craft-select-15663a": "craft-select-15663a"
+  "timber-creek-creekside-series-the-twin-creek": "twin-creek-cs-3242",
+  "palm-harbor-plant-city-craft-select-15663a": "craft-select-15663a",
+  ...Object.fromEntries(timberCreekCatalog.map((home) => [`timber-creek-creekside-series-${home.sourceSlug}`, home.slug]))
 };
 
-// Clean normalization key helper to detect and prevent duplicates
-const cleanKey = (s?: string | null) => (s ? s.toLowerCase().replace(/[^a-z0-9]/g, '') : '');
-
 const existingDisplayKeys = new Set([
-  ...displaySeeds.map((d) => cleanKey(d.name)),
-  ...displaySeeds.map((d) => cleanKey(d.slug)),
-  ...displaySeeds.map((d) => cleanKey(d.modelNumber)).filter(Boolean),
-  ...knownLineupSeeds.map((d) => cleanKey(d.name)),
-  ...knownLineupSeeds.map((d) => cleanKey(d.slug)),
-  ...knownLineupSeeds.map((d) => cleanKey(d.modelNumber)).filter(Boolean)
+  ...displaySeeds.flatMap((home) => [cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)]),
+  ...knownLineupSeeds.flatMap((home) => [cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)]),
+  ...timberCreekSeeds.flatMap((home) => [cleanKey(home.name), cleanKey(home.slug), cleanKey(home.modelNumber)])
 ].filter(Boolean));
 
-// Track seen keys to eliminate any duplicate across all catalog seeds
 const seenModelKeys = new Set<string>(existingDisplayKeys);
-
 const catalogSeeds: Seed[] = [];
 for (const home of catalogHomeSeeds) {
   if (legacyHomeSlugAliases[home.slug]) continue;
 
   const k1 = cleanKey(home.name);
-  const k2 = home.displayName ? cleanKey(home.displayName) : '';
-  const k3 = home.modelNumber ? cleanKey(home.modelNumber) : '';
+  const k2 = home.displayName ? cleanKey(home.displayName) : "";
+  const k3 = home.modelNumber ? cleanKey(home.modelNumber) : "";
   const k4 = cleanKey(home.slug);
 
   if (
@@ -145,9 +243,7 @@ for (const home of catalogHomeSeeds) {
     (k2 && seenModelKeys.has(k2)) ||
     (k3 && seenModelKeys.has(k3)) ||
     (k4 && seenModelKeys.has(k4))
-  ) {
-    continue;
-  }
+  ) continue;
 
   if (k1) seenModelKeys.add(k1);
   if (k2) seenModelKeys.add(k2);
@@ -167,26 +263,31 @@ for (const home of catalogHomeSeeds) {
   });
 }
 
-const seeds: Seed[] = [...displaySeeds, ...knownLineupSeeds, ...catalogSeeds];
+const seeds: Seed[] = [...displaySeeds, ...knownLineupSeeds, ...timberCreekSeeds, ...catalogSeeds];
 const protectedSeedPriceSlugs = new Set(["tulip", "dogwood", "born-to-run", "paxton", "craft-select-28603a", ...catalogHomeSeeds.map((home) => home.slug)]);
 
 export const homes: Home[] = seeds.map((home, index) => {
   const importedMedia = getImportedHomeMedia(home.slug);
   const scraped = scrapedHomeDetails[home.slug];
+  const timberCreek = timberCreekCatalogBySlug[home.slug];
   const importedGallery = importedMedia?.gallery.filter((item) => item.category !== "brochure" && item.category !== "video") as HomeGalleryItem[] | undefined;
-  
-  // Strict verified media only: never manufacture media paths
   const gallery = importedGallery?.length ? importedGallery : [];
-  const startingPrice = protectedSeedPriceSlugs.has(home.slug)
-    ? home.startingPrice ?? scraped?.startingPrice ?? null
-    : scraped?.startingPrice ?? home.startingPrice ?? null;
+
+  // Manufacturer pages never set EHS retail pricing. Existing curated EHS prices win;
+  // new Timber Creek catalog models intentionally remain call-for-price.
+  const startingPrice = timberCreek
+    ? home.startingPrice ?? null
+    : protectedSeedPriceSlugs.has(home.slug)
+      ? home.startingPrice ?? scraped?.startingPrice ?? null
+      : scraped?.startingPrice ?? home.startingPrice ?? null;
+
   const description = desc(home.displayName ?? home.name, home.isCatalogModel, home.slug);
-  const baseTitle = `${home.displayName ?? home.name} - ${home.bedrooms ? `${home.bedrooms} Bed, ${home.bathrooms} Bath` : 'Manufactured Home'}`;
+  const baseTitle = `${home.displayName ?? home.name} - ${home.bedrooms ? `${home.bedrooms} Bed, ${home.bathrooms} Bath` : "Manufactured Home"}`;
   const seoTitle = `${baseTitle} | Brooksville, FL`;
-  const seoDescription = home.isCatalogModel 
-    ? `View the ${home.displayName ?? home.name} floor plan by ${home.manufacturer || 'our builders'}. This ${home.squareFeet || 'spacious'} sq. ft. home is available to order in Brooksville, FL with financing & delivery support.`
-    : `Tour the ${home.displayName ?? home.name} on our lot in Brooksville, FL! This ${home.bedrooms ? `${home.bedrooms}-bed, ${home.bathrooms}-bath` : 'beautiful'} manufactured home is available now. Call for a quote.`;
-  
+  const seoDescription = home.isCatalogModel
+    ? `View the ${home.displayName ?? home.name} floor plan by ${home.manufacturer || "our builders"}. This ${home.squareFeet || "spacious"} sq. ft. home is available to order in Brooksville, FL with financing & delivery support.`
+    : `Tour the ${home.displayName ?? home.name} on our lot in Brooksville, FL! This ${home.bedrooms ? `${home.bedrooms}-bed, ${home.bathrooms}-bath` : "beautiful"} manufactured home is available now. Call for a quote.`;
+
   return {
     id: home.slug,
     slug: home.slug,
@@ -195,9 +296,10 @@ export const homes: Home[] = seeds.map((home, index) => {
     alternateName: home.alternateName ?? null,
     modelNumber: home.modelNumber ?? null,
     manufacturer: home.manufacturer ?? null,
+    manufacturerUrl: timberCreek?.sourcePage ?? null,
     series: home.series ?? null,
     note: home.note ?? null,
-    homeType: "Manufactured Home",
+    homeType: timberCreek?.isModular ? "Manufactured / Modular Home" : "Manufactured Home",
     bedrooms: home.bedrooms,
     bathrooms: home.bathrooms,
     squareFeet: home.squareFeet,
@@ -206,7 +308,11 @@ export const homes: Home[] = seeds.map((home, index) => {
     size: home.size,
     startingPrice,
     salePrice: null,
-    priceLabel: protectedSeedPriceSlugs.has(home.slug) ? home.priceLabel : scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"),
+    priceLabel: timberCreek
+      ? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call/Text for starting price")
+      : protectedSeedPriceSlugs.has(home.slug)
+        ? home.priceLabel
+        : scraped?.priceLabel ?? home.priceLabel ?? (startingPrice ? "Starting Price" : "Call for current pricing"),
     priceDisclaimer: catalogPriceDisclaimer,
     status: "Available",
     isActive: true,
@@ -219,11 +325,11 @@ export const homes: Home[] = seeds.map((home, index) => {
     shortDescription: description,
     longDescription: description,
     features: home.isCatalogModel ? catalogFeatures : displayFeatures,
-    standardFeatures,
+    standardFeatures: timberCreek ? timberCreekStandardFeatures : standardFeatures,
     images: gallery.map((item) => item.src),
     gallery,
-    floorPlanImage: importedMedia?.floorPlanImage ?? null,
-    brochureUrl: importedMedia?.brochureUrl ?? null,
+    floorPlanImage: importedMedia?.floorPlanImage ?? timberCreek?.floorPlanImage ?? null,
+    brochureUrl: importedMedia?.brochureUrl ?? timberCreek?.brochureUrl ?? null,
     videoUrl: importedMedia?.videoUrl ?? null,
     virtualTourUrl: importedMedia?.virtualTourUrl ?? null,
     walkthroughVideoUrl: null,
