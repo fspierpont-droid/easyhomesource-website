@@ -104,7 +104,8 @@ const generated = readArray("data/catalogHomeSeeds.ts", "catalogHomeSeeds");
 const timberCreekSource = readTimberCreekCatalog();
 const aliases = readAliases();
 const curated = [...display, ...lineup];
-const seenKeys = new Set(curated.flatMap(identityKeys));
+const curatedKeys = new Set(curated.flatMap(identityKeys));
+const seenKeys = new Set(curatedKeys);
 
 if (timberCreekSource.length !== 31) {
   failures.push(`expected 31 Timber Creek Creekside source models, found ${timberCreekSource.length}`);
@@ -120,7 +121,11 @@ for (const home of timberCreekSource) {
 
   // White Oak and Delilah are already curated EHS display/lineup records. The
   // manufacturer snapshot enriches them at runtime but must not create a second card.
-  if (keys.some((key) => seenKeys.has(key))) continue;
+  // Distinct Timber Creek models may legitimately share a marketing name (for
+  // example CS-1625 and CS-1625-2), so only compare this source list to the
+  // pre-existing EHS curated identities here. True duplicate slugs and model
+  // identities are checked below across the full public set.
+  if (keys.some((key) => curatedKeys.has(key))) continue;
   keys.forEach((key) => seenKeys.add(key));
   timberCreek.push(home);
 }
