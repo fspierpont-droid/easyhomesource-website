@@ -70,6 +70,8 @@ const catalogFeatures = ["Online floor plan catalog model", "Available to quote 
 
 const desc = (name: string, catalogModel = false, slug?: string) => {
   if (slug === "tulip") return `${name} is the TRU Mini TRT12482PH, offered by Easy HomeSource at the advertised special price. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
+  if (slug === "lake-wood-cs-3254") return "The Lake Wood CS-3254 is a 3-bedroom, 2-bath Creekside Series manufactured home with approximately 2,040 square feet of inviting living space. Its 30' x 68' double-wide layout blends open living areas, a spacious kitchen, comfortable bedrooms, and Timber Creek craftsmanship. Contact Easy HomeSource for current order availability, options, pricing, delivery and setup, financing guidance, and a final quote.";
+  if (slug === "cedar-creek-cs-3240") return "The Cedar Creek CS-3240 delivers approximately 2,280 square feet of spacious living with 4 bedrooms and 2 bathrooms. Its expansive kitchen, open gathering spaces, generous bedrooms, and 32' x 76' double-wide layout make it a strong option for families looking for substantial space without sacrificing the comfort and finishes of Timber Creek's Creekside Series. Contact Easy HomeSource for current order availability, options, pricing, delivery and setup, financing guidance, and a final quote.";
   return catalogModel
     ? `${name} is part of the Easy HomeSource online floor plan catalog. Contact our Brooksville team for current availability, order options, pricing, delivery and setup, financing guidance, and a final quote.`
     : `The ${name} is part of the Easy HomeSource display inventory. Contact our Brooksville team for current pricing, availability, floor plan details, delivery and setup, financing guidance, and a final quote.`;
@@ -97,6 +99,8 @@ const knownLineupSeeds: Seed[] = [
   { name: "Boujee 2", slug: "boujee-2", manufacturer: "Clayton Addison", series: "Boujee Series", modelNumber: "44BOU28603BH", bedrooms: 3, bathrooms: 2, squareFeet: 1580, width: 28, length: 60, size: "28' x 60'", startingPrice: 132400, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
   { name: "Delilah", slug: "delilah", manufacturer: "Timber Creek Housing", series: "Creekside Series", modelNumber: "CSFL-3301", bedrooms: 4, bathrooms: 2, squareFeet: 2280, width: 30, length: 76, size: "30' x 76'", startingPrice: 168900, priceLabel: "Starting Price", isFeatured: false, isOnDisplay: true, isCatalogModel: false, isSpecialOffer: false, isNewArrival: true },
   { name: "Craft Select 15663A", slug: "craft-select-15663a", manufacturer: "Cavco Plant City / Palm Harbor", series: "Craft Select", modelNumber: "15663A", bedrooms: 3, bathrooms: 2, squareFeet: 1140, width: 15, length: 76, size: "15' x 76'", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true },
+  { name: "Lake Wood", displayName: "The Lake Wood CS-3254", slug: "lake-wood-cs-3254", manufacturer: "Timber Creek Housing", series: "Creekside Series", modelNumber: "CS-3254", bedrooms: 3, bathrooms: 2, squareFeet: 2040, width: 30, length: 68, size: "30' x 68'", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Verified from Timber Creek Housing floorplan 235413. Manufacturer media and Matterport are representative; final options, colors, specifications, pricing, and availability must be confirmed by Easy HomeSource." },
+  { name: "Cedar Creek", displayName: "The Cedar Creek CS-3240", slug: "cedar-creek-cs-3240", manufacturer: "Timber Creek Housing", series: "Creekside Series", modelNumber: "CS-3240", bedrooms: 4, bathrooms: 2, squareFeet: 2280, width: 32, length: 76, size: "32' x 76'", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true, note: "Verified from Timber Creek Housing floorplan 237172. Manufacturer media and Matterport are representative; final options, colors, specifications, pricing, and availability must be confirmed by Easy HomeSource." },
   { name: "Creekside Series", slug: "creekside-series", manufacturer: "Timber Creek Housing", series: "Creekside Series", startingPrice: null, priceLabel: "Call/Text for starting price", isFeatured: false, isOnDisplay: false, isCatalogModel: true, isSpecialOffer: false, isNewArrival: true }
 ];
 
@@ -113,6 +117,8 @@ export const legacyHomeSlugAliases: Record<string, string> = {
   "palm-harbor-plant-city-craft-select-28603a": "craft-select-28603a",
   "timber-creek-creekside-series-the-white-oak": "white-oak",
   "timber-creek-creekside-series-the-delilah": "delilah",
+  "timber-creek-creekside-series-the-lake-wood-cs-3254": "lake-wood-cs-3254",
+  "timber-creek-creekside-series-the-cedar-creek-cs-3240": "cedar-creek-cs-3240",
   "palm-harbor-plant-city-craft-select-15663a": "craft-select-15663a"
 };
 
