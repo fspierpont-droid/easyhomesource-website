@@ -136,9 +136,13 @@ export default function QuoteDetailPage() {
   const catalogHome = catalogHomes.find((home) =>
     home.name === quote.homeModel && (!quote.manufacturer || home.manufacturer === quote.manufacturer),
   ) || catalogHomes.find((home) => home.name === quote.homeModel);
-  const msrpPrice = Number(catalogHome?.msrp) || 0;
-  const ehsPrice = Number(catalogHome?.ehsPrice) || Number(quoteData.financialTotals?.ehs_price_calculated) || quote.homePrice;
-  const vipPrice = quote.homePrice > 0 && ehsPrice > 0 && quote.homePrice < ehsPrice - 0.005 ? quote.homePrice : 0;
+  const msrpPrice = Number(quoteData.msrpPrice) || Number(catalogHome?.msrp) || 0;
+  const ehsPrice = Number(quoteData.ehsPrice) || Number(catalogHome?.ehsPrice) || Number(quoteData.financialTotals?.ehs_price_calculated) || quote.homePrice;
+  const vipPrice = Number(quoteData.vipPrice) > 0
+    ? Number(quoteData.vipPrice)
+    : quote.homePrice > 0 && ehsPrice > 0 && quote.homePrice < ehsPrice - 0.005
+      ? quote.homePrice
+      : 0;
   const customerHomePrice = vipPrice > 0 ? vipPrice : quote.homePrice;
   const ehsSavings = msrpPrice > ehsPrice ? msrpPrice - ehsPrice : 0;
   const vipSavings = vipPrice > 0 && ehsPrice > vipPrice ? ehsPrice - vipPrice : 0;
