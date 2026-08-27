@@ -14,8 +14,7 @@ interface QuotePortalShellProps {
 export function QuotePortalShell({
   children,
   activeNav = 'dashboard',
-  onNavChange,
-  onNewManualQuote
+  onNavChange
 }: QuotePortalShellProps) {
   const { user, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -124,6 +123,11 @@ export function QuotePortalShell({
     }
   };
 
+  const openNewQuote = () => {
+    setMobileOpen(false);
+    window.location.href = '/quotes/new';
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col lg:flex-row antialiased w-full overflow-x-hidden">
       <header className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
@@ -153,7 +157,7 @@ export function QuotePortalShell({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={onNewManualQuote}
+            onClick={openNewQuote}
             className="px-3 py-1.5 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-black rounded-lg text-xs shadow-xs transition-all active:scale-95 cursor-pointer"
           >
             + New Quote
@@ -198,14 +202,11 @@ export function QuotePortalShell({
         <div className="p-4">
           <button
             type="button"
-            onClick={() => {
-              setMobileOpen(false);
-              onNewManualQuote?.();
-            }}
+            onClick={openNewQuote}
             className="w-full bg-[#0B1E38] hover:bg-[#081628] text-white font-extrabold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-[1.01] active:scale-95 cursor-pointer"
           >
             <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[11px] font-black">+</span>
-            <span>New Manual Quote</span>
+            <span>New Master Quote</span>
           </button>
         </div>
 
