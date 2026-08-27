@@ -29,7 +29,8 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
   const homeTitle = home.displayName ?? home.name;
   const photos = home.gallery.filter((item) => item.category !== "floorplan" && item.category !== "video");
   const floorPlan = home.floorPlanImage ?? home.gallery.find((item) => item.category === "floorplan")?.src;
-  const videoLink = home.videoUrl ?? home.virtualTourUrl ?? home.walkthroughVideoUrl;
+  const videoLink = home.videoUrl ?? home.walkthroughVideoUrl ?? home.virtualTourUrl;
+  const is3dTour = Boolean(home.virtualTourUrl && !home.videoUrl && !home.walkthroughVideoUrl);
   const isIncomplete = hasIncompleteCatalogDetails(home);
   const pricingHref = `/get-quote?home=${encodeURIComponent(home.slug)}`;
   const tourHref = `/get-quote?home=${encodeURIComponent(home.slug)}&source=schedule-tour`;
@@ -59,6 +60,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
               {home.manufacturer && <span>Manufacturer: <strong className="text-ehsBlack">{home.manufacturer}</strong></span>}
               {home.modelNumber && <span>Model: <strong className="text-ehsBlack">{home.modelNumber}</strong></span>}
               {home.series && <span>Series: <strong className="text-ehsBlack">{home.series}</strong></span>}
+              {home.homeType && <span>Type: <strong className="text-ehsBlack">{home.homeType}</strong></span>}
             </div>
 
             <HomeMediaGallery homeName={homeTitle} gallery={photos} />
@@ -80,13 +82,20 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
             </section>
 
             <section className="mt-10" aria-labelledby="video-heading">
-              <h2 id="video-heading" className="text-3xl font-black text-ehsBlack">Video walkthrough</h2>
+              <h2 id="video-heading" className="text-3xl font-black text-ehsBlack">3D tour & walkthrough</h2>
               {videoLink ? (
                 <div className="mt-5 rounded-[2rem] bg-ehsNavy p-6 text-white sm:p-8">
                   <p className="text-lg font-bold">Take a closer look at the {homeTitle}.</p>
-                  <a className="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-ehsBlue" href={videoLink}>Watch the video walkthrough</a>
+                  <a
+                    className="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-ehsBlue"
+                    href={videoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {is3dTour ? "Open the 3D home tour" : "Watch the video walkthrough"}
+                  </a>
                 </div>
-              ) : <MediaPlaceholder title="Video walkthrough coming soon" className="mt-5 min-h-64" />}
+              ) : <MediaPlaceholder title="3D tour or walkthrough coming soon" className="mt-5 min-h-64" />}
             </section>
 
             {home.standardFeatures.length > 0 && <section className="mt-10 rounded-[2rem] border border-borderGray bg-white p-6 sm:p-8">
@@ -103,6 +112,26 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
             <div className="mt-6 grid gap-3">
               <ButtonLink href={pricingHref}>Get Pricing for This Home</ButtonLink>
               <ButtonLink href={tourHref} variant="secondary">Schedule a Tour</ButtonLink>
+              {home.brochureUrl && (
+                <a
+                  href={home.brochureUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-ehsBlue px-5 py-3 text-center text-sm font-black text-ehsBlue transition hover:bg-ehsSoftBlue"
+                >
+                  View Factory Brochure
+                </a>
+              )}
+              {home.manufacturerUrl && (
+                <a
+                  href={home.manufacturerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-borderGray px-5 py-3 text-center text-sm font-black text-ehsBlack transition hover:border-ehsBlue hover:text-ehsBlue"
+                >
+                  Manufacturer Details
+                </a>
+              )}
             </div>
             <div className="mt-6 border-t border-borderGray pt-5">
               <p className="font-black text-ehsBlack">Local guidance from start to finish</p>
