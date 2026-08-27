@@ -63,7 +63,7 @@ export function ProjectMap({
   );
   const unmappedProjectCount = filteredProjects.length - mappedProjects.length;
 
-  // Initialize Real Leaflet Map with CartoDB Positron / Clean GIS Real-Estate Tiles
+  // Initialize Leaflet with OpenStreetMap tiles. No CARTO key or dependency is required.
   useEffect(() => {
     let isMounted = true;
 
@@ -84,9 +84,8 @@ export function ProjectMap({
           scrollWheelZoom: true
         });
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-          subdomains: 'abcd',
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
           maxZoom: 19
         }).addTo(map);
 
@@ -107,6 +106,19 @@ export function ProjectMap({
         leafletMapRef.current = null;
       }
     };
+  }, []);
+
+  // Keep Leaflet sized correctly when the responsive map viewport changes.
+  useEffect(() => {
+    const element = mapElementRef.current;
+    if (!element || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(() => {
+      leafletMapRef.current?.invalidateSize({ animate: false });
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   // Sync Markers
@@ -191,7 +203,7 @@ export function ProjectMap({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden flex flex-col h-[700px] relative w-full">
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-2xs overflow-hidden flex flex-col h-auto md:h-[700px] relative w-full">
       {/* Map Control Toolbar */}
       <div className="p-3.5 border-b border-slate-200 bg-white flex flex-wrap items-center justify-between gap-3 z-10 shrink-0">
         <div className="flex items-center gap-3">
@@ -271,10 +283,10 @@ export function ProjectMap({
         </div>
       </div>
 
-      {/* Main Map Workspace (Real Leaflet Map Tiles with Side Inspector) */}
-      <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden bg-[#FAFCFF] min-h-0">
+      {/* Main Map Workspace (map above inspector on mobile; side-by-side on desktop) */}
+      <div className="flex flex-col md:flex-1 md:flex-row relative overflow-visible md:overflow-hidden bg-[#FAFCFF] min-h-0">
         {/* Real Leaflet Map Container */}
-        <div className="flex-1 relative overflow-hidden h-full">
+        <div className="relative overflow-hidden h-[420px] sm:h-[500px] md:h-full md:flex-1 shrink-0">
           <div ref={mapElementRef} className="w-full h-full" />
 
           {/* Floating Map HUD Controls */}
@@ -341,7 +353,7 @@ export function ProjectMap({
 
         {/* Right Docked GHL Project Card Inspector Panel */}
         <div
-          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-[450] flex flex-col shrink-0 h-full ${
+          className={`bg-white border-t md:border-t-0 md:border-l border-slate-200 transition-all duration-200 z-[450] flex flex-col shrink-0 h-auto md:h-full ${
             isPanelCollapsed ? 'w-full md:w-12' : 'w-full md:w-88 lg:w-[410px]'
           }`}
         >
@@ -355,7 +367,7 @@ export function ProjectMap({
               <span className="hidden md:inline vertical-lr text-[11px]">Inspect GHL Job</span>
             </button>
           ) : (
-            <div className="flex-1 flex flex-col overflow-y-auto p-5 space-y-4 max-h-[630px]">
+            <div className="flex flex-col overflow-visible md:overflow-y-auto p-5 space-y-4 max-h-none md:max-h-[630px]">
               {/* Header */}
               <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
