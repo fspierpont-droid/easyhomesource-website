@@ -45,6 +45,19 @@ const usableAddressPart = (value: unknown) => {
   const cleaned = typeof value === 'string' ? value.trim() : '';
   return cleaned && cleaned.toLowerCase() !== 'not provided' ? cleaned : '';
 };
+const uniqueAddressCandidates = (values: string[]) => {
+  const seen = new Set<string>();
+  return values.filter((value) => {
+    const normalized = value.trim().replace(/\s+/g, ' ');
+    if (!normalized) return false;
+    const key = normalized.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+const looksLikeCompleteFloridaAddress = (value: string) =>
+  /\b(?:FL|Florida)\b/i.test(value) || /\b\d{5}(?:-\d{4})?\b/.test(value);
 
 type ResolvedCoordinates = { latitude: number; longitude: number };
 
@@ -96,6 +109,14 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
       return pending;
     };
 
+    const geocodeCandidates = async (candidates: string[]): Promise<ResolvedCoordinates | null> => {
+      for (const candidate of uniqueAddressCandidates(candidates)) {
+        const resolved = await geocodeAddress(candidate);
+        if (resolved) return resolved;
+      }
+      return null;
+    };
+
     const projects: GhlProject[] = await Promise.all(opportunities.map(async (opp) => {
       const embeddedContact = opp.contact || {};
       const contactId = opp.contactId || embeddedContact.id || '';
@@ -119,13 +140,20 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
         latitude: number(contact.latitude),
         longitude: number(contact.longitude)
       };
-      const fullAddress = [address, contact.city, contact.state, contact.postalCode]
+      const siteAddress = usableAddressPart(address);
+      const contactStreet = usableAddressPart(contact.address1);
+      const locality = [contact.city, contact.state, contact.postalCode]
         .map(usableAddressPart)
         .filter(Boolean)
         .join(', ');
+      const enrichedSiteAddress = [siteAddress, locality].filter(Boolean).join(', ');
+      const contactFullAddress = [contactStreet, locality].filter(Boolean).join(', ');
+      const candidates = looksLikeCompleteFloridaAddress(siteAddress)
+        ? [siteAddress, enrichedSiteAddress, contactFullAddress]
+        : [enrichedSiteAddress, siteAddress, contactFullAddress];
       const resolvedCoordinates = hasValidCoordinates(coordinates)
         ? { latitude: coordinates.latitude, longitude: coordinates.longitude }
-        : await geocodeAddress(fullAddress);
+        : await geocodeCandidates(candidates);
       const canonical = {
         contactId, opportunityId: opp.id, pipelineId: opp.pipelineId,
         pipelineStageId: opp.pipelineStageId || '', status: opp.status || '', monetaryValue: opp.monetaryValue ?? null,
