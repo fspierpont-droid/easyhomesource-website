@@ -74,6 +74,11 @@ function money(value: number) {
   }).format(Number(value) || 0);
 }
 
+function moneyOrDash(value: unknown) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric > 0 ? money(numeric) : '—';
+}
+
 function makeLine(
   id: string,
   sku: string,
@@ -199,6 +204,13 @@ interface DeliveryEstimate {
   delivery_price: number;
   source: string;
   warning?: string;
+}
+
+function deliverySourceLabel(source: string) {
+  if (source === 'google_routes') return 'Google driving route';
+  if (source === 'factory_baseline') return 'Master Quote 5 factory baseline';
+  if (source === 'manual_fallback' || source === 'manual') return 'Manual mileage fallback';
+  return String(source || 'delivery engine').replaceAll('_', ' ');
 }
 
 export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
@@ -494,7 +506,7 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
         estimate.duration_text,
         `${estimate.transport_sides} transported section${estimate.transport_sides === 1 ? '' : 's'}`,
         `${estimate.escort_count} escort${estimate.escort_count === 1 ? '' : 's'} per section`,
-        estimate.source === 'google_distance_matrix' ? 'Google driving route' : 'manual mileage fallback',
+        deliverySourceLabel(estimate.source),
       ].filter(Boolean);
       setDeliveryNote(`${parts.join(' · ')}${estimate.warning ? ` · ${estimate.warning}` : ''}`);
     } catch (error) {
@@ -506,8 +518,8 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
 
   function addTableLine() {
     if (!selectedServiceSku || lineItems.some((line) => line.sku === selectedServiceSku)) return;
-    const line = catalogLine(selectedServiceSku, `line-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
-    if (line) setLineItems((current) => [...current, line]);
+    const lineItem = catalogLine(selectedServiceSku, `line-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`);
+    if (lineItem) setLineItems((current) => [...current, lineItem]);
   }
 
   function addCustomLine() {
@@ -544,7 +556,7 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
       setActiveTab('customer');
       return;
     }
-    const zeroCustom = lineItems.find((line) => line.sku.startsWith('SITE-SEPTIC-CUSTOM-') && Number(line.totalPrice) <= 0);
+    const zeroCustom = lineItems.find((lineItem) => lineItem.sku.startsWith('SITE-SEPTIC-CUSTOM-') && Number(lineItem.totalPrice) <= 0);
     if (zeroCustom) {
       setSaveError('The selected larger septic system requires a confirmed customer price before this quote can be finalized. Enter its price in Site Systems & Services.');
       setActiveTab('systems');
@@ -691,14 +703,42 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
               </section>}
 
               {activeTab === 'home' && <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div className="flex flex-wrap justify-between gap-3"><div><h2 className="text-lg font-black text-[#0B1E38]">Home Selection</h2><p className="text-xs text-slate-500">Master Quote 5 catalog and EHS price chain.</p></div><div className="text-right text-xs"><strong>{selectedHome.name}</strong><div className="text-slate-500">{selectedHome.dimensions} · {(selectedHome.squareFeet || 0).toLocaleString()} sq ft</div></div></div>
-                <div className="grid gap-2 sm:grid-cols-3"><input value={homeSearch} onChange={(e) => setHomeSearch(e.target.value)} placeholder="Search home…" className="rounded-xl border border-slate-200 px-3 py-2 text-xs sm:col-span-2" /><select value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold"><option value="ALL">All manufacturers</option>{manufacturers.map((manufacturer) => <option key={manufacturer} value={manufacturer}>{manufacturer}</option>)}</select></div>
-                <div className="max-h-72 overflow-y-auto rounded-xl border border-slate-200">{filteredHomes.slice(0, 80).map((home) => <button key={home.slug || `${home.manufacturer}-${home.name}`} type="button" onClick={() => setHome(home)} className={`flex w-full justify-between gap-4 border-b border-slate-100 p-3 text-left text-xs hover:bg-slate-50 ${selectedHome.name === home.name && selectedHome.manufacturer === home.manufacturer ? 'bg-sky-50' : ''}`}><div><div className="font-black">{home.name}</div><div className="text-[11px] text-slate-500">{home.manufacturer} · {home.bedrooms || 0}b/{home.bathrooms || 0}ba · {home.dimensions}</div></div><strong>{money(Number(home.ehsPrice) || 0)}</strong></button>)}</div>
-                <div className="grid gap-4 rounded-xl border border-sky-200 bg-sky-50 p-4 sm:grid-cols-2"><label className="text-xs font-black">Customer Home Price<input type="number" min="0" step="0.01" value={homePrice} onChange={(e) => setHomePrice(Math.max(0, Number(e.target.value) || 0))} className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-3 py-2 text-base font-black" /></label><div className="text-xs"><div className="text-slate-500">Internal factory cost</div><div className="mt-1 text-lg font-black">{money(factoryCost)}</div></div></div>
+                <div className="flex flex-wrap justify-between gap-3">
+                  <div><h2 className="text-lg font-black text-[#0B1E38]">Home Selection</h2><p className="text-xs text-slate-500">Master Quote 5 catalog and EHS internal price chain.</p></div>
+                  <div className="text-right text-xs"><strong>{selectedHome.name}</strong><div className="text-slate-500">{selectedHome.dimensions} · {(selectedHome.squareFeet || 0).toLocaleString()} sq ft</div></div>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-3">
+                  <input value={homeSearch} onChange={(e) => setHomeSearch(e.target.value)} placeholder="Search home…" className="rounded-xl border border-slate-200 px-3 py-2 text-xs sm:col-span-2" />
+                  <select value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold"><option value="ALL">All manufacturers</option>{manufacturers.map((manufacturer) => <option key={manufacturer} value={manufacturer}>{manufacturer}</option>)}</select>
+                </div>
+                <div className="max-h-72 overflow-y-auto rounded-xl border border-slate-200">
+                  {filteredHomes.slice(0, 80).map((home) => (
+                    <button key={home.slug || `${home.manufacturer}-${home.name}`} type="button" onClick={() => setHome(home)} className={`flex w-full justify-between gap-4 border-b border-slate-100 p-3 text-left text-xs hover:bg-slate-50 ${selectedHome.name === home.name && selectedHome.manufacturer === home.manufacturer ? 'bg-sky-50' : ''}`}>
+                      <div><div className="font-black">{home.name}</div><div className="text-[11px] text-slate-500">{home.manufacturer} · {home.bedrooms || 0}b/{home.bathrooms || 0}ba · {home.dimensions}</div></div>
+                      <div className="shrink-0 text-right"><div className="text-[10px] font-bold text-slate-400">MSRP {moneyOrDash(home.msrp)}</div><strong className="text-[#0B4F86]">EHS {moneyOrDash(home.ehsPrice)}</strong></div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="rounded-2xl border border-sky-200 bg-sky-50/70 p-4">
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                    <div><div className="text-[10px] font-black uppercase tracking-wider text-[#0B4F86]">Internal Home Pricing</div><div className="text-xs text-slate-600">Master Quote 5 pricing ladder. These internal values are not customer-facing quote fields.</div></div>
+                    <span className="rounded-full border border-sky-200 bg-white px-2 py-1 text-[10px] font-black text-[#0B4F86]">INTERNAL</span>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="rounded-xl border border-sky-100 bg-white p-3"><div className="text-[10px] font-black uppercase text-slate-400">Base Price List</div><div className="mt-1 text-base font-black text-slate-800">{moneyOrDash(selectedHome.hudBasePrice)}</div></div>
+                    <div className="rounded-xl border border-sky-100 bg-white p-3"><div className="text-[10px] font-black uppercase text-slate-400">Est. Factory Cost</div><div className="mt-1 text-base font-black text-slate-800">{moneyOrDash(selectedHome.estFactoryCost || factoryCost)}</div></div>
+                    <div className="rounded-xl border border-sky-100 bg-white p-3"><div className="text-[10px] font-black uppercase text-slate-400">MSRP</div><div className="mt-1 text-base font-black text-slate-800">{moneyOrDash(selectedHome.msrp)}</div></div>
+                    <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3"><div className="text-[10px] font-black uppercase text-emerald-700">EHS Price</div><div className="mt-1 text-base font-black text-emerald-800">{moneyOrDash(selectedHome.ehsPrice)}</div></div>
+                    <label className="rounded-xl border border-[#0B4F86]/20 bg-white p-3 text-[10px] font-black uppercase text-[#0B4F86]">Final Negotiated Price<input type="number" min="0" step="0.01" value={homePrice} onChange={(e) => setHomePrice(Math.max(0, Number(e.target.value) || 0))} className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-3 py-2 text-base font-black normal-case text-slate-900" /></label>
+                    <div className="rounded-xl border border-amber-200 bg-amber-50 p-3"><div className="text-[10px] font-black uppercase text-amber-700">Lowest Allowable Sale Price</div><div className="mt-1 text-sm font-black text-amber-900">Manager approval required</div><div className="mt-1 text-[10px] leading-4 text-amber-800">No automatic floor is invented until an authoritative EHS management value is provided.</div></div>
+                  </div>
+                  <div className="mt-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-[11px] text-slate-600">Current quote factory-cost basis: <strong>{money(factoryCost)}</strong>. Profit, commission and take-home checks remain in the internal panel at right and are never printed as customer pricing.</div>
+                </div>
               </section>}
 
               {activeTab === 'delivery' && <section className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div><h2 className="text-lg font-black text-[#0B1E38]">Land & Delivery</h2><p className="text-xs text-slate-500">Automatic driving distance when Google Maps is configured; manual mileage remains available as a safe fallback.</p></div>
+                <div><h2 className="text-lg font-black text-[#0B1E38]">Land & Delivery</h2><p className="text-xs text-slate-500">Automatic driving distance through the permanent Google Routes backend; confirmed manual mileage remains available as a safe fallback.</p></div>
                 <div className="grid gap-2 sm:grid-cols-3">{([['OWNED','Customer Owns Land'],['EHS_PROPERTY','EHS Property'],['CUSTOM','Custom / TBD']] as Array<[LandOption,string]>).map(([id,label]) => <button key={id} type="button" onClick={() => changeLandOption(id)} className={`rounded-xl border p-3 text-left text-xs font-black ${landOption === id ? 'border-[#0B1E38] bg-[#0B1E38] text-white' : 'border-slate-200 bg-slate-50'}`}>{label}</button>)}</div>
                 {propertyLoadError && <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs font-bold text-amber-800">{propertyLoadError}</div>}
                 {landOption === 'EHS_PROPERTY' && <label className="block text-xs font-bold">Available EHS Property<select value={selectedPropertyId} onChange={(e) => selectProperty(e.target.value)} className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2"><option value="">Select property…</option>{properties.map((property) => <option key={property.id} value={property.id}>{property.address}, {property.city} — {property.price == null ? 'Price TBD' : money(property.price)}</option>)}</select></label>}
@@ -722,7 +762,7 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
                 </div>
 
                 <div className="border-t border-slate-200 pt-4"><div className="mb-3 flex flex-wrap items-end gap-2"><label className="min-w-[260px] flex-1 text-xs font-bold">Additional Master Quote 5 Service<select value={selectedServiceSku} onChange={(e) => setSelectedServiceSku(e.target.value)} className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2">{SERVICE_CATALOG.map((service) => <option key={service.sku} value={service.sku}>{service.name} — {service.requiresBid ? 'BID' : money(service.defaultPrice)}</option>)}</select></label><button type="button" onClick={addTableLine} className="rounded-xl bg-[#0F2A47] px-4 py-2.5 text-xs font-black text-white">+ Add Service</button><button type="button" onClick={addCustomLine} className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-black">+ Custom Item</button></div>
-                <div className="overflow-hidden rounded-xl border border-slate-200">{lineItems.map((item) => <div key={item.id} className="border-b border-slate-100 p-3 last:border-0"><div className="grid items-end gap-3 md:grid-cols-[1fr_90px_150px_110px_auto]"><div><div className="font-black text-slate-800">{item.name}</div><div className="text-[10.5px] text-slate-500">{item.description}</div></div><label className="text-[10px] font-black uppercase text-slate-500">Qty<input type="number" min="1" step="1" value={item.quantity} onChange={(e) => updateLine(item.id, 'quantity', Number(e.target.value))} className="mt-1 w-full rounded-lg border border-slate-200 p-2 text-xs" /></label><label className="text-[10px] font-black uppercase text-slate-500">Customer Unit Price<input type="number" min="0" step="0.01" value={item.unitPrice} onChange={(e) => updateLine(item.id, 'unitPrice', Number(e.target.value))} className="mt-1 w-full rounded-lg border border-slate-200 p-2 text-xs" /></label><div className="text-right"><div className="text-[10px] text-slate-400">Line Total</div><strong>{money(item.totalPrice)}</strong></div><button type="button" onClick={() => setLineItems((current) => current.filter((line) => line.id !== item.id))} className="rounded-lg p-2 font-black text-rose-600 hover:bg-rose-50">✕</button></div></div>)}</div></div>
+                <div className="overflow-hidden rounded-xl border border-slate-200">{lineItems.map((item) => <div key={item.id} className="border-b border-slate-100 p-3 last:border-0"><div className="grid items-end gap-3 md:grid-cols-[1fr_90px_150px_110px_auto]"><div><div className="font-black text-slate-800">{item.name}</div><div className="text-[10.5px] text-slate-500">{item.description}</div></div><label className="text-[10px] font-black uppercase text-slate-500">Qty<input type="number" min="1" step="1" value={item.quantity} onChange={(e) => updateLine(item.id, 'quantity', Number(e.target.value))} className="mt-1 w-full rounded-lg border border-slate-200 p-2 text-xs" /></label><label className="text-[10px] font-black uppercase text-slate-500">Customer Unit Price<input type="number" min="0" step="0.01" value={item.unitPrice} onChange={(e) => updateLine(item.id, 'unitPrice', Number(e.target.value))} className="mt-1 w-full rounded-lg border border-slate-200 p-2 text-xs" /></label><div className="text-right"><div className="text-[10px] text-slate-400">Line Total</div><strong>{money(item.totalPrice)}</strong></div><button type="button" onClick={() => setLineItems((current) => current.filter((lineItem) => lineItem.id !== item.id))} className="rounded-lg p-2 font-black text-rose-600 hover:bg-rose-50">✕</button></div></div>)}</div></div>
                 <label className="block text-xs font-bold">Quote Discount<input type="number" min="0" step="0.01" value={discounts} onChange={(e) => setDiscounts(Math.max(0, Number(e.target.value) || 0))} className="mt-1 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2" /></label>
               </section>}
 
@@ -736,7 +776,7 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
 
               {activeTab === 'review' && <section className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
                 <div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-lg font-black text-[#0B1E38]">Review & Save</h2><p className="text-xs text-slate-500">Confirm the route, utilities and customer-facing numbers before saving.</p></div><label className="text-xs font-bold">Quote Status<select value={status} onChange={(e) => setStatus(e.target.value as SavedQuote['status'])} className="mt-1 rounded-lg border border-slate-200 bg-white p-2"><option value="DRAFT">Draft</option><option value="SENT_TO_BUYER">Sent to Buyer</option><option value="LENDER_REVIEW">Lender Review</option><option value="APPROVED">Approved</option><option value="IN_CONTRACT">In Contract</option></select></label></div>
-                <div className="grid gap-3 text-xs sm:grid-cols-2"><div className="rounded-xl bg-slate-50 p-4"><div className="text-slate-400">Customer</div><strong>{customerName || 'Not entered'}</strong><div className="mt-2 text-slate-400">Home</div><strong>{selectedHome.name}</strong></div><div className="rounded-xl bg-slate-50 p-4"><div className="text-slate-400">Delivery</div><strong>{deliveryMiles > 0 ? `${deliveryMiles} miles · ${money(deliveryFreightPrice)}` : 'No route recorded'}</strong><div className="mt-2 text-slate-400">Site systems</div><strong>{siteSystems.acEnabled ? `${siteSystems.acTonnage}T A/C` : 'A/C TBD'} · {siteSystems.waterSource.replace('_', ' ')} · {siteSystems.sewerSource.replace('_', ' ')}</strong></div></div>
+                <div className="grid gap-3 text-xs sm:grid-cols-2"><div className="rounded-xl bg-slate-50 p-4"><div className="text-slate-400">Customer</div><strong>{customerName || 'Not entered'}</strong><div className="mt-2 text-slate-400">Home</div><strong>{selectedHome.name}</strong></div><div className="rounded-xl bg-slate-50 p-4"><div className="text-slate-400">Delivery</div><strong>{deliveryMiles > 0 ? `${deliveryMiles} miles · ${money(deliveryFreightPrice)}` : deliveryFreightPrice > 0 ? `Factory baseline · ${money(deliveryFreightPrice)}` : 'No route recorded'}</strong><div className="mt-2 text-slate-400">Site systems</div><strong>{siteSystems.acEnabled ? `${siteSystems.acTonnage}T A/C` : 'A/C TBD'} · {siteSystems.waterSource.replace('_', ' ')} · {siteSystems.sewerSource.replace('_', ' ')}</strong></div></div>
                 <button type="button" disabled={isSaving} onClick={() => void saveQuote()} className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-black text-white hover:bg-emerald-700 disabled:opacity-60">{isSaving ? 'Saving to permanent quote library…' : editing ? '✓ Save Changes & View Quote' : '✓ Create Quote & View Proposal'}</button>
               </section>}
             </main>
@@ -744,7 +784,7 @@ export default function QuoteBuilderUnified({ quoteId }: { quoteId?: string }) {
             <aside className="self-start rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm lg:sticky lg:top-24">
               <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Live Quote Totals</div>
               <div className="mt-4 space-y-2"><div className="flex justify-between"><span>Home</span><strong>{money(homePrice)}</strong></div>{propertyPrice > 0 && <div className="flex justify-between"><span>Land</span><strong>{money(propertyPrice)}</strong></div>}<div className="flex justify-between"><span>Delivery</span><strong>{money(deliveryFreightPrice)}</strong></div><div className="flex justify-between"><span>Site Work</span><strong>{money(siteWorkPrice)}</strong></div>{addonsPrice > 0 && <div className="flex justify-between"><span>Add-Ons</span><strong>{money(addonsPrice)}</strong></div>}{discounts > 0 && <div className="flex justify-between text-rose-700"><span>Discount</span><strong>-{money(discounts)}</strong></div>}<div className="border-t border-slate-100 pt-2"><div className="flex justify-between font-black"><span>Subtotal</span><span>{money(totals.subtotal)}</span></div><div className="mt-1 flex justify-between"><span>3% Sales Tax</span><strong className="text-[#1E6FA8]">{money(totals.sales_tax_total)}</strong></div></div><div className="mt-3 flex items-center justify-between rounded-xl bg-[#0F2A47] px-3 py-3 text-white"><span className="text-[10px] font-black uppercase">Estimated Total</span><span className="font-mono text-lg font-black">{money(totals.estimated_total)}</span></div></div>
-              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3"><div className="text-[10px] font-black uppercase text-slate-400">Internal Deal Check</div><div className="mt-2 grid grid-cols-2 gap-1 text-[11px]"><span>Home margin</span><strong className="text-right">{money(totals.house_gross_margin)}</strong><span>Service profit</span><strong className="text-right">{money(totals.service_profit)}</strong><span>Commission</span><strong className="text-right">{money(totals.salesperson_commission)}</strong><span>EHS take-home</span><strong className={`text-right ${totals.target_met ? 'text-emerald-700' : 'text-amber-700'}`}>{money(totals.net_take_home)}</strong></div></div>
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3"><div className="text-[10px] font-black uppercase text-slate-400">Internal Deal Check</div><div className="mt-2 grid grid-cols-2 gap-1 text-[11px]"><span>Home margin</span><strong className="text-right">{money(totals.house_gross_margin)}</strong><span>Service profit</span><strong className="text-right">{money(totals.service_profit)}</strong><span>Commission</span><strong className="text-right">{money(totals.salesperson_commission)}</strong><span>EHS take-home</span><strong className={`text-right ${totals.target_met ? 'text-emerald-700' : 'text-amber-700'}`}>{money(totals.net_take_home)}</strong><span>Take-home target</span><strong className="text-right">{money(totals.take_home_floor)}</strong><span>Target status</span><strong className={`text-right ${totals.target_met ? 'text-emerald-700' : 'text-amber-700'}`}>{totals.target_met ? 'MET' : 'BELOW TARGET'}</strong></div></div>
               <button type="button" onClick={() => setActiveTab('review')} className="mt-4 w-full rounded-xl border border-slate-200 bg-white py-2 font-black text-[#0B1E38]">Review Before Save →</button>
             </aside>
           </div>
