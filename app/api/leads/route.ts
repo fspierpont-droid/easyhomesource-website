@@ -36,6 +36,8 @@ function isEmail(value: string) {
 }
 
 function normalizeLead(body: Record<string, unknown>, request: Request): LeadPayload {
+  const sourcePage = clean(body.sourcePage);
+
   return {
     firstName: clean(body.firstName),
     lastName: clean(body.lastName),
@@ -51,10 +53,12 @@ function normalizeLead(body: Record<string, unknown>, request: Request): LeadPay
     deliverySetupHelp: clean(body.deliverySetupHelp),
     message: clean(body.message),
     smsContactConsent: body.smsContactConsent === true,
-    smsMarketingConsent: body.smsMarketingConsent === true,
+    // The current AI chat quote/tour form includes inquiry-contact consent but
+    // does not present a separate promotional-marketing opt-in. Never infer it.
+    smsMarketingConsent: sourcePage === "AI Chat Widget" ? false : body.smsMarketingConsent === true,
     consentTextContact,
     consentTextMarketing,
-    sourcePage: clean(body.sourcePage),
+    sourcePage,
     sourceUrl: clean(body.sourceUrl),
     submittedAt: new Date().toISOString(),
     userAgent: request.headers.get("user-agent") ?? clean(body.userAgent)
