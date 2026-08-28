@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { PropertyPackageManager } from '@/components/portal/PropertyPackageManager';
 import { AuthGate } from '@/components/portal/AuthGate';
+import { PortalHome } from '@/components/portal/PortalHome';
 
 export const metadata: Metadata = {
-  title: 'Easy HomeSource Quote Portal | Operational Hub',
-  description: 'Production operational hub, quote dashboard, and single source of truth for Easy HomeSource manufactured homes, land packages, inventory, and permitting.'
+  title: 'Easy HomeSource Portal | Operational Hub',
+  description: 'Production operational hub and single source of truth for Easy HomeSource sales, manufactured homes, land packages, inventory, projects, quoting, and permitting.'
 };
 
 export default function PortalPage() {
@@ -13,7 +13,7 @@ export default function PortalPage() {
     <AuthGate>
       <div className="ehs-portal-layer-root">
         <Suspense fallback={<div className="p-8 text-center text-xs text-slate-400">Loading Portal...</div>}>
-          <PropertyPackageManager initialNav="dashboard" />
+          <PortalHome />
         </Suspense>
 
         {/*
