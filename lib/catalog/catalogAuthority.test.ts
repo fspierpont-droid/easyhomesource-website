@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import type { Home } from '../../data/homes.ts';
+import type { MasterCatalogHome } from '../../data/fullMasterCatalog.generated.ts';
 import {
   applyMasterCatalogOverrides,
   applyPublicCatalogOverrides,
   findPublicCatalogMatch,
 } from './catalogAuthority.ts';
 
-const masterHome = {
+const masterHome: MasterCatalogHome = {
   slug: 'cavco-plant-city-paxton-28523a',
   name: 'Paxton 28523A',
   manufacturer: 'CAVCO Plant City',
@@ -27,7 +29,7 @@ const masterHome = {
   modularOffFrameCapable: false,
 };
 
-const publicHome = {
+const publicHome: Home = {
   id: 'paxton',
   name: 'Paxton',
   slug: 'paxton',
