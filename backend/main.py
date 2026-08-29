@@ -16,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError
 
+from admin import router as admin_router
 from auth import (
     create_access_token,
     get_current_user,
@@ -60,6 +61,7 @@ app.include_router(permitting_router)
 app.include_router(quotes_router)
 app.include_router(public_quotes_router)
 app.include_router(legacy_quotes_router)
+app.include_router(admin_router)
 
 
 def _cors_origins() -> list[str]:
@@ -108,6 +110,15 @@ def _as_utc(value: object) -> datetime | None:
     if value.tzinfo is None:
         return value.replace(tzinfo=timezone.utc)
     return value.astimezone(timezone.utc)
+
+
+def _removes_active_admin_access(current: dict, update: dict) -> bool:
+    """Return True when an update would remove an active administrator."""
+    if (current.get("role") or "").lower() != "admin" or not current.get("active", True):
+        return False
+    next_role = (update.get("role", current.get("role")) or "").lower()
+    next_active = update.get("active", current.get("active", True))
+    return next_role != "admin" or next_active is False
 
 
 async def _audit(
@@ -294,9 +305,28 @@ async def update_user(
     request: Request,
     admin: dict = Depends(require_admin),
 ) -> UserPublic:
+    db = get_db()
+    current = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    if not current:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
     update = payload.model_dump(exclude_unset=True)
     if "email" in update and update["email"] is not None:
         update["email"] = str(update["email"]).lower().strip()
+
+    if _removes_active_admin_access(current, update):
+        if user_id == admin.get("id"):
+            raise HTTPException(
+                status_code=400,
+                detail="You cannot deactivate or demote your own admin account.",
+            )
+        active_admins = await db.users.count_documents({"role": "admin", "active": {"$ne": False}})
+        if active_admins <= 1:
+            raise HTTPException(
+                status_code=400,
+                detail="At least one active administrator must remain.",
+            )
+
     if "password" in update:
         password = update.pop("password")
         if password:
@@ -304,7 +334,7 @@ async def update_user(
     update["updated_at"] = datetime.now(timezone.utc)
 
     try:
-        document = await get_db().users.find_one_and_update(
+        document = await db.users.find_one_and_update(
             {"id": user_id},
             {"$set": update},
             projection={"_id": 0, "password_hash": 0},
