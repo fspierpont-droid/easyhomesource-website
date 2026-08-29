@@ -1,5 +1,6 @@
-import { homes } from '@/data/homes';
+import { homes as baselineHomes, type Home } from '@/data/homes';
 import { siteInfo } from '@/data/site';
+import { getPublicCatalog } from '@/lib/catalog/catalogAuthorityServer';
 
 export type ChatAction = 'text' | 'homes' | 'lead_form' | 'tour_booking' | 'financing_info';
 export type ConversationItem = { role?: string; content?: string };
@@ -128,7 +129,7 @@ function compact(value: string) {
   return normalize(value).replace(/\s+/g, '');
 }
 
-function homeSearchText(home: (typeof homes)[number]) {
+function homeSearchText(home: Home) {
   return [
     home.name,
     home.displayName,
@@ -143,7 +144,7 @@ function homeSearchText(home: (typeof homes)[number]) {
     .join(' ');
 }
 
-function queryMatchesHome(home: (typeof homes)[number], query: string) {
+function queryMatchesHome(home: Home, query: string) {
   const normalizedQuery = normalize(query);
   if (!normalizedQuery) return true;
 
@@ -158,7 +159,7 @@ function queryMatchesHome(home: (typeof homes)[number], query: string) {
   return tokens.every((token) => compactHaystack.includes(compact(token)));
 }
 
-function homeMatchScore(home: (typeof homes)[number], query: string) {
+function homeMatchScore(home: Home, query: string) {
   const normalizedQuery = normalize(query);
   if (!normalizedQuery) return 1;
 
@@ -191,13 +192,13 @@ function money(value: number) {
   return `$${Math.round(value).toLocaleString('en-US')}`;
 }
 
-function displayPrice(home: (typeof homes)[number]) {
+function displayPrice(home: Home) {
   if (typeof home.salePrice === 'number') return `Sale price ${money(home.salePrice)}`;
   if (typeof home.startingPrice === 'number') return `Starting at ${money(home.startingPrice)}`;
   return 'Price requires an EHS quote';
 }
 
-function compactHome(home: (typeof homes)[number]) {
+function compactHome(home: Home) {
   return {
     slug: home.slug,
     name: home.displayName || home.name,
@@ -224,12 +225,12 @@ function searchCatalog(input: {
   onDisplayOnly?: boolean;
   manufacturer?: string;
   limit?: number;
-}) {
+}, catalog: Home[] = baselineHomes) {
   const query = input.query?.trim() || '';
   const manufacturer = input.manufacturer?.trim() || '';
   const limit = Math.min(Math.max(input.limit || 5, 1), 8);
 
-  return homes
+  return catalog
     .filter((home) => home.isActive !== false)
     .filter((home) => !input.onDisplayOnly || home.isOnDisplay)
     .filter((home) => input.bedrooms == null || home.bedrooms === input.bedrooms)
@@ -421,7 +422,7 @@ async function requestCloudflareCompletion(messages: CloudflareMessage[], deadli
   return parseCloudflareCompletion(payload, model, step);
 }
 
-async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState) {
+async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState, catalog: Home[]) {
   const input = parseToolArguments(call.function.arguments);
 
   switch (call.function.name) {
@@ -429,7 +430,7 @@ async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState) 
       const query = stringValue(input.query);
       if (!query) return { error: 'query is required' };
 
-      const matches = searchCatalog({ query, limit: 4 });
+      const matches = searchCatalog({ query, limit: 4 }, catalog);
       if (!matches.length) {
         return {
           found: false,
@@ -456,7 +457,7 @@ async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState) 
         onDisplayOnly: booleanValue(input.onDisplayOnly),
         manufacturer: stringValue(input.manufacturer),
         limit: boundedInteger(input.limit, 1, 8),
-      });
+      }, catalog);
 
       for (const home of matches.slice(0, 4)) uiState.homeSlugs.add(home.slug);
       return {
@@ -472,7 +473,7 @@ async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState) 
         email: siteInfo.email,
         hours: siteInfo.businessHours,
         localTime: brooksvilleLocalTime(),
-        activeDisplayHomes: homes.filter((home) => home.isActive !== false && home.isOnDisplay).length,
+        activeDisplayHomes: catalog.filter((home) => home.isActive !== false && home.isOnDisplay).length,
       };
 
     case 'open_quote_request': {
@@ -501,6 +502,7 @@ export async function runEhsSalesAgent(message: string, history: ConversationIte
     homeSlugs: new Set<string>(),
     actionType: 'text',
   };
+  const catalog = await getPublicCatalog();
 
   const normalizedHistory = history
     .slice(-MAX_HISTORY_ITEMS)
@@ -537,7 +539,7 @@ export async function runEhsSalesAgent(message: string, history: ConversationIte
     }
 
     for (const call of toolCalls) {
-      const toolResult = await executeToolCall(call, uiState);
+      const toolResult = await executeToolCall(call, uiState, catalog);
       messages.push({
         role: 'tool',
         tool_call_id: call.id,

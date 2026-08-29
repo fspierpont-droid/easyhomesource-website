@@ -6,24 +6,26 @@ import { HomeCard, StatusBadge, homeBadges } from "@/components/HomeCard";
 import { HomeImage } from "@/components/HomeImage";
 import { HomeMediaGallery } from "@/components/HomeMediaGallery";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
-import { formatHomePrice, getHomeBySlug, hasIncompleteCatalogDetails, homes } from "@/data/homes";
+import { formatHomePrice, hasIncompleteCatalogDetails, homes as baselineHomes } from "@/data/homes";
+import { getPublicCatalog, getPublicCatalogHome } from "@/lib/catalog/catalogAuthorityServer";
 
 const startingPriceDisclaimer = "Starting price does not include delivery, setup, taxes, permits, site work, utility connections, skirting, steps, or selected options.";
 
 export function generateStaticParams() {
-  return homes.map((home) => ({ slug: home.slug }));
+  return baselineHomes.map((home) => ({ slug: home.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const home = getHomeBySlug(params.slug);
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const home = await getPublicCatalogHome(params.slug);
   return {
     title: home?.seoTitle ?? (home ? `${home.name} | Easy HomeSource` : "Home Details | Easy HomeSource"),
     description: home?.seoDescription ?? home?.shortDescription ?? "View manufactured home details from Easy HomeSource in Brooksville, Florida."
   };
 }
 
-export default function HomeDetailPage({ params }: { params: { slug: string } }) {
-  const home = getHomeBySlug(params.slug);
+export default async function HomeDetailPage({ params }: { params: { slug: string } }) {
+  const catalog = await getPublicCatalog();
+  const home = catalog.find((item) => item.slug === params.slug);
   if (!home) notFound();
 
   const homeTitle = home.displayName ?? home.name;
@@ -40,7 +42,7 @@ export default function HomeDetailPage({ params }: { params: { slug: string } })
     home.squareFeet != null && Number.isFinite(home.squareFeet) && home.squareFeet > 0 && { label: "Square feet", value: home.squareFeet.toLocaleString() },
     home.size && { label: "Home size", value: home.size }
   ].filter(Boolean) as { label: string; value: string | number }[];
-  const similar = homes.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
+  const similar = catalog.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
 
   return (
     <main className="px-4 py-8 sm:py-12">

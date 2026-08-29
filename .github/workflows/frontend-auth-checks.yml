@@ -5,16 +5,21 @@ on:
     paths:
       - 'lib/auth/**'
       - 'lib/chat/**'
+      - 'lib/catalog/**'
       - 'app/api/portal/auth/**'
       - 'app/api/portal/admin/**'
+      - 'app/api/portal/catalog/**'
       - 'app/api/portal/projects/**'
       - 'app/api/portal/ready-to-quote/**'
       - 'app/api/portal/home-inventory/**'
       - 'app/api/chat/**'
       - 'app/settings/**'
       - 'app/portal/system-health/**'
+      - 'app/quotes/**'
       - 'components/ChatWidget.tsx'
       - 'components/portal/AdminSettingsPage.tsx'
+      - 'components/portal/CatalogManagementPage.tsx'
+      - 'components/portal/QuoteBuilderCatalogAuthority.tsx'
       - 'components/portal/SystemHealthPage.tsx'
       - 'components/portal/PortalSidebar.tsx'
       - 'components/portal/HomeInventoryView.tsx'
@@ -51,6 +56,8 @@ jobs:
         run: npm ci
       - name: Validate public catalog
         run: npm run validate:catalog
+      - name: Test catalog authority
+        run: node --experimental-strip-types --test lib/catalog/catalogAuthority.test.ts
       - name: Run ESLint
         run: npm run lint
       - name: Run portal/GHL tests

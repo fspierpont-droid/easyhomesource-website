@@ -25,6 +25,7 @@ from auth import (
     verify_password,
 )
 from catalog import router as catalog_router
+from catalog_overrides import router as catalog_overrides_router
 from customers import router as customers_router
 from database import ensure_indexes, get_db, ping_database
 from delivery import router as delivery_router
@@ -53,6 +54,7 @@ app = FastAPI(
     redoc_url=None,
 )
 app.include_router(catalog_router)
+app.include_router(catalog_overrides_router)
 app.include_router(customers_router)
 app.include_router(properties_router)
 app.include_router(home_inventory_router)
@@ -360,6 +362,7 @@ async def system_check(_admin: dict = Depends(require_admin)) -> dict:
         "legacy_quotes",
         "projects",
         "homes",
+        "catalog_overrides",
         "properties",
         "home_inventory",
         "key_contacts",

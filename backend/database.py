@@ -55,6 +55,11 @@ async def ensure_indexes() -> None:
     await db.homes.create_index("id", unique=True, sparse=True)
     await db.homes.create_index([("manufacturer", 1), ("series", 1), ("model_name", 1)])
 
+    await db.catalog_overrides.create_index("catalog_key", unique=True)
+    await db.catalog_overrides.create_index("quote_slug")
+    await db.catalog_overrides.create_index("public_slug")
+    await db.catalog_overrides.create_index([("updated_at", -1)])
+
     await db.quotes.create_index("id", unique=True)
     await db.quotes.create_index("quote_number", unique=True)
     await db.quotes.create_index("customer_id")
