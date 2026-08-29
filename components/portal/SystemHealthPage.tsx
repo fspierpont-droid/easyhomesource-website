@@ -66,6 +66,7 @@ export function SystemHealthPage() {
   const [system, setSystem] = useState<SystemCheck | null>(null);
   const [systemError, setSystemError] = useState<string | null>(null);
   const [systemLoading, setSystemLoading] = useState(false);
+  const [activePropertyCount, setActivePropertyCount] = useState<number | null>(null);
 
   const [audit, setAudit] = useState<AuditPayload>({ items: [], total: 0, page: 1, page_size: PAGE_SIZE, total_pages: 1 });
   const [auditLoading, setAuditLoading] = useState(false);
@@ -87,9 +88,21 @@ export function SystemHealthPage() {
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.success || !data.system?.ok) throw new Error(data.error || 'Unable to read system health.');
       setSystem(data.system);
+
+      try {
+        const propertyResponse = await fetch('/api/portal/properties/stats', { cache: 'no-store' });
+        const propertyData = await propertyResponse.json().catch(() => ({}));
+        if (!propertyResponse.ok || !propertyData.success || !propertyData.stats) {
+          throw new Error(propertyData.error || 'Unable to read active property statistics.');
+        }
+        setActivePropertyCount(Number(propertyData.stats.totalProperties) || 0);
+      } catch {
+        setActivePropertyCount(null);
+      }
     } catch (error) {
       setSystemError(error instanceof Error ? error.message : 'Unable to read system health.');
       setSystem(null);
+      setActivePropertyCount(null);
     } finally {
       setSystemLoading(false);
     }
@@ -165,14 +178,25 @@ export function SystemHealthPage() {
   }
 
   const counts = system?.collection_counts || {};
-  const countCards = useMemo(() => [
-    ['Employees', counts.users],
-    ['Current Quotes', counts.quotes],
-    ['Historical Quotes', counts.legacy_quotes],
-    ['Home Inventory', counts.home_inventory],
-    ['Properties', counts.properties],
-    ['Permit Jobs', counts.permit_jobs],
-  ] as Array<[string, number | undefined]>, [counts]);
+  const countCards = useMemo(() => {
+    const totalPropertyRecords = typeof counts.properties === 'number' ? counts.properties : undefined;
+    const activeProperties = activePropertyCount === null ? undefined : activePropertyCount;
+    const archivedProperties =
+      typeof totalPropertyRecords === 'number' && typeof activeProperties === 'number'
+        ? Math.max(0, totalPropertyRecords - activeProperties)
+        : undefined;
+
+    return [
+      ['Employees', counts.users],
+      ['Current Quotes', counts.quotes],
+      ['Historical Quotes', counts.legacy_quotes],
+      ['Home Inventory', counts.home_inventory],
+      ['Property Records', totalPropertyRecords],
+      ['Active Properties', activeProperties],
+      ['Archived Properties', archivedProperties],
+      ['Permit Jobs', counts.permit_jobs],
+    ] as Array<[string, number | undefined]>;
+  }, [activePropertyCount, counts]);
 
   if (loading) {
     return <div className="min-h-screen bg-slate-50 flex items-center justify-center text-xs font-bold text-slate-400">Checking system access…</div>;
@@ -220,10 +244,11 @@ export function SystemHealthPage() {
                   <div>
                     <div className="text-[10px] font-black uppercase tracking-wider text-[#1E6FA8]">Permanent Database</div>
                     <h2 className="text-lg font-black text-[#0B1E38]">Record Counts</h2>
+                    <p className="mt-1 text-xs text-slate-500">Collection totals include archived history. Property records are split below into active and archived counts.</p>
                   </div>
                   {systemLoading && <span className="text-xs text-slate-400">Refreshing…</span>}
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {countCards.map(([label, value]) => (
                     <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">{label}</div>
