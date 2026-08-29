@@ -508,28 +508,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-// Preview-only diagnostic path used to verify that the deployed Vercel runtime can
-// reach an AI provider. Production GET requests intentionally remain unavailable.
-export async function GET(req: Request) {
-  if (process.env.VERCEL_ENV !== 'preview') {
-    return NextResponse.json({ error: 'Not found.' }, { status: 404 });
-  }
-
-  const url = new URL(req.url);
-  const message = url.searchParams.get('q')?.trim().slice(0, MAX_MESSAGE_LENGTH) || '';
-  if (!message) {
-    const providers = getAiProviders();
-    return NextResponse.json({
-      success: true,
-      previewDiagnostic: true,
-      aiConfigured: providers.length > 0,
-      providers: providers.map((provider) => ({ name: provider.name, model: provider.model })),
-    });
-  }
-
-  return NextResponse.json({
-    ...(await buildChatResponse(message, [])),
-    previewDiagnostic: true,
-  });
-}
