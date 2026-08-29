@@ -98,8 +98,9 @@ export function applyPublicCatalogOverrides(
 
     return [{
       ...home,
-      name: override.name?.trim() || home.name,
-      manufacturer: override.manufacturer?.trim() || home.manufacturer,
+      // Public display naming, manufacturer labels, slugs and rich media remain
+      // owned by the verified public catalog so an internal quote-model name can
+      // never rewrite customer-facing identity or SEO URLs.
       status: present(override.public_status, home.status),
       isActive: override.public_enabled ?? home.isActive,
       isOnDisplay: override.is_on_display ?? home.isOnDisplay,
@@ -120,9 +121,7 @@ function normalized(value: string | null | undefined) {
 }
 
 function normalizedManufacturer(value: string | null | undefined) {
-  return normalized(value)
-    .replace(/^cavco/, 'cavco')
-    .replace(/^clayton/, 'clayton');
+  return normalized(value);
 }
 
 export function findPublicCatalogMatch(
