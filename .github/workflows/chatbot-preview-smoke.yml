@@ -1,0 +1,46 @@
+name: Chatbot preview smoke
+
+on:
+  push:
+    branches:
+      - fix/chatbot-ai-runtime
+  workflow_dispatch:
+
+jobs:
+  preview-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PREVIEW_URL: https://easyhomesource-website-git-fix-5bb798-scott-pierponts-projects.vercel.app
+
+    steps:
+      - name: Wait for Vercel preview diagnostic
+        run: |
+          set -euo pipefail
+          ready=0
+          for attempt in $(seq 1 30); do
+            code=$(curl -L -sS -o /tmp/chat-status.json -w "%{http_code}" "$PREVIEW_URL/api/chat" || true)
+            if [ "$code" = "200" ]; then
+              ready=1
+              break
+            fi
+            echo "Preview not ready yet (HTTP $code), attempt $attempt/30"
+            sleep 10
+          done
+          cat /tmp/chat-status.json || true
+          test "$ready" = "1"
+          node -e 'const fs=require("fs");const data=JSON.parse(fs.readFileSync("/tmp/chat-status.json","utf8"));if(!data.previewDiagnostic||!data.aiConfigured){console.error("AI provider is not configured in preview runtime",data);process.exit(1)};console.log("Configured providers:",data.providers)'
+
+      - name: Verify hours question uses real AI
+        run: |
+          set -euo pipefail
+          curl -L -sS --get --data-urlencode "q=What time do you guys open?" "$PREVIEW_URL/api/chat" -o /tmp/chat-hours.json
+          cat /tmp/chat-hours.json
+          node -e 'const fs=require("fs");const data=JSON.parse(fs.readFileSync("/tmp/chat-hours.json","utf8"));if(!data.aiEnabled){console.error("Hours response fell back instead of using AI",data);process.exit(1)};if(!/9(:00)?\s*(AM|am).*5(:00)?\s*(PM|pm)|9\s*AM.*5\s*PM/.test(data.reply)){console.error("Hours response did not answer the question directly",data);process.exit(1)};console.log("Hours probe passed:",data.reply)'
+
+      - name: Verify visit question uses real AI
+        run: |
+          set -euo pipefail
+          curl -L -sS --get --data-urlencode "q=I want to visit the dealership" "$PREVIEW_URL/api/chat" -o /tmp/chat-visit.json
+          cat /tmp/chat-visit.json
+          node -e 'const fs=require("fs");const data=JSON.parse(fs.readFileSync("/tmp/chat-visit.json","utf8"));if(!data.aiEnabled){console.error("Visit response fell back instead of using AI",data);process.exit(1)};if(!/9011 McIntyre|Brooksville|visit|hours|tour/i.test(data.reply)){console.error("Visit response did not address the visit intent",data);process.exit(1)};console.log("Visit probe passed:",data.reply)'
