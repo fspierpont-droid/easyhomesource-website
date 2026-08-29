@@ -1,0 +1,61 @@
+name: Next 15 security upgrade validation
+
+on:
+  push:
+    branches:
+      - security/next-15-5-21
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install patched Next.js and React baseline
+        run: |
+          npm install --save-exact \
+            next@15.5.21 \
+            eslint-config-next@15.5.21 \
+            react@19 \
+            react-dom@19 \
+            @types/react@19 \
+            @types/react-dom@19
+
+      - name: Run GHL/auth/quote regression tests
+        run: npm run test:ghl
+
+      - name: Run Project Board coordinate tests
+        run: npm run test:project-coordinates
+
+      - name: Run Project Board cache tests
+        run: npm run test:project-cache
+
+      - name: Run production build
+        run: npm run build
+
+      - name: Commit regenerated dependency lockfile after green validation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "Dependency files already current."
+          else
+            git commit -m "chore: upgrade Next.js security baseline"
+            git push origin HEAD:security/next-15-5-21
+          fi
