@@ -3,6 +3,18 @@ export const siteInfo = {
   phoneDisplay: "352-558-8888",
   phoneHref: "+13525588888",
   email: "info@easyhomesource.com",
+  timezone: "America/New_York",
+  businessHours: {
+    monday: "9:00 AM - 5:00 PM",
+    tuesday: "9:00 AM - 5:00 PM",
+    wednesday: "9:00 AM - 5:00 PM",
+    thursday: "9:00 AM - 5:00 PM",
+    friday: "9:00 AM - 5:00 PM",
+    saturday: "9:00 AM - 5:00 PM",
+    sunday: "Closed",
+    summary: "Monday-Saturday 9:00 AM-5:00 PM; Sunday closed",
+    appointmentNote: "Appointments are recommended for the best lot-tour experience."
+  },
   privacyUrl: "/privacy",
   termsUrl: "/terms",
   pricingDisclaimer: "Home availability, pricing, financing, delivery and setup, taxes, fees, permits, site conditions, lender approval, and final project costs are subject to change and final quote."
