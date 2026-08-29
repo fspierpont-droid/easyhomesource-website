@@ -1,1 +1,1 @@
-export { default } from '@/components/portal/QuoteBuilderUnified';
+export { default } from '@/components/portal/QuoteBuilderCatalogAuthority';
