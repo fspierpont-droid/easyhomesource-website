@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'lib/auth/**'
+      - 'lib/chat/**'
       - 'app/api/portal/auth/**'
       - 'app/api/portal/projects/**'
       - 'app/api/portal/ready-to-quote/**'

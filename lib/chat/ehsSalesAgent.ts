@@ -1,5 +1,3 @@
-import { ToolLoopAgent, stepCountIs, tool } from 'ai';
-import { z } from 'zod';
 import { homes } from '@/data/homes';
 import { siteInfo } from '@/data/site';
 
@@ -11,8 +9,116 @@ export type AgentUiState = {
   actionType: ChatAction;
 };
 
+type JsonObject = Record<string, unknown>;
+
+type CloudflareToolCall = {
+  id: string;
+  type: 'function';
+  function: {
+    name: string;
+    arguments: string;
+  };
+};
+
+type CloudflareMessage =
+  | { role: 'system' | 'user'; content: string }
+  | { role: 'assistant'; content: string | null; tool_calls?: CloudflareToolCall[] }
+  | { role: 'tool'; tool_call_id: string; name: string; content: string };
+
+type CloudflareCompletion = {
+  model: string;
+  finishReason: string | null;
+  message: Extract<CloudflareMessage, { role: 'assistant' }>;
+};
+
 const MAX_HISTORY_ITEMS = 16;
 const MAX_HISTORY_ITEM_LENGTH = 1600;
+const MAX_AGENT_STEPS = 8;
+const MAX_OUTPUT_TOKENS = 900;
+const AGENT_TOTAL_TIMEOUT_MS = 30_000;
+const AGENT_STEP_TIMEOUT_MS = 12_000;
+const DEFAULT_CLOUDFLARE_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8';
+
+const CLOUDFLARE_TOOLS = [
+  {
+    type: 'function',
+    function: {
+      name: 'get_home_details',
+      description: 'Find and return verified Easy HomeSource catalog details for one specific home or model. Use this whenever the customer names a home, model, or manufacturer + model combination.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description: 'The customer wording for the home, model, or manufacturer + model combination.',
+          },
+        },
+        required: ['query'],
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_home_catalog',
+      description: 'Search the verified Easy HomeSource home catalog by natural language, manufacturer, bedrooms, budget, or on-display status. Use this for comparisons and recommendations.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'Natural-language home/model/manufacturer wording, if any.' },
+          bedrooms: { type: 'integer', minimum: 1, maximum: 10 },
+          minBedrooms: { type: 'integer', minimum: 1, maximum: 10 },
+          maxPrice: { type: 'number', exclusiveMinimum: 0 },
+          onDisplayOnly: { type: 'boolean' },
+          manufacturer: { type: 'string' },
+          limit: { type: 'integer', minimum: 1, maximum: 8 },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_dealership_info',
+      description: 'Return verified Brooksville dealership address, phone, hours, local time, and display-home count. Use for visit, hours, phone, address, and open-now questions.',
+      parameters: {
+        type: 'object',
+        properties: {},
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'open_quote_request',
+      description: 'Signal the website to open the quote-request UI. Use only after the customer explicitly asks to start/request/build/get a quote or clearly accepts an offer to do so.',
+      parameters: {
+        type: 'object',
+        properties: {
+          reason: { type: 'string' },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'open_tour_request',
+      description: 'Signal the website to open the tour-request UI. Use only when the customer explicitly asks to schedule/book/reserve/set up a tour or appointment.',
+      parameters: {
+        type: 'object',
+        properties: {
+          reason: { type: 'string' },
+        },
+        additionalProperties: false,
+      },
+    },
+  },
+] as const;
 
 function normalize(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -187,96 +293,207 @@ CONVERSION
 - Keep the tone like a knowledgeable dealership employee, not an automated script.`;
 }
 
-function createAgent(uiState: AgentUiState) {
-  return new ToolLoopAgent({
-    model: process.env.EHS_CHAT_MODEL?.trim() || 'openai/gpt-5.6-sol',
-    instructions: instructions(),
-    stopWhen: stepCountIs(8),
-    maxOutputTokens: 900,
-    temperature: 0.35,
-    tools: {
-      get_home_details: tool({
-        description: 'Find and return verified Easy HomeSource catalog details for one specific home or model. Use this whenever the customer names a home, model, or manufacturer + model combination.',
-        inputSchema: z.object({
-          query: z.string().min(1).describe('The customer wording for the home, model, or manufacturer + model combination.'),
-        }),
-        execute: async ({ query }) => {
-          const matches = searchCatalog({ query, limit: 4 });
-          if (!matches.length) {
-            return {
-              found: false,
-              query,
-              message: 'No verified catalog match was found. Ask one clarifying question rather than inventing a home.',
-            };
-          }
+function isRecord(value: unknown): value is JsonObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
-          const home = matches[0];
-          uiState.homeSlugs.add(home.slug);
-          return {
-            found: true,
-            home: compactHome(home),
-            alternatives: matches.slice(1, 4).map((item) => compactHome(item)),
-          };
-        },
-      }),
+function stringValue(value: unknown) {
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined;
+}
 
-      search_home_catalog: tool({
-        description: 'Search the verified Easy HomeSource home catalog by natural language, manufacturer, bedrooms, budget, or on-display status. Use this for comparisons and recommendations.',
-        inputSchema: z.object({
-          query: z.string().optional().describe('Natural-language home/model/manufacturer wording, if any.'),
-          bedrooms: z.number().int().min(1).max(10).optional(),
-          minBedrooms: z.number().int().min(1).max(10).optional(),
-          maxPrice: z.number().positive().optional(),
-          onDisplayOnly: z.boolean().optional(),
-          manufacturer: z.string().optional(),
-          limit: z.number().int().min(1).max(8).optional(),
-        }),
-        execute: async (input) => {
-          const matches = searchCatalog(input);
-          for (const home of matches.slice(0, 4)) uiState.homeSlugs.add(home.slug);
-          return {
-            count: matches.length,
-            homes: matches.map((home) => compactHome(home)),
-          };
-        },
-      }),
+function boundedInteger(value: unknown, minimum: number, maximum: number) {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  if (!Number.isInteger(numeric) || numeric < minimum || numeric > maximum) return undefined;
+  return numeric;
+}
 
-      get_dealership_info: tool({
-        description: 'Return verified Brooksville dealership address, phone, hours, local time, and display-home count. Use for visit, hours, phone, address, and open-now questions.',
-        inputSchema: z.object({}),
-        execute: async () => ({
-          address: siteInfo.address,
-          phone: siteInfo.phoneDisplay,
-          email: siteInfo.email,
-          hours: siteInfo.businessHours,
-          localTime: brooksvilleLocalTime(),
-          activeDisplayHomes: homes.filter((home) => home.isActive !== false && home.isOnDisplay).length,
-        }),
-      }),
+function positiveNumber(value: unknown) {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(numeric) || numeric <= 0) return undefined;
+  return numeric;
+}
 
-      open_quote_request: tool({
-        description: 'Signal the website to open the quote-request UI. Use only after the customer explicitly asks to start/request/build/get a quote or clearly accepts an offer to do so.',
-        inputSchema: z.object({
-          reason: z.string().optional(),
-        }),
-        execute: async ({ reason }) => {
-          uiState.actionType = 'lead_form';
-          return { opened: true, reason: reason || 'Customer explicitly requested a quote.' };
-        },
-      }),
+function booleanValue(value: unknown) {
+  return typeof value === 'boolean' ? value : undefined;
+}
 
-      open_tour_request: tool({
-        description: 'Signal the website to open the tour-request UI. Use only when the customer explicitly asks to schedule/book/reserve/set up a tour or appointment.',
-        inputSchema: z.object({
-          reason: z.string().optional(),
-        }),
-        execute: async ({ reason }) => {
-          uiState.actionType = 'tour_booking';
-          return { opened: true, reason: reason || 'Customer explicitly requested a tour appointment.' };
-        },
-      }),
+function parseToolArguments(raw: string): JsonObject {
+  try {
+    const parsed = JSON.parse(raw);
+    return isRecord(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function cloudflareConfig() {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID?.trim();
+  const apiToken = process.env.CLOUDFLARE_AI_API_TOKEN?.trim();
+  const model = process.env.EHS_CHAT_MODEL?.trim() || DEFAULT_CLOUDFLARE_MODEL;
+
+  if (!accountId || !apiToken) {
+    throw new Error('Cloudflare Workers AI is not configured. CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_AI_API_TOKEN are required.');
+  }
+
+  return { accountId, apiToken, model };
+}
+
+function normalizeToolCall(value: unknown, step: number, index: number): CloudflareToolCall | null {
+  if (!isRecord(value) || !isRecord(value.function)) return null;
+  const name = stringValue(value.function.name);
+  if (!name) return null;
+
+  const rawArguments = value.function.arguments;
+  const argumentsText = typeof rawArguments === 'string'
+    ? rawArguments
+    : JSON.stringify(isRecord(rawArguments) ? rawArguments : {});
+
+  return {
+    id: stringValue(value.id) || `ehs_tool_${step}_${index}`,
+    type: 'function',
+    function: {
+      name,
+      arguments: argumentsText,
     },
-  });
+  };
+}
+
+function parseCloudflareCompletion(payload: unknown, configuredModel: string, step: number): CloudflareCompletion {
+  const root = isRecord(payload) && isRecord(payload.result) ? payload.result : payload;
+  if (!isRecord(root) || !Array.isArray(root.choices) || !root.choices.length || !isRecord(root.choices[0])) {
+    throw new Error('Cloudflare Workers AI returned an invalid chat-completion payload.');
+  }
+
+  const choice = root.choices[0];
+  if (!isRecord(choice.message)) {
+    throw new Error('Cloudflare Workers AI returned a chat completion without an assistant message.');
+  }
+
+  const rawToolCalls = Array.isArray(choice.message.tool_calls) ? choice.message.tool_calls : [];
+  const toolCalls = rawToolCalls
+    .map((item, index) => normalizeToolCall(item, step, index))
+    .filter((item): item is CloudflareToolCall => Boolean(item));
+
+  return {
+    model: stringValue(root.model) || configuredModel,
+    finishReason: stringValue(choice.finish_reason) || null,
+    message: {
+      role: 'assistant',
+      content: typeof choice.message.content === 'string' ? choice.message.content : null,
+      ...(toolCalls.length ? { tool_calls: toolCalls } : {}),
+    },
+  };
+}
+
+async function requestCloudflareCompletion(messages: CloudflareMessage[], deadline: number, step: number) {
+  const { accountId, apiToken, model } = cloudflareConfig();
+  const remainingMs = deadline - Date.now();
+  if (remainingMs <= 0) throw new Error('EHS sales agent exceeded its total response timeout.');
+
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(accountId)}/ai/v1/chat/completions`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        tools: CLOUDFLARE_TOOLS,
+        tool_choice: 'auto',
+        temperature: 0.35,
+        max_tokens: MAX_OUTPUT_TOKENS,
+        stream: false,
+      }),
+      signal: AbortSignal.timeout(Math.max(1, Math.min(AGENT_STEP_TIMEOUT_MS, remainingMs))),
+      cache: 'no-store',
+    },
+  );
+
+  if (!response.ok) {
+    const errorText = (await response.text()).replace(/\s+/g, ' ').slice(0, 350);
+    throw new Error(`Cloudflare Workers AI request failed with HTTP ${response.status}${errorText ? `: ${errorText}` : ''}`);
+  }
+
+  const payload: unknown = await response.json();
+  return parseCloudflareCompletion(payload, model, step);
+}
+
+async function executeToolCall(call: CloudflareToolCall, uiState: AgentUiState) {
+  const input = parseToolArguments(call.function.arguments);
+
+  switch (call.function.name) {
+    case 'get_home_details': {
+      const query = stringValue(input.query);
+      if (!query) return { error: 'query is required' };
+
+      const matches = searchCatalog({ query, limit: 4 });
+      if (!matches.length) {
+        return {
+          found: false,
+          query,
+          message: 'No verified catalog match was found. Ask one clarifying question rather than inventing a home.',
+        };
+      }
+
+      const home = matches[0];
+      uiState.homeSlugs.add(home.slug);
+      return {
+        found: true,
+        home: compactHome(home),
+        alternatives: matches.slice(1, 4).map((item) => compactHome(item)),
+      };
+    }
+
+    case 'search_home_catalog': {
+      const matches = searchCatalog({
+        query: stringValue(input.query),
+        bedrooms: boundedInteger(input.bedrooms, 1, 10),
+        minBedrooms: boundedInteger(input.minBedrooms, 1, 10),
+        maxPrice: positiveNumber(input.maxPrice),
+        onDisplayOnly: booleanValue(input.onDisplayOnly),
+        manufacturer: stringValue(input.manufacturer),
+        limit: boundedInteger(input.limit, 1, 8),
+      });
+
+      for (const home of matches.slice(0, 4)) uiState.homeSlugs.add(home.slug);
+      return {
+        count: matches.length,
+        homes: matches.map((home) => compactHome(home)),
+      };
+    }
+
+    case 'get_dealership_info':
+      return {
+        address: siteInfo.address,
+        phone: siteInfo.phoneDisplay,
+        email: siteInfo.email,
+        hours: siteInfo.businessHours,
+        localTime: brooksvilleLocalTime(),
+        activeDisplayHomes: homes.filter((home) => home.isActive !== false && home.isOnDisplay).length,
+      };
+
+    case 'open_quote_request': {
+      uiState.actionType = 'lead_form';
+      return {
+        opened: true,
+        reason: stringValue(input.reason) || 'Customer explicitly requested a quote.',
+      };
+    }
+
+    case 'open_tour_request': {
+      uiState.actionType = 'tour_booking';
+      return {
+        opened: true,
+        reason: stringValue(input.reason) || 'Customer explicitly requested a tour appointment.',
+      };
+    }
+
+    default:
+      return { error: `Unknown EHS tool: ${call.function.name}` };
+  }
 }
 
 export async function runEhsSalesAgent(message: string, history: ConversationItem[]) {
@@ -293,14 +510,45 @@ export async function runEhsSalesAgent(message: string, history: ConversationIte
     }))
     .filter((item) => item.content.trim());
 
-  const agent = createAgent(uiState);
-  const result = await agent.generate({
-    messages: [...normalizedHistory, { role: 'user' as const, content: message }],
-    timeout: { totalMs: 30000, stepMs: 12000 },
-  });
+  const messages: CloudflareMessage[] = [
+    { role: 'system', content: instructions() },
+    ...normalizedHistory,
+    { role: 'user', content: message },
+  ];
 
-  if (!result.text?.trim()) {
-    throw new Error(`EHS sales agent returned no final text (finishReason=${result.finishReason}).`);
+  const deadline = Date.now() + AGENT_TOTAL_TIMEOUT_MS;
+  let reply = '';
+  let model = process.env.EHS_CHAT_MODEL?.trim() || DEFAULT_CLOUDFLARE_MODEL;
+  let steps = 0;
+
+  while (steps < MAX_AGENT_STEPS) {
+    steps += 1;
+    const completion = await requestCloudflareCompletion(messages, deadline, steps);
+    model = completion.model;
+    messages.push(completion.message);
+
+    const toolCalls = completion.message.tool_calls || [];
+    if (!toolCalls.length) {
+      reply = completion.message.content?.trim() || '';
+      if (!reply) {
+        throw new Error(`EHS sales agent returned no final text (finishReason=${completion.finishReason || 'unknown'}).`);
+      }
+      break;
+    }
+
+    for (const call of toolCalls) {
+      const toolResult = await executeToolCall(call, uiState);
+      messages.push({
+        role: 'tool',
+        tool_call_id: call.id,
+        name: call.function.name,
+        content: JSON.stringify(toolResult),
+      });
+    }
+  }
+
+  if (!reply) {
+    throw new Error(`EHS sales agent did not produce a final answer within ${MAX_AGENT_STEPS} tool-loop steps.`);
   }
 
   if (uiState.actionType === 'text' && uiState.homeSlugs.size > 0) {
@@ -308,11 +556,11 @@ export async function runEhsSalesAgent(message: string, history: ConversationIte
   }
 
   return {
-    reply: result.text.trim(),
+    reply,
     actionType: uiState.actionType,
     homeSlugs: [...uiState.homeSlugs].slice(0, 4),
-    model: result.response?.modelId || process.env.EHS_CHAT_MODEL?.trim() || 'openai/gpt-5.6-sol',
-    steps: result.steps.length,
+    model,
+    steps,
   };
 }
 
@@ -320,4 +568,6 @@ export const __test = {
   queryMatchesHome,
   homeMatchScore,
   searchCatalog,
+  parseToolArguments,
+  parseCloudflareCompletion,
 };
