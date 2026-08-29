@@ -1,11 +1,13 @@
 import { HomesBrowser } from "@/components/HomesBrowser";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
-import { formatHomePrice, getHomeBySlug } from "@/data/homes";
-import { homes } from "@/data/homes";
+import { formatHomePrice } from "@/data/homes";
+import { getPublicCatalog } from "@/lib/catalog/catalogAuthorityServer";
 
-export default function HomesPage() {
-  const tulip = getHomeBySlug("tulip");
+export default async function HomesPage() {
+  const homes = await getPublicCatalog();
+  const tulip = homes.find((home) => home.slug === "tulip");
+
   return (
     <main className="px-4 py-8 sm:py-10">
       <div className="mx-auto max-w-7xl">
