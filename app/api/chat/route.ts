@@ -11,7 +11,6 @@ const chatRateLimit = globalChatState.__ehsChatRateLimit ?? new Map<string, Rate
 globalChatState.__ehsChatRateLimit = chatRateLimit;
 
 const MAX_MESSAGE_LENGTH = 2000;
-const DIAGNOSTIC_HEADER = 'ehs-agent-auth-check-20260829';
 
 function money(value: number) {
   return `$${Math.round(value).toLocaleString('en-US')}`;
@@ -65,34 +64,7 @@ function checkRateLimit(req: Request) {
   return true;
 }
 
-function sanitizedAgentError(error: unknown) {
-  const name = error instanceof Error ? error.name : typeof error;
-  const raw = error instanceof Error ? error.message : String(error);
-  const message = raw
-    .replace(/Bearer\s+[^\s]+/gi, 'Bearer [redacted]')
-    .replace(/sk-[A-Za-z0-9_-]+/g, '[redacted-key]')
-    .replace(/eyJ[A-Za-z0-9._-]{20,}/g, '[redacted-token]')
-    .slice(0, 600);
-
-  const candidate = error as { statusCode?: unknown; status?: unknown; code?: unknown } | null;
-  return {
-    name,
-    message,
-    code: typeof candidate?.code === 'string' || typeof candidate?.code === 'number' ? candidate.code : null,
-    status: typeof candidate?.statusCode === 'number'
-      ? candidate.statusCode
-      : typeof candidate?.status === 'number'
-        ? candidate.status
-        : null,
-    hasVercelOidcToken: Boolean(process.env.VERCEL_OIDC_TOKEN),
-    hasAiGatewayApiKey: Boolean(process.env.AI_GATEWAY_API_KEY),
-    hasOpenAiApiKey: Boolean(process.env.OPENAI_API_KEY),
-  };
-}
-
 export async function POST(req: Request) {
-  const diagnosticRequested = req.headers.get('x-ehs-agent-diagnostic') === DIAGNOSTIC_HEADER;
-
   try {
     if (!checkRateLimit(req)) {
       return NextResponse.json(
@@ -134,13 +106,6 @@ export async function POST(req: Request) {
       aiProvider: 'vercel-ai-gateway',
       aiModel: agentResult.model,
       agentSteps: agentResult.steps,
-      ...(diagnosticRequested ? {
-        diagnostic: {
-          hasVercelOidcToken: Boolean(process.env.VERCEL_OIDC_TOKEN),
-          hasAiGatewayApiKey: Boolean(process.env.AI_GATEWAY_API_KEY),
-          hasOpenAiApiKey: Boolean(process.env.OPENAI_API_KEY),
-        },
-      } : {}),
     });
   } catch (error) {
     console.error('Easy HomeSource AI sales agent unavailable:', error);
@@ -156,7 +121,6 @@ export async function POST(req: Request) {
         aiProvider: null,
         aiModel: null,
         agentSteps: 0,
-        ...(diagnosticRequested ? { diagnostic: sanitizedAgentError(error) } : {}),
       },
       { status: 200 },
     );
