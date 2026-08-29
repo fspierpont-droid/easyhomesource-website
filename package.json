@@ -6,7 +6,7 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint app components lib",
     "test:project-coordinates": "node --experimental-strip-types --test lib/ghl/projectCoordinates.test.ts",
     "test:project-cache": "node --experimental-strip-types --test data/projectStore.test.ts",
     "import:trove-media": "node --experimental-strip-types scripts/import-trove-media.ts",
