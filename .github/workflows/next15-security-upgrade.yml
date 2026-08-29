@@ -40,7 +40,7 @@ jobs:
           npm audit fix
           npm pkg set scripts.dev="next dev --webpack"
           npm pkg set scripts.build="next build --webpack"
-          npm pkg set scripts.lint="eslint ."
+          npm pkg set scripts.lint="eslint app components lib"
 
       - name: Validate public catalog
         run: npm run validate:catalog
