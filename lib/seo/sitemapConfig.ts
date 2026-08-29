@@ -1,0 +1,17 @@
+export const PUBLIC_SITEMAP_ROUTES = [
+  '',
+  '/homes',
+  '/featured-homes',
+  '/special-offers',
+  '/properties',
+  '/packages',
+  '/financing',
+  '/delivery-setup',
+  '/how-it-works',
+  '/videos',
+  '/about',
+  '/contact',
+  '/get-quote',
+  '/privacy-policy',
+  '/terms',
+] as const;
