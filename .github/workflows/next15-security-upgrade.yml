@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install patched Next.js and React baseline
@@ -48,7 +48,10 @@ jobs:
       - name: Run production build
         run: npm run build
 
-      - name: Commit regenerated dependency lockfile after green validation
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Commit regenerated dependency files after green validation
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
