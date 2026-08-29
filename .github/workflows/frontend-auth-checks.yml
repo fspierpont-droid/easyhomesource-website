@@ -23,6 +23,7 @@ on:
       - 'scripts/validate-catalog.mjs'
       - 'package.json'
       - 'package-lock.json'
+      - 'eslint.config.mjs'
       - '.github/workflows/frontend-auth-checks.yml'
 
 jobs:
@@ -40,6 +41,8 @@ jobs:
         run: npm ci
       - name: Validate public catalog
         run: npm run validate:catalog
+      - name: Run ESLint
+        run: npm run lint
       - name: Run portal/GHL tests
         run: npm run test:ghl
       - name: Build production Next.js app
