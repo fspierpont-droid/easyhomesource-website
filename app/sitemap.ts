@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { homes } from "@/data/homes";
-
-const baseUrl = "https://easyhomesource.com";
+import { publicSiteUrl } from "@/lib/seo/siteIdentity";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -20,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return [
-    ...routes.map((route) => ({ url: `${baseUrl}${route}`, lastModified: new Date() })),
-    ...homes.map((home) => ({ url: `${baseUrl}/homes/${home.id}`, lastModified: new Date() }))
+    ...routes.map((route) => ({ url: `${publicSiteUrl}${route}`, lastModified: new Date() })),
+    ...homes.map((home) => ({ url: `${publicSiteUrl}/homes/${home.slug}`, lastModified: new Date() }))
   ];
 }
