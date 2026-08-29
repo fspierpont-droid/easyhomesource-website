@@ -8,6 +8,7 @@ import { HomeMediaGallery } from "@/components/HomeMediaGallery";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
 import { formatHomePrice, hasIncompleteCatalogDetails, homes as baselineHomes } from "@/data/homes";
 import { getPublicCatalog, getPublicCatalogHome } from "@/lib/catalog/catalogAuthorityServer";
+import { publicSiteUrl } from "@/lib/seo/siteIdentity";
 
 const startingPriceDisclaimer = "Starting price does not include delivery, setup, taxes, permits, site work, utility connections, skirting, steps, or selected options.";
 
@@ -17,10 +18,27 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const home = await getPublicCatalogHome(params.slug);
+  const title = home?.seoTitle ?? (home ? `${home.name} | Easy HomeSource` : "Home Details | Easy HomeSource");
+  const description = home?.seoDescription ?? home?.shortDescription ?? "View manufactured home details from Easy HomeSource in Brooksville, Florida.";
+  const canonical = home ? `/homes/${home.slug}` : `/homes/${params.slug}`;
+  const image = home?.image || home?.gallery?.[0]?.src;
+
   return {
-    title: home?.seoTitle ?? (home ? `${home.name} | Easy HomeSource` : "Home Details | Easy HomeSource"),
-    description: home?.seoDescription ?? home?.shortDescription ?? "View manufactured home details from Easy HomeSource in Brooksville, Florida."
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "website",
+      ...(image ? { images: [{ url: image, alt: `${home?.displayName ?? home?.name ?? "Easy HomeSource manufactured home"}` }] } : {}),
+    },
   };
+}
+
+function jsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
 export default async function HomeDetailPage({ params }: { params: { slug: string } }) {
@@ -29,6 +47,7 @@ export default async function HomeDetailPage({ params }: { params: { slug: strin
   if (!home) notFound();
 
   const homeTitle = home.displayName ?? home.name;
+  const homeUrl = `${publicSiteUrl}/homes/${home.slug}`;
   const photos = home.gallery.filter((item) => item.category !== "floorplan" && item.category !== "video");
   const floorPlan = home.floorPlanImage ?? home.gallery.find((item) => item.category === "floorplan")?.src;
   const videoLink = home.videoUrl ?? home.walkthroughVideoUrl ?? home.virtualTourUrl;
@@ -43,9 +62,61 @@ export default async function HomeDetailPage({ params }: { params: { slug: strin
     home.size && { label: "Home size", value: home.size }
   ].filter(Boolean) as { label: string; value: string | number }[];
   const similar = catalog.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
+  const productPrice = home.salePrice ?? home.startingPrice;
+  const productImages = Array.from(new Set([home.image, ...photos.map((photo) => photo.src)].filter((value): value is string => Boolean(value)))).slice(0, 8);
+  const availability = home.status === "Sold"
+    ? "https://schema.org/OutOfStock"
+    : home.isOnDisplay
+      ? "https://schema.org/InStock"
+      : "https://schema.org/PreOrder";
+
+  const productStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: homeTitle,
+    url: homeUrl,
+    description: home.seoDescription ?? home.shortDescription ?? home.longDescription,
+    ...(productImages.length ? { image: productImages } : {}),
+    ...(home.manufacturer ? { brand: { "@type": "Brand", name: home.manufacturer } } : {}),
+    ...(home.modelNumber ? { model: home.modelNumber } : {}),
+    category: "Manufactured Home",
+    additionalProperty: [
+      home.bedrooms != null ? { "@type": "PropertyValue", name: "Bedrooms", value: home.bedrooms } : null,
+      home.bathrooms != null ? { "@type": "PropertyValue", name: "Bathrooms", value: home.bathrooms } : null,
+      home.squareFeet != null ? { "@type": "PropertyValue", name: "Square Feet", value: home.squareFeet, unitText: "sq ft" } : null,
+      home.size ? { "@type": "PropertyValue", name: "Home Size", value: home.size } : null,
+    ].filter(Boolean),
+    ...(typeof productPrice === "number" && Number.isFinite(productPrice) && productPrice > 0 ? {
+      offers: {
+        "@type": "Offer",
+        url: homeUrl,
+        priceCurrency: "USD",
+        price: productPrice.toFixed(2),
+        availability,
+        seller: {
+          "@type": "Organization",
+          name: "Easy HomeSource",
+          url: publicSiteUrl,
+        },
+        description: startingPriceDisclaimer,
+      },
+    } : {}),
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: publicSiteUrl },
+      { "@type": "ListItem", position: 2, name: "Homes", item: `${publicSiteUrl}/homes` },
+      { "@type": "ListItem", position: 3, name: homeTitle, item: homeUrl },
+    ],
+  };
 
   return (
     <main className="px-4 py-8 sm:py-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(productStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbStructuredData) }} />
       <div className="mx-auto max-w-6xl">
         <nav className="mb-5 text-sm font-bold text-ehsBlack/60" aria-label="Breadcrumb">
           <Link href="/homes" className="transition hover:text-ehsBlue">Homes</Link> <span aria-hidden="true">/</span> <span className="text-ehsBlack">{homeTitle}</span>

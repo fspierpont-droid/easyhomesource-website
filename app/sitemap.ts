@@ -1,25 +1,30 @@
 import type { MetadataRoute } from "next";
-import { homes } from "@/data/homes";
+import { getPublicCatalog } from "@/lib/catalog/catalogAuthorityServer";
 import { publicSiteUrl } from "@/lib/seo/siteIdentity";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
     "",
     "/homes",
-    "/properties",
     "/featured-homes",
     "/special-offers",
+    "/properties",
+    "/packages",
     "/financing",
     "/delivery-setup",
     "/how-it-works",
-    "/get-quote",
     "/videos",
+    "/about",
+    "/contact",
+    "/get-quote",
     "/privacy-policy",
-    "/terms"
+    "/terms",
   ];
 
+  const homes = (await getPublicCatalog()).filter((home) => home.isActive !== false);
+
   return [
-    ...routes.map((route) => ({ url: `${publicSiteUrl}${route}`, lastModified: new Date() })),
-    ...homes.map((home) => ({ url: `${publicSiteUrl}/homes/${home.slug}`, lastModified: new Date() }))
+    ...routes.map((route) => ({ url: `${publicSiteUrl}${route}` })),
+    ...homes.map((home) => ({ url: `${publicSiteUrl}/homes/${home.slug}` })),
   ];
 }
