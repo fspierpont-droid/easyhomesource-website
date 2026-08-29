@@ -1,0 +1,55 @@
+name: EHS AI agent production smoke
+
+on:
+  push:
+    branches:
+      - qa/ehs-agent-production-smoke
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PRODUCTION_URL: https://easyhomesource-website.vercel.app
+    steps:
+      - name: Confirm production site
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body "$PRODUCTION_URL" -o /tmp/home.html
+          grep -qi "Easy HomeSource" /tmp/home.html
+
+      - name: Test natural Timber Creek Lakewood request
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body \
+            -H "Content-Type: application/json" \
+            -d '{"message":"I want the Timber Creek Lakewood","conversationHistory":[]}' \
+            "$PRODUCTION_URL/api/chat" -o /tmp/lakewood.json
+          cat /tmp/lakewood.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('/tmp/lakewood.json','utf8'));
+          if (!data.aiEnabled || data.agentMode !== 'tool-loop') throw new Error('Agent did not run: ' + JSON.stringify(data));
+          if (!/lake\s*wood|cs-3254|timber creek/i.test(data.reply || '')) throw new Error('Agent failed to understand Lake Wood: ' + JSON.stringify(data));
+          if (!Array.isArray(data.homes) || !data.homes.some(h => h.slug === 'lake-wood-cs-3254')) throw new Error('Lake Wood tool/card result missing: ' + JSON.stringify(data));
+          console.log('Lake Wood production agent smoke passed.');
+          NODE
+
+      - name: Test normal visit and phone question
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body \
+            -H "Content-Type: application/json" \
+            -d '{"message":"What if I wanted to come to the lot? Who could I call?","conversationHistory":[]}' \
+            "$PRODUCTION_URL/api/chat" -o /tmp/visit.json
+          cat /tmp/visit.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('/tmp/visit.json','utf8'));
+          if (!data.aiEnabled || data.agentMode !== 'tool-loop') throw new Error('Agent did not run: ' + JSON.stringify(data));
+          if (!/352[- .]?558[- .]?8888|3525588888/.test(data.reply || '')) throw new Error('Agent did not answer who to call: ' + JSON.stringify(data));
+          console.log('Visit/phone production agent smoke passed.');
+          NODE
