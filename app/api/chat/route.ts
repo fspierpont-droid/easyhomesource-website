@@ -90,6 +90,7 @@ export async function POST(req: Request) {
     const matchedHomes = resolveHomes(agentResult.homeSlugs);
 
     console.info('EHS AI sales agent turn completed', {
+      provider: 'cloudflare-workers-ai',
       model: agentResult.model,
       steps: agentResult.steps,
       actionType: agentResult.actionType,
@@ -103,7 +104,7 @@ export async function POST(req: Request) {
       homes: matchedHomes.map(toRecommendedHome),
       aiEnabled: true,
       agentMode: 'tool-loop',
-      aiProvider: 'vercel-ai-gateway',
+      aiProvider: 'cloudflare-workers-ai',
       aiModel: agentResult.model,
       agentSteps: agentResult.steps,
     });
