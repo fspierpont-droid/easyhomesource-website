@@ -1,5 +1,5 @@
-import QuoteBuilderUnified from '@/components/portal/QuoteBuilderUnified';
+import QuoteBuilderCatalogAuthority from '@/components/portal/QuoteBuilderCatalogAuthority';
 
 export default function EditQuotePage({ params }: { params: { id: string } }) {
-  return <QuoteBuilderUnified quoteId={params.id} />;
+  return <QuoteBuilderCatalogAuthority quoteId={params.id} />;
 }
