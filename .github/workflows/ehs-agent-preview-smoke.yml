@@ -1,0 +1,65 @@
+name: EHS AI agent preview smoke
+
+on:
+  push:
+    branches:
+      - fix/ehs-ai-sales-agent
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PREVIEW_URL: https://easyhomesource-website-git-fix-01b90f-scott-pierponts-projects.vercel.app
+    steps:
+      - name: Get GitHub OIDC token
+        uses: actions/github-script@v7
+        id: oidc
+        with:
+          script: |
+            const token = await core.getIDToken();
+            core.setSecret(token);
+            core.setOutput('token', token);
+
+      - name: Test natural Timber Creek Lakewood request
+        env:
+          OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body \
+            -H "x-vercel-trusted-oidc-idp-token: $OIDC_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"message":"I want the Timber Creek Lakewood","conversationHistory":[]}' \
+            "$PREVIEW_URL/api/chat" -o /tmp/lakewood.json
+          cat /tmp/lakewood.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('/tmp/lakewood.json','utf8'));
+          if (!data.aiEnabled || data.agentMode !== 'tool-loop') throw new Error('Agent did not run: ' + JSON.stringify(data));
+          if (!/lake\s*wood|cs-3254|timber creek/i.test(data.reply || '')) throw new Error('Agent failed to understand Lake Wood: ' + JSON.stringify(data));
+          if (!Array.isArray(data.homes) || !data.homes.some(h => h.slug === 'lake-wood-cs-3254')) throw new Error('Lake Wood card/tool result missing: ' + JSON.stringify(data));
+          console.log('Lake Wood agent smoke passed.');
+          NODE
+
+      - name: Test dealership phone question
+        env:
+          OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body \
+            -H "x-vercel-trusted-oidc-idp-token: $OIDC_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"message":"What if I wanted to come to the lot? Who could I call?","conversationHistory":[]}' \
+            "$PREVIEW_URL/api/chat" -o /tmp/visit.json
+          cat /tmp/visit.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('/tmp/visit.json','utf8'));
+          if (!data.aiEnabled || data.agentMode !== 'tool-loop') throw new Error('Agent did not run: ' + JSON.stringify(data));
+          if (!/352[- .]?558[- .]?8888|3525588888/.test(data.reply || '')) throw new Error('Agent did not answer who to call: ' + JSON.stringify(data));
+          console.log('Visit/phone agent smoke passed.');
+          NODE
