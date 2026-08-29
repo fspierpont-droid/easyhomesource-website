@@ -40,9 +40,13 @@ jobs:
           npm audit fix
           npm pkg set scripts.dev="next dev --webpack"
           npm pkg set scripts.build="next build --webpack"
+          npm pkg set scripts.lint="eslint ."
 
       - name: Validate public catalog
         run: npm run validate:catalog
+
+      - name: Run ESLint
+        run: npm run lint
 
       - name: Run GHL/auth/quote regression tests
         run: npm run test:ghl
@@ -67,6 +71,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Dependency files already current."
           else
-            git commit -m "chore: upgrade Next.js security baseline"
+            git commit -m "chore: normalize Next.js security dependencies"
             git push origin HEAD:security/next-15-5-21
           fi
