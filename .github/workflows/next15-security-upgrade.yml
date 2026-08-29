@@ -1,4 +1,4 @@
-name: Next 15 security upgrade validation
+name: Next security upgrade validation
 
 on:
   push:
@@ -26,15 +26,22 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Install patched Next.js and React baseline
+      - name: Install current Active LTS security baseline
         run: |
           npm install --save-exact \
-            next@15.5.21 \
-            eslint-config-next@15.5.21 \
-            react@19 \
-            react-dom@19 \
+            next@16.3.3 \
+            eslint-config-next@16.3.3 \
+            react@19.2.8 \
+            react-dom@19.2.8 \
             @types/react@19 \
-            @types/react-dom@19
+            @types/react-dom@19 \
+            postcss@latest
+          npm audit fix
+          npm pkg set scripts.dev="next dev --webpack"
+          npm pkg set scripts.build="next build --webpack"
+
+      - name: Validate public catalog
+        run: npm run validate:catalog
 
       - name: Run GHL/auth/quote regression tests
         run: npm run test:ghl
@@ -45,7 +52,7 @@ jobs:
       - name: Run Project Board cache tests
         run: npm run test:project-cache
 
-      - name: Run production build
+      - name: Run production build with existing webpack aliases
         run: npm run build
 
       - name: Audit production dependencies
