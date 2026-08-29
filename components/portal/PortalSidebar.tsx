@@ -11,8 +11,14 @@ interface PortalSidebarProps {
   onCloseMobile?: () => void;
   activeNav?: string;
   onNavChange?: (nav: string) => void;
-  totalPropertiesCount?: number;
 }
+
+type NavItem = {
+  id: string;
+  label: string;
+  icon: string;
+  href: string;
+};
 
 export function PortalSidebar({
   mobileOpen = false,
@@ -20,74 +26,39 @@ export function PortalSidebar({
   onCloseMobile,
   activeNav,
   onNavChange,
-  totalPropertiesCount = 17
 }: PortalSidebarProps) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-
-  const handleClose = () => {
-    if (onCloseMobile) onCloseMobile();
-    if (setMobileOpen) setMobileOpen(false);
-  };
-
-  const navItems = [
-    {
-      id: 'dashboard',
-      label: 'Quote Dashboard',
-      icon: '📊',
-      href: '/portal'
-    },
-    {
-      id: 'ready',
-      label: 'Ready to Quote',
-      icon: '⚡',
-      href: '/portal?view=ready'
-    },
-    {
-      id: 'library',
-      label: 'Quote Library',
-      icon: '📄',
-      href: '/portal?view=library'
-    },
-    {
-      id: 'catalog',
-      label: 'Home Catalog',
-      icon: '📖',
-      href: '/homes'
-    },
-    {
-      id: 'inventory',
-      label: 'Home Inventory',
-      icon: '🏠',
-      href: '/portal?view=inventory'
-    },
-    {
-      id: 'property-packages',
-      label: 'Property Packages',
-      icon: '📍',
-      href: '/portal?view=property-packages',
-      badge: totalPropertiesCount > 0 ? String(totalPropertiesCount) : undefined
-    },
-    {
-      id: 'projects',
-      label: 'Project Board',
-      icon: '🏗️',
-      href: '/portal?view=projects',
-      badge: '11'
-    }
-  ];
-
   const isManagement = user?.role === 'Admin' || user?.role === 'Manager';
   const isAdmin = user?.role === 'Admin';
+
+  const handleClose = () => {
+    onCloseMobile?.();
+    setMobileOpen?.(false);
+  };
+
+  const operations: NavItem[] = [
+    ...(isManagement
+      ? [{ id: 'management', label: 'Master Dashboard', icon: '📊', href: '/portal/management' }]
+      : []),
+    { id: 'dashboard', label: 'Quote Dashboard', icon: '🏠', href: '/portal?view=dashboard' },
+    { id: 'ready', label: 'Ready to Quote', icon: '⚡', href: '/portal?view=ready' },
+    { id: 'library', label: 'Quote Library', icon: '📄', href: '/portal?view=library' },
+    { id: 'catalog', label: 'Home Catalog', icon: '📖', href: '/homes' },
+    { id: 'inventory', label: 'Home Inventory', icon: '🏘️', href: '/portal?view=inventory' },
+    { id: 'property-packages', label: 'Property Packages', icon: '📍', href: '/portal?view=property-packages' },
+    { id: 'projects', label: 'Project Board', icon: '🏗️', href: '/portal?view=projects' },
+    { id: 'amhi', label: 'AMHI Permitting', icon: '📋', href: '/portal/amhi' },
+  ];
 
   const userInitials = user?.name
     ? user.name
         .split(' ')
-        .map((n) => n[0])
+        .map((name) => name[0])
         .join('')
         .slice(0, 2)
         .toUpperCase()
-    : 'SP';
+    : 'EH';
 
   const handleSignOut = () => {
     if (typeof window !== 'undefined') {
@@ -95,6 +66,13 @@ export function PortalSidebar({
       localStorage.removeItem('ehs_user');
     }
     logout();
+  };
+
+  const isItemActive = (item: NavItem) => {
+    if (activeNav) return activeNav === item.id;
+    if (item.id === 'management') return pathname === '/portal/management';
+    if (item.id === 'amhi') return pathname === '/portal/amhi';
+    return false;
   };
 
   return (
@@ -119,7 +97,7 @@ export function PortalSidebar({
             <div>
               <div className="font-extrabold text-xs tracking-tight text-slate-900 flex items-center gap-1.5">
                 <span>EHS PORTAL</span>
-                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.2 rounded border border-emerald-200">
+                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded border border-emerald-200">
                   ERP V05
                 </span>
               </div>
@@ -138,13 +116,10 @@ export function PortalSidebar({
 
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
           <div>
-            <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Operations
-            </div>
+            <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Operations</div>
             <nav className="space-y-0.5">
-              {navItems.map((item) => {
-                const isActive = activeNav === item.id || item.href === pathname || (item.id === 'dashboard' && pathname === '/portal');
-
+              {operations.map((item) => {
+                const isActive = isItemActive(item);
                 return (
                   <Link
                     key={item.id}
@@ -153,21 +128,14 @@ export function PortalSidebar({
                       handleClose();
                       onNavChange?.(item.id);
                     }}
-                    className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
                       isActive
                         ? 'bg-slate-100 text-slate-900 shadow-2xs'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-sm">{item.icon}</span>
-                      <span>{item.label}</span>
-                    </div>
-                    {item.badge && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                        {item.badge}
-                      </span>
-                    )}
+                    <span className="text-sm" aria-hidden="true">{item.icon}</span>
+                    <span>{item.label}</span>
                   </Link>
                 );
               })}
@@ -176,9 +144,7 @@ export function PortalSidebar({
 
           {isManagement && (
             <div>
-              <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Administration
-              </div>
+              <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Administration</div>
               <nav className="space-y-0.5">
                 <Link
                   href="/settings"
@@ -232,12 +198,8 @@ export function PortalSidebar({
                 {userInitials}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-black text-slate-900 truncate">
-                  {user?.name || 'EHS Employee'}
-                </p>
-                <p className="text-[10px] text-slate-500 font-semibold truncate">
-                  {user?.role || 'Associate'}
-                </p>
+                <p className="text-xs font-black text-slate-900 truncate">{user?.name || 'EHS Employee'}</p>
+                <p className="text-[10px] text-slate-500 font-semibold truncate">{user?.role || 'Associate'}</p>
               </div>
             </div>
           </div>
@@ -251,7 +213,6 @@ export function PortalSidebar({
               <span>🔑</span>
               <span>Change Password</span>
             </Link>
-
             <button
               type="button"
               onClick={handleSignOut}
