@@ -219,7 +219,7 @@ export async function deleteQuoteFromServer(id: string): Promise<boolean> {
   }
   const response = await fetch(`/api/portal/quotes/${encodeURIComponent(id)}`, { method: 'DELETE' });
   const data = await response.json();
-  if (!response.ok || !data.success) {
+  if (!response.ok || !data.success || !data.deleted) {
     throw new Error(data.error || 'Permanent quote delete failed.');
   }
   writeCache(readCache().filter((quote) => quote.id !== id && quote.quoteNumber !== id));
@@ -232,8 +232,15 @@ export function deleteQuoteFromStore(id: string): boolean {
     syncError('Historical quotes are read-only and cannot be deleted.');
     return false;
   }
+
+  const previous = readCache();
+  writeCache(previous.filter((quote) => quote.id !== id && quote.quoteNumber !== id));
+
   void deleteQuoteFromServer(id).catch((error) => {
     console.error('Permanent quote delete failed:', error);
+    // A failed permanent delete must never leave the browser pretending the
+    // quote is gone. Restore the exact prior cache and surface the sync error.
+    writeCache(previous);
     syncError(error instanceof Error ? error.message : 'Permanent quote delete failed.');
   });
   return true;

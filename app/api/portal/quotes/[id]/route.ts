@@ -10,14 +10,17 @@ const legacyMutationError = () => NextResponse.json(
   { status: 403 },
 );
 
+type QuoteRouteContext = { params: Promise<{ id: string }> };
+
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: QuoteRouteContext,
 ) {
-  const legacy = params.id.startsWith('legacy:');
+  const { id } = await params;
+  const legacy = id.startsWith('legacy:');
   const path = legacy
-    ? `/api/legacy-quotes/${encodeURIComponent(params.id)}`
-    : `/api/quotes/${encodeURIComponent(params.id)}`;
+    ? `/api/legacy-quotes/${encodeURIComponent(id)}`
+    : `/api/quotes/${encodeURIComponent(id)}`;
   const backend = await permanentApiRequest(request, path);
   const payload = await backend.json().catch(() => ({}));
   if (!backend.ok) {
@@ -31,21 +34,22 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: QuoteRouteContext,
 ) {
-  if (params.id.startsWith('legacy:')) return legacyMutationError();
+  const { id } = await params;
+  if (id.startsWith('legacy:')) return legacyMutationError();
 
   try {
     const quote: SavedQuote = await request.json();
     if (quote.legacyReadOnly) return legacyMutationError();
 
-    const candidate = normalizePortalQuoteForPersistence({ ...quote, id: params.id });
+    const candidate = normalizePortalQuoteForPersistence({ ...quote, id });
     const validationError = validateQuoteForPersistence(candidate);
     if (validationError) {
       return NextResponse.json({ success: false, error: validationError }, { status: 400 });
     }
 
-    const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`, {
+    const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(id)}`, {
       method: 'PATCH',
       body: JSON.stringify(toBackendQuote(candidate)),
     });
@@ -58,18 +62,19 @@ export async function PATCH(
     }
     return NextResponse.json({ success: true, quote: fromBackendQuote(payload) });
   } catch (error) {
-    console.error(`Failed to update quote ${params.id}:`, error);
+    console.error(`Failed to update quote ${id}:`, error);
     return NextResponse.json({ success: false, error: 'Failed to update quote' }, { status: 500 });
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: QuoteRouteContext,
 ) {
-  if (params.id.startsWith('legacy:')) return legacyMutationError();
+  const { id } = await params;
+  if (id.startsWith('legacy:')) return legacyMutationError();
 
-  const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(params.id)}`, { method: 'DELETE' });
+  const backend = await permanentApiRequest(request, `/api/quotes/${encodeURIComponent(id)}`, { method: 'DELETE' });
   const payload = await backend.json().catch(() => ({}));
   if (!backend.ok) {
     return NextResponse.json(
