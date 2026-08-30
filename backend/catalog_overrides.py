@@ -15,7 +15,7 @@ from fastapi import APIRouter, Depends, HTTPException, Path, status
 from pydantic import BaseModel, Field, model_validator
 from pymongo import ReturnDocument
 
-from auth import get_current_user, require_admin
+from auth import get_current_user, require_catalog_manager
 from database import get_db
 
 router = APIRouter(prefix="/api/catalog-overrides", tags=["catalog-overrides"])
@@ -115,7 +115,7 @@ async def internal_catalog_overrides(_user: dict = Depends(get_current_user)) ->
 async def upsert_catalog_override(
     payload: CatalogOverrideWrite,
     catalog_key: str = Path(min_length=1, max_length=240),
-    admin: dict = Depends(require_admin),
+    admin: dict = Depends(require_catalog_manager),
 ) -> dict:
     now = datetime.now(timezone.utc)
     update = payload.model_dump(exclude_unset=True)
@@ -147,7 +147,7 @@ async def upsert_catalog_override(
 @router.delete("/{catalog_key}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_catalog_override(
     catalog_key: str = Path(min_length=1, max_length=240),
-    admin: dict = Depends(require_admin),
+    admin: dict = Depends(require_catalog_manager),
 ):
     result = await get_db().catalog_overrides.delete_one({"catalog_key": catalog_key})
     if result.deleted_count == 0:
