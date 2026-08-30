@@ -18,6 +18,9 @@ type EhsAuthUser = {
   role?: unknown;
   active?: unknown;
   ghl_linked?: unknown;
+  business_role?: unknown;
+  permissions?: unknown;
+  amhi_access?: unknown;
 };
 
 type EhsLoginResponse = {
@@ -25,12 +28,6 @@ type EhsLoginResponse = {
   user?: EhsAuthUser;
 };
 
-/**
- * Production and Vercel Preview deployments are deliberately pinned to the
- * permanent EHS API. The public Render origin is not a secret, and making it
- * canonical removes a deployment-environment variable as an authentication
- * dependency. Local development may still override it with EHS_BACKEND_URL.
- */
 export function portalBackendUrl() {
   if (process.env.NODE_ENV === 'production') return PERMANENT_EHS_BACKEND_URL;
 
@@ -53,9 +50,19 @@ export function portalBackendUrl() {
 
 function normalizeRole(role: unknown): UserRole {
   const normalized = typeof role === 'string' ? role.trim().toLowerCase() : '';
+  if (normalized === 'owner') return 'Owner';
   if (normalized === 'admin') return 'Admin';
   if (normalized === 'manager') return 'Manager';
   return 'Associate';
+}
+
+function normalizePermissions(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const permissions = value
+    .filter((item): item is string => typeof item === 'string')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return permissions.length ? [...new Set(permissions)] : [];
 }
 
 function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string): TeamUser | null {
@@ -79,6 +86,11 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string)
     ghlLinked: Boolean(remote.ghl_linked),
     phone: typeof remote.phone === 'string' && remote.phone.trim() ? remote.phone.trim() : displayProfile?.phone,
     title: displayProfile?.title,
+    businessRole: typeof remote.business_role === 'string' && remote.business_role.trim()
+      ? remote.business_role.trim()
+      : displayProfile?.title,
+    permissions: normalizePermissions(remote.permissions),
+    amhiAccess: remote.amhi_access === true,
   };
 }
 
