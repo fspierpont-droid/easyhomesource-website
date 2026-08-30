@@ -1,10 +1,20 @@
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
+import { authenticatedPortalUser } from '@/lib/auth/portalSession';
+import { canAccessAmhi } from '@/data/teamMembers';
 
 interface RouteContext {
   params: { segments: string[] };
 }
 
 async function proxy(request: Request, context: RouteContext, method: string) {
+  const user = await authenticatedPortalUser(request);
+  if (!user) {
+    return Response.json({ error: 'Authentication required.' }, { status: 401 });
+  }
+  if (!canAccessAmhi(user)) {
+    return Response.json({ error: 'AMHI permitting access required.' }, { status: 403 });
+  }
+
   const { segments } = context.params;
   const suffix = (segments || []).map(encodeURIComponent).join('/');
   const path = `/api/permitting/${suffix}`;
