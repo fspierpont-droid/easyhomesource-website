@@ -18,6 +18,9 @@ type EhsAuthUser = {
   role?: unknown;
   active?: unknown;
   ghl_linked?: unknown;
+  business_role?: unknown;
+  permissions?: unknown;
+  amhi_access?: unknown;
 };
 
 type EhsLoginResponse = {
@@ -25,12 +28,6 @@ type EhsLoginResponse = {
   user?: EhsAuthUser;
 };
 
-/**
- * Production and Vercel Preview deployments are deliberately pinned to the
- * permanent EHS API. The public Render origin is not a secret, and making it
- * canonical removes a deployment-environment variable as an authentication
- * dependency. Local development may still override it with EHS_BACKEND_URL.
- */
 export function portalBackendUrl() {
   if (process.env.NODE_ENV === 'production') return PERMANENT_EHS_BACKEND_URL;
 
@@ -53,9 +50,27 @@ export function portalBackendUrl() {
 
 function normalizeRole(role: unknown): UserRole {
   const normalized = typeof role === 'string' ? role.trim().toLowerCase() : '';
+  if (normalized === 'owner') return 'Owner';
   if (normalized === 'admin') return 'Admin';
   if (normalized === 'manager') return 'Manager';
   return 'Associate';
+}
+
+function normalizePermissions(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const permissions = value
+    .filter((item): item is string => typeof item === 'string')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return permissions.length ? [...new Set(permissions)] : [];
+}
+
+function compatibilityRole(remoteRole: unknown, permissions: string[] | undefined, profile?: TeamUser): UserRole {
+  const effective = permissions ?? profile?.permissions;
+  if (effective?.includes('*') || effective?.includes('users:write')) return 'Admin';
+  if (effective?.includes('settings:read') || effective?.includes('catalog:manage')) return 'Manager';
+  if (profile?.businessRole === 'Owner' || normalizeRole(remoteRole) === 'Owner') return 'Associate';
+  return normalizeRole(remoteRole);
 }
 
 function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string): TeamUser | null {
@@ -69,16 +84,24 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string)
   if (!email || (expectedEmail && email !== expectedEmail) || remote.active === false) return null;
 
   const displayProfile = VERIFIED_TEAM_USERS.find((candidate) => candidate.email.toLowerCase() === email);
+  const remotePermissions = normalizePermissions(remote.permissions);
+  const hasRemotePermissionMetadata = Array.isArray(remote.permissions);
+  const hasRemoteAmhiMetadata = typeof remote.amhi_access === 'boolean';
+  const hasRemoteBusinessRole = typeof remote.business_role === 'string' && remote.business_role.trim();
+  const permissions = hasRemotePermissionMetadata ? remotePermissions : displayProfile?.permissions;
 
   return {
     id: remote.id,
     name: remote.name.trim() || displayProfile?.name || email,
     email,
-    role: normalizeRole(remote.role),
+    role: compatibilityRole(remote.role, permissions, displayProfile),
     active: true,
     ghlLinked: Boolean(remote.ghl_linked),
     phone: typeof remote.phone === 'string' && remote.phone.trim() ? remote.phone.trim() : displayProfile?.phone,
     title: displayProfile?.title,
+    businessRole: hasRemoteBusinessRole ? String(remote.business_role).trim() : displayProfile?.businessRole || displayProfile?.title,
+    permissions,
+    amhiAccess: hasRemoteAmhiMetadata ? remote.amhi_access === true : displayProfile?.amhiAccess === true,
   };
 }
 

@@ -6,6 +6,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, EmailStr, Field
 
 UserRole = Literal[
+    "owner",
     "admin",
     "manager",
     "associate",
@@ -28,6 +29,9 @@ class UserPublic(BaseModel):
     ghl_linked: bool = False
     ghl_user_id: Optional[str] = None
     ghl_user_email: Optional[EmailStr] = None
+    business_role: Optional[str] = None
+    permissions: list[str] = Field(default_factory=list)
+    amhi_access: bool = False
 
 
 class LoginRequest(BaseModel):
@@ -53,6 +57,9 @@ class UserCreate(BaseModel):
     phone: Optional[str] = Field(default=None, max_length=50)
     role: UserRole = "associate"
     active: bool = True
+    business_role: Optional[str] = Field(default=None, max_length=160)
+    permissions: list[str] = Field(default_factory=list)
+    amhi_access: bool = False
 
 
 class UserUpdate(BaseModel):
@@ -65,3 +72,6 @@ class UserUpdate(BaseModel):
     ghl_linked: Optional[bool] = None
     ghl_user_id: Optional[str] = Field(default=None, max_length=200)
     ghl_user_email: Optional[EmailStr] = None
+    business_role: Optional[str] = Field(default=None, max_length=160)
+    permissions: Optional[list[str]] = None
+    amhi_access: Optional[bool] = None

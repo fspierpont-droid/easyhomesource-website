@@ -1,13 +1,4 @@
-"""Authentication for the permanent Easy HomeSource backend.
-
-Existing EHS bcrypt password hashes remain valid after database copy. New or
-changed passwords are hashed here; plaintext passwords are never stored.
-
-The browser never needs an EHS API bearer token. The Next.js portal may call
-protected backend routes server-to-server with a private internal key plus the
-signed portal user's database ID. The backend re-loads that employee on every
-request, so deactivation and role changes take effect immediately.
-"""
+"""Authentication and authorization for the permanent Easy HomeSource backend."""
 from __future__ import annotations
 
 import os
@@ -24,13 +15,14 @@ from fastapi.security import OAuth2PasswordBearer
 from database import get_db
 
 JWT_ALG = "HS256"
-JWT_EXP_HOURS = int(os.environ.get("JWT_EXP_HOURS", "12"))
+JWT_EXP_HOURS = int(os.environ.get("JWT_EXP_HOURS", "168"))
 MIN_PASSWORD_LENGTH = int(os.environ.get("MIN_PASSWORD_LENGTH", "10"))
 APP_ENV = (os.environ.get("APP_ENV") or os.environ.get("ENVIRONMENT") or "development").lower()
 PRODUCTION_ENVS = {"production", "prod"}
 DEV_JWT_SECRET = "ehs-local-dev-secret-do-not-use-in-prod"
 
 ROLES = {
+    "owner",
     "admin",
     "manager",
     "associate",
@@ -41,8 +33,8 @@ ROLES = {
     "quote_user",
     "sales_quote",
 }
-ADMIN_ROLES = {"admin"}
-MANAGER_ROLES = {"admin", "manager"}
+ADMIN_ROLES = {"owner", "admin"}
+MANAGER_ROLES = {"owner", "admin", "manager"}
 
 
 def _jwt_secret() -> str:
@@ -77,12 +69,31 @@ def normalize_role(role: Optional[str]) -> str:
     return normalized
 
 
+def has_permission(user: dict, permission: str) -> bool:
+    permissions = user.get("permissions")
+    if isinstance(permissions, list):
+        normalized = {str(item).strip() for item in permissions if str(item).strip()}
+        if "*" in normalized or permission in normalized:
+            return True
+        namespace = permission.split(":", 1)[0]
+        if f"{namespace}:*" in normalized:
+            return True
+        if normalized:
+            return False
+
+    role = (user.get("role") or "associate").lower()
+    if role == "owner":
+        return True
+    if permission in {"settings:read", "catalog:manage"}:
+        return role in {"admin", "manager"}
+    if permission in {"users:read", "users:write", "system-health:read"}:
+        return role == "admin"
+    return False
+
+
 def validate_password_strength(plain: str) -> None:
     if len(plain or "") < MIN_PASSWORD_LENGTH:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Password must be at least {MIN_PASSWORD_LENGTH} characters",
-        )
+        raise HTTPException(status_code=400, detail=f"Password must be at least {MIN_PASSWORD_LENGTH} characters")
     if len(plain) < 14:
         checks = [
             bool(re.search(r"[a-z]", plain)),
@@ -91,10 +102,7 @@ def validate_password_strength(plain: str) -> None:
             bool(re.search(r"[^A-Za-z0-9]", plain)),
         ]
         if sum(checks) < 3:
-            raise HTTPException(
-                status_code=400,
-                detail="Password must include at least three of: uppercase, lowercase, number, symbol",
-            )
+            raise HTTPException(status_code=400, detail="Password must include at least three of: uppercase, lowercase, number, symbol")
     lowered = plain.lower()
     if any(term in lowered for term in ("password", "easyhomesource", "welcome", "admin")):
         raise HTTPException(status_code=400, detail="Password contains a common or company-related phrase")
@@ -127,19 +135,11 @@ def create_access_token(sub: str, extra: Optional[dict[str, Any]] = None) -> str
 
 
 def decode_token(token: str) -> dict[str, Any]:
-    return jwt.decode(
-        token,
-        JWT_SECRET,
-        algorithms=[JWT_ALG],
-        options={"require": ["exp", "iat", "sub"]},
-    )
+    return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG], options={"require": ["exp", "iat", "sub"]})
 
 
 async def _active_user(user_id: str) -> dict:
-    user = await get_db().users.find_one(
-        {"id": user_id},
-        {"_id": 0, "password_hash": 0},
-    )
+    user = await get_db().users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
     if not user or not user.get("active", True):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
     return user
@@ -150,12 +150,6 @@ async def get_current_user(
     internal_key: Optional[str] = Header(default=None, alias="X-EHS-Internal-Key"),
     internal_user_id: Optional[str] = Header(default=None, alias="X-EHS-User-ID"),
 ) -> dict:
-    """Authenticate either a direct API bearer or the trusted Next.js portal.
-
-    If either internal-auth header is supplied, the request must satisfy the
-    entire internal-auth contract. A bad internal key never falls back to bearer
-    authentication.
-    """
     if internal_key is not None or internal_user_id is not None:
         if not INTERNAL_API_KEY or not internal_key or not internal_user_id:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
@@ -173,13 +167,13 @@ async def get_current_user(
     user_id = payload.get("sub")
     if not isinstance(user_id, str) or not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-
     return await _active_user(user_id)
 
 
 async def require_admin(user: dict = Depends(get_current_user)) -> dict:
-    if (user.get("role") or "").lower() not in ADMIN_ROLES:
-        raise HTTPException(status_code=403, detail="Admin role required")
+    """Legacy admin dependency now means user/security administration."""
+    if not has_permission(user, "users:write"):
+        raise HTTPException(status_code=403, detail="User administration permission required")
     return user
 
 
@@ -187,3 +181,27 @@ async def require_manager_or_admin(user: dict = Depends(get_current_user)) -> di
     if (user.get("role") or "").lower() not in MANAGER_ROLES:
         raise HTTPException(status_code=403, detail="Manager or admin role required")
     return user
+
+
+async def require_user_admin(user: dict = Depends(get_current_user)) -> dict:
+    if not has_permission(user, "users:write"):
+        raise HTTPException(status_code=403, detail="User administration permission required")
+    return user
+
+
+async def require_system_health(user: dict = Depends(get_current_user)) -> dict:
+    if not has_permission(user, "system-health:read"):
+        raise HTTPException(status_code=403, detail="System health permission required")
+    return user
+
+
+async def require_catalog_manager(user: dict = Depends(get_current_user)) -> dict:
+    if not has_permission(user, "catalog:manage"):
+        raise HTTPException(status_code=403, detail="Catalog management permission required")
+    return user
+
+
+async def require_amhi(user: dict = Depends(get_current_user)) -> dict:
+    if user.get("amhi_access") is True or has_permission(user, "amhi:access"):
+        return user
+    raise HTTPException(status_code=403, detail="AMHI permitting access required")
