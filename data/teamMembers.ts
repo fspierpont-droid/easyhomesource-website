@@ -1,4 +1,4 @@
-export type UserRole = 'Admin' | 'Manager' | 'Associate';
+export type UserRole = 'Owner' | 'Admin' | 'Manager' | 'Associate';
 
 export interface TeamUser {
   id: string;
@@ -9,6 +9,9 @@ export interface TeamUser {
   ghlLinked: boolean;
   phone?: string;
   title?: string;
+  businessRole?: string;
+  permissions?: string[];
+  amhiAccess?: boolean;
 }
 
 export const VERIFIED_TEAM_USERS: TeamUser[] = [
@@ -46,11 +49,11 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     id: 'user-4',
     name: 'Kevin Malone',
     email: 'kevin@easyhomesource.com',
-    role: 'Associate',
+    role: 'Owner',
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'Housing Consultant'
+    title: 'Owner'
   },
   {
     id: 'user-5',
@@ -76,11 +79,11 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     id: 'user-7',
     name: 'Scott Pierpont',
     email: 'scott@easyhomesource.com',
-    role: 'Admin',
+    role: 'Owner',
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'Principal & Operations Admin'
+    title: 'Platform Owner & Operations Admin'
   },
   {
     id: 'user-8',
@@ -104,17 +107,60 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
   }
 ];
 
-export const CURRENT_LOGGED_IN_USER: TeamUser = VERIFIED_TEAM_USERS[6]; // Scott Pierpont (Admin)
+export const CURRENT_LOGGED_IN_USER: TeamUser = VERIFIED_TEAM_USERS[6];
 
-// Permission & Role Check Helpers
-export function canAccessSettings(user?: TeamUser | null): boolean {
+function explicitPermission(user: TeamUser | null | undefined, permission: string): boolean | null {
+  if (!user?.permissions) return null;
+  if (user.permissions.includes('*') || user.permissions.includes(permission)) return true;
+  const [namespace] = permission.split(':');
+  if (namespace && user.permissions.includes(`${namespace}:*`)) return true;
+  return false;
+}
+
+export function hasPermission(user: TeamUser | null | undefined, permission: string): boolean {
   if (!user) return false;
-  return user.role === 'Admin' || user.role === 'Manager';
+  const explicit = explicitPermission(user, permission);
+  if (explicit !== null) return explicit;
+
+  // Legacy fallback while older user records are being migrated.
+  if (user.role === 'Owner') return true;
+  if (permission === 'settings:read' || permission === 'catalog:manage') {
+    return user.role === 'Admin' || user.role === 'Manager';
+  }
+  if (permission === 'users:read' || permission === 'users:write' || permission === 'system-health:read') {
+    return user.role === 'Admin';
+  }
+  return false;
+}
+
+export function canAccessSettings(user?: TeamUser | null): boolean {
+  return hasPermission(user, 'settings:read');
+}
+
+export function canManageUsers(user?: TeamUser | null): boolean {
+  return hasPermission(user, 'users:write');
+}
+
+export function canAssignOwner(user?: TeamUser | null): boolean {
+  return hasPermission(user, 'users:assign-owner');
+}
+
+export function canAccessSystemHealth(user?: TeamUser | null): boolean {
+  return hasPermission(user, 'system-health:read');
+}
+
+export function canManageCatalog(user?: TeamUser | null): boolean {
+  return hasPermission(user, 'catalog:manage');
+}
+
+export function canAccessAmhi(user?: TeamUser | null): boolean {
+  if (!user) return false;
+  if (user.amhiAccess) return true;
+  return hasPermission(user, 'amhi:access');
 }
 
 export function canEditBasePrices(user?: TeamUser | null): boolean {
-  if (!user) return false;
-  return user.role === 'Admin' || user.role === 'Manager';
+  return hasPermission(user, 'catalog:manage');
 }
 
 export function isSalesAssociate(user?: TeamUser | null): boolean {
