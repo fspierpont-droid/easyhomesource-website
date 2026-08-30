@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 
-export function PortalAuthBoundary({ children }: { children: React.ReactNode }) {
+export function PortalAuthBoundary({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
