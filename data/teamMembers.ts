@@ -23,7 +23,10 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'Executive Admin & Operations'
+    title: 'Executive Admin & Operations',
+    businessRole: 'Admin',
+    permissions: ['portal:*', 'settings:read', 'settings:write', 'catalog:manage', 'seo:read'],
+    amhiAccess: false,
   },
   {
     id: 'user-2',
@@ -53,7 +56,10 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'Owner'
+    title: 'Owner',
+    businessRole: 'Owner',
+    permissions: ['portal:*'],
+    amhiAccess: true,
   },
   {
     id: 'user-5',
@@ -63,7 +69,10 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'General Sales Manager'
+    title: 'General Sales Manager',
+    businessRole: 'Manager',
+    permissions: ['portal:*', 'settings:read', 'settings:write', 'users:read', 'users:write', 'system-health:read', 'catalog:manage', 'seo:manage'],
+    amhiAccess: false,
   },
   {
     id: 'user-6',
@@ -83,7 +92,10 @@ export const VERIFIED_TEAM_USERS: TeamUser[] = [
     active: true,
     ghlLinked: false,
     phone: '(352) 558-8888',
-    title: 'Platform Owner & Operations Admin'
+    title: 'Platform Owner & Operations Admin',
+    businessRole: 'Platform Owner',
+    permissions: ['*'],
+    amhiAccess: true,
   },
   {
     id: 'user-8',
@@ -122,7 +134,6 @@ export function hasPermission(user: TeamUser | null | undefined, permission: str
   const explicit = explicitPermission(user, permission);
   if (explicit !== null) return explicit;
 
-  // Legacy fallback while older user records are being migrated.
   if (user.role === 'Owner') return true;
   if (permission === 'settings:read' || permission === 'catalog:manage') {
     return user.role === 'Admin' || user.role === 'Manager';
