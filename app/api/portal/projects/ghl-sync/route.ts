@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requirePortalAccess } from '@/lib/auth/portalSession';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 import { DEPOSIT_STATUS_FIELD_ID, GHL_LOCATION_ID, PROJECT_PIPELINE_ID, ghlRequest, searchOpportunities } from '@/lib/ghl/client';
+import { readGhlCustomValue } from '@/lib/ghl/customFields';
 import type { GhlProject, ProjectStage } from '@/types/project';
 import { hasValidCoordinates } from '@/lib/ghl/projectCoordinates';
 
@@ -28,10 +29,6 @@ export const PORTAL_STAGE_TO_GHL: Record<ProjectStage, string> = {
 
 const text = (value: unknown) => typeof value === 'string' && value.trim() ? value.trim() : 'Not provided';
 const number = (value: unknown) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value)) ? Number(value) : null;
-const customValue = (fields: any[], id: string) => {
-  const field = fields.find((item) => item.id === id);
-  return field?.fieldValueString ?? field?.fieldValueNumber ?? field?.field_value;
-};
 const depositStatus = (value: unknown): GhlProject['depositStatus'] => {
   if (typeof value !== 'string') return null;
   const normalized = value.trim().toLowerCase();
@@ -133,9 +130,10 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
         : {};
       const contact = { ...embeddedContact, ...hydrated };
       const fields = Array.isArray(opp.customFields) ? opp.customFields : [];
+      const customValue = (id: string) => readGhlCustomValue(fields, id);
       const stage = GHL_STAGE_TO_PORTAL[opp.pipelineStageId];
       const rep = users.get(opp.assignedTo) as any;
-      const address = customValue(fields, 'dHjTQIz3TiLyA1nTjBKY') ?? contact.address1;
+      const address = customValue('dHjTQIz3TiLyA1nTjBKY') ?? contact.address1;
       const coordinates = {
         latitude: number(contact.latitude),
         longitude: number(contact.longitude)
@@ -164,14 +162,14 @@ async function handleFetchProjectPhaseOpps(request: NextRequest) {
         ghlPipelineId: opp.pipelineId, ghlPipelineStageId: canonical.pipelineStageId, opportunityStatus: text(opp.status),
         jobId: `GHL-${opp.id.slice(0, 7).toUpperCase()}`, customerName: text(contact.name || opp.name),
         customerPhone: text(contact.phone), customerEmail: text(contact.email), jobAddress: text(address),
-        city: text(contact.city), county: text(customValue(fields, process.env.GHL_COUNTY_FIELD_ID || '')),
+        city: text(contact.city), county: text(customValue(process.env.GHL_COUNTY_FIELD_ID || '')),
         state: text(contact.state), zip: text(contact.postalCode), latitude: resolvedCoordinates?.latitude ?? null,
         longitude: resolvedCoordinates?.longitude ?? null,
         stage: stage.stage, stageLabel: stage.label, progressPct: stage.progressPct, dealValue: number(opp.monetaryValue),
-        depositAmount: number(customValue(fields, 'xuAyycLxj8YoaOAoFIoR')), depositStatus: depositStatus(customValue(fields, DEPOSIT_STATUS_FIELD_ID)),
-        assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue(fields, 'u65XL9zAaZiOIqBqygov')),
+        depositAmount: number(customValue('xuAyycLxj8YoaOAoFIoR')), depositStatus: depositStatus(customValue(DEPOSIT_STATUS_FIELD_ID)),
+        assignedRep: text(rep?.name), assignedRepEmail: text(rep?.email), homeModel: text(customValue('u65XL9zAaZiOIqBqygov')),
         manufacturer: 'Not provided', bedrooms: null, bathrooms: null, squareFeet: null, dimensions: 'Not provided',
-        zoning: text(customValue(fields, 'maaf51kmzQDMhONJqGfb')), milestones: [],
+        zoning: text(customValue('maaf51kmzQDMhONJqGfb')), milestones: [],
         ghlTags: Array.isArray(contact.tags) ? contact.tags : [], notes: '—',
         createdAt: opp.createdAt || syncedAt, updatedAt: opp.updatedAt || syncedAt, lastGhlSyncAt: syncedAt,
         lastGhlHash: createHash('sha256').update(JSON.stringify(canonical)).digest('hex'), lastSyncSource: 'ghl-fetch'
