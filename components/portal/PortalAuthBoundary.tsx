@@ -1,21 +1,20 @@
 'use client';
 
 import { useEffect, type ReactNode } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 export function PortalAuthBoundary({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
     if (loading || user) return;
-    const query = searchParams.toString();
-    const returnTo = `${pathname}${query ? `?${query}` : ''}`;
+    const query = typeof window !== 'undefined' ? window.location.search : '';
+    const returnTo = `${pathname}${query}`;
     router.replace(`/login?next=${encodeURIComponent(returnTo)}`);
-  }, [loading, pathname, router, searchParams, user]);
+  }, [loading, pathname, router, user]);
 
   if (loading || !user) {
     return (
