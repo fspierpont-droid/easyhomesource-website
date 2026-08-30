@@ -65,6 +65,14 @@ function normalizePermissions(value: unknown): string[] | undefined {
   return permissions.length ? [...new Set(permissions)] : [];
 }
 
+function compatibilityRole(remoteRole: unknown, permissions: string[] | undefined, profile?: TeamUser): UserRole {
+  const effective = permissions ?? profile?.permissions;
+  if (effective?.includes('*') || effective?.includes('users:write')) return 'Admin';
+  if (effective?.includes('settings:read') || effective?.includes('catalog:manage')) return 'Manager';
+  if (profile?.businessRole === 'Owner' || normalizeRole(remoteRole) === 'Owner') return 'Associate';
+  return normalizeRole(remoteRole);
+}
+
 function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string): TeamUser | null {
   if (
     typeof remote.id !== 'string' ||
@@ -80,20 +88,19 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string)
   const hasRemotePermissionMetadata = Array.isArray(remote.permissions);
   const hasRemoteAmhiMetadata = typeof remote.amhi_access === 'boolean';
   const hasRemoteBusinessRole = typeof remote.business_role === 'string' && remote.business_role.trim();
+  const permissions = hasRemotePermissionMetadata ? remotePermissions : displayProfile?.permissions;
 
   return {
     id: remote.id,
     name: remote.name.trim() || displayProfile?.name || email,
     email,
-    role: hasRemoteBusinessRole || hasRemotePermissionMetadata || hasRemoteAmhiMetadata
-      ? normalizeRole(remote.role)
-      : (displayProfile?.role || normalizeRole(remote.role)),
+    role: compatibilityRole(remote.role, permissions, displayProfile),
     active: true,
     ghlLinked: Boolean(remote.ghl_linked),
     phone: typeof remote.phone === 'string' && remote.phone.trim() ? remote.phone.trim() : displayProfile?.phone,
     title: displayProfile?.title,
     businessRole: hasRemoteBusinessRole ? String(remote.business_role).trim() : displayProfile?.businessRole || displayProfile?.title,
-    permissions: hasRemotePermissionMetadata ? remotePermissions : displayProfile?.permissions,
+    permissions,
     amhiAccess: hasRemoteAmhiMetadata ? remote.amhi_access === true : displayProfile?.amhiAccess === true,
   };
 }
