@@ -81,7 +81,6 @@ def has_permission(user: dict, permission: str) -> bool:
         if normalized:
             return False
 
-    # Legacy fallback while older records are being migrated.
     role = (user.get("role") or "associate").lower()
     if role == "owner":
         return True
@@ -172,8 +171,9 @@ async def get_current_user(
 
 
 async def require_admin(user: dict = Depends(get_current_user)) -> dict:
-    if (user.get("role") or "").lower() not in ADMIN_ROLES:
-        raise HTTPException(status_code=403, detail="Admin role required")
+    """Legacy admin dependency now means user/security administration."""
+    if not has_permission(user, "users:write"):
+        raise HTTPException(status_code=403, detail="User administration permission required")
     return user
 
 
