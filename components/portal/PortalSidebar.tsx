@@ -3,6 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {
+  canAccessAmhi,
+  canAccessSettings,
+  canAccessSystemHealth,
+  canManageCatalog,
+  hasPermission,
+} from '@/data/teamMembers';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 interface PortalSidebarProps {
@@ -29,8 +36,13 @@ export function PortalSidebar({
 }: PortalSidebarProps) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  const isManagement = user?.role === 'Admin' || user?.role === 'Manager';
-  const isAdmin = user?.role === 'Admin';
+  const isManagement = Boolean(user && (user.role === 'Owner' || user.role === 'Admin' || user.role === 'Manager'));
+  const showSettings = canAccessSettings(user);
+  const showCatalogManagement = canManageCatalog(user);
+  const showSystemHealth = canAccessSystemHealth(user);
+  const showAmhi = canAccessAmhi(user);
+  const showSeo = Boolean(user && (hasPermission(user, 'seo:read') || hasPermission(user, 'seo:manage') || user.role === 'Owner'));
+  const showAdministration = showSettings || showCatalogManagement || showSystemHealth || showSeo;
 
   const handleClose = () => {
     onCloseMobile?.();
@@ -48,7 +60,7 @@ export function PortalSidebar({
     { id: 'inventory', label: 'Home Inventory', icon: '🏘️', href: '/portal?view=inventory' },
     { id: 'property-packages', label: 'Property Packages', icon: '📍', href: '/portal?view=property-packages' },
     { id: 'projects', label: 'Project Board', icon: '🏗️', href: '/portal?view=projects' },
-    { id: 'amhi', label: 'AMHI Permitting', icon: '📋', href: '/portal/amhi' },
+    ...(showAmhi ? [{ id: 'amhi', label: 'AMHI Permitting', icon: '📋', href: '/portal/amhi' }] : []),
   ];
 
   const userInitials = user?.name
@@ -142,61 +154,49 @@ export function PortalSidebar({
             </nav>
           </div>
 
-          {isManagement && (
+          {showAdministration && (
             <div>
               <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Administration</div>
               <nav className="space-y-0.5">
-                <Link
-                  href="/portal/seo"
-                  onClick={handleClose}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                    pathname === '/portal/seo'
-                      ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`}
-                >
-                  <span>📈</span>
-                  <span>Website & SEO</span>
-                </Link>
-                <Link
-                  href="/settings"
-                  onClick={handleClose}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                    pathname === '/settings'
-                      ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`}
-                >
-                  <span>⚙️</span>
-                  <span>Settings</span>
-                </Link>
-                {isAdmin && (
-                  <>
-                    <Link
-                      href="/settings/catalog"
-                      onClick={handleClose}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        pathname === '/settings/catalog'
-                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                      }`}
-                    >
-                      <span>🏷️</span>
-                      <span>Catalog Management</span>
-                    </Link>
-                    <Link
-                      href="/portal/system-health"
-                      onClick={handleClose}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                        pathname === '/portal/system-health'
-                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                      }`}
-                    >
-                      <span>🩺</span>
-                      <span>System Health</span>
-                    </Link>
-                  </>
+                {showSeo && (
+                  <Link
+                    href="/portal/seo"
+                    onClick={handleClose}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${pathname === '/portal/seo' ? 'bg-slate-100 text-slate-900 shadow-2xs' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                  >
+                    <span>📈</span>
+                    <span>Website & SEO</span>
+                  </Link>
+                )}
+                {showSettings && (
+                  <Link
+                    href="/settings"
+                    onClick={handleClose}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${pathname === '/settings' ? 'bg-slate-100 text-slate-900 shadow-2xs' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                  >
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                  </Link>
+                )}
+                {showCatalogManagement && (
+                  <Link
+                    href="/settings/catalog"
+                    onClick={handleClose}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${pathname === '/settings/catalog' ? 'bg-slate-100 text-slate-900 shadow-2xs' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                  >
+                    <span>🏷️</span>
+                    <span>Catalog Management</span>
+                  </Link>
+                )}
+                {showSystemHealth && (
+                  <Link
+                    href="/portal/system-health"
+                    onClick={handleClose}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors ${pathname === '/portal/system-health' ? 'bg-slate-100 text-slate-900 shadow-2xs' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`}
+                  >
+                    <span>🩺</span>
+                    <span>System Health</span>
+                  </Link>
                 )}
               </nav>
             </div>
@@ -211,7 +211,7 @@ export function PortalSidebar({
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-black text-slate-900 truncate">{user?.name || 'EHS Employee'}</p>
-                <p className="text-[10px] text-slate-500 font-semibold truncate">{user?.role || 'Associate'}</p>
+                <p className="text-[10px] text-slate-500 font-semibold truncate">{user?.businessRole || user?.role || 'Associate'}</p>
               </div>
             </div>
           </div>
