@@ -76,21 +76,25 @@ function normalizeAuthenticatedUser(remote: EhsAuthUser, expectedEmail?: string)
   if (!email || (expectedEmail && email !== expectedEmail) || remote.active === false) return null;
 
   const displayProfile = VERIFIED_TEAM_USERS.find((candidate) => candidate.email.toLowerCase() === email);
+  const remotePermissions = normalizePermissions(remote.permissions);
+  const hasRemotePermissionMetadata = Array.isArray(remote.permissions);
+  const hasRemoteAmhiMetadata = typeof remote.amhi_access === 'boolean';
+  const hasRemoteBusinessRole = typeof remote.business_role === 'string' && remote.business_role.trim();
 
   return {
     id: remote.id,
     name: remote.name.trim() || displayProfile?.name || email,
     email,
-    role: normalizeRole(remote.role),
+    role: hasRemoteBusinessRole || hasRemotePermissionMetadata || hasRemoteAmhiMetadata
+      ? normalizeRole(remote.role)
+      : (displayProfile?.role || normalizeRole(remote.role)),
     active: true,
     ghlLinked: Boolean(remote.ghl_linked),
     phone: typeof remote.phone === 'string' && remote.phone.trim() ? remote.phone.trim() : displayProfile?.phone,
     title: displayProfile?.title,
-    businessRole: typeof remote.business_role === 'string' && remote.business_role.trim()
-      ? remote.business_role.trim()
-      : displayProfile?.title,
-    permissions: normalizePermissions(remote.permissions),
-    amhiAccess: remote.amhi_access === true,
+    businessRole: hasRemoteBusinessRole ? String(remote.business_role).trim() : displayProfile?.businessRole || displayProfile?.title,
+    permissions: hasRemotePermissionMetadata ? remotePermissions : displayProfile?.permissions,
+    amhiAccess: hasRemoteAmhiMetadata ? remote.amhi_access === true : displayProfile?.amhiAccess === true,
   };
 }
 
