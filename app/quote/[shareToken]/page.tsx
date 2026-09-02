@@ -1,113 +1,165 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SiteLogo } from '@/components/SiteLogo';
-import { getSavedQuoteById, type SavedQuote } from '@/data/quotesStore';
+import type { SavedQuote } from '@/data/quotesStore';
 
 export default function CustomerShareQuotePage() {
   const params = useParams();
-  const token = (params?.shareToken as string) || 'quote-1';
+  const token = String(params?.shareToken || '').trim();
   const [copied, setCopied] = useState(false);
   const [quoteData, setQuoteData] = useState<SavedQuote | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const existing = getSavedQuoteById(token);
-    if (existing) {
-      setQuoteData(existing);
+    const controller = new AbortController();
+
+    async function loadQuote() {
+      if (!token || token.length < 32) {
+        setQuoteData(null);
+        setError('This quote link is invalid or has expired.');
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(
+          `/api/public/quotes/${encodeURIComponent(token)}`,
+          { cache: 'no-store', signal: controller.signal },
+        );
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.success || !data.quote) {
+          setQuoteData(null);
+          setError(
+            response.status === 404
+              ? 'This quote link is invalid, expired, or no longer shared.'
+              : data.error || 'The quote service is temporarily unavailable.',
+          );
+          return;
+        }
+
+        setQuoteData(data.quote as SavedQuote);
+      } catch (loadError) {
+        if (controller.signal.aborted) return;
+        console.error('Failed to load shared quote:', loadError);
+        setQuoteData(null);
+        setError('The quote service is temporarily unavailable. Please try again.');
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
     }
+
+    void loadQuote();
+    return () => controller.abort();
   }, [token]);
-
-  // Proposal state
-  const quote = {
-    id: quoteData?.id || token,
-    quoteNumber: quoteData?.quoteNumber || (token.startsWith('quote-') ? 'Q-2026-0801' : token),
-    customerName: quoteData?.customerName || 'Sarah Jenkins',
-    customerPhone: quoteData?.customerPhone || '352-555-0192',
-    customerEmail: quoteData?.customerEmail || 'sarah.j@example.com',
-    homeModel: quoteData?.homeModel || 'Move on Up (18x60 3b/2ba)',
-    manufacturer: quoteData?.manufacturer || 'CLAYTON Addison',
-    series: quoteData?.series || 'Tempo Series',
-    beds: quoteData?.beds || 3,
-    baths: quoteData?.baths || 2,
-    sqft: quoteData?.sqft || 1080,
-    dimensions: quoteData?.dimensions || "18' x 60'",
-    homePrice: Number(quoteData?.homePrice) || 94900.00,
-    propertyAddress: quoteData?.propertyAddress || '6645 W Erlen Ln, Homosassa, FL 34446',
-    propertyPrice: Number(quoteData?.propertyPrice) || 0.00,
-    deliveryRoute: quoteData?.deliveryRouteType === 'dealer_to_customer' ? 'Dealership to Customer Site' : 'Factory Direct Delivery',
-    deliveryMiles: quoteData?.deliveryMiles || 32,
-    freightDelivery: Number(quoteData?.freightDelivery) || 3850.00,
-    siteWorkTotal: Number(quoteData?.siteWorkTotal) || 30650.00,
-    discounts: Number(quoteData?.discounts) || 0,
-    salesperson: quoteData?.salesperson || 'Scott Pierpont',
-    salespersonTitle: 'Operations & Principal Consultant',
-    salespersonPhone: '(352) 558-8888',
-    salespersonEmail: quoteData?.salespersonEmail || 'scott@easyhomesource.com',
-    status: quoteData?.status || 'APPROVED',
-    notes: quoteData?.notesCustomer || quoteData?.notes || 'Complete turnkey land and manufactured home package for Central Florida. Includes county building permits, site prep, potable water well, 1050-gal septic system, 200A electric panel, 3.0-ton heat pump, vented vinyl skirting, and code entrance stairs.',
-    lineItems: (quoteData?.lineItems && quoteData.lineItems.length > 0)
-      ? quoteData.lineItems.map((li) => ({
-          id: li.id,
-          name: li.name,
-          description: li.description,
-          price: Number(li.totalPrice || li.unitPrice || 0)
-        }))
-      : [
-          {
-            id: 'li-1',
-            name: 'Block & Hurricane Tie-Down Installation',
-            description: 'Concrete pier pads, cinder blocks, leveling, and Florida wind zone ground anchors (60ft double table).',
-            price: 5835.00
-          },
-          {
-            id: 'li-2',
-            name: '3.0-Ton Central A/C Heat Pump System (14.3 SEER2)',
-            description: 'High-efficiency heat pump with digital programmable thermostat, outdoor equipment pad, whip, and ductwork plenum tie-in.',
-            price: 5555.00
-          },
-          {
-            id: 'li-3',
-            name: 'Dirt Pad & Laser Site Grading (2 Loads)',
-            description: 'Land clearing, clean fill dirt import, compacting, and laser leveling for solid home foundation.',
-            price: 2700.00
-          },
-          {
-            id: 'li-4',
-            name: 'Vented Vinyl Perimeter Skirting & Steps (2 Sets)',
-            description: 'Full perimeter vinyl skirting with top rail, ground track, access door, and 2 sets of code stairs.',
-            price: 3200.00
-          },
-          {
-            id: 'li-5',
-            name: 'County Building, Zoning & Health Dept Permits',
-            description: 'Hernando/Citrus county building permit processing, plan review, zoning, and health inspections ($2,000 standard).',
-            price: 2000.00
-          }
-        ],
-    createdAt: quoteData?.quoteDate || 'August 8, 2026'
-  };
-
-  const subtotal = quoteData?.subtotal || (quote.homePrice + quote.propertyPrice + quote.freightDelivery + quote.siteWorkTotal - quote.discounts);
-  const salesTax = quoteData?.salesTax || Math.round(subtotal * 0.03 * 100) / 100;
-  const estimatedTotal = quoteData?.estimatedTotal || Math.round((subtotal + salesTax) * 100) / 100;
 
   const handlePrint = () => {
     window.print();
   };
 
   const handleCopyLink = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
+    if (navigator.clipboard) {
+      void navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-100/70 flex items-center justify-center p-6">
+        <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl">
+          <div className="mx-auto mb-4 flex justify-center">
+            <SiteLogo size="lg" />
+          </div>
+          <h1 className="text-xl font-black text-[#0B1E38]">Loading your Easy HomeSource proposal</h1>
+          <p className="mt-2 text-sm text-slate-500">Retrieving the permanent quote record…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !quoteData) {
+    return (
+      <div className="min-h-screen bg-slate-100/70 flex items-center justify-center p-6">
+        <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl">
+          <div className="mx-auto mb-4 flex justify-center">
+            <SiteLogo size="lg" />
+          </div>
+          <h1 className="text-xl font-black text-[#0B1E38]">Quote unavailable</h1>
+          <p className="mt-2 text-sm leading-relaxed text-slate-500">
+            {error || 'This quote could not be found.'}
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/"
+              className="rounded-xl bg-[#0B1E38] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#132f50]"
+            >
+              Return to Easy HomeSource
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const quote = {
+    id: quoteData.id,
+    quoteNumber: quoteData.quoteNumber,
+    customerName: quoteData.customerName,
+    customerPhone: quoteData.customerPhone,
+    customerEmail: quoteData.customerEmail,
+    homeModel: quoteData.homeModel,
+    manufacturer: quoteData.manufacturer || '',
+    series: quoteData.series || '',
+    beds: Number(quoteData.beds || 0),
+    baths: Number(quoteData.baths || 0),
+    sqft: Number(quoteData.sqft || 0),
+    dimensions: quoteData.dimensions || '',
+    homePrice: Number(quoteData.homePrice || 0),
+    propertyAddress: quoteData.propertyAddress || '',
+    propertyPrice: Number(quoteData.propertyPrice || 0),
+    deliveryRoute:
+      quoteData.deliveryRouteType === 'dealer_to_customer'
+        ? 'Dealership to Customer Site'
+        : quoteData.deliveryRouteType === 'factory_to_dealer'
+          ? 'Factory to Dealership'
+          : 'Factory Direct Delivery',
+    deliveryMiles: Number(quoteData.deliveryMiles || 0),
+    freightDelivery: Number(quoteData.freightDelivery || 0),
+    siteWorkTotal: Number(quoteData.siteWorkTotal || 0),
+    discounts: Number(quoteData.discounts || 0),
+    salesperson: quoteData.salesperson || 'Easy HomeSource',
+    salespersonEmail: quoteData.salespersonEmail || 'info@easyhomesource.com',
+    lineItems: (quoteData.lineItems || []).map((lineItem) => ({
+      id: lineItem.id,
+      name: lineItem.name,
+      description: lineItem.description,
+      price: Number(lineItem.totalPrice || lineItem.unitPrice || 0),
+    })),
+    createdAt: quoteData.quoteDate || quoteData.createdAt || '',
+  };
+
+  const subtotal = Number(quoteData.subtotal || 0);
+  const salesTax = Number(quoteData.salesTax || 0);
+  const estimatedTotal = Number(quoteData.estimatedTotal || quoteData.totalTurnkeyPrice || 0);
+  const salesTaxRate = Number(quoteData.financialTotals?.sales_tax_rate ?? 0.03);
+
   return (
     <div className="min-h-screen bg-slate-100/70 font-sans text-slate-800 antialiased print:bg-white print:p-0">
-      {/* Top Bar (Hidden in Print) */}
       <header className="no-print bg-[#0B1E38] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 shadow-md">
         <div className="flex items-center gap-3">
           <Link href="/" className="font-extrabold text-sm text-white tracking-tight flex items-center gap-2">
@@ -115,9 +167,7 @@ export default function CustomerShareQuotePage() {
             <span>Easy HomeSource Customer Proposal</span>
           </Link>
           <span className="text-white/30">|</span>
-          <span className="font-mono text-xs text-emerald-400 font-bold">
-            {quote.quoteNumber}
-          </span>
+          <span className="font-mono text-xs text-emerald-400 font-bold">{quote.quoteNumber}</span>
         </div>
 
         <div className="flex items-center gap-2.5">
@@ -141,9 +191,7 @@ export default function CustomerShareQuotePage() {
         </div>
       </header>
 
-      {/* Proposal Main Document */}
       <div className="max-w-4xl mx-auto my-6 sm:my-10 space-y-8 print:my-0 print:space-y-0 print:max-w-full">
-        {/* PAGE 1: Proposal Overview */}
         <section className="bg-white p-8 sm:p-12 rounded-[2rem] shadow-xl border border-slate-200 space-y-6 print:p-0 print:border-none print:shadow-none print:break-after-page print:min-h-screen">
           <div className="text-[10px] text-slate-400 font-bold flex justify-between border-b border-slate-100 pb-2">
             <span>Easy HomeSource | 352-558-8888 | info@easyhomesource.com | 9011 McIntyre Rd, Brooksville, FL 34601</span>
@@ -170,14 +218,13 @@ export default function CustomerShareQuotePage() {
             </div>
           </div>
 
-          {/* Customer & Rep */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1 text-xs">
               <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">CUSTOMER</span>
               <div className="text-base font-black text-[#0B1E38]">{quote.customerName}</div>
-              <div className="text-slate-600 font-semibold">📞 {quote.customerPhone}</div>
-              <div className="text-slate-600 font-medium">✉️ {quote.customerEmail}</div>
-              <div className="text-slate-500 text-[11px]">📍 {quote.propertyAddress}</div>
+              {quote.customerPhone && <div className="text-slate-600 font-semibold">📞 {quote.customerPhone}</div>}
+              {quote.customerEmail && <div className="text-slate-600 font-medium">✉️ {quote.customerEmail}</div>}
+              {quote.propertyAddress && <div className="text-slate-500 text-[11px]">📍 {quote.propertyAddress}</div>}
             </div>
 
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1 text-xs sm:text-right">
@@ -188,7 +235,6 @@ export default function CustomerShareQuotePage() {
             </div>
           </div>
 
-          {/* Navy ESTIMATED TOTAL Banner */}
           <div className="flex items-center justify-between rounded-2xl bg-[#0F2A47] text-white px-6 py-4 shadow-md">
             <span className="text-xs uppercase tracking-wider font-extrabold">ESTIMATED TOTAL</span>
             <span className="font-black text-3xl tracking-tight font-mono">
@@ -196,19 +242,21 @@ export default function CustomerShareQuotePage() {
             </span>
           </div>
 
-          {/* Selected Home */}
           <div className="space-y-2">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Selected Manufactured Home</h2>
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs">
               <div className="text-base font-black text-[#0B1E38]">{quote.homeModel}</div>
-              <div className="text-slate-600 font-bold mt-0.5">{quote.manufacturer} • {quote.series}</div>
+              {(quote.manufacturer || quote.series) && (
+                <div className="text-slate-600 font-bold mt-0.5">
+                  {[quote.manufacturer, quote.series].filter(Boolean).join(' • ')}
+                </div>
+              )}
               <div className="text-slate-500 font-semibold mt-1">
                 {quote.beds} Beds | {quote.baths} Baths | {quote.sqft.toLocaleString()} Sq. Ft. | {quote.dimensions}
               </div>
             </div>
           </div>
 
-          {/* Scope of Work Table */}
           <div className="space-y-3 pt-1">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Scope of Work &amp; Line Items</h2>
             <div className="border border-slate-200 rounded-2xl overflow-hidden text-xs">
@@ -220,40 +268,49 @@ export default function CustomerShareQuotePage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 bg-white">
-                  <tr>
-                    <td className="py-3 px-4">
-                      <div className="font-bold text-slate-800">Factory Freight &amp; Transport Carrier Delivery</div>
-                      <div className="text-[10.5px] text-slate-500">{quote.deliveryRoute} • {quote.deliveryMiles} Miles</div>
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                      ${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </td>
-                  </tr>
+                  {quote.freightDelivery > 0 && (
+                    <tr>
+                      <td className="py-3 px-4">
+                        <div className="font-bold text-slate-800">Factory Freight &amp; Transport Carrier Delivery</div>
+                        <div className="text-[10.5px] text-slate-500">
+                          {quote.deliveryRoute}{quote.deliveryMiles > 0 ? ` • ${quote.deliveryMiles} Miles` : ''}
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
+                        ${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
+                    </tr>
+                  )}
                   {quote.lineItems.map((item) => (
                     <tr key={item.id}>
                       <td className="py-3 px-4">
                         <div className="font-bold text-slate-800">{item.name}</div>
-                        <div className="text-[10.5px] text-slate-500">{item.description}</div>
+                        {item.description && <div className="text-[10.5px] text-slate-500">{item.description}</div>}
                       </td>
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
                         ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                     </tr>
                   ))}
+                  {quote.freightDelivery <= 0 && quote.lineItems.length === 0 && (
+                    <tr>
+                      <td colSpan={2} className="py-5 px-4 text-center text-slate-500">
+                        No additional line items are listed on this proposal.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </section>
 
-        {/* PAGE 2: Financial Summary & Next Steps */}
         <section className="bg-white p-8 sm:p-12 rounded-[2rem] shadow-xl border border-slate-200 space-y-6 print:p-0 print:border-none print:shadow-none print:min-h-screen">
           <div className="text-[10px] text-slate-400 font-bold flex justify-between border-b border-slate-100 pb-2">
             <span>Easy HomeSource | 352-558-8888 | info@easyhomesource.com | 9011 McIntyre Rd, Brooksville, FL 34601</span>
             <span>Page 2</span>
           </div>
 
-          {/* Summary Box */}
           <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#1E6FA8]">Turnkey Pricing Summary</h2>
             <div className="space-y-2 text-xs text-slate-700">
@@ -267,14 +324,18 @@ export default function CustomerShareQuotePage() {
                   <span className="font-mono font-bold text-slate-900">${quote.propertyPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               )}
-              <div className="flex justify-between font-semibold">
-                <span>Freight Transport &amp; Delivery</span>
-                <span className="font-mono font-bold text-slate-900">${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              </div>
-              <div className="flex justify-between font-semibold">
-                <span>Site Work, Prep &amp; Utilities</span>
-                <span className="font-mono font-bold text-slate-900">${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              </div>
+              {quote.freightDelivery > 0 && (
+                <div className="flex justify-between font-semibold">
+                  <span>Freight Transport &amp; Delivery</span>
+                  <span className="font-mono font-bold text-slate-900">${quote.freightDelivery.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              )}
+              {quote.siteWorkTotal > 0 && (
+                <div className="flex justify-between font-semibold">
+                  <span>Site Work, Prep &amp; Utilities</span>
+                  <span className="font-mono font-bold text-slate-900">${quote.siteWorkTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              )}
 
               <div className="my-2 border-t border-slate-200" />
 
@@ -283,7 +344,7 @@ export default function CustomerShareQuotePage() {
                 <span className="font-mono font-black">${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between font-bold text-[#1E6FA8]">
-                <span>Sales Tax (3.00%)</span>
+                <span>Sales Tax ({(salesTaxRate * 100).toFixed(2)}%)</span>
                 <span className="font-mono">${salesTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
 
