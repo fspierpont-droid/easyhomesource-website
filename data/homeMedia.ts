@@ -1,11 +1,12 @@
 import type { HomeMediaManifest } from "@/data/homeMedia";
 import { catalogHomeMedia } from "@/data/catalogHomeMedia.generated";
+import { manufacturerMedia } from "@/data/manufacturerMedia.generated";
 import { scrapedHomeDetails } from "@/data/scrapedHomeDetails.generated";
 import { tulipManufacturerMedia } from "@/data/tulipManufacturerMedia";
 import { craftSelectManufacturerMedia } from "@/data/craftSelectManufacturerMedia";
 import manualMap from "@/scripts/trove-media-manual-map.generated.json";
 
-// NEW: Manufacturer media imports
+// Curated manufacturer media imports. These remain higher-precedence than generated enrichment.
 import { boujee2ManufacturerMedia } from "@/data/boujee2ManufacturerMedia";
 import { craftSelect15663aManufacturerMedia } from "@/data/craftSelect15663aManufacturerMedia";
 import { boujeeXl2MediaOverride } from "@/data/boujeeXl2MediaOverride";
@@ -104,9 +105,11 @@ if (Array.isArray(manualMap)) {
 }
 
 // 3. Combined master media manifest
-// Order matters: later spreads override earlier ones
+// Order matters: later spreads override earlier ones. The bulk manufacturer scrape
+// fills gaps but never replaces hand-verified EHS media.
 const rawMasterMedia: HomeMediaManifest = {
   ...catalogHomeMedia,
+  ...manufacturerMedia,
   ...manualMedia,
   ...scrapedMedia,
   ...tulipManufacturerMedia,
