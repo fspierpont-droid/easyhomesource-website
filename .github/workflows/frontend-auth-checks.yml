@@ -40,10 +40,12 @@ on:
       - 'data/*Media*.ts'
       - 'data/timberCreekCatalog.ts'
       - 'scripts/validate-catalog.mjs'
+      - 'scripts/import-manufacturer-media.ts'
       - 'package.json'
       - 'package-lock.json'
       - 'eslint.config.mjs'
       - '.github/workflows/frontend-auth-checks.yml'
+      - '.github/workflows/manufacturer-media-enrichment.yml'
 
 jobs:
   test-build:
@@ -62,6 +64,8 @@ jobs:
         run: npm run validate:catalog
       - name: Test catalog authority
         run: node --experimental-strip-types --test lib/catalog/catalogAuthority.test.ts
+      - name: Test home card media priority
+        run: npm run test:home-card-media
       - name: Run ESLint
         run: npm run lint
       - name: Run portal/GHL tests
