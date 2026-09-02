@@ -3626,249 +3626,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-1.jpg",
         "alt": "The Hangout CS-3263 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/3263_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/32631_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-1_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-3_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-4_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-5_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-6_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-7_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-1_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-2_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-3_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-1_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-2_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-3_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-4_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-2_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-6_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-7_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bath-1_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bath-2_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bath-3_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-uti-1_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-uti-2_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-ext-3_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-ext-4_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-ext-5_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-5_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/TheHangoutext_thumb_xxl.jpg",
         "alt": "The Hangout CS-3263 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-3.jpg",
         "alt": "The Hangout CS-3263 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-4.jpg",
         "alt": "The Hangout CS-3263 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-5.jpg",
         "alt": "The Hangout CS-3263 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-6.jpg",
         "alt": "The Hangout CS-3263 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-7.jpg",
         "alt": "The Hangout CS-3263 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-1.jpg",
         "alt": "The Hangout CS-3263 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-2.jpg",
         "alt": "The Hangout CS-3263 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-int-3.jpg",
         "alt": "The Hangout CS-3263 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-1.jpg",
         "alt": "The Hangout CS-3263 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-2.jpg",
         "alt": "The Hangout CS-3263 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-bed-3.jpg",
         "alt": "The Hangout CS-3263 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237110/The%20Hangout%20CS-3263-kit-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237110/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237110/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=e2YGYZpJDXS",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237110-5774/easy-homesource/hernando/creekside-series/the-hangout-cs-3263/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237110/creekside-series/the-hangout-cs-3263/"
   },
   "low-country-cs-3262": {
     "slug": "low-country-cs-3262",
@@ -3877,249 +3877,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-1.jpg",
         "alt": "The Low Country CS-3262 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/3262_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/32621_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-4_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-5_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-6_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-7_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-8_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-9_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-10_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-int-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-int-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-int-3_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-int-4_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-3_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-uti-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-uti-3_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-uti-4_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-3_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-4_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-5_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bed-6_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bath-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bath-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-bath-3_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-uti-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-ext-1_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-ext-2_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/Low%20country_thumb_xxl.jpg",
         "alt": "The Low Country CS-3262 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-4.jpg",
         "alt": "The Low Country CS-3262 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-5.jpg",
         "alt": "The Low Country CS-3262 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-6.jpg",
         "alt": "The Low Country CS-3262 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-7.jpg",
         "alt": "The Low Country CS-3262 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-8.jpg",
         "alt": "The Low Country CS-3262 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-9.jpg",
         "alt": "The Low Country CS-3262 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-10.jpg",
         "alt": "The Low Country CS-3262 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237149/The%20Low%20Country%20CS-3262-kit-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237149/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237149/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=JiQazeMgrb7",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237149-5774/easy-homesource/hernando/creekside-series/the-low-country-cs-3262/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237149/creekside-series/the-low-country-cs-3262/"
   },
   "cedar-creek-cs-3240": {
     "slug": "cedar-creek-cs-3240",
@@ -4128,249 +4128,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-1.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/3240_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-uti-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-6_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-3_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-uti-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-3_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-4_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-5_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-6_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-3_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-4_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-5_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-6_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-kit-7_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-3_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-4_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-5_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-ext-1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-ext-2_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-ext-3_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-ext-4_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/cedar%20creek1_thumb_xxl.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-uti-2.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bed-6.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-1.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-2.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-bath-3.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-uti-1.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-2.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-3.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-4.jpg",
         "alt": "The Cedar Creek CS-3240 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172/The%20Cedar%20Creek%20CS-3240-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237172/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237172/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=8E2JJVrweP1",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237172-5774/easy-homesource/hernando/creekside-series/the-cedar-creek-cs-3240/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237172/creekside-series/the-cedar-creek-cs-3240/"
   },
   "lake-wood-cs-3254": {
     "slug": "lake-wood-cs-3254",
@@ -4379,249 +4379,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-1.jpg",
         "alt": "The Lake Wood CS-3254 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/3254_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-3_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-3_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-4_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-5_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-6_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-7_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-8_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-9_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-3_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-4_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-5_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bath-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bath-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bath-3_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bath-4_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-uti-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-uti-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-ext-1_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-ext-2_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-ext-3_thumb_xxl.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-2.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-3.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-1.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-2.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-3.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-4.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-5.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-6.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-7.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-8.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-kit-9.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-bed-1.jpg",
         "alt": "The Lake Wood CS-3254 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413/biloxi2025-The%20Lake%20Wood%20CS-3254-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/235413/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/235413/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=8qr1HTetnD2",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235413-5774/easy-homesource/hernando/creekside-series/the-lake-wood-cs-3254/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235413/creekside-series/the-lake-wood-cs-3254/"
   },
   "highland-oak-cs-3253": {
     "slug": "highland-oak-cs-3253",
@@ -4630,249 +4630,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-01.jpg",
         "alt": "The Highland Oak CS-3253 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/3253_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-01_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-3_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-4_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-05_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-01_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-02_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-3_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-4_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-5_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-06_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-07_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-1_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-2_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-3_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-4_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bath-1_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bath-2_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bath-3_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bath-4_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bath-5_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-uti-1_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-uti-2_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-ext-1_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-ext-2_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-2_thumb_xxl.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-3.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-4.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-05.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-01.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-02.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-3.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-4.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-5.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-06.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-kit-07.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-1.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-2.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-bed-3.jpg",
         "alt": "The Highland Oak CS-3253 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235411/biloxi2025-The%20Highland%20Oak%20CS-3253-int-01.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/235411/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/235411/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=5dxFY3B59Uv",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235411-5774/easy-homesource/hernando/creekside-series/the-highland-oak-cs-3253/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235411/creekside-series/the-highland-oak-cs-3253/"
   },
   "roxy-csfl-3305": {
     "slug": "roxy-csfl-3305",
@@ -4881,249 +4881,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-1.jpg",
         "alt": "The Roxy CSFL-3305 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/3305_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-2_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-3_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-4_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-5_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-6_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-2_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-3_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-4_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-2_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-3_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-4_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-5_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-6_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bath-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bath-02_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bath-3_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-uti-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-ext-1_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-ext-2_thumb_xxl.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-2.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-3.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-4.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-5.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-6.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-1.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-2.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-3.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-int-4.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-1.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-2.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-3.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-4.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-5.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bed-6.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-bath-1.jpg",
         "alt": "The Roxy CSFL-3305 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235412/biloxi2025-The%20Roxy%20CSFL-3305-kit-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/235412/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/235412/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=CNTp6UAnji5",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235412-5774/easy-homesource/hernando/creekside-series/the-roxy-csfl-3305/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235412/creekside-series/the-roxy-csfl-3305/"
   },
   "cahaba-cs-1604": {
     "slug": "cahaba-cs-1604",
@@ -5132,153 +5132,153 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-1.jpg",
         "alt": "The Cahaba CS-1604 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/The%20Cahaba%20CS-1604%20floor-plans-SMALL_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-1_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-2_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-3_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-4_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-6_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-7_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-8_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/The%20Cahaba%20CS-1604%20floor-plans-SMALL.jpg",
         "alt": "The Cahaba CS-1604 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-9_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-10_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-11_thumb_xxl.jpg",
         "alt": "The Cahaba CS-1604 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-2.jpg",
         "alt": "The Cahaba CS-1604 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-3.jpg",
         "alt": "The Cahaba CS-1604 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-4.jpg",
         "alt": "The Cahaba CS-1604 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-6.jpg",
         "alt": "The Cahaba CS-1604 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-7.jpg",
         "alt": "The Cahaba CS-1604 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-8.jpg",
         "alt": "The Cahaba CS-1604 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-9.jpg",
         "alt": "The Cahaba CS-1604 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-10.jpg",
         "alt": "The Cahaba CS-1604 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-11.jpg",
         "alt": "The Cahaba CS-1604 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Cahaba CS-1604 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       },
       {
         "src": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/images/3DTour.png",
         "alt": "The Cahaba CS-1604 home photo 24",
         "category": "other" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231596/Cahaba%20CS-1604-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/231596/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/231596/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=ZzFt31RGVjL",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231596-5774/easy-homesource/hernando/creekside-series/the-cahaba-cs-1604/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231596/creekside-series/the-cahaba-cs-1604/"
   },
   "callaway-cs-3215": {
     "slug": "callaway-cs-3215",
@@ -5287,165 +5287,165 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-1.jpg",
         "alt": "The Callaway CS-3215 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215%20floor-plans-SMALL_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-1_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-2_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-3_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-4_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-5_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-6_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-7_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215%20floor-plans-SMALL.jpg",
         "alt": "The Callaway CS-3215 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-8_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-9_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-10_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-11_thumb_xxl.jpg",
         "alt": "The Callaway CS-3215 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-2.jpg",
         "alt": "The Callaway CS-3215 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-3.jpg",
         "alt": "The Callaway CS-3215 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-4.jpg",
         "alt": "The Callaway CS-3215 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-5.jpg",
         "alt": "The Callaway CS-3215 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-6.jpg",
         "alt": "The Callaway CS-3215 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-7.jpg",
         "alt": "The Callaway CS-3215 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-8.jpg",
         "alt": "The Callaway CS-3215 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-9.jpg",
         "alt": "The Callaway CS-3215 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-10.jpg",
         "alt": "The Callaway CS-3215 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-11.jpg",
         "alt": "The Callaway CS-3215 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Callaway CS-3215 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       },
       {
         "src": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/images/3DTour.png",
         "alt": "The Callaway CS-3215 home photo 26",
         "category": "other" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231597/The%20Callaway%20CS-3215-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/231597/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/231597/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=CPdG61md8hp",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231597-5774/easy-homesource/hernando/creekside-series/the-callaway-cs-3215/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231597/creekside-series/the-callaway-cs-3215/"
   },
   "cheaha-cs-1620": {
     "slug": "cheaha-cs-1620",
@@ -5454,177 +5454,177 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/1620_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-1_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-2_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-4_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-3_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-int-1_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-int-2_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-1_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-2_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-3_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-1_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-2_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-3_thumb_xxl.jpg",
         "alt": "The Cheaha CS-1620 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-1.jpg",
         "alt": "The Cheaha CS-1620 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Cheaha CS-1620 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/1620.jpg",
         "alt": "The Cheaha CS-1620 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-2.jpg",
         "alt": "The Cheaha CS-1620 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-4.jpg",
         "alt": "The Cheaha CS-1620 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-kit-3.jpg",
         "alt": "The Cheaha CS-1620 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-int-1.jpg",
         "alt": "The Cheaha CS-1620 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-int-2.jpg",
         "alt": "The Cheaha CS-1620 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-1.jpg",
         "alt": "The Cheaha CS-1620 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-2.jpg",
         "alt": "The Cheaha CS-1620 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bed-3.jpg",
         "alt": "The Cheaha CS-1620 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-1.jpg",
         "alt": "The Cheaha CS-1620 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-2.jpg",
         "alt": "The Cheaha CS-1620 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/The%20Cheaha%20CS-162-THO-bath-3.jpg",
         "alt": "The Cheaha CS-1620 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       },
       {
         "src": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/images/3DTour.png",
         "alt": "The Cheaha CS-1620 home photo 28",
         "category": "other" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233372/1620_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233372/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233372/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=M6KihUu3HDV",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233372-5774/easy-homesource/hernando/creekside-series/the-cheaha-cs-1620/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233372/creekside-series/the-cheaha-cs-1620/"
   },
   "canyon-creek-cs-1622": {
     "slug": "canyon-creek-cs-1622",
@@ -5633,249 +5633,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-1.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/1622_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-4_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-5_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-6_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-7_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-4_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-5_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-6_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bath-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bath-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bath-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bath-4_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bath-5_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-uti-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-uti-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-uti-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-ext-1_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-ext-2_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-ext-3_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-ext-4_thumb_xxl.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-2.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-3.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-1.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-2.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-3.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-4.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-5.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-6.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-kit-7.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-bed-1.jpg",
         "alt": "The Canyon Creek CS-1622 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233555/Biloxi-24-The%20Canyon%20Creek%20CS-1622-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233555/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233555/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=TG8nGFeZetV",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233555-5774/easy-homesource/hernando/creekside-series/the-canyon-creek-cs-1622/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233555/creekside-series/the-canyon-creek-cs-1622/"
   },
   "twin-creek-cs-3242": {
     "slug": "twin-creek-cs-3242",
@@ -5884,249 +5884,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-1.jpg",
         "alt": "The Twin Creek CS-3242 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/3242_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-2_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-5_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-2_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-2_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-5_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bed-6_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-2_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-5_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-6_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-bath-7_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-uti-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-uti-2_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-uti-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-uti-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-uti-5_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-ext-1_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-ext-3_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-ext-4_thumb_xxl.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-2.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-3.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-4.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-5.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-1.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-2.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-3.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-int-4.jpg",
         "alt": "The Twin Creek CS-3242 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233556/Biloxi-24-The%20Twin%20Creek%20CS-3242-kit-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233556/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233556/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=YwWBDeq7iXp",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233556-5774/easy-homesource/hernando/creekside-series/the-twin-creek-cs-3242/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233556/creekside-series/the-twin-creek-cs-3242/"
   },
   "shoal-creek-cs-3241": {
     "slug": "shoal-creek-cs-3241",
@@ -6135,249 +6135,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-1.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/3241_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/the%20shoal%20creek%20extra%20FP_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-3_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-4_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-3_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-4_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-5_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-6_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-7_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-8_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bed-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bed-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bath-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bath-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bath-3_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bath-4_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bath-5_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-uti-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-uti-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-uti-3_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-uti-4_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-ext-1_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-ext-2_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bed-3_thumb_xxl.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-3.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-4.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-1.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-2.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-3.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-4.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-5.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-6.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-7.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-kit-8.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-bed-1.jpg",
         "alt": "The Shoal Creek CS-3241 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233557/Biloxi-24-The%20Shoal%20Creek%20CS-3241-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233557/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233557/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=Rh8SxsjBj8z",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233557-5774/easy-homesource/hernando/creekside-series/the-shoal-creek-cs-3241/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233557/creekside-series/the-shoal-creek-cs-3241/"
   },
   "shades-creek-cs-3248": {
     "slug": "shades-creek-cs-3248",
@@ -6386,249 +6386,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-1.jpg",
         "alt": "The Shades Creek CS-3248 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/shades%20creek_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-1_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-2_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-3_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-4_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-1_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-2_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-3_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-4_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-5_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-6_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-7_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-1_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-2_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-3_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-4_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-5_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bath-1_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bath-2_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bath-3_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bath-4_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-uti-1_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-uti-2_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-uti-3_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-ext-01_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-ext-02_thumb_xxl.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-2.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-3.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-4.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-1.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-2.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-3.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-4.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-5.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-6.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-kit-7.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-1.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-2.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-bed-3.jpg",
         "alt": "The Shades Creek CS-3248 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234817/The%20Shades%20Creek%20CS-3248-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/234817/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/234817/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=f8NNNVshw5a",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234817-5774/easy-homesource/hernando/creekside-series/the-shades-creek-cs-3248/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234817/creekside-series/the-shades-creek-cs-3248/"
   },
   "patton-creek-cs-3249": {
     "slug": "patton-creek-cs-3249",
@@ -6637,249 +6637,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-1.jpg",
         "alt": "The Patton Creek CS-3249 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/patton%20creek_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-3_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-4_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-5_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-3_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-4_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-5_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-6_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bed-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bed-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bed-3_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bed-4_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bed-5_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-3_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-4_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-5_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-6_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-bath-7_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-uti-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-uti-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-uti-3_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-ext-1_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-ext-2_thumb_xxl.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-2.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-3.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-4.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-5.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-1.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-2.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-3.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-4.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-5.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-kit-6.jpg",
         "alt": "The Patton Creek CS-3249 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234818/The%20Patton%20Creek%20CS-3249-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/234818/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/234818/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=GFRAXJKRZyY",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234818-5774/easy-homesource/hernando/creekside-series/the-patton-creek-cs-3249/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234818/creekside-series/the-patton-creek-cs-3249/"
   },
   "caney-creek-cs-1623": {
     "slug": "caney-creek-cs-1623",
@@ -6888,249 +6888,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/caney_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-3_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-4_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-5_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-66_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-3_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-4_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-3_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-4_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bath-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bath-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-uti-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-uti-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-ext-1_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-ext-2_thumb_xxl.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-2.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-3.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-4.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-5.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-66.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-2.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-3.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-int-4.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-2.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-3.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bed-4.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bath-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-bath-2.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-uti-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-uti-2.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-ext-1.jpg",
         "alt": "The Caney Creek CS-1623 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/234819/The%20Caney%20Creek%20CS-1623-kit-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/234819/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/234819/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=bFgE9ba3uT7",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234819-5774/easy-homesource/hernando/creekside-series/the-caney-creek-cs-1623/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/234819/creekside-series/the-caney-creek-cs-1623/"
   },
   "keystone-cs-1625": {
     "slug": "keystone-cs-1625",
@@ -7139,249 +7139,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-1.jpg",
         "alt": "The Keystone CS-1625 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/1625_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/1625%20elevation_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-4_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-4_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/TheKeystoneext_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-2.jpg",
         "alt": "The Keystone CS-1625 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-2.jpg",
         "alt": "The Keystone CS-1625 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-3.jpg",
         "alt": "The Keystone CS-1625 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-4.jpg",
         "alt": "The Keystone CS-1625 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-1.jpg",
         "alt": "The Keystone CS-1625 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-2.jpg",
         "alt": "The Keystone CS-1625 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-3.jpg",
         "alt": "The Keystone CS-1625 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bed-4.jpg",
         "alt": "The Keystone CS-1625 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-1.jpg",
         "alt": "The Keystone CS-1625 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-2.jpg",
         "alt": "The Keystone CS-1625 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-bath-3.jpg",
         "alt": "The Keystone CS-1625 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-1.jpg",
         "alt": "The Keystone CS-1625 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-2.jpg",
         "alt": "The Keystone CS-1625 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-uti-3.jpg",
         "alt": "The Keystone CS-1625 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-kit-1.jpg",
         "alt": "The Keystone CS-1625 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-3.jpg",
         "alt": "The Keystone CS-1625 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Keystone CS-1625 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/1625.jpg",
         "alt": "The Keystone CS-1625 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/1625%20elevation.jpg",
         "alt": "The Keystone CS-1625 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237147/The%20Keystone%20CS-1625-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237147/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237147/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=BE4o58fVoNM",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237147-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237147/creekside-series/the-keystone-cs-1625/"
   },
   "little-creek-cs-3243": {
     "slug": "little-creek-cs-3243",
@@ -7390,33 +7390,33 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237173/3243_thumb_xxl.jpg",
         "alt": "The Little Creek CS-3243 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173-5774/easy-homesource/hernando/creekside-series/the-little-creek-cs-3243/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173/creekside-series/the-little-creek-cs-3243/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237173/3243.jpg",
         "alt": "The Little Creek CS-3243 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173-5774/easy-homesource/hernando/creekside-series/the-little-creek-cs-3243/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173/creekside-series/the-little-creek-cs-3243/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Little Creek CS-3243 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173-5774/easy-homesource/hernando/creekside-series/the-little-creek-cs-3243/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173/creekside-series/the-little-creek-cs-3243/"
       },
       {
         "src": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/images/3DTour.png",
         "alt": "The Little Creek CS-3243 home photo 4",
         "category": "other" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173-5774/easy-homesource/hernando/creekside-series/the-little-creek-cs-3243/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237173/creekside-series/the-little-creek-cs-3243/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237173/3243_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237173/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237173/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=BEJK9N41ChJ",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237173-5774/easy-homesource/hernando/creekside-series/the-little-creek-cs-3243/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237173/creekside-series/the-little-creek-cs-3243/"
   },
   "south-fork-cs-3268": {
     "slug": "south-fork-cs-3268",
@@ -7425,249 +7425,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-int-01.jpg",
         "alt": "The South Fork CS-3268 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/3268_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-int-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-int-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-03_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-04_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-05_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-04_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-03_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-04_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-03_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-03_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-04_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-ext-01_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-ext-02_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-ext-03_thumb_xxl.jpg",
         "alt": "The South Fork CS-3268 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-int-02.jpg",
         "alt": "The South Fork CS-3268 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-01.jpg",
         "alt": "The South Fork CS-3268 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-02.jpg",
         "alt": "The South Fork CS-3268 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-03.jpg",
         "alt": "The South Fork CS-3268 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-kit-04.jpg",
         "alt": "The South Fork CS-3268 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-01.jpg",
         "alt": "The South Fork CS-3268 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-05.jpg",
         "alt": "The South Fork CS-3268 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-02.jpg",
         "alt": "The South Fork CS-3268 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-04.jpg",
         "alt": "The South Fork CS-3268 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bed-03.jpg",
         "alt": "The South Fork CS-3268 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-01.jpg",
         "alt": "The South Fork CS-3268 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-04.jpg",
         "alt": "The South Fork CS-3268 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-03.jpg",
         "alt": "The South Fork CS-3268 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-bath-02.jpg",
         "alt": "The South Fork CS-3268 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-01.jpg",
         "alt": "The South Fork CS-3268 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-uti-02.jpg",
         "alt": "The South Fork CS-3268 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237680/The%20South%20Fork%20CS-3268-int-01.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237680/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237680/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=seYi64JWu5u",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237680-5774/easy-homesource/hernando/creekside-series/the-south-fork-cs-3268/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237680/creekside-series/the-south-fork-cs-3268/"
   },
   "mountain-laurel-cs-3290": {
     "slug": "mountain-laurel-cs-3290",
@@ -7676,249 +7676,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-1.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/3290_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-3_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-4_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-3_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-4_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-5_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-3_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-4_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-5_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-6_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bath-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bath-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bath-3_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-uti-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-uti-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-ext-1_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-ext-2_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-ext-3_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-ext-4_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-ext-5_thumb_xxl.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-2.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-3.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-4.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-1.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-2.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-3.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-4.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-kit-5.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-1.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-2.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-3.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-4.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-bed-5.jpg",
         "alt": "The Mountain Laurel CS-3290 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237681/The%20Mountain%20Laurel%20CS-3290-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237681/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237681/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=9cStxbNXwvv",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237681-5774/easy-homesource/hernando/creekside-series/the-mountain-laurel-cs-3290/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237681/creekside-series/the-mountain-laurel-cs-3290/"
   },
   "keystone-cs-1625-2": {
     "slug": "keystone-cs-1625-2",
@@ -7927,225 +7927,225 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-int-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/1625_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-int-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-int-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-4_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-3_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-uti-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-uti-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-ext-1_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-ext-2_thumb_xxl.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-int-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-kit-3.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-3.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bed-4.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-bath-3.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-uti-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-uti-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-ext-1.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-ext-2.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/1625.jpg",
         "alt": "The Keystone CS-1625-2 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       },
       {
         "src": "https://www.timbercreekhousing.com/wp-content/plugins/mfh/images/3DTour.png",
         "alt": "The Keystone CS-1625-2 home photo 36",
         "category": "other" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237682/The%20Keystone%20CS-1625-2-int-1.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237682/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237682/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=VE1KQjCUFjY",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237682-5774/easy-homesource/hernando/creekside-series/the-keystone-cs-1625-2/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237682/creekside-series/the-keystone-cs-1625-2/"
   },
   "willow-oak-cs-3229": {
     "slug": "willow-oak-cs-3229",
@@ -8154,249 +8154,249 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/willow%20oak%20floor-plans-SMALL_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-1_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-2_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-3_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-4_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-5_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 6",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-6_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 7",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-7_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 8",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-08_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 9",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-8_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 10",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-9_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 11",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-10_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 12",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-11_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 13",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-12_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 14",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-13_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 15",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-14_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 16",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-15_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 17",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-16_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 18",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-17_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 19",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-18_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 20",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-19_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 21",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-20_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 22",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-21_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 23",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-22_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 24",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-23_thumb_xxl.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 25",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-1.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 26",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 27",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/willow%20oak%20floor-plans-SMALL.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 28",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-2.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 29",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-3.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 30",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-4.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 31",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-5.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 32",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-6.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 33",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-7.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 34",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-08.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 35",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-8.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 36",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-9.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 37",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-10.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 38",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-11.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 39",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/3229-12.jpg",
         "alt": "The Willow Oak CS-3229 floor plan 40",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232347/willow%20oak%20floor-plans-SMALL_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/232347/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/232347/",
     "videoUrl": null,
     "virtualTourUrl": "https://my.matterport.com/show/?m=bQ9tT1ywZW9",
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/232347-5774/easy-homesource/hernando/creekside-series/the-willow-oak-cs-3229/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/232347/creekside-series/the-willow-oak-cs-3229/"
   },
   "chickasaw-extra-cs-3214": {
     "slug": "chickasaw-extra-cs-3214",
@@ -8405,27 +8405,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231601/The%20Chickasaw%20Extra%20CS-3214%20floor-plans-SMALL.jpg",
         "alt": "The Chickasaw Extra CS-3214 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601-5774/easy-homesource/hernando/creekside-series/the-chickasaw-extra-cs-3214/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601/creekside-series/the-chickasaw-extra-cs-3214/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231601/The%20Chickasaw%20Extra%20CS-3214%20floor-plans-SMALL_thumb_xxl.jpg",
         "alt": "The Chickasaw Extra CS-3214 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601-5774/easy-homesource/hernando/creekside-series/the-chickasaw-extra-cs-3214/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601/creekside-series/the-chickasaw-extra-cs-3214/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Chickasaw Extra CS-3214 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601-5774/easy-homesource/hernando/creekside-series/the-chickasaw-extra-cs-3214/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/231601/creekside-series/the-chickasaw-extra-cs-3214/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231601/The%20Chickasaw%20Extra%20CS-3214%20floor-plans-SMALL.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/231601/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/231601/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231601-5774/easy-homesource/hernando/creekside-series/the-chickasaw-extra-cs-3214/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/231601/creekside-series/the-chickasaw-extra-cs-3214/"
   },
   "willow-oak-extra-cs-3232": {
     "slug": "willow-oak-extra-cs-3232",
@@ -8434,27 +8434,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232706/floor-plans-SMALL_thumb_xxl.jpg",
         "alt": "The Willow Oak Extra CS-3232 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706-5774/easy-homesource/hernando/creekside-series/the-willow-oak-extra-cs-3232/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706/creekside-series/the-willow-oak-extra-cs-3232/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232706/floor-plans-SMALL.jpg",
         "alt": "The Willow Oak Extra CS-3232 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706-5774/easy-homesource/hernando/creekside-series/the-willow-oak-extra-cs-3232/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706/creekside-series/the-willow-oak-extra-cs-3232/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Willow Oak Extra CS-3232 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706-5774/easy-homesource/hernando/creekside-series/the-willow-oak-extra-cs-3232/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/232706/creekside-series/the-willow-oak-extra-cs-3232/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/232706/floor-plans-SMALL_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/232706/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/232706/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/232706-5774/easy-homesource/hernando/creekside-series/the-willow-oak-extra-cs-3232/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/232706/creekside-series/the-willow-oak-extra-cs-3232/"
   },
   "big-mulberry-cs-3230": {
     "slug": "big-mulberry-cs-3230",
@@ -8463,27 +8463,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233371/The%20Big%20Mulberry%20CS-3230.jpg",
         "alt": "The Big Mulberry CS-3230 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371-5774/easy-homesource/hernando/creekside-series/the-big-mulberry-cs-3230/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371/creekside-series/the-big-mulberry-cs-3230/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233371/The%20Big%20Mulberry%20CS-3230_thumb_xxl.jpg",
         "alt": "The Big Mulberry CS-3230 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371-5774/easy-homesource/hernando/creekside-series/the-big-mulberry-cs-3230/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371/creekside-series/the-big-mulberry-cs-3230/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Big Mulberry CS-3230 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371-5774/easy-homesource/hernando/creekside-series/the-big-mulberry-cs-3230/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233371/creekside-series/the-big-mulberry-cs-3230/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233371/The%20Big%20Mulberry%20CS-3230.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233371/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233371/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233371-5774/easy-homesource/hernando/creekside-series/the-big-mulberry-cs-3230/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233371/creekside-series/the-big-mulberry-cs-3230/"
   },
   "gloria-csfl-3302": {
     "slug": "gloria-csfl-3302",
@@ -8492,27 +8492,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233641/The%20Gloria%20CSFL-3302.jpg",
         "alt": "The Gloria CSFL-3302 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641-5774/easy-homesource/hernando/creekside-series/the-gloria-csfl-3302/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641/creekside-series/the-gloria-csfl-3302/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233641/The%20Gloria%20CSFL-3302_thumb_xxl.jpg",
         "alt": "The Gloria CSFL-3302 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641-5774/easy-homesource/hernando/creekside-series/the-gloria-csfl-3302/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641/creekside-series/the-gloria-csfl-3302/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Gloria CSFL-3302 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641-5774/easy-homesource/hernando/creekside-series/the-gloria-csfl-3302/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233641/creekside-series/the-gloria-csfl-3302/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233641/The%20Gloria%20CSFL-3302.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233641/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233641/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233641-5774/easy-homesource/hernando/creekside-series/the-gloria-csfl-3302/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233641/creekside-series/the-gloria-csfl-3302/"
   },
   "carolina-csfl-3300": {
     "slug": "carolina-csfl-3300",
@@ -8521,27 +8521,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233644/carolina_thumb_xxl.jpg",
         "alt": "The Carolina CSFL-3300 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644-5774/easy-homesource/hernando/creekside-series/the-carolina-csfl-3300/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644/creekside-series/the-carolina-csfl-3300/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233644/carolina.jpg",
         "alt": "The Carolina CSFL-3300 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644-5774/easy-homesource/hernando/creekside-series/the-carolina-csfl-3300/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644/creekside-series/the-carolina-csfl-3300/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Carolina CSFL-3300 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644-5774/easy-homesource/hernando/creekside-series/the-carolina-csfl-3300/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/233644/creekside-series/the-carolina-csfl-3300/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/233644/carolina_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/233644/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/233644/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233644-5774/easy-homesource/hernando/creekside-series/the-carolina-csfl-3300/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/233644/creekside-series/the-carolina-csfl-3300/"
   },
   "susie-q5-csfl-3304": {
     "slug": "susie-q5-csfl-3304",
@@ -8550,27 +8550,27 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235438/The%20Susie%20Q5%20CSFL-3304.jpg",
         "alt": "The Susie Q5 CSFL-3304 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438-5774/easy-homesource/hernando/creekside-series/the-susie-q5-csfl-3304/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438/creekside-series/the-susie-q5-csfl-3304/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235438/The%20Susie%20Q5%20CSFL-3304_thumb_xxl.jpg",
         "alt": "The Susie Q5 CSFL-3304 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438-5774/easy-homesource/hernando/creekside-series/the-susie-q5-csfl-3304/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438/creekside-series/the-susie-q5-csfl-3304/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Susie Q5 CSFL-3304 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438-5774/easy-homesource/hernando/creekside-series/the-susie-q5-csfl-3304/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/235438/creekside-series/the-susie-q5-csfl-3304/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235438/The%20Susie%20Q5%20CSFL-3304.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/235438/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/235438/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235438-5774/easy-homesource/hernando/creekside-series/the-susie-q5-csfl-3304/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/235438/creekside-series/the-susie-q5-csfl-3304/"
   },
   "keystone-3-cs-1626": {
     "slug": "keystone-3-cs-1626",
@@ -8579,39 +8579,39 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237148/1626_thumb_xxl.jpg",
         "alt": "The Keystone 3 CS-1626 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237148/16261_thumb_xxl.jpg",
         "alt": "The Keystone 3 CS-1626 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237148/1626.jpg",
         "alt": "The Keystone 3 CS-1626 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Keystone 3 CS-1626 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237148/16261.jpg",
         "alt": "The Keystone 3 CS-1626 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237148/1626_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237148/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237148/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237148-5774/easy-homesource/hernando/creekside-series/the-keystone-3-cs-1626/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237148/creekside-series/the-keystone-3-cs-1626/"
   },
   "low-country-extra-cs-3264": {
     "slug": "low-country-extra-cs-3264",
@@ -8620,39 +8620,39 @@ export const manufacturerMedia: HomeMediaManifest = {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237150/3264_thumb_xxl.jpg",
         "alt": "The Low Country Extra CS-3264 floor plan",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/",
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/",
         "isPrimary": true
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237150/32641_thumb_xxl.jpg",
         "alt": "The Low Country Extra CS-3264 floor plan 2",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237150/3264.jpg",
         "alt": "The Low Country Extra CS-3264 floor plan 3",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/2939/floorplan/223727/the-grove-floor-plans.jpg",
         "alt": "The Low Country Extra CS-3264 floor plan 4",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/"
       },
       {
         "src": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237150/32641.jpg",
         "alt": "The Low Country Extra CS-3264 floor plan 5",
         "category": "floorplan" as const,
-        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/"
+        "sourceUrl": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/"
       }
     ],
     "floorPlanImage": "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237150/3264_thumb_xxl.jpg",
-    "brochureUrl": "https://www.timbercreekhousing.com/brochure/dealer/5774/237150/",
+    "brochureUrl": "https://www.timbercreekhousing.com/brochure/manufacturer/3391/237150/",
     "videoUrl": null,
     "virtualTourUrl": null,
-    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237150-5774/easy-homesource/hernando/creekside-series/the-low-country-extra-cs-3264/"
+    "sourcePage": "https://www.timbercreekhousing.com/floorplan/237150/creekside-series/the-low-country-extra-cs-3264/"
   },
   "tulip": {
     "slug": "tulip",
