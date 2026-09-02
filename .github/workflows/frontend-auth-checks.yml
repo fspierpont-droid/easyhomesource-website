@@ -68,3 +68,96 @@ jobs:
         run: npm run test:ghl
       - name: Build production Next.js app
         run: npm run build
+      - name: Smoke test public site navigation
+        shell: bash
+        run: |
+          npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/ehs-next.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+
+          ready=0
+          for attempt in {1..30}; do
+            if curl --silent --fail http://127.0.0.1:3000/homes > /dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" -ne 1 ]; then
+            echo "Next.js server did not become ready."
+            cat /tmp/ehs-next.log
+            exit 1
+          fi
+
+          routes=(
+            "/"
+            "/about"
+            "/contact"
+            "/delivery-setup"
+            "/featured-homes"
+            "/financing"
+            "/get-quote"
+            "/homes"
+            "/how-it-works"
+            "/packages"
+            "/privacy"
+            "/properties"
+            "/property-packages"
+            "/special-offers"
+            "/terms"
+            "/videos"
+            "/robots.txt"
+            "/sitemap.xml"
+          )
+
+          for route in "${routes[@]}"; do
+            status=$(curl --location --silent --output /tmp/ehs-route.html --write-out "%{http_code}" "http://127.0.0.1:3000${route}")
+            echo "${route} -> ${status}"
+            if [ "$status" != "200" ]; then
+              echo "Expected HTTP 200 for ${route}, got ${status}."
+              cat /tmp/ehs-next.log
+              exit 1
+            fi
+          done
+
+          python - <<'PY'
+          import re
+          import sys
+          import urllib.error
+          import urllib.request
+
+          base = "http://127.0.0.1:3000"
+          with urllib.request.urlopen(f"{base}/sitemap.xml", timeout=20) as response:
+              sitemap = response.read().decode("utf-8")
+
+          paths = sorted(set(re.findall(r"<loc>https?://[^/]+(/homes/[^<]+)</loc>", sitemap)))
+          print(f"Discovered {len(paths)} public home detail routes from sitemap.")
+          if len(paths) < 200:
+              print("Expected at least 200 public home detail routes; sitemap coverage is unexpectedly low.")
+              sys.exit(1)
+
+          failures = []
+          for index, path in enumerate(paths, start=1):
+              try:
+                  with urllib.request.urlopen(f"{base}{path}", timeout=30) as response:
+                      status = response.status
+              except urllib.error.HTTPError as error:
+                  status = error.code
+              except Exception as error:
+                  failures.append((path, str(error)))
+                  continue
+
+              if status != 200:
+                  failures.append((path, f"HTTP {status}"))
+              elif index % 25 == 0 or index == len(paths):
+                  print(f"Verified {index}/{len(paths)} home routes.")
+
+          if failures:
+              print("Home detail route failures:")
+              for path, reason in failures:
+                  print(f"- {path}: {reason}")
+              sys.exit(1)
+
+          print(f"All {len(paths)} public home detail routes returned HTTP 200.")
+          PY

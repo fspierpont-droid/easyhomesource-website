@@ -11,16 +11,18 @@ import { getPublicCatalog, getPublicCatalogHome } from "@/lib/catalog/catalogAut
 import { publicSiteUrl } from "@/lib/seo/siteIdentity";
 
 const startingPriceDisclaimer = "Starting price does not include delivery, setup, taxes, permits, site work, utility connections, skirting, steps, or selected options.";
+type HomeDetailParams = Promise<{ slug: string }>;
 
 export function generateStaticParams() {
   return baselineHomes.map((home) => ({ slug: home.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const home = await getPublicCatalogHome(params.slug);
+export async function generateMetadata({ params }: { params: HomeDetailParams }): Promise<Metadata> {
+  const { slug } = await params;
+  const home = await getPublicCatalogHome(slug);
   const title = home?.seoTitle ?? (home ? `${home.name} | Easy HomeSource` : "Home Details | Easy HomeSource");
   const description = home?.seoDescription ?? home?.shortDescription ?? "View manufactured home details from Easy HomeSource in Brooksville, Florida.";
-  const canonical = home ? `/homes/${home.slug}` : `/homes/${params.slug}`;
+  const canonical = home ? `/homes/${home.slug}` : `/homes/${slug}`;
   const image = home?.image || home?.gallery?.[0]?.src;
 
   return {
@@ -41,9 +43,10 @@ function jsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
-export default async function HomeDetailPage({ params }: { params: { slug: string } }) {
+export default async function HomeDetailPage({ params }: { params: HomeDetailParams }) {
+  const { slug } = await params;
   const catalog = await getPublicCatalog();
-  const home = catalog.find((item) => item.slug === params.slug);
+  const home = catalog.find((item) => item.slug === slug);
   if (!home) notFound();
 
   const homeTitle = home.displayName ?? home.name;
