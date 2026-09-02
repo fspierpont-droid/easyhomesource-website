@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - 'scripts/import-manufacturer-media.ts'
+      - 'scripts/import-manufacturer-media-browser.ts'
       - 'data/catalogHomeSeeds.ts'
       - 'data/timberCreekCatalog.ts'
+      - 'package.json'
       - '.github/workflows/manufacturer-media-enrichment.yml'
   workflow_dispatch:
 
