@@ -8,7 +8,7 @@ on:
       - '.github/workflows/backend-checks.yml'
   push:
     branches:
-      - 'codex/permanent-backend-migration'
+      - 'main'
     paths:
       - 'backend/**'
       - 'render.yaml'
