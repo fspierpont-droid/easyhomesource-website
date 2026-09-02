@@ -68,7 +68,7 @@ jobs:
         run: npm run test:ghl
       - name: Build production Next.js app
         run: npm run build
-      - name: Smoke test public home detail routes
+      - name: Smoke test public site navigation
         shell: bash
         run: |
           npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/ehs-next.log 2>&1 &
@@ -91,6 +91,24 @@ jobs:
           fi
 
           routes=(
+            "/"
+            "/about"
+            "/contact"
+            "/delivery-setup"
+            "/featured-homes"
+            "/financing"
+            "/get-quote"
+            "/homes"
+            "/how-it-works"
+            "/packages"
+            "/privacy"
+            "/properties"
+            "/property-packages"
+            "/special-offers"
+            "/terms"
+            "/videos"
+            "/robots.txt"
+            "/sitemap.xml"
             "/homes/tulip"
             "/homes/dogwood"
             "/homes/born-to-run"
