@@ -68,3 +68,43 @@ jobs:
         run: npm run test:ghl
       - name: Build production Next.js app
         run: npm run build
+      - name: Smoke test public home detail routes
+        shell: bash
+        run: |
+          npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/ehs-next.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+
+          ready=0
+          for attempt in {1..30}; do
+            if curl --silent --fail http://127.0.0.1:3000/homes > /dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" -ne 1 ]; then
+            echo "Next.js server did not become ready."
+            cat /tmp/ehs-next.log
+            exit 1
+          fi
+
+          routes=(
+            "/homes/tulip"
+            "/homes/dogwood"
+            "/homes/born-to-run"
+            "/homes/paxton"
+            "/homes/boujee-xl-2"
+            "/homes/white-oak"
+          )
+
+          for route in "${routes[@]}"; do
+            status=$(curl --location --silent --output /tmp/ehs-route.html --write-out "%{http_code}" "http://127.0.0.1:3000${route}")
+            echo "${route} -> ${status}"
+            if [ "$status" != "200" ]; then
+              echo "Expected HTTP 200 for ${route}, got ${status}."
+              cat /tmp/ehs-next.log
+              exit 1
+            fi
+          done
