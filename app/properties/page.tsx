@@ -1,19 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PublicFloridaPropertyMap } from '@/components/PublicFloridaPropertyMap';
 import { LandHomePackagesBrowser } from '@/components/LandHomePackagesBrowser';
 import { LeadForm } from '@/components/LeadForm';
-import { INITIAL_PROPERTIES } from '@/lib/db/propertyStore';
+import type { Property } from '@/types/property';
 
 export default function PropertiesPage() {
   const [activeTab, setActiveTab] = useState<'map' | 'packages'>('map');
-  const publicProperties = INITIAL_PROPERTIES.filter((p) => p.publicVisible);
+  const [publicProperties, setPublicProperties] = useState<Property[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const loadProperties = useCallback(async () => {
+    setIsLoading(true);
+    setLoadError(null);
+    try {
+      const response = await fetch('/api/portal/properties/public', { cache: 'no-store' });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload?.success || !Array.isArray(payload?.properties)) {
+        throw new Error(payload?.error || 'Property inventory is temporarily unavailable.');
+      }
+      setPublicProperties(payload.properties);
+    } catch (error) {
+      setPublicProperties([]);
+      setLoadError(error instanceof Error ? error.message : 'Property inventory is temporarily unavailable.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadProperties();
+  }, [loadProperties]);
 
   return (
     <main className="px-4 py-8 sm:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
-        {/* Header Hero Section */}
         <section className="rounded-2xl bg-ehsSoftBlue p-5 sm:p-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
@@ -24,11 +47,10 @@ export default function PropertiesPage() {
                 Land &amp; Home Packages in Central Florida
               </h1>
               <p className="mt-2.5 max-w-4xl text-sm sm:text-base leading-relaxed text-ehsBlack/75">
-                Bring the property, manufactured home, delivery, site prep, permitting, and utilities together into one stress-free turnkey package. Compare available homesites and move-in ready properties across Hernando, Citrus, and Pasco counties.
+                Bring the property, manufactured home, delivery, site prep, permitting, and utilities together into one stress-free turnkey package. Explore verified available and coming-soon EHS homesites on the live map.
               </p>
             </div>
 
-            {/* View Switcher Toggle (Map is now default!) */}
             <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-borderGray shadow-2xs shrink-0 self-start md:self-auto text-xs font-bold">
               <button
                 type="button"
@@ -66,23 +88,40 @@ export default function PropertiesPage() {
               💳 Combined Land-Home Financing
             </div>
           </div>
+
+          {!isLoading && !loadError && (
+            <div className="mt-4 text-xs font-bold text-ehsNavy/70">
+              {publicProperties.length} verified EHS land/home opportunities currently published
+            </div>
+          )}
         </section>
 
-        {/* View 1: Moveable & Zoomable Interactive Map (Default View) */}
-        {activeTab === 'map' && (
+        {isLoading ? (
+          <section className="rounded-2xl border border-borderGray bg-white p-10 text-center text-sm font-semibold text-slate-500">
+            Loading live EHS property inventory…
+          </section>
+        ) : loadError ? (
+          <section className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center">
+            <h2 className="text-base font-black text-rose-800">Property inventory temporarily unavailable</h2>
+            <p className="mt-2 text-sm text-rose-700">{loadError}</p>
+            <button
+              type="button"
+              onClick={() => void loadProperties()}
+              className="mt-4 rounded-xl bg-ehsDeepBlue px-4 py-2 text-xs font-black text-white"
+            >
+              Retry live inventory
+            </button>
+          </section>
+        ) : activeTab === 'map' ? (
           <div className="space-y-4 animate-in fade-in duration-200">
             <PublicFloridaPropertyMap properties={publicProperties} />
           </div>
-        )}
-
-        {/* View 2: Package Deals Browser */}
-        {activeTab === 'packages' && (
+        ) : (
           <div className="animate-in fade-in duration-200">
             <LandHomePackagesBrowser initialProperties={publicProperties} />
           </div>
         )}
 
-        {/* How Turnkey Packages Work */}
         <section className="rounded-2xl border border-borderGray bg-white p-6 sm:p-8 space-y-6">
           <div>
             <p className="text-xs font-black uppercase tracking-wider text-ehsBlue">
@@ -110,7 +149,7 @@ export default function PropertiesPage() {
               </span>
               <h3 className="font-extrabold text-sm text-ehsNavy">Choose Your Home</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Match your property with models starting from $39,888 up to luxury 4 &amp; 5-bedroom double wides.
+                Match the homesite with the manufactured-home model that best fits the property, household and budget.
               </p>
             </div>
 
@@ -120,7 +159,7 @@ export default function PropertiesPage() {
               </span>
               <h3 className="font-extrabold text-sm text-ehsNavy">Turnkey Setup &amp; Utilities</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                We handle freight, tie-downs, well &amp; septic hookups, A/C installation, and Hernando/Citrus county permits.
+                EHS coordinates the home, delivery, site work and permitting scope while third-party and jurisdictional costs are verified before final pricing.
               </p>
             </div>
 
@@ -128,15 +167,14 @@ export default function PropertiesPage() {
               <span className="w-6 h-6 rounded-full bg-ehsDeepBlue text-white font-black text-xs flex items-center justify-center">
                 4
               </span>
-              <h3 className="font-extrabold text-sm text-ehsNavy">Single Monthly Payment</h3>
+              <h3 className="font-extrabold text-sm text-ehsNavy">Build the Financing Plan</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Roll the land, home, delivery, and site work into one mortgage loan (FHA, VA, USDA, or Conventional).
+                Explore financing paths for the home and land package based on lender eligibility, property details and verified project costs.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Lead Quote Form */}
         <div className="mt-8">
           <LeadForm cta="Request Package Pricing" />
         </div>

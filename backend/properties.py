@@ -164,8 +164,16 @@ def _public_property(document: dict) -> dict:
 
 @router.get("/public")
 async def list_public_properties() -> list[dict]:
+    # Public visibility is a two-part approval: an employee must explicitly
+    # mark the record public, and the operational status must be market-ready.
+    # This prevents STATUS_TO_CONFIRM, under-contract or sold records from
+    # leaking onto the consumer map through a mistaken visibility toggle.
     documents = await get_db().properties.find(
-        {"archived": {"$ne": True}, "public_visible": True},
+        {
+            "archived": {"$ne": True},
+            "public_visible": True,
+            "status": {"$in": ["AVAILABLE", "COMING_SOON"]},
+        },
         {"_id": 0},
     ).sort([("featured", -1), ("display_order", 1), ("city", 1)]).to_list(2000)
     return [_public_property(document) for document in documents]
