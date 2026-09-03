@@ -5,7 +5,14 @@ import type { PropertyStatus, PropertyType } from '@/types/property';
 
 export async function GET(request: Request) {
   try {
-    const backend = await permanentApiRequest(request, '/api/properties');
+    const url = new URL(request.url);
+    const { searchParams } = url;
+    const includeArchived = searchParams.get('include_archived') === 'true';
+    const backendPath = includeArchived
+      ? '/api/properties?include_archived=true'
+      : '/api/properties';
+
+    const backend = await permanentApiRequest(request, backendPath);
     if (!backend.ok) {
       const error = await backend.json().catch(() => ({}));
       return NextResponse.json(
@@ -19,7 +26,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: false, error: 'Permanent property API returned invalid data.' }, { status: 502 });
     }
 
-    const { searchParams } = new URL(request.url);
     const search = searchParams.get('search')?.toLowerCase().trim() || '';
     const status = searchParams.get('status') as PropertyStatus | null;
     const propertyType = searchParams.get('propertyType') as PropertyType | null;
