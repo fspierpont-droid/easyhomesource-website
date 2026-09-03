@@ -2,15 +2,14 @@ import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 
 type RouteContext = {
-  params: Promise<{ path: string[] }> | { path: string[] };
+  params: Promise<{ path: string[] }>;
 };
 
 async function forward(request: Request, context: RouteContext) {
-  const params = await context.params;
-  const segments = Array.isArray(params.path) ? params.path : [];
+  const { path } = await context.params;
   const sourceUrl = new URL(request.url);
   const backendPath =
-    `/api/permitting/${segments.map((segment) => encodeURIComponent(segment)).join('/')}${sourceUrl.search}`;
+    `/api/permitting/${path.map((segment) => encodeURIComponent(segment)).join('/')}${sourceUrl.search}`;
 
   const method = request.method.toUpperCase();
   const headers = new Headers();
