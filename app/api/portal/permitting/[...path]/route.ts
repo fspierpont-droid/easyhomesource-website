@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 
-type RouteContext = {
-  params: Promise<{ path: string[] }>;
-};
+type RouteContext = { params: Promise<{ path: string[] }> };
 
-async function forward(request: Request, context: RouteContext) {
-  const { path } = await context.params;
+async function forward(request: Request, { params }: RouteContext) {
+  const { path } = await params;
   const sourceUrl = new URL(request.url);
   const backendPath =
     `/api/permitting/${path.map((segment) => encodeURIComponent(segment)).join('/')}${sourceUrl.search}`;
@@ -23,12 +21,13 @@ async function forward(request: Request, context: RouteContext) {
 
   const backend = await permanentApiRequest(request, backendPath, init);
   const responseHeaders = new Headers();
-  for (const name of ['content-type', 'content-disposition', 'content-length']) {
+  for (const name of ['content-type', 'content-disposition']) {
     const value = backend.headers.get(name);
     if (value) responseHeaders.set(name, value);
   }
 
-  return new NextResponse(backend.body, {
+  const body = await backend.arrayBuffer();
+  return new NextResponse(body, {
     status: backend.status,
     headers: responseHeaders,
   });
