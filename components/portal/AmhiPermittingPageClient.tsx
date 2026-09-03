@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { AmhiOperationalSummary } from '@/components/portal/AmhiOperationalSummary';
 import { AmhiPermittingHub } from '@/components/portal/AmhiPermittingHub';
 import { QuotePortalShell } from '@/components/portal/QuotePortalShell';
 import { canAccessAmhi } from '@/data/teamMembers';
@@ -28,7 +29,10 @@ export function AmhiPermittingPageClient() {
     >
       <main className="w-full p-4 sm:p-6 lg:p-8">
         {allowed ? (
-          <AmhiPermittingHub />
+          <>
+            <AmhiOperationalSummary />
+            <AmhiPermittingHub />
+          </>
         ) : (
           <div className="max-w-2xl mx-auto rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
             <div className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Restricted Workspace</div>
