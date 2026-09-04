@@ -1,0 +1,268 @@
+# Manufacturer media enrichment report
+
+- Targets: **285**
+- Enriched: **36**
+- Exterior/elevation coverage: **36**
+- Virtual tours found: **28**
+- Unmatched/errors: **220**
+
+## By manufacturer
+- **Legacy Housing:** 0/85 enriched · 0 exterior-covered · 0 virtual tours
+- **TRU Homes:** 11/14 enriched · 11 exterior-covered · 0 virtual tours
+- **Clayton Addison:** 21/23 enriched · 21 exterior-covered · 7 virtual tours
+- **Palm Harbor Plant City:** 0/76 enriched · 0 exterior-covered · 0 virtual tours
+- **Timber Creek:** 0/67 enriched · 0 exterior-covered · 21 virtual tours
+- **Clayton TRU:** 4/5 enriched · 4 exterior-covered · 0 virtual tours
+- **Cavco Plant City:** 0/4 enriched · 0 exterior-covered · 0 virtual tours
+- **null:** 0/11 enriched · 0 exterior-covered · 0 virtual tours
+
+## Needs review
+- Legacy Housing · S 1240 11fla · legacy-housing-select-collection-s-1240-11fla · no-match
+- Legacy Housing · C 1672 32c · legacy-housing-classic-collection-c-1672-32c · no-match
+- Palm Harbor Plant City · Paxton 28523a · palm-harbor-plant-city-elite-paxton-28523a · no-match
+- TRU Homes · Homes Origin Spruce Oak · tru-homes-tru-origin-spruce-oak · no-match
+- Palm Harbor Plant City · Atmos 28603n · palm-harbor-plant-city-alpha-atmos-28603n · no-match
+- Palm Harbor Plant City · 28603a · palm-harbor-plant-city-craft-select-28603a · no-match
+- Timber Creek · The White Oak · timber-creek-creekside-series-the-white-oak · no-match
+- Timber Creek · The Delilah · timber-creek-creekside-series-the-delilah · no-match
+- Timber Creek · The Twin · timber-creek-creekside-series-the-twin-creek · no-match
+- Legacy Housing · S 1460 21sa · legacy-housing-select-collection-s-1460-21sa · no-match
+- Legacy Housing · S 1464 22a · legacy-housing-select-collection-s-1464-22a · no-match
+- Legacy Housing · S 1468 32a · legacy-housing-select-collection-s-1468-32a · no-match
+- Legacy Housing · C 1660 21fka · legacy-housing-classic-collection-c-1660-21fka · no-match
+- Legacy Housing · H 1660 21fka · legacy-housing-heritage-collection-h-1660-21fka · no-match
+- Palm Harbor Plant City · Reed 24482c · palm-harbor-plant-city-elite-reed-24482c · no-match
+- Palm Harbor Plant City · 15602a · palm-harbor-plant-city-craft-select-15602a · no-match
+- Palm Harbor Plant City · Hayden 24442a Pyzz · palm-harbor-plant-city-elite-hayden-24442a-pyzz · no-match
+- Legacy Housing · S 1664 32c · legacy-housing-select-collection-s-1664-32c · no-match
+- Legacy Housing · C 1664 32c · legacy-housing-classic-collection-c-1664-32c · no-match
+- Legacy Housing · C 1664 32c · legacy-housing-heritage-collection-c-1664-32c · no-match
+- Palm Harbor Plant City · Annie 15662a · palm-harbor-plant-city-elite-annie-15662a · no-match
+- Palm Harbor Plant City · 15663a · palm-harbor-plant-city-craft-select-15663a · no-match
+- Legacy Housing · C 1668 22a · legacy-housing-classic-collection-c-1668-22a · no-match
+- Legacy Housing · H 1668 22a · legacy-housing-heritage-collection-h-1668-22a · no-match
+- Legacy Housing · S 2448 32a · legacy-housing-select-collection-s-2448-32a · no-match
+- Palm Harbor Plant City · Luca 24482a · palm-harbor-plant-city-elite-luca-24482a · no-match
+- Palm Harbor Plant City · Hayden 24442a · palm-harbor-plant-city-elite-hayden-24442a · no-match
+- Palm Harbor Plant City · Keidyn 20522a · palm-harbor-plant-city-elite-keidyn-20522a · no-match
+- Palm Harbor Plant City · Cumberland Duplex · palm-harbor-plant-city-anthem-cumberland-duplex · no-match
+- Palm Harbor Plant City · Roanoke Duplex · palm-harbor-plant-city-anthem-roanoke-duplex · no-match
+- Palm Harbor Plant City · 28402a · palm-harbor-plant-city-craft-select-28402a · no-match
+- Legacy Housing · S 1672 32b · legacy-housing-select-collection-s-1672-32b · no-match
+- Legacy Housing · S 1672 32a · legacy-housing-select-collection-s-1672-32a · no-match
+- Legacy Housing · H 1672 32b · legacy-housing-heritage-collection-h-1672-32b · no-match
+- Legacy Housing · H 1672 32d · legacy-housing-heritage-collection-h-1672-32d · no-match
+- Palm Harbor Plant City · Avon Park 24482e · palm-harbor-plant-city-lifestyle-avon-park-24482e · no-match
+- Legacy Housing · Workforce O 1480 33af · legacy-housing-workforce-housing-o-1480-33af · no-match
+- Palm Harbor Plant City · Jess 28522e · palm-harbor-plant-city-elite-jess-28522e · no-match
+- Legacy Housing · C 1868 32a · legacy-housing-classic-collection-c-1868-32a · no-match
+- Legacy Housing · H 1868 32a · legacy-housing-heritage-collection-h-1868-32a · no-match
+- Timber Creek · The Cahaba · timber-creek-creekside-series-the-cahaba · no-match
+- Timber Creek · The Coldwater · timber-creek-creekside-series-the-coldwater · no-match
+- Timber Creek · The Cypress · timber-creek-creekside-series-the-cypress · no-match
+- Timber Creek · The Cheaha · timber-creek-creekside-series-the-cheaha · no-match
+- Timber Creek · The Canyon · timber-creek-creekside-series-the-canyon-creek · no-match
+- Timber Creek · The Caney · timber-creek-creekside-series-the-caney-creek · no-match
+- Timber Creek · The Camelia · timber-creek-creekside-series-the-camelia · no-match
+- Palm Harbor Plant City · Helix 16763n · palm-harbor-plant-city-alpha-helix-16763n · no-match
+- Cavco Plant City · 15763a · palm-harbor-plant-city-cavco-select-15763a · no-match
+- Palm Harbor Plant City · Tommie 15763a · palm-harbor-plant-city-elite-tommie-15763a · no-match
+- Palm Harbor Plant City · 15763a · palm-harbor-plant-city-craft-select-15763a · no-match
+- null · Lc9fyw · lc9fyw · no-match
+- null · G0k0ck · g0k0ck · no-match
+- null · Si76ue · si76ue · no-match
+- Legacy Housing · C 1864 22a · legacy-housing-classic-collection-c-1864-22a · no-match
+- Legacy Housing · H 1864 22a · legacy-housing-heritage-collection-h-1864-22a · no-match
+- Legacy Housing · Workforce O 1680 55aof · legacy-housing-workforce-housing-o-1680-55aof · no-match
+- Legacy Housing · C 1680 32d · legacy-housing-classic-collection-c-1680-32d · no-match
+- Legacy Housing · S 1680 32b · legacy-housing-select-collection-s-1680-32b · no-match
+- Legacy Housing · H 1680 32flp · legacy-housing-heritage-collection-h-1680-32flp · no-match
+- Legacy Housing · C 1680 32m · legacy-housing-classic-collection-c-1680-32m · no-match
+- Legacy Housing · C 1680 32flp · legacy-housing-classic-collection-c-1680-32flp · no-match
+- Legacy Housing · S 1680 32a · legacy-housing-select-collection-s-1680-32a · no-match
+- Legacy Housing · C 1680 32a · legacy-housing-classic-collection-c-1680-32a · no-match
+- Legacy Housing · C 1680 32b · legacy-housing-classic-collection-c-1680-32b · no-match
+- Legacy Housing · C 1680 32h · legacy-housing-classic-collection-c-1680-32h · no-match
+- Legacy Housing · C 1680 32j · legacy-housing-classic-collection-c-1680-32j · no-match
+- Legacy Housing · C 1680 32q · legacy-housing-classic-collection-c-1680-32q · no-match
+- Legacy Housing · H 1680 32a · legacy-housing-heritage-collection-h-1680-32a · no-match
+- Legacy Housing · H 1680 32b · legacy-housing-heritage-collection-h-1680-32b · no-match
+- Legacy Housing · H 1680 32j · legacy-housing-heritage-collection-h-1680-32j · no-match
+- Legacy Housing · H 1680 32n · legacy-housing-heritage-collection-h-1680-32n · no-match
+- Legacy Housing · H 1680 32p · legacy-housing-heritage-collection-h-1680-32p · no-match
+- Palm Harbor Plant City · Cottage Farmhouse 24 24522d · palm-harbor-plant-city-lifestyle-cottage-farmhouse-24-24522d · no-match
+- Palm Harbor Plant City · Logan 24522a · palm-harbor-plant-city-elite-logan-24522a · no-match
+- Palm Harbor Plant City · Blake 28482b · palm-harbor-plant-city-elite-blake-28482b · no-match
+- Palm Harbor Plant City · Luca Ii 28482a · palm-harbor-plant-city-elite-luca-ii-28482a · no-match
+- Palm Harbor Plant City · 28482a · palm-harbor-plant-city-craft-select-28482a · no-match
+- Palm Harbor Plant City · Lauren 24562a · palm-harbor-plant-city-elite-lauren-24562a · no-match
+- Palm Harbor Plant City · Riece 28562d · palm-harbor-plant-city-elite-riece-28562d · no-match
+- Palm Harbor Plant City · Hialeah 28 28522a · palm-harbor-plant-city-lifestyle-hialeah-28-28522a · no-match
+- Palm Harbor Plant City · Ryan 28522b · palm-harbor-plant-city-elite-ryan-28522b · no-match
+- Palm Harbor Plant City · Kinsley 28522f · palm-harbor-plant-city-elite-kinsley-28522f · no-match
+- Palm Harbor Plant City · Logan Ii 28522c · palm-harbor-plant-city-elite-logan-ii-28522c · no-match
+- Palm Harbor Plant City · Alexa 28522a · palm-harbor-plant-city-elite-alexa-28522a · no-match
+- Palm Harbor Plant City · Cottage Farmhouse 28522j · palm-harbor-plant-city-lifestyle-cottage-farmhouse-28522j · no-match
+- Palm Harbor Plant City · Brooks 28562b · palm-harbor-plant-city-elite-brooks-28562b · no-match
+- Palm Harbor Plant City · Pierce 28562a · palm-harbor-plant-city-elite-pierce-28562a · no-match
+- Palm Harbor Plant City · Carriage Farmhouse 28562k · palm-harbor-plant-city-lifestyle-carriage-farmhouse-28562k · no-match
+- Palm Harbor Plant City · Lailani 28562c · palm-harbor-plant-city-elite-lailani-28562c · no-match
+- Palm Harbor Plant City · Colby 28602a · palm-harbor-plant-city-elite-colby-28602a · no-match
+- Palm Harbor Plant City · Chase 40402a · palm-harbor-plant-city-elite-chase-40402a · no-match
+- Palm Harbor Plant City · Hudson 28642a · palm-harbor-plant-city-elite-hudson-28642a · no-match
+- Palm Harbor Plant City · Chase Ii 40442a · palm-harbor-plant-city-elite-chase-ii-40442a · no-match
+- Palm Harbor Plant City · Jalynn 28662a · palm-harbor-plant-city-elite-jalynn-28662a · no-match
+- Palm Harbor Plant City · Flagler 30602a · palm-harbor-plant-city-timberland-flagler-30602a · no-match
+- Palm Harbor Plant City · 28463a · palm-harbor-plant-city-craft-select-28463a · no-match
+- Legacy Housing · S 3244 32a · legacy-housing-select-collection-s-3244-32a · no-match
+- Legacy Housing · C 3244 32a · legacy-housing-classic-collection-c-3244-32a · no-match
+- Legacy Housing · H 3244 32a · legacy-housing-heritage-collection-h-3244-32a · no-match
+- Palm Harbor Plant City · Craftselect28483a · palm-harbor-plant-city-craft-select-craftselect28483a · no-match
+- Palm Harbor Plant City · Bailey 28483a · palm-harbor-plant-city-elite-bailey-28483a · no-match
+- Legacy Housing · H 1872 32a · legacy-housing-heritage-collection-h-1872-32a · no-match
+- Legacy Housing · C 1872 32a · legacy-housing-classic-collection-c-1872-32a · no-match
+- Legacy Housing · H 1880 32e · legacy-housing-heritage-collection-h-1880-32e · no-match
+- Legacy Housing · C 1880 32f · legacy-housing-classic-collection-c-1880-32f · no-match
+- Legacy Housing · C 3248 32b · legacy-housing-classic-collection-c-3248-32b · no-match
+- Legacy Housing · H 3248 32a · legacy-housing-heritage-collection-h-3248-32a · no-match
+- Palm Harbor Plant City · Cumberland Ii 28523a · palm-harbor-plant-city-timberland-cumberland-ii-28523a · no-match
+- Cavco Plant City · 30483a · palm-harbor-plant-city-cavco-select-30483a · no-match
+- Palm Harbor Plant City · Ventura Vi 30483c · palm-harbor-plant-city-timberland-ventura-vi-30483c · no-match
+- TRU Homes · Homes Origin Spruce Cedar · tru-homes-tru-origin-spruce-cedar · no-match
+- Palm Harbor Plant City · 28563a · palm-harbor-plant-city-craft-select-28563a · no-match
+- Palm Harbor Plant City · Kash 28563a · palm-harbor-plant-city-elite-kash-28563a · no-match
+- Legacy Housing · S 3252 32d · legacy-housing-select-collection-s-3252-32d · no-match
+- Legacy Housing · C 3252 32d · legacy-housing-classic-collection-c-3252-32d · no-match
+- Legacy Housing · C 3252 32c · legacy-housing-heritage-collection-c-3252-32c · no-match
+- Palm Harbor Plant City · 28563b · palm-harbor-plant-city-craft-select-28563b · no-match
+- Timber Creek · The Frontier · timber-creek-creekside-series-the-frontier · no-match
+- Palm Harbor Plant City · Ariya 30482a · palm-harbor-plant-city-elite-ariya-30482a · no-match
+- Palm Harbor Plant City · Quinn 30523a · palm-harbor-plant-city-elite-quinn-30523a · no-match
+- Clayton Addison · Wonderfulworld · clayton-addison-tempo-series-wonderfulworld · no-match
+- Palm Harbor Plant City · Ellenton 28603a · palm-harbor-plant-city-lifestyle-ellenton-28603a · no-match
+- Palm Harbor Plant City · Ashley 28603a · palm-harbor-plant-city-elite-ashley-28603a · no-match
+- Legacy Housing · H 3264 32ap · legacy-housing-heritage-collection-h-3264-32ap · no-match
+- Timber Creek · The Cottonwood · timber-creek-creekside-series-the-cottonwood · no-match
+- Palm Harbor Plant City · Coppitt Key 30563b · palm-harbor-plant-city-timberland-coppitt-key-30563b · no-match
+- Palm Harbor Plant City · Haven Bay 30563c · palm-harbor-plant-city-timberland-haven-bay-30563c · no-match
+- Cavco Plant City · 30563a · palm-harbor-plant-city-cavco-select-30563a · no-match
+- Palm Harbor Plant City · Brooklyn 28643a · palm-harbor-plant-city-elite-brooklyn-28643a · no-match
+- Legacy Housing · H 3260 32a · legacy-housing-heritage-collection-h-3260-32a · no-match
+- Legacy Housing · C 3260 32b · legacy-housing-classic-collection-c-3260-32b · no-match
+- Timber Creek · The Chickasaw · timber-creek-creekside-series-the-chickasaw · no-match
+- Timber Creek · The Shades · timber-creek-creekside-series-the-shades-creek · no-match
+- Timber Creek · The Coosa · timber-creek-creekside-series-the-coosa · no-match
+- Timber Creek · The Gloria C · timber-creek-creekside-series-the-gloria-c · no-match
+- Palm Harbor Plant City · Mckenna 30603b · palm-harbor-plant-city-lifestyle-mckenna-30603b · no-match
+- Palm Harbor Plant City · Kennedy Ii 30603d · palm-harbor-plant-city-timberland-kennedy-ii-30603d · no-match
+- Palm Harbor Plant City · Malibu 30603b · palm-harbor-plant-city-timberland-malibu-30603b · no-match
+- null · S28sxv · s28sxv · no-match
+- null · X6z6l3 · x6z6l3 · no-match
+- Palm Harbor Plant City · Davan 28683a · palm-harbor-plant-city-elite-davan-28683a · no-match
+- Timber Creek · The Blackwater · timber-creek-creekside-series-the-blackwater · no-match
+- Legacy Housing · H 3264 32c · legacy-housing-heritage-collection-h-3264-32c · no-match
+- null · Classiccollection C 3264 32c · legacy-housing-classiccollection-c-3264-32c · no-match
+- Legacy Housing · C 3264 32bp · legacy-housing-classic-collection-c-3264-32bp · no-match
+- Legacy Housing · C 3264 32b · legacy-housing-classic-collection-c-3264-32b · no-match
+- Legacy Housing · H 3264 32a · legacy-housing-heritage-collection-h-3264-32a · no-match
+- Timber Creek · The Carolina · timber-creek-creekside-series-the-carolina · no-match
+- Palm Harbor Plant City · Knox 30643a · palm-harbor-plant-city-elite-knox-30643a · no-match
+- Timber Creek · The Shoal · timber-creek-creekside-series-the-shoal-creek · no-match
+- Timber Creek · The Willow Oak · timber-creek-creekside-series-the-willow-oak · no-match
+- Timber Creek · The Bayou 4 · timber-creek-creekside-series-the-bayou-4 · no-match
+- Timber Creek · The Azalea · timber-creek-creekside-series-the-azalea · no-match
+- Timber Creek · The Honeysuckle · timber-creek-creekside-series-the-honeysuckle · no-match
+- null · 1ydepm · 1ydepm · no-match
+- Palm Harbor Plant City · Pelican Bay 30683a · palm-harbor-plant-city-timberland-pelican-bay-30683a · no-match
+- Palm Harbor Plant City · Easton Farmhouse 30683a · palm-harbor-plant-city-lifestyle-easton-farmhouse-30683a · no-match
+- Palm Harbor Plant City · La Belle Vi 40643b · palm-harbor-plant-city-timberland-la-belle-vi-40643b · no-match
+- Legacy Housing · S 1684 42a · legacy-housing-select-collection-s-1684-42a · no-match
+- Legacy Housing · S 1684 42b · legacy-housing-select-collection-s-1684-42b · no-match
+- Legacy Housing · C 1684 42b · legacy-housing-classic-collection-c-1684-42b · no-match
+- Legacy Housing · H 1684 42a · legacy-housing-heritage-collection-h-1684-42a · no-match
+- Legacy Housing · Workforce O 1872 44a · legacy-housing-workforce-housing-o-1872-44a · no-match
+- Legacy Housing · S 2468 42a · legacy-housing-select-collection-s-2468-42a · no-match
+- Timber Creek · The Bayou · timber-creek-creekside-series-the-bayou · no-match
+- Legacy Housing · S 3256 42a · legacy-housing-select-collection-s-3256-42a · no-match
+- null · H 3256 42a · legacy-heritage-collection-h-3256-42a · no-match
+- Legacy Housing · H 3256 32d · legacy-housing-heritage-collection-h-3256-32d · no-match
+- Legacy Housing · C 3256 42b · legacy-housing-classic-collection-c-3256-42b · no-match
+- Legacy Housing · C 3256 32e · legacy-housing-classic-collection-c-3256-32e · no-match
+- Timber Creek · The Cottonwood 4 · timber-creek-creekside-series-the-cottonwood-4 · no-match
+- Timber Creek · The Sweetwater · timber-creek-creekside-series-the-sweetwater · no-match
+- Timber Creek · The Riverton · timber-creek-creekside-series-the-riverton · no-match
+- Palm Harbor Plant City · Kyle 28724a · palm-harbor-plant-city-elite-kyle-28724a · no-match
+- Palm Harbor Plant City · Isla Ii 42484a · palm-harbor-plant-city-timberland-isla-ii-42484a · no-match
+- Timber Creek · The Limestone · timber-creek-creekside-series-the-limestone · no-match
+- Timber Creek · The Patton · timber-creek-creekside-series-the-patton-creek · no-match
+- Timber Creek · The Chickasaw Extra · timber-creek-creekside-series-the-chickasaw-extra · no-match
+- Cavco Plant City · 30684a · palm-harbor-plant-city-cavco-select-30684a · no-match
+- Clayton Addison · Boujee Premier · clayton-addison-boujee-series-boujee-premier · no-match
+- null · U7lp59 · u7lp59 · no-match
+- Legacy Housing · 3272 43a · legacy-housing-heritage-collection-3272-43a · no-match
+- Legacy Housing · C 3272 43b · legacy-housing-classic-collection-c-3272-43b · no-match
+- Timber Creek · The Mulberry · timber-creek-creekside-series-the-mulberry · no-match
+- Palm Harbor Plant City · Pelican Bay Ii 30764b · palm-harbor-plant-city-timberland-pelican-bay-ii-30764b · no-match
+- Timber Creek · The Callaway · timber-creek-creekside-series-the-callaway · no-match
+- Timber Creek · The Magnolia · timber-creek-creekside-series-the-magnolia · no-match
+- Timber Creek · The Willow Oak Extra · timber-creek-creekside-series-the-willow-oak-extra · no-match
+- Timber Creek · The Big Mulberry · timber-creek-creekside-series-the-big-mulberry · no-match
+- Timber Creek · The Mulberry Extra · timber-creek-creekside-series-the-mulberry-extra · no-match
+- Palm Harbor Plant City · 30764a · palm-harbor-plant-city-craft-select-30764a · no-match
+- null · Aef2ya · aef2ya · no-match
+- null · Cwppmw · cwppmw · no-match
+- Legacy Housing · C 3280 425b · legacy-housing-classic-collection-c-3280-425b · no-match
+- Legacy Housing · H 3280 425a · legacy-housing-heritage-collection-h-3280-425a · no-match
+- Legacy Housing · H 3672 43a · legacy-housing-heritage-collection-h-3672-43a · no-match
+- Palm Harbor Plant City · Tradewinds Ii 40684c · palm-harbor-plant-city-timberland-tradewinds-ii-40684c · no-match
+- Palm Harbor Plant City · Draper 40764a · palm-harbor-plant-city-elite-draper-40764a · no-match
+- Palm Harbor Plant City · Justin 28725a · palm-harbor-plant-city-elite-justin-28725a · no-match
+- Legacy Housing · Workforce O 1880 64a · legacy-housing-workforce-housing-o-1880-64a · no-match
+- Legacy Housing · Workforce O 3280 84a · legacy-housing-workforce-housing-o-3280-84a · no-match
+- Legacy Housing · Select S-1240-22A · select-s-1240-22a · no-match
+- Legacy Housing · Select S-1234-32A · select-s-1234-32a · no-match
+- Legacy Housing · Select S-1234-31A · select-s-1234-31a · no-match
+- Legacy Housing · Select S-1236-11FLA · select-s-1236-11fla · no-match
+- Legacy Housing · Select S-1444-11OFP · select-s-1444-11ofp · no-match
+- Legacy Housing · Select S-1256-21A · select-s-1256-21a · no-match
+- Palm Harbor Plant City · Waverly 15471A · waverly-15471a · no-match
+- Legacy Housing · Workforce O-16x44-22AOF · workforce-o-1644-22aof · no-match
+- Clayton TRU · Elm · elm · no-match
+- Legacy Housing · Select S-1264-22A · select-s-1264-22a · no-match
+- Legacy Housing · Select S-1272-32A · select-s-1272-32a · no-match
+- Timber Creek · The Hangout CS-3263 · hangout-cs-3263 · floorplan-only
+- Timber Creek · The Low Country CS-3262 · low-country-cs-3262 · floorplan-only
+- Timber Creek · The Cedar Creek CS-3240 · cedar-creek-cs-3240 · floorplan-only
+- Timber Creek · The Lake Wood CS-3254 · lake-wood-cs-3254 · floorplan-only
+- Timber Creek · The Highland Oak CS-3253 · highland-oak-cs-3253 · floorplan-only
+- Timber Creek · The Roxy CSFL-3305 · roxy-csfl-3305 · floorplan-only
+- Timber Creek · The Cahaba CS-1604 · cahaba-cs-1604 · floorplan-only
+- Timber Creek · The Callaway CS-3215 · callaway-cs-3215 · floorplan-only
+- Timber Creek · White Oak · white-oak · no-match
+- Timber Creek · Delilah · delilah · no-match
+- Timber Creek · The Cheaha CS-1620 · cheaha-cs-1620 · floorplan-only
+- Timber Creek · The Canyon Creek CS-1622 · canyon-creek-cs-1622 · floorplan-only
+- Timber Creek · The Twin Creek CS-3242 · twin-creek-cs-3242 · floorplan-only
+- Timber Creek · The Shoal Creek CS-3241 · shoal-creek-cs-3241 · floorplan-only
+- Timber Creek · The Shades Creek CS-3248 · shades-creek-cs-3248 · floorplan-only
+- Timber Creek · The Patton Creek CS-3249 · patton-creek-cs-3249 · floorplan-only
+- Timber Creek · The Caney Creek CS-1623 · caney-creek-cs-1623 · floorplan-only
+- Timber Creek · The Keystone CS-1625 · keystone-cs-1625 · floorplan-only
+- Timber Creek · The Little Creek CS-3243 · little-creek-cs-3243 · floorplan-only
+- Timber Creek · The South Fork CS-3268 · south-fork-cs-3268 · floorplan-only
+- Timber Creek · The Mountain Laurel CS-3290 · mountain-laurel-cs-3290 · floorplan-only
+- Timber Creek · The Keystone CS-1625-2 · keystone-cs-1625-2 · floorplan-only
+- Timber Creek · The Willow Oak CS-3229 · willow-oak-cs-3229 · floorplan-only
+- Timber Creek · The Chickasaw Extra CS-3214 · chickasaw-extra-cs-3214 · floorplan-only
+- Timber Creek · The Willow Oak Extra CS-3232 · willow-oak-extra-cs-3232 · floorplan-only
+- Timber Creek · The Big Mulberry CS-3230 · big-mulberry-cs-3230 · floorplan-only
+- Timber Creek · The Gloria CSFL-3302 · gloria-csfl-3302 · floorplan-only
+- Timber Creek · The Carolina CSFL-3300 · carolina-csfl-3300 · floorplan-only
+- Timber Creek · The Susie Q5 CSFL-3304 · susie-q5-csfl-3304 · floorplan-only
+- Timber Creek · The Keystone 3 CS-1626 · keystone-3-cs-1626 · floorplan-only
+- Timber Creek · The Low Country Extra CS-3264 · low-country-extra-cs-3264 · floorplan-only
+- Legacy Housing · Classic C-1672-32C · classic-c-1672-32c · no-match
+- Palm Harbor Plant City · Paxton · paxton · no-match
+- TRU Homes · Oak · oak · no-match
+- Palm Harbor Plant City · Atmos 28603N · atmos-28603n · no-match
+- Palm Harbor Plant City · Craft Select 28603A · craft-select-28603a · no-match

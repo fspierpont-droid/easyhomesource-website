@@ -1,0 +1,51 @@
+name: Manufacturer media enrichment
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/import-manufacturer-media.ts'
+      - 'scripts/import-manufacturer-media-browser.ts'
+      - 'data/catalogHomeSeeds.ts'
+      - 'data/timberCreekCatalog.ts'
+      - 'package.json'
+      - '.github/workflows/manufacturer-media-enrichment.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  enrich:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Enrich manufacturer media
+        run: npm run import:manufacturer-media
+      - name: Verify card-media priority
+        run: npm run test:home-card-media
+      - name: Commit refreshed media manifest
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/manufacturerMedia.generated.ts reports/manufacturer-media-report.md
+          if git diff --cached --quiet; then
+            echo "Manufacturer media is already current."
+            exit 0
+          fi
+          git commit -m "Refresh manufacturer catalog media"
+          TARGET_BRANCH="${{ github.head_ref || github.ref_name }}"
+          git push origin "HEAD:${TARGET_BRANCH}"
