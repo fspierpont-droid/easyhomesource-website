@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { permanentApiRequest } from '@/lib/auth/permanentApi';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const backend = await permanentApiRequest(
     request,
-    `/api/home-inventory/${encodeURIComponent(params.id)}/documents`,
+    `/api/home-inventory/${encodeURIComponent(id)}/documents`,
   );
   const payload = await backend.json().catch(() => ({}));
   if (!backend.ok) {
@@ -22,7 +23,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
   return NextResponse.json({ success: true, documents: payload });
 }
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const url = new URL(request.url);
   const category = url.searchParams.get('category');
   const filename = request.headers.get('x-filename');
@@ -36,7 +38,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
   const body = await request.arrayBuffer();
   const backend = await permanentApiRequest(
     request,
-    `/api/home-inventory/${encodeURIComponent(params.id)}/documents?category=${encodeURIComponent(category)}`,
+    `/api/home-inventory/${encodeURIComponent(id)}/documents?category=${encodeURIComponent(category)}`,
     {
       method: 'POST',
       headers: {

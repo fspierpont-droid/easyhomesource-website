@@ -3,11 +3,12 @@ import { permanentApiRequest } from '@/lib/auth/permanentApi';
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string; documentId: string } },
+  { params }: { params: Promise<{ id: string; documentId: string }> },
 ) {
+  const { id, documentId } = await params;
   const backend = await permanentApiRequest(
     request,
-    `/api/home-inventory/${encodeURIComponent(params.id)}/documents/${encodeURIComponent(params.documentId)}`,
+    `/api/home-inventory/${encodeURIComponent(id)}/documents/${encodeURIComponent(documentId)}`,
     { method: 'DELETE' },
   );
   const payload = await backend.json().catch(() => ({}));
