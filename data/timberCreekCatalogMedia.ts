@@ -29,6 +29,9 @@ const cedarCreek = timberCreekCatalogBySlug["cedar-creek-cs-3240"];
 const lakeWoodBase = "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/235413";
 const cedarCreekBase = "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/237172";
 
+const whiteOak = timberCreekCatalogBySlug["white-oak"];
+const whiteOakBase = "https://d132mt2yijm03y.cloudfront.net/manufacturer/3391/floorplan/231618";
+
 const richMediaOverrides: HomeMediaManifest = {
   "lake-wood-cs-3254": {
     slug: "lake-wood-cs-3254",
