@@ -6,7 +6,7 @@ import { HomeCard, StatusBadge, homeBadges } from "@/components/HomeCard";
 import { HomeImage } from "@/components/HomeImage";
 import { HomeMediaGallery } from "@/components/HomeMediaGallery";
 import { MediaPlaceholder } from "@/components/MediaPlaceholder";
-import { formatHomePrice, hasIncompleteCatalogDetails, homes as baselineHomes } from "@/data/homes";
+import { hasIncompleteCatalogDetails, homes as baselineHomes } from "@/data/homes";
 import { getPublicCatalog, getPublicCatalogHome } from "@/lib/catalog/catalogAuthorityServer";
 import { publicSiteUrl } from "@/lib/seo/siteIdentity";
 
@@ -65,7 +65,6 @@ export default async function HomeDetailPage({ params }: { params: HomeDetailPar
     home.size && { label: "Home size", value: home.size }
   ].filter(Boolean) as { label: string; value: string | number }[];
   const similar = catalog.filter((item) => item.slug !== home.slug && (item.bedrooms === home.bedrooms || Math.abs((item.squareFeet ?? 0) - (home.squareFeet ?? 0)) <= 350 || item.isFeatured)).slice(0, 2);
-  const productPrice = home.salePrice ?? home.startingPrice;
   const productImages = Array.from(new Set([home.image, ...photos.map((photo) => photo.src)].filter((value): value is string => Boolean(value)))).slice(0, 8);
   const availability = home.status === "Sold"
     ? "https://schema.org/OutOfStock"
