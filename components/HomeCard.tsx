@@ -108,15 +108,9 @@ export function HomeCard({ home }: { home: Home }) {
 
           {/* Pricing Box */}
           <div className="rounded-xl bg-gradient-to-br from-ehsSoftBlue to-white p-3 ring-1 ring-ehsBlue/10">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-ehsNavy/60">
-              Display price
-            </p>
-            <p className="mt-0.5 text-xl sm:text-2xl font-black text-ehsNavy">
-              {formatHomePrice(home)}
-            </p>
-            <p className="mt-1 text-[11px] font-medium text-ehsNavy/55">
-              Final quote required.
-            </p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-ehsNavy/60">Pricing</p>
+            <p className="mt-0.5 text-lg sm:text-xl font-black text-ehsNavy">Request current pricing</p>
+            <p className="mt-1 text-[11px] font-medium text-ehsNavy/55">Call or request a quote.</p>
           </div>
 
           {/* Quick Specs */}
