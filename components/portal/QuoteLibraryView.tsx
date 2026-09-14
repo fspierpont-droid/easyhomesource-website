@@ -21,6 +21,8 @@ export function QuoteLibraryView({
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [selectedQuoteForPreview, setSelectedQuoteForPreview] = useState<SavedQuote | null>(null);
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
+  const [sharingQuoteId, setSharingQuoteId] = useState<string | null>(null);
+  const [shareError, setShareError] = useState<string | null>(null);
   const legacyCount = quotes.filter((quote) => quote.legacyReadOnly).length;
 
   const filteredQuotes = quotes.filter((q) => {
@@ -58,18 +60,41 @@ export function QuoteLibraryView({
     }
   };
 
-  const getShareUrl = (q: SavedQuote) => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    return `${origin}/quote/${q.shareToken || q.quoteNumber || q.id}`;
-  };
+  const handleCopyShareLink = async (q: SavedQuote) => {
+    if (q.legacyReadOnly || sharingQuoteId) return;
 
-  const handleCopyShareLink = (q: SavedQuote) => {
-    if (q.legacyReadOnly) return;
-    const url = getShareUrl(q);
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
+    setSharingQuoteId(q.id);
+    setShareError(null);
+    try {
+      const response = await fetch(`/api/portal/quotes/${encodeURIComponent(q.id)}/share`, {
+        method: 'POST',
+        cache: 'no-store',
+      });
+      const payload = await response.json().catch(() => ({}));
+      const shareToken = String(payload.shareToken || '');
+
+      if (!response.ok || !payload.success || shareToken.length < 32) {
+        throw new Error(payload.error || 'Unable to create a customer share link.');
+      }
+
+      const url = `${window.location.origin}/quote/${encodeURIComponent(shareToken)}`;
+      if (!navigator.clipboard) {
+        throw new Error('Clipboard access is unavailable in this browser.');
+      }
+
+      await navigator.clipboard.writeText(url);
+      const updatedQuote = { ...q, shareToken };
+      if (selectedQuoteForPreview?.id === q.id) {
+        setSelectedQuoteForPreview(updatedQuote);
+      }
+      onUpdateQuote?.(updatedQuote);
       setCopiedToken(q.id);
       setTimeout(() => setCopiedToken(null), 2500);
+    } catch (error) {
+      console.error('Failed to create customer quote share link:', error);
+      setShareError(error instanceof Error ? error.message : 'Unable to create a customer share link.');
+    } finally {
+      setSharingQuoteId(null);
     }
   };
 
@@ -272,7 +297,10 @@ export function QuoteLibraryView({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             type="button"
-                            onClick={() => setSelectedQuoteForPreview(q)}
+                            onClick={() => {
+                              setShareError(null);
+                              setSelectedQuoteForPreview(q);
+                            }}
                             className="px-2 py-1 text-slate-600 hover:text-[#0B1E38] font-bold text-[11px] hover:underline cursor-pointer"
                             title="Quick Preview"
                           >
@@ -378,7 +406,10 @@ export function QuoteLibraryView({
                 </button>
 
                 <button
-                  onClick={() => setSelectedQuoteForPreview(null)}
+                  onClick={() => {
+                    setShareError(null);
+                    setSelectedQuoteForPreview(null);
+                  }}
                   className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm cursor-pointer ml-1"
                 >
                   ✕
@@ -497,20 +528,32 @@ export function QuoteLibraryView({
                     Historical record • Read only
                   </span>
                 ) : (
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/quotes/${selectedQuoteForPreview.id}/edit`}
-                      className="px-4 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
-                    >
-                      ✏️ Open Full Quote Editor
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => handleCopyShareLink(selectedQuoteForPreview)}
-                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F2A47] font-bold rounded-xl text-xs transition-colors cursor-pointer"
-                    >
-                      {copiedToken === selectedQuoteForPreview.id ? '✓ Copied Share Link!' : '🔗 Copy Share Link'}
-                    </button>
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/quotes/${selectedQuoteForPreview.id}/edit`}
+                        className="px-4 py-2 bg-[#0F2A47] hover:bg-[#0B1E38] text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                      >
+                        ✏️ Open Full Quote Editor
+                      </Link>
+                      <button
+                        type="button"
+                        disabled={sharingQuoteId === selectedQuoteForPreview.id}
+                        onClick={() => void handleCopyShareLink(selectedQuoteForPreview)}
+                        className="px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-60 disabled:cursor-wait text-[#0F2A47] font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                      >
+                        {sharingQuoteId === selectedQuoteForPreview.id
+                          ? 'Creating Customer Link…'
+                          : copiedToken === selectedQuoteForPreview.id
+                            ? '✓ Customer Link Copied!'
+                            : '🔗 Copy Customer Link'}
+                      </button>
+                    </div>
+                    {shareError && (
+                      <div className="max-w-md text-right text-[10.5px] font-bold text-rose-600">
+                        {shareError}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

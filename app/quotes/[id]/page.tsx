@@ -11,6 +11,8 @@ export default function QuoteDetailPage() {
   const params = useParams();
   const quoteId = String((params?.id as string) || '');
   const [copied, setCopied] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
   const [quoteData, setQuoteData] = useState<SavedQuote | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -161,12 +163,36 @@ export default function QuoteDetailPage() {
     window.print();
   };
 
-  const handleCopyLink = () => {
-    const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/quotes/${encodeURIComponent(quote.id)}`;
-    if (navigator.clipboard) {
-      void navigator.clipboard.writeText(url);
+  const handleCopyLink = async () => {
+    if (sharing) return;
+
+    setSharing(true);
+    setShareError(null);
+    try {
+      const response = await fetch(`/api/portal/quotes/${encodeURIComponent(quote.id)}/share`, {
+        method: 'POST',
+        cache: 'no-store',
+      });
+      const payload = await response.json().catch(() => ({}));
+      const shareToken = String(payload.shareToken || '');
+
+      if (!response.ok || !payload.success || shareToken.length < 32) {
+        throw new Error(payload.error || 'Unable to create a customer share link.');
+      }
+      if (!navigator.clipboard) {
+        throw new Error('Clipboard access is unavailable in this browser.');
+      }
+
+      const url = `${window.location.origin}/quote/${encodeURIComponent(shareToken)}`;
+      await navigator.clipboard.writeText(url);
+      setQuoteData((current) => current ? { ...current, shareToken } : current);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+    } catch (error) {
+      console.error('Failed to create customer quote share link:', error);
+      setShareError(error instanceof Error ? error.message : 'Unable to create a customer share link.');
+    } finally {
+      setSharing(false);
     }
   };
 
@@ -186,14 +212,15 @@ export default function QuoteDetailPage() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center justify-end gap-2.5">
           <button
             type="button"
-            onClick={handleCopyLink}
-            className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+            disabled={sharing}
+            onClick={() => void handleCopyLink()}
+            className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 disabled:opacity-60 disabled:cursor-wait text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <span>🔗</span>
-            <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
+            <span>{sharing ? 'Creating Link…' : copied ? 'Customer Link Copied!' : 'Copy Customer Link'}</span>
           </button>
 
           <Link
@@ -213,6 +240,11 @@ export default function QuoteDetailPage() {
             <span>📄</span>
             <span>Download / Print PDF</span>
           </button>
+          {shareError && (
+            <div className="basis-full text-right text-[10.5px] font-bold text-rose-300">
+              {shareError}
+            </div>
+          )}
         </div>
       </header>
 
